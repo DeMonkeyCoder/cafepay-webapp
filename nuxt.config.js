@@ -1,4 +1,5 @@
 
+import webpack from 'webpack'
 export default {
   mode: 'universal',
   /*
@@ -23,6 +24,8 @@ export default {
   ** Global CSS
   */
   css: [
+    '@assets/fontawesome/css/all.min.css',
+    '@assets/sass/cafepay.sass'
   ],
   /*
   ** Plugins to load before mounting the App
@@ -36,7 +39,11 @@ export default {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
+    'nuxt-buefy',
   ],
+
+  buefy: {
+  /* buefy options */ },
   /*
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options
@@ -47,6 +54,14 @@ export default {
   ** Build configuration
   */
   build: {
+    plugins: [
+      new webpack.ProvidePlugin({
+        '$': 'jquery',
+        'jQuery': 'jquery',
+        'window.jQuery': 'jquery',
+        // 'M': 'materialize-css'
+      })
+    ],
     /*
     ** You can extend webpack config here
     */

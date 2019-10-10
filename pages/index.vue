@@ -1,68 +1,91 @@
 <template>
-  <div class="container">
-    <div>
-      <logo />
-      <h1 class="title">
-        customer-web-application
-      </h1>
-      <h2 class="subtitle">
-        My posh Nuxt.js project
-      </h2>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          class="button--green"
-        >Documentation</a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          class="button--grey"
-        >GitHub</a>
+  <div class="home-container">
+    
+    <section class="intro flex" :style="{ backgroundImage: `url(${introBackground})` }">
+      <transition name="fade" mode="out-in">
+          
+      <div class="intro-state center-align" v-if="state === 'intro'" :key="1">
+        <h1 class="t-white t-xxlarge">{{name}}</h1>
+        <h2 class="t-white">انتخاب کن، سفارش بده و به راحتی پرداخت کن</h2>
+        <div class="action flex buttons are-medium">
+          <button class="btn is-success button is-inverted is-outlined is-fullwidth" @click="state = 'login'">ورود مشتری</button>
+          <button class="btn is-danger button is-inverted is-outlined is-fullwidth" to="aboutus">درباره کافه پِی</button>
+        </div>
       </div>
-    </div>
+
+      <div class="login center-align" v-if="state === 'login'" :key="2">
+        <h2 class="t-white">ورود مشتری</h2>
+         <b-field class="field">
+            <b-input :loading="loading" :disabled="loading" placeholder="۰۹xxxxxxxxx" size="is-large"></b-input>
+        </b-field>
+        <div class="action flex buttons are-medium">
+        <button class="send-code-btn btn is-success button is-fullwidth" @click="sendCode">ارسال کد تایید</button>
+         <button class="btn is-success button is-inverted is-outlined is-fullwidth" @click="state = 'intro'">بازگشت</button>
+         </div>
+      </div>
+
+      </transition>
+    </section>
   </div>
-</template>
+</template>{
 
 <script>
-import Logo from '~/components/Logo.vue'
-
+// import Logo from '~/components/Logo.vue'
+import introBackground from '~/assets/img/background/intro-background-1.jpg'
 export default {
-  components: {
-    Logo
+  data() {
+    return {
+      name: 'کافه پِی | Cafepay',
+      introBackground,
+      state: 'intro',
+      loading: false
+    }
+  },
+  methods: {
+    sendCode(){
+      this.loading = true
+    }
+  },
+  mounted(){
+    let h = window.innerHeight
+    $('section').css({'min-height': h})
+
   }
 }
 </script>
 
-<style>
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
+<style lang="sass">
 
-.title {
-  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-}
+.intro
+  justify-content: center
+  align-items: center
+  h2
+    margin-top: 15px
 
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
+.action
+  // flex-direction: column
+  justify-content: center
+  align-items: center
+  margin-top: 30px
+  button
+    margin: 0 10px
+    flex: 1
 
-.links {
-  padding-top: 15px;
-}
+.fade-enter-active, .fade-leave-active 
+  transition: all .5s
+  // transform: translateX(-100px)
+
+.fade-enter, .fade-leave-to
+  transition: all .5s
+  transform: translateX(-100px)
+  opacity: 0
+
+.field
+  margin-top: 15px
+  margin-bottom: 30px!important
+  
+
+  
+
+
 </style>
