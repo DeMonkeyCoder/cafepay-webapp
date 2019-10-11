@@ -11,7 +11,7 @@
     "generate": "nuxt generate"
   },
   "dependencies": {
-    "@nuxtjs/axios": "^5.3.6",
+    "@nuxtjs/axios": "^5.6.0",
     "@nuxtjs/pwa": "^2.6.0",
     "jquery": "^3.4.1",
     "node-sass": "^4.12.0",

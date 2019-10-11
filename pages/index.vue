@@ -16,10 +16,10 @@
       <div class="login center-align" v-if="state === 'login'" :key="2">
         <h2 class="t-white">ورود مشتری</h2>
          <b-field class="field">
-            <b-input :loading="loading" :disabled="loading" placeholder="۰۹xxxxxxxxx" size="is-large"></b-input>
+            <b-input v-model="phone_number" :disabled="cloading" placeholder="۰۹xxxxxxxxx" size="is-large"></b-input>
         </b-field>
         <div class="action flex buttons are-medium">
-        <button class="send-code-btn btn is-success button is-fullwidth" @click="sendCode">ارسال کد تایید</button>
+        <b-button size="is-medium" :loading="cloading" class="send-code-btn btn is-success button is-fullwidth" @click="sendCode">ارسال کد تایید</b-button>
          <button class="btn is-success button is-inverted is-outlined is-fullwidth" @click="state = 'intro'">بازگشت</button>
          </div>
       </div>
@@ -32,25 +32,35 @@
 <script>
 // import Logo from '~/components/Logo.vue'
 import introBackground from '~/assets/img/background/intro-background-1.jpg'
+import {mapState, mapGetters, mapActions} from 'vuex'
+
 export default {
   data() {
     return {
       name: 'کافه پِی | Cafepay',
       introBackground,
       state: 'intro',
-      loading: false
-    }
+      phone_number: ""
+      }
   },
   methods: {
-    sendCode(){
-      this.loading = true
+    async sendCode () {
+    await this.$axios.post('https://cafepay.app/api/v1/user-profile/add/',{ 
+        phone_number: this.phone_number
+      }).then(res =>{
+          console.log(res)
+      }).catch(err =>{
+        console.log(err.response.data)
+      })
     }
   },
+  
   mounted(){
     let h = window.innerHeight
     $('section').css({'min-height': h})
 
-  }
+  },
+
 }
 </script>
 
@@ -84,7 +94,9 @@ export default {
   margin-top: 15px
   margin-bottom: 30px!important
   
-
+.send-code-btn 
+  span
+    font-size: 20px!important
   
 
 
