@@ -24,6 +24,17 @@
          </div>
       </div>
 
+      <div class="enter-code center-align" v-if="state === 'enter-code'" :key="3">
+        <h2 class="t-white">لطفا کد ارسال شده را وارد کنید</h2>
+         <b-field class="code-field">
+            <b-input v-for="n in 5" v-model="user_code" :disabled="cloading" maxlength=1 size="is-medium" placeholder="__" custom-class="code-input"></b-input>
+        </b-field>
+        <div class="action flex buttons are-medium">
+        <b-button size="is-medium" :loading="cloading" class="send-code-btn btn is-success button is-fullwidth" @click="checkCode">ورود</b-button>
+         <button class="btn is-success button is-inverted is-outlined is-fullwidth" @click="state = 'login'">بازگشت</button>
+         </div>
+      </div>
+
       </transition>
     </section>
   </div>
@@ -45,13 +56,14 @@ export default {
   },
   methods: {
     async sendCode () {
-    await this.$axios.post('https://cafepay.app/api/v1/user-profile/add/',{ 
+    await this.$axios.post('https://cafepay.app/api/v1/auth-token/',{ 
         phone_number: this.phone_number
       }).then(res =>{
           console.log(res)
       }).catch(err =>{
         console.log(err.response.data)
       })
+      this.state = 'enter-code'
     }
   },
   
@@ -98,6 +110,10 @@ export default {
   span
     font-size: 20px!important
   
-
-
+.code-input, .code-input::placeholder
+  background: transparent
+  border-style: none
+  color: white
+  width: 2rem
+    
 </style>
