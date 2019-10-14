@@ -24,6 +24,21 @@
          </div>
       </div>
 
+      <div class="enter-code center-align" v-if="state === 'enter-code'" :key="3">
+        <h2 class="t-white">لطفا کد ارسال شده را وارد کنید</h2>
+         <b-field class="code-field">
+            <b-input v-model="user_code1" :disabled="cloading" maxlength=1 size="is-medium" placeholder="__" custom-class="code-input"></b-input>
+            <b-input v-model="user_code2" :disabled="cloading" maxlength=1 size="is-medium" placeholder="__" custom-class="code-input"></b-input>
+            <b-input v-model="user_code3" :disabled="cloading" maxlength=1 size="is-medium" placeholder="__" custom-class="code-input"></b-input>
+            <b-input v-model="user_code4" :disabled="cloading" maxlength=1 size="is-medium" placeholder="__" custom-class="code-input"></b-input>
+            <b-input v-model="user_code5" :disabled="cloading" maxlength=1 size="is-medium" placeholder="__" custom-class="code-input"></b-input>
+        </b-field>
+        <div class="action flex buttons are-medium">
+        <b-button size="is-medium" :loading="cloading" class="send-code-btn btn is-success button is-fullwidth" @click="checkCode">ورود</b-button>
+         <button class="btn is-success button is-inverted is-outlined is-fullwidth" @click="state = 'login'">بازگشت</button>
+         </div>
+      </div>
+
       </transition>
     </section>
   </div>
@@ -32,7 +47,6 @@
 <script>
 // import Logo from '~/components/Logo.vue'
 import introBackground from '~/assets/img/background/intro-background-1.jpg'
-import {mapState, mapGetters, mapActions} from 'vuex'
 
 export default {
   data() {
@@ -40,26 +54,53 @@ export default {
       name: 'کافه پِی | Cafepay',
       introBackground,
       state: 'intro',
-      phone_number: ""
+      phone_number: "",
+      user_code1: "",
+      user_code2: "",
+      user_code3: "",
+      user_code4: "",
+      user_code5: "",
       }
   },
   methods: {
     async sendCode () {
-    await this.$axios.post('https://cafepay.app/api/v1/user-profile/add/',{ 
+    await this.$axios.post('https://cafepay.app/api/v1/auth-token/',{ 
         phone_number: this.phone_number
       }).then(res =>{
-          console.log(res)
+        console.log(res)
+        this.state = 'enter-code'
       }).catch(err =>{
-        console.log(err.response.data)
+        console.log(err)
+        if (err.response){
+          if(err.response.data.phone_number[0] === "This field may not be blank."){
+            this.toaster("شماره تلفن وارد شده معتبر نیست", "is-danger")
+          }
+          if(err.response.data.phone_number[0] === "Enter a valid phone number" ){
+            console.log(err.response.data)
+            this.toaster("شماره تلفن وارد شده معتبر نیست", "is-danger")
+          }
+        }
+      })
+    },
+    async checkCode (){
+      var code = this.user_code1+this.user_code2+this.user_code3+this.user_code4+this.user_code5
+      await this.$axios.post('https://cafepay.app/api/v1/verify-phone/',{
+        'phone_number': this.phone_number,
+        'code': code 
+      }).then(res =>{
+        console.log(res)
+      }).catch(err =>{
+        if (err.response){
+          console.log(err.response.data)
+        }
       })
     }
-  },
-  
-  mounted(){
-    let h = window.innerHeight
-    $('section').css({'min-height': h})
 
   },
+  mounted (){
+    let h = window.innerHeight
+    $('section').css({'min-height': h})
+  }
 
 }
 </script>
@@ -93,11 +134,26 @@ export default {
 .field
   margin-top: 15px
   margin-bottom: 30px!important
+  display: flex
+  justify-content: space-between
+  .control
+    flex: 2
   
+
 .send-code-btn 
   span
     font-size: 20px!important
   
-
+.code-input, .code-input::placeholder
+  background: transparent
+  border-style: none
+  color: white
+  width: 3rem
+  text-align: center
+    
+.control
+  text-align: center
+  small
+    display: none!important
 
 </style>

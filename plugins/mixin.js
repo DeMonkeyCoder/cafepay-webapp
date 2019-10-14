@@ -5,5 +5,15 @@ Vue.mixin({
         cloading (){
             return this.$store.state.loading
         }
+    },
+    methods: {
+        toaster (massage, type) {
+            this.$buefy.toast.open({
+                duration: 5000,
+                message: massage,
+                position: 'is-bottom',
+                type: type
+            })
+        }
     }
 })
