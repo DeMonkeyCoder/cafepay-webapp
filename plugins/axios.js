@@ -1,5 +1,5 @@
 
-export default function ({ $axios, store }) {
+export default function ({ $axios, store, $buefy }) {
     $axios.onRequest(config => {
         store.commit("toggleLoading", true)
     })
@@ -10,8 +10,6 @@ export default function ({ $axios, store }) {
   
     $axios.onError(error => {
       const code = parseInt(error.response && error.response.status)
-    //   if (code === 400) {
-    //   }
-    store.commit("toggleLoading", false)
+      store.commit("toggleLoading", false)
     })
   }

@@ -6,7 +6,6 @@ Vue.use(Vuex)
 
 export const state = () => ({
     loading: false,
- 
 })
   
 export const mutations = {
