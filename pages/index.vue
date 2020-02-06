@@ -1,41 +1,45 @@
 <template>
   <div class="home-container">
     
-    <section class="intro flex" :style="{ backgroundImage: `url(${introBackground})` }">
+    <section class="intro flex" :style="{backgroundImage: `url(${background})`}">
+      <img class="logo" :src="logo" alt="">
       <transition name="fade" mode="out-in">
           
       <div class="intro-state center-align" v-if="state === 'intro'" :key="1">
-        <h1 class="t-white t-xxlarge">{{name}}</h1>
-        <h2 class="t-white">انتخاب کن، سفارش بده و به راحتی پرداخت کن</h2>
+        <h1 class="t-xxlarge">کافه‌<span class="t-xxlarge t-lightblue">پِی</span></h1>
+        <h2 class="">انتخاب کن، سفارش بده و به راحتی پرداخت کن</h2>
         <div class="action flex buttons are-medium">
-          <button class="btn is-success button is-inverted is-outlined is-fullwidth" @click="state = 'login'">ورود مشتری</button>
-          <button class="btn is-danger button is-inverted is-outlined is-fullwidth" to="aboutus">درباره کافه پِی</button>
+          <button class="btn is-danger button  is-fullwidth" @click="state = 'login'">ورود - ثبت نام</button>
+          <button class="btn is-info button is-inverted  is-fullwidth" to="aboutus">درباره کافه‌پِی</button>
         </div>
       </div>
 
       <div class="login center-align" v-if="state === 'login'" :key="2">
-        <h2 class="t-white">ورود مشتری</h2>
+        <h2 class="">ورود یا ثبت نام</h2>
          <b-field class="field">
             <b-input v-model="phone_number" :disabled="cloading" placeholder="۰۹xxxxxxxxx" size="is-large"></b-input>
         </b-field>
         <div class="action flex buttons are-medium">
-        <b-button size="is-medium" :loading="cloading" class="send-code-btn btn is-success button is-fullwidth" @click="sendCode">ارسال کد تایید</b-button>
-         <button class="btn is-success button is-inverted is-outlined is-fullwidth" @click="state = 'intro'">بازگشت</button>
+        <b-button size="is-medium" :loading="cloading" class="send-code-btn btn is-info button is-fullwidth" @click="sendCode">ارسال کد تایید</b-button>
+         <button class="btn is-info button is-inverted is-fullwidth" @click="state = 'intro'">بازگشت</button>
          </div>
       </div>
 
       <div class="enter-code center-align" v-if="state === 'enter-code'" :key="3">
-        <h2 class="t-white">لطفا کد ارسال شده را وارد کنید</h2>
-         <b-field class="code-field">
-            <b-input v-model="user_code1" :disabled="cloading" maxlength=1 size="is-medium" placeholder="__" custom-class="code-input"></b-input>
-            <b-input v-model="user_code2" :disabled="cloading" maxlength=1 size="is-medium" placeholder="__" custom-class="code-input"></b-input>
-            <b-input v-model="user_code3" :disabled="cloading" maxlength=1 size="is-medium" placeholder="__" custom-class="code-input"></b-input>
-            <b-input v-model="user_code4" :disabled="cloading" maxlength=1 size="is-medium" placeholder="__" custom-class="code-input"></b-input>
-            <b-input v-model="user_code5" :disabled="cloading" maxlength=1 size="is-medium" placeholder="__" custom-class="code-input"></b-input>
-        </b-field>
+        <h2 class="">لطفا کد ارسال شده را وارد کنید</h2>
+            <div class="input-container">
+            <input v-model="user_code" :disabled="cloading" maxlength="5" class="is-medium" custom-class="code-input">
+            <div class="input-masks">
+              <div class="mask"></div>
+              <div class="mask"></div>
+              <div class="mask"></div>
+              <div class="mask"></div>
+              <div class="mask"></div>
+            </div>
+          </div>
         <div class="action flex buttons are-medium">
         <b-button size="is-medium" :loading="cloading" class="send-code-btn btn is-success button is-fullwidth" @click="checkCode">ورود</b-button>
-         <button class="btn is-success button is-inverted is-outlined is-fullwidth" @click="state = 'login'">بازگشت</button>
+         <button class="btn is-info button is-inverted is-fullwidth" @click="state = 'login'">بازگشت</button>
          </div>
       </div>
 
@@ -46,25 +50,24 @@
 
 <script>
 // import Logo from '~/components/Logo.vue'
-import introBackground from '~/assets/img/background/intro-background-1.jpg'
+import logo from '~/assets/img/shape/logo-transparent.png'
+import background from '~/assets/img/background/320.png'
 
 export default {
   data() {
     return {
-      name: 'کافه پِی | Cafepay',
-      introBackground,
+      name: 'کافه پِی',
+      logo,
       state: 'intro',
       phone_number: "",
-      user_code1: "",
-      user_code2: "",
-      user_code3: "",
-      user_code4: "",
-      user_code5: "",
+      user_code: "",
+      background
+
       }
   },
   methods: {
-    async sendCode () {
-    await this.$axios.post('https://cafepay.app/api/v1/auth-token/',{ 
+    sendCode () {
+    this.$axios.post('https://cafepay.cloud/api/v1/send-code/',{ 
         phone_number: this.phone_number
       }).then(res =>{
         console.log(res)
@@ -82,13 +85,15 @@ export default {
         }
       })
     },
-    async checkCode (){
-      var code = this.user_code1+this.user_code2+this.user_code3+this.user_code4+this.user_code5
-      await this.$axios.post('https://cafepay.app/api/v1/verify-phone/',{
+    checkCode (){
+      
+      this.$axios.post('https://cafepay.cloud/api/v1/verify-phone/',{
         'phone_number': this.phone_number,
-        'code': code 
+        'code': this.user_code 
       }).then(res =>{
         console.log(res)
+        localStorage.setItem('token', res.token)
+        this.$router.push('/user/home')
       }).catch(err =>{
         if (err.response){
           console.log(err.response.data)
@@ -107,9 +112,49 @@ export default {
 
 <style lang="sass">
 
+.logo
+  width: 300px   
+.input-container
+  position: relative
+  input
+    padding-left: 30px
+    background: none
+    border: none
+    height: 50px
+    font-size: 20px
+    font-size: 1.429rem
+    line-height: 1.1
+    letter-spacing: 60px
+    width: 350px
+    color: white
+    input:focus
+      color: white!important
+      border: none!important
+      outline:none!important
+      box-shadow:none!important 
+  .input-masks
+    display: flex
+    -webkit-box-pack: justify
+    -ms-flex-pack: justify
+    justify-content: space-between
+    -webkit-box-align: end
+    -ms-flex-align: end
+    align-items: flex-end
+    bottom: 8px
+    .mask
+      height: 2px
+      width: 43px
+      background-color: #c8c8c8
+      border-radius: 3px
+
+
+
+
 .intro
+  background-size: cover
   justify-content: center
   align-items: center
+  flex-direction: column
   h2
     margin-top: 15px
 
