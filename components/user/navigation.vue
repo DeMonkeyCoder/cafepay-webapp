@@ -18,7 +18,7 @@
     </div>
 
     <div @click="triggerChangeTab('scan')" class="nav-tab center-align" :class="{'is-active': tabName == 'scan'}">
-      <img :style="{'op'}" src='@/assets/img/shape/icons/qr-code-color.png' alt="">
+      <img v-if="tabName == 'scan'" src='@/assets/img/shape/icons/qr-code-color.png' alt="">
       <img v-else src='@/assets/img/shape/icons/qr-code.png' alt="">
       <p>اسکن</p>
     </div>
