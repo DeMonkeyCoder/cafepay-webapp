@@ -67,7 +67,7 @@ export default {
   },
   methods: {
     sendCode () {
-    this.$axios.post('https://cafepay.cloud/api/v1/send-code/',{ 
+    this.$axios.post('https://cafepay.cloud/api/v1/user-profile/send-code/',{ 
         phone_number: this.phone_number
       }).then(res =>{
         console.log(res)
@@ -87,7 +87,7 @@ export default {
     },
     checkCode (){
       
-      this.$axios.post('https://cafepay.cloud/api/v1/verify-phone/',{
+      this.$axios.post('/api/v1/verify-phone/',{
         'phone_number': this.phone_number,
         'code': this.user_code 
       }).then(res =>{

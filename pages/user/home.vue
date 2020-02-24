@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div dir="rtl">
     <component :is="dynamicComponent"></component>
     <navigation @changeTab="changeTab" />
   </div>
@@ -27,6 +27,11 @@
         this.dynamicComponent = componentName
       },
     },
+    mounted(){
+      var w = window.innerWidth;
+      console.log('w',w);
+      
+    }
   }
 </script>
 

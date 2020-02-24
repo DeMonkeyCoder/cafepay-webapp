@@ -1,15 +1,10 @@
 <template>
   <div class="navigation-container">
    
-
-    <div @click="triggerChangeTab('profile')" class="nav-tab profile center-align" :class="{'is-active': tabName == 'profile'}">
-      <img src='@/assets/img/shape/icons/user.png' alt="">
-      <p>پروفایل</p>
-    </div>
-
-    <div @click="triggerChangeTab('cp-table')" class="nav-tab chair center-align" :class="{'is-active': tabName == 'cp-table'}">
-      <img class="" src='@/assets/img/shape/icons/chair.png' alt="">
-      <p>میز سفارش</p>
+    <div @click="triggerChangeTab('scan')" class="nav-tab center-align" :class="{'is-active': tabName == 'scan'}">
+      <img v-if="tabName == 'scan'" src='@/assets/img/shape/icons/qr-code-color.png' alt="">
+      <img v-else src='@/assets/img/shape/icons/qr-code.png' alt="">
+      <p>اسکن</p>
     </div>
 
     <div @click="triggerChangeTab('search')" class="nav-tab center-align" :class="{'is-active': tabName == 'search'}">
@@ -17,11 +12,16 @@
       <p>جست‌وجو</p>
     </div>
 
-    <div @click="triggerChangeTab('scan')" class="nav-tab center-align" :class="{'is-active': tabName == 'scan'}">
-      <img v-if="tabName == 'scan'" src='@/assets/img/shape/icons/qr-code-color.png' alt="">
-      <img v-else src='@/assets/img/shape/icons/qr-code.png' alt="">
-      <p>اسکن</p>
+    <div @click="triggerChangeTab('cp-table')" class="nav-tab chair center-align" :class="{'is-active': tabName == 'cp-table'}">
+      <img class="" src='@/assets/img/shape/icons/chair.png' alt="">
+      <p>میز سفارش</p>
     </div>
+
+    <div @click="triggerChangeTab('profile')" class="nav-tab profile center-align" :class="{'is-active': tabName == 'profile'}">
+      <img src='@/assets/img/shape/icons/user.png' alt="">
+      <p>پروفایل</p>
+    </div>
+
   </div>
 </template>
 
@@ -71,7 +71,6 @@
       bottom: 5px
     img
       width: 31px
-      opacity: 0.0
 
   .is-active
     p
