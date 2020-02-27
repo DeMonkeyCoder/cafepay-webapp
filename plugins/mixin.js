@@ -4,6 +4,9 @@ Vue.mixin({
     computed: {
         cloading (){
             return this.$store.state.loading
+        },
+        activeCafeFlag(){
+          return this.$store.state.activeCafeFlag
         }
     },
     methods: {

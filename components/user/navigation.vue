@@ -1,8 +1,8 @@
 <template>
   <div class="navigation-container">
    
-    <div @click="triggerChangeTab('scan')" class="nav-tab center-align" :class="{'is-active': tabName == 'scan'}">
-      <img v-if="tabName == 'scan'" src='@/assets/img/shape/icons/qr-code-color.png' alt="">
+    <div @click="triggerChangeTab((activeCafeFlag) ? 'currentCafe' : 'scan')" class="nav-tab center-align" :class="{'is-active': tabName == 'scan'}">
+      <img v-if="tabName == 'scan' || tabName == 'currentCafe'" src='@/assets/img/shape/icons/qr-code-color.png' alt="">
       <img v-else src='@/assets/img/shape/icons/qr-code.png' alt="">
       <p>اسکن</p>
     </div>
@@ -29,8 +29,7 @@
   export default {
     data() {
       return {
-        sdas: 'value',
-        tabName: 'scan'
+        tabName: 'scan',
       }
     },
     methods: {

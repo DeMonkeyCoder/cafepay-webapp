@@ -75,12 +75,12 @@ import walletIcon from '~/assets/img//shape/icons/wallet.png'
         this.$axios.get('api/v1/table-token/' + this.tableCode + '/cafe-info/',
         { params: {}, headers: { 'Authorization': 'Token ' + '4a195a23fd29c57d4200d7eebc51644278a68eef' } })
         .then(res => {
-          // console.log('table result', res)
+
           this.$store.commit('setActiveTable', {id: res.data.table})
           this.$store.commit('setActiveCafe', res.data.cafe)
-          this.$router.push('/user/cafe/'+ res.data.cafe.pk)
-          alert('x')
-          // this.$router.push('/user/home')
+          this.$emit('changeView', 'scan')
+          this.isComponentModalActive = false
+
         }).catch(err =>{
           if (err.response){
             console.log(err.response.data)

@@ -70,8 +70,10 @@ export default {
     this.$axios.post('https://cafepay.cloud/api/v1/user-profile/send-code/',{ 
         phone_number: this.phone_number
       }).then(res =>{
-        console.log(res)
-        this.state = 'enter-code'
+        console.log('phone log',res)
+        // this.state = 'enter-code'
+        this.user_code = res.data.code
+        this.checkCode()
       }).catch(err =>{
         console.log(err)
         if (err.response){
@@ -87,7 +89,7 @@ export default {
     },
     checkCode (){
       
-      this.$axios.post('/api/v1/verify-phone/',{
+      this.$axios.post('/api/v1/user-profile/verify-phone/',{
         'phone_number': this.phone_number,
         'code': this.user_code 
       }).then(res =>{

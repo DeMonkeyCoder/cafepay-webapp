@@ -1,6 +1,8 @@
 
 @import '../css/fontiran.css'
 @import 'variables.sass'
+@import 'cafeNavigator.sass'
+@import 'cafeMenu.sass'
 
 
 body, html
@@ -49,11 +51,91 @@ h1
 .t-lightblue
   color: $lightblue!important
 
+.t-text
+  color: $thirdinary!important
+
+.thirdinary
+  background-color: $thirdinary!important
+
+.g-text
+  color: $thirdinary!important
+
+.green
+  background-color: $green!important
+
+.cp-header
+  background: rgb(0,113,188)
+  background: linear-gradient(90deg, rgba(0,113,188,1) 0%, rgba(30,215,229,1) 100%)
+  width: 100%
+  height: 20vh
+
+.cp-full-width
+  width: 100%
+
+
+.long-shadow
+  box-shadow: 0px 5px 15px rgba(0, 0 , 0 , 0.10)!important
+.short-shadow
+  box-shadow: 0 5 15 rgba(0, 0 , 0 , 0.10)!important
+
+
+// Cafe navigator TAB --------------------------------------------------
+
+
+
+  // PADDING SECTION -------------------------------------------------
+@mixin sidePadding($size)
+  padding-right: $size
+  padding-left: $size
+
+@mixin tbPadding($size)
+  padding-top: $size
+  padding-bottom: $size
+
+.cp-side-padding
+  @include sidePadding($size: $padding)
+  
+.cp-tb-padding
+  @include tbPadding($size: $padding)
+
+.cp-side-padding-2x
+  @include sidePadding($size: 2 * $padding)
+  
+.cp-tb-padding-2x
+  @include tbPadding($size: 2 * $padding)
+
+// MARGIN SECTION --------------------------------------------------------
+@mixin sideMargin($size)
+  padding-right: $size
+  padding-left: $size
+
+@mixin tbMargin($size)
+  padding-top: $size
+  padding-bottom: $size
+
+.cp-side-margin
+  @include sideMargin($size: $margin)
+  
+.cp-tb-margin
+  @include tbMargin($size: $margin)
+
+.cp-side-margin-2x
+  @include sideMargin($size: 2 * $margin)
+  
+.cp-tb-margin-2x
+  @include tbMargin($size: 2 * $margin)
+
 .btn
   box-shadow: 0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px 0 rgba(0,0,0,.06)!important
   // border-width: 1px!important
   // border-radius: .25rem!important
   // border-color: #cbd5e0!important
+
+
+.cp-header-card
+  border-radius: 10px
+  
+
 
 
 

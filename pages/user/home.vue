@@ -1,6 +1,6 @@
 <template>
   <div dir="rtl">
-    <component :is="dynamicComponent"></component>
+    <keep-alive><component @changeView="changeViewTrigger" :is="dynamicComponent"></component></keep-alive>
     <navigation @changeTab="changeTab" />
   </div>
 </template>
@@ -10,22 +10,23 @@
   import scan from '~/components/user/scan.vue'
   import cpTable from '~/components/user/table.vue'
   import search from '~/components/user/search.vue'
+  import currentCafe from '~/components/cafe/currentCafe.vue'
   export default {
-    components: {navigation, scan, cpTable, search},
+    components: {navigation, scan, cpTable, search, currentCafe},
     head(){
-      meta: [
-        { name: 'viewport', content: 'width=device-width, initial-scale=1' }
-      ]
     },
     data() {
       return {
-        dynamicComponent: 'scan'
+        dynamicComponent: (this.activeCafeFlag) ? 'currentCafe' :'scan'
       }
     },
     methods: {
       changeTab(componentName) {
         this.dynamicComponent = componentName
       },
+      changeViewTrigger(command){
+         this.dynamicComponent = 'currentCafe'
+      }
     },
     mounted(){
       var w = window.innerWidth;
