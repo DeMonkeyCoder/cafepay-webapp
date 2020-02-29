@@ -6,9 +6,30 @@
 
 
 body, html
-  background-color: #F3F3F3!important
-  
+  // background-color: #F3F3F3!important
+  background-color: #f0f0f0!important
+.navigation-container
+  box-shadow: $navbarBoxShadow
 
+.font-ul
+ font-weight: 200!important
+ font-family: "IRANSans"
+
+.font-l
+  font-weight: 300!important
+  font-family: "IRANSans"
+
+.font-reg
+  font-weight: 400!important
+  font-family: "IRANSans"
+
+.font-norm
+  font-weight: 500!important
+  font-family: "IRANSans"
+
+.font-bold
+    font-weight: bold!important
+    font-family: "IRANSans"
 
 
 h1 
@@ -78,6 +99,12 @@ h1
 .short-shadow
   box-shadow: 0 5 15 rgba(0, 0 , 0 , 0.10)!important
 
+.normal-radius
+  border-radius: 5px
+
+.header-radius
+  border-radius: 10px
+
 
 // Cafe navigator TAB --------------------------------------------------
 
@@ -106,12 +133,12 @@ h1
 
 // MARGIN SECTION --------------------------------------------------------
 @mixin sideMargin($size)
-  padding-right: $size
-  padding-left: $size
+  margin-right: $size
+  margin-left: $size
 
 @mixin tbMargin($size)
-  padding-top: $size
-  padding-bottom: $size
+  margin-top: $size
+  margin-bottom: $size
 
 .cp-side-margin
   @include sideMargin($size: $margin)

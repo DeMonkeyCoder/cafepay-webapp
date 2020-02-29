@@ -3,6 +3,7 @@
   direction: rtl
   margin-left: calc(-1 * $margin)
   .category-item
+    font-size: 14px
     display: inline-block
     margin: 0 5px
     background-color: grey
@@ -11,4 +12,115 @@
     color: white
   .category-item.active-category
     background-color: $secondary
+
+.product-list
+  .product-item
+    height: 15vh
+    display: flex
+    .img-section
+      flex: 6
+      img
+        height: 100%
+        width: 100%
+        object-fit: cover
+        border-radius: 50px 5px 5px 50px
+    .content-section
+      position: relative
+      text-align: right
+      flex: 11
+      .product-title
+        font-size: 15px
+
+      .product-description
+        font-size: 11px
+        line-height: 13px
+
+      .product-price
+        position: absolute
+        right: $padding
+        bottom: $padding
+        font-size: 15px
+        .toman
+          color: $grey
+          font-size: 11px
+          position: relative
+          right: 2px
+
+    .add-or-remove
+      padding-top: $padding*1.1
+      text-align: center
+      padding-left: $padding
+      flex: 1
+      display: flex
+      flex-direction: column
+      .product-add, .product-remove
+        .aor-shape
+          padding-top: 2px
+          font-size: 18px
+          display: flex
+          justify-content: center
+          align-items: center
+          height: 22px
+          width: 22px
+          background-color: $thirdinary
+          border-radius: 15px
+          color: white
+      .product-remove
+        .aor-shape
+          font-size: 26px
+      span
+        flex: 1
+
+#selected-products-preview
+  position: fixed
+  display: flex
+  bottom: 0
+  left: 0
+  right: 0
+  background-color: white
+  height: 46px
+  transition-timing-function: ease-in
+  transition: 0.4s
+  background-color: $blueShade
+  display: flex
+  .submit-order
+    flex: 3
+    color: white
+    display: flex
+    justify-content: center
+    align-items: center
+
+  .sp-info
+    flex: 4
+    display: flex
+    justify-content: flex-end
+    align-items: center
+    .total-count, .total-price
+      display: inline-block
+    .total-price
+      font-size: 18px
+      .toman
+        font-size: 14px
+        color: $grey
+        position: relative
+        right: 3px
+    .total-count
+      display: flex
+      width: 30px
+      height: 30px
+      font-size: 18px
+      justify-content: center
+      align-items: center
+      color: white
+      border-radius: 15px
+      
+
+.selected-products-preview-is-shown
+  box-shadow: 0px -1px 0px rgba(0,0 ,0 ,0.05)
+  bottom: 105px!important
+  transition: 0.3s!important
+  transition-timing-function: ease-out!important
+  transform: translateY(46px)!important
+  opacity: 1!important
+
 

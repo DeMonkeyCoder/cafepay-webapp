@@ -1,7 +1,8 @@
 <template>
   <div class="navigation-container">
    
-    <div @click="triggerChangeTab((activeCafeFlag) ? 'currentCafe' : 'scan')" class="nav-tab center-align" :class="{'is-active': tabName == 'scan'}">
+    <div @click="triggerChangeTab((activeCafeFlag) ? 'currentCafe' : 'scan')" class="nav-tab center-align" 
+    :class="{'is-active': tabName == 'scan' || tabName == 'currentCafe'}">
       <img v-if="tabName == 'scan' || tabName == 'currentCafe'" src='@/assets/img/shape/icons/qr-code-color.png' alt="">
       <img v-else src='@/assets/img/shape/icons/qr-code.png' alt="">
       <p>اسکن</p>

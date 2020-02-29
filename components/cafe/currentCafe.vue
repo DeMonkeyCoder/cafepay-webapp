@@ -3,7 +3,6 @@
     <div class="cafe-header cp-header"></div>
     <cafe-navigator :cafeId="cafe.pk" class="cp-full-width" @changeTabTrigger="changeTab" />
     <!-- <keep-alive><component :cafeId="cafe.id" @changeView="changeViewTrigger" :is="dynamicComponent"></component></keep-alive> -->
-    
   </div>
 </template>
 
