@@ -20,7 +20,7 @@
 
       <div v-for="(prod, index) in activeProducts" :key="prod.pk" class="normal-radius has-background-white
          cp-tb-margin product-item">
-        <Skeleton>
+        <!-- <Skeleton> -->
         <div class="add-or-remove">
           <span class="product-add" @click="countChange(index, 1)" ><div class="aor-shape">+</div></span>
           <span class="product-count">{{prod.count}}</span>
@@ -36,7 +36,7 @@
         <div class="img-section">
           <img src='@/assets/img/product-sample-1.jpg' alt="">
         </div>
-        </Skeleton>
+        <!-- </Skeleton> -->
       </div>
 
 
@@ -45,9 +45,9 @@
 </template>
 
 <script>
-import Skeleton from 'vue-loading-skeleton';
+// import Skeleton from 'vue-loading-skeleton';
   export default {
-    components: {Skeleton},
+    // components: {Skeleton},
     props: {
       menu: {
         default: 3
