@@ -79,8 +79,10 @@
         this.$forceUpdate();
         this.totalCount = this.menu.reduce((sum, activeCat) => {
           let innerSum = activeCat.products.reduce( (innerSum, prod) => prod.count + innerSum,  0)
+          // alert(innerSum)
           return innerSum + sum
         }, 0)
+          // alert(this.totalCount)
         this.totalPrice = this.menu.reduce((sum, activeCat) => {
           let innerSum = activeCat.products.reduce( (innerSum, prod) => prod.price * prod.count + innerSum,  0)
           return innerSum + sum

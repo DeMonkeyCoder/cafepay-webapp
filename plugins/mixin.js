@@ -7,6 +7,9 @@ Vue.mixin({
         },
         activeCafeFlag(){
           return this.$store.state.activeCafeFlag
+        },
+        token() {
+          return this.$store.state.token
         }
     },
     methods: {

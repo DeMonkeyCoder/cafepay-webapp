@@ -31,8 +31,8 @@
 
     <div class="landing white">
       <img class="user-img" :src="userImg" alt="">
-      <h1 class="t-large">شیرین محبی</h1>
-      <h4>اعتبار:‌<span>۱۴,۰۰۰ تومان</span></h4>
+      <h1 class="t-large">{{user.full_name}}</h1>
+      <h4>اعتبار:‌<span>{{user.wallet_amount | currency}} تومان</span></h4>
       <div class="columns shortcut-btns is-mobile is-3-mobile">
         <div class="column ">
            <div class="has-background-white">
@@ -71,22 +71,48 @@ import walletIcon from '~/assets/img//shape/icons/wallet.png'
         this.isComponentModalActive = true
       },
       sendCode(){
- 
-        this.$axios.get('api/v1/table-token/' + this.tableCode + '/cafe-info/',
-        { params: {}, headers: { 'Authorization': 'Token ' + '4a195a23fd29c57d4200d7eebc51644278a68eef' } })
-        .then(res => {
 
-          this.$store.commit('setActiveTable', {id: res.data.table})
-          this.$store.commit('setActiveCafe', res.data.cafe)
-          this.$emit('changeView', 'scan')
-          this.isComponentModalActive = false
+        let Cafe = {
+          name: 'کافه هدایت',
+          avatar: 'https://homepages.cae.wisc.edu/~ece533/images/baboon.png',
+          rate: 4.4,
+          review: {
 
-        }).catch(err =>{
-          if (err.response){
-            console.log(err.response.data)
+          },
+          info: {
+
+          },
+          posts: {
+
+          },
+          products_by_category: {
+
           }
-        })
+        }
+
+        this.$store.commit('cafe/set', Cafe)
+        
+ 
+        // this.$axios.get('api/v1/table-token/' + this.tableCode + '/cafe-info/',
+        // { params: {}, headers: { 'Authorization': 'Token ' + this.token } })
+        // .then(res => {
+
+        //   this.$store.commit('setActiveTable', {id: res.data.table})
+        //   this.$store.commit('setActiveCafe', res.data.cafe)
+        //   this.$emit('changeView', 'scan')
+        //   this.isComponentModalActive = false
+
+        // }).catch(err =>{
+        //   if (err.response){
+        //     console.log(err.response.data)
+        //   }
+        // })
       }
+    },
+    computed: {
+      user() {
+        return this.$store.state.user.user 
+      },
     },
   }
 </script>

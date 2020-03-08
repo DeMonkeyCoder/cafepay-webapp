@@ -3,12 +3,12 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-
 export const state = () => ({
     loading: false,
     activeCafe: {},
     activeTable: {},
-    activeCafeFlag: false
+    activeCafeFlag: false,
+    token: null
 })
   
 export const mutations = {
@@ -19,6 +19,14 @@ export const mutations = {
     },
     setActiveTable(state, table){
       state.activeTable = table
+    },
+    setToken(state, token){
+      state.token = token
+      localStorage.setItem('token', token)
+    },
+    clearToken(state){
+      localStorage.removeItem('token')
+      state.token = null
     }
 }
 

@@ -38,7 +38,8 @@ export default {
   plugins: [
     '~/plugins/axios',
     '~/plugins/mixin',
-    '~/plugins/vue-currency'
+    '~/plugins/vue-currency',
+    '~/plugins/onReload'
   ],
   /*
   ** Nuxt.js modules

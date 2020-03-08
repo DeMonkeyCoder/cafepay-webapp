@@ -9,7 +9,8 @@
         <h1 class="t-xxlarge">کافه‌<span class="t-xxlarge t-lightblue">پِی</span></h1>
         <h2 class="">انتخاب کن، سفارش بده و به راحتی پرداخت کن</h2>
         <div class="action flex buttons are-medium">
-          <button class="btn is-danger button  is-fullwidth" @click="state = 'login'">ورود - ثبت نام</button>
+          <!-- @click="state = 'login'" for ورود - ثبت نام -->
+          <button class="btn is-danger button  is-fullwidth" @click="entertoApp">ورود - ثبت نام</button>
           <button class="btn is-info button is-inverted  is-fullwidth" to="aboutus">درباره کافه‌پِی</button>
         </div>
       </div>
@@ -66,6 +67,21 @@ export default {
       }
   },
   methods: {
+    entertoApp(){
+      let userData = {
+        first_name: 'علی',
+        last_name: 'بیگی',
+        phone_number: '09170540081',
+        avatar: 'https://homepages.cae.wisc.edu/~ece533/images/girl.png',
+        wallet: {
+          amount: 78000,
+          transactions: []
+        }
+
+      }
+      this.$store.commit('user/set',userData)
+      this.$router.push('/user/home')
+    },
     sendCode () {
     this.$axios.post('https://cafepay.cloud/api/v1/user-profile/send-code/',{ 
         phone_number: this.phone_number
@@ -94,7 +110,7 @@ export default {
         'code': this.user_code 
       }).then(res =>{
         console.log(res)
-        localStorage.setItem('token', res.token)
+        this.$store.commit('setToken', res.data.token)
         this.$router.push('/user/home')
       }).catch(err =>{
         if (err.response){
