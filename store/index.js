@@ -8,14 +8,14 @@ export const state = () => ({
     activeCafe: {},
     activeTable: {},
     activeCafeFlag: false,
-    token: null
+    token: null,
+    currentMainPage: (state.activeCafeFlag) ? 'currentCafe' : 'scan'
 })
   
 export const mutations = {
     toggleLoading (state, flag) {state.loading = flag},
-    setActiveCafe(state, cafe) {
-      state.activeCafe = cafe
-      state.activeCafeFlag = true
+    setActiveCafe(state, flag) {
+      state.activeCafeFlag = flag
     },
     setActiveTable(state, table){
       state.activeTable = table
@@ -27,6 +27,9 @@ export const mutations = {
     clearToken(state){
       localStorage.removeItem('token')
       state.token = null
+    },
+    changeNavigation(state, PageName) {
+      state.currentMainPage = PageName
     }
 }
 

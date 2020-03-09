@@ -2,23 +2,24 @@
   <div class="navigation-container">
    
     <div @click="triggerChangeTab((activeCafeFlag) ? 'currentCafe' : 'scan')" class="nav-tab center-align" 
-    :class="{'is-active': tabName == 'scan' || tabName == 'currentCafe'}">
-      <img v-if="tabName == 'scan' || tabName == 'currentCafe'" src='@/assets/img/shape/icons/qr-code-color.png' alt="">
+    :class="{'is-active': currentMainPage == 'scan' || currentMainPage == 'currentCafe'}">
+      <img v-if="currentMainPage == 'scan' || currentMainPage == 'currentCafe'" src='@/assets/img/shape/icons/qr-code-color.png' alt="">
       <img v-else src='@/assets/img/shape/icons/qr-code.png' alt="">
       <p>اسکن</p>
     </div>
 
-    <div @click="triggerChangeTab('search')" class="nav-tab center-align" :class="{'is-active': tabName == 'search'}">
+    <div @click="triggerChangeTab('search')" class="nav-tab center-align" :class="{'is-active': currentMainPage == 'search'}">
       <img src='@/assets/img/shape/icons/shop.png' alt="">
       <p>جست‌وجو</p>
     </div>
 
-    <div @click="triggerChangeTab('cp-table')" class="nav-tab chair center-align" :class="{'is-active': tabName == 'cp-table'}">
-      <img class="" src='@/assets/img/shape/icons/chair.png' alt="">
+    <div @click="triggerChangeTab('cp-table')" class="nav-tab chair center-align" :class="{'is-active': currentMainPage == 'cp-table'}">
+      <img v-if="currentMainPage == 'cp-table'" class="" src='@/assets/img/shape/icons/chair-color.png' alt="">
+      <img v-else src='@/assets/img/shape/icons/chair.png' alt="">
       <p>میز سفارش</p>
     </div>
 
-    <div @click="triggerChangeTab('profile')" class="nav-tab profile center-align" :class="{'is-active': tabName == 'profile'}">
+    <div @click="triggerChangeTab('profile')" class="nav-tab profile center-align" :class="{'is-active': currentMainPage == 'profile'}">
       <img src='@/assets/img/shape/icons/user.png' alt="">
       <p>پروفایل</p>
     </div>
@@ -30,14 +31,19 @@
   export default {
     data() {
       return {
-        tabName: 'scan',
       }
     },
     methods: {
       triggerChangeTab(componentName) {
         this.tabName = componentName
-        this.$emit('changeTab',componentName)
+        this.$store.commit('changeNavigation', componentName)
+        // this.$emit('changeTab',componentName)
       },
+    },
+    computed: {
+      currentMainPage() {
+        return this.$store.state.currentMainPage
+      }
     },
     mounted(){
       // document.querySelectorAll('.nav-tab').addEventListener('click', this.triggerChangeTab())

@@ -2,46 +2,31 @@
 
 
 
-export const category = class Category {
+export const Category = class Category {
   constructor(rawData = {}) {
-    this.id = rawData.id
-    this.title = rawData.title
-    this.poster_path = rawData.poster_path
-  }
-
-  get posterUrl() {
-    return async () => {
-      let cfg = store.getters['config/images']
-      if (!cfg) {
-        cfg = await store.dispatch('config/get')
-      }
-      if (this.poster_path && cfg.base_url) {
-        return cfg.base_url + cfg.poster_sizes[0] + this.poster_path
-      } else {
-        return ''
-      }
+    this.name = rawData.name
+    this.products = []
+    for (const product of rawData.products) {
+      this.products.push(new Product(product))
     }
   }
+
+
 }
 
-export const summery = class Movie {
+
+
+export const Product = class Product {
   constructor(rawData = {}) {
-    this.id = rawData.id
-    this.title = rawData.title
-    this.poster_path = rawData.poster_path
+    this.name = rawData.name
+    this.avatar = rawData.avatar
+    this.description = rawData.description
+    this.price = rawData.price
+    this.rate = rawData.rate
+    this.original_price = rawData.original_price
+    this.discount = rawData.discount,
+    this.count = 0
   }
 
-  get posterUrl() {
-    return async () => {
-      let cfg = store.getters['config/images']
-      if (!cfg) {
-        cfg = await store.dispatch('config/get')
-      }
-      if (this.poster_path && cfg.base_url) {
-        return cfg.base_url + cfg.poster_sizes[0] + this.poster_path
-      } else {
-        return ''
-      }
-    }
-  }
+
 }

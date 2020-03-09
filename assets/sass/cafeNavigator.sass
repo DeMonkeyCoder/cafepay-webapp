@@ -19,3 +19,32 @@
 .tab-content
   padding: 0!important
   // margin: $margin -$margin
+
+.cafe-header
+  display: flex
+  .info
+    flex: 1
+    img
+      width: 75px
+      height: 75px
+      border-radius: 50px
+    .cafe-name, .cafe-rate
+      position: absolute
+      display: inline-block
+    .cafe-name
+      font-size: 16px
+      font-weight: 500
+      color: white
+    .cafe-rate
+      top: $margin * 3
+
+    .go-back
+      flex: 1
+
+
+@media screen and (max-width: 768px)
+  .modal .animation-content 
+    width: 90%
+
+
+    

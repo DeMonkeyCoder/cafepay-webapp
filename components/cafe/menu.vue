@@ -2,7 +2,7 @@
   <div>
 
     <div id="selected-products-preview">
-      <div dir="rtl" class="submit-order green">ثبت در میز سفارش <b-icon icon="chevron-left" type="is-light">
+      <div @click="sumbitOnTable" dir="rtl" class="submit-order green">ثبت در میز سفارش <b-icon icon="chevron-left" type="is-light">
             </b-icon></div>
       <div class="sp-info cp-side-padding">
         <div dir="rtl" class="total-price cp-side-margin font-norm">{{totalPrice | currency}}<span class="toman">تومان</span></div>
@@ -12,13 +12,13 @@
 
     <div class="category-list cp-tb-margin">
       <div class="category-item" v-for="(cat, index) in menu" :class="{'active-category':  (index == activeCategory)}" 
-       @click="changeActiveCategory(index)"  :key="cat.category.pk">{{cat.category.title}}</div>
+       @click="changeActiveCategory(index)"  :key="cat.name">{{cat.name}}</div>
     </div>
 
     <div class="product-list">
 
 
-      <div v-for="(prod, index) in activeProducts" :key="prod.pk" class="normal-radius has-background-white
+      <div v-for="(prod, index) in activeProducts" :key="prod.name" class="normal-radius has-background-white
          cp-tb-margin product-item">
         <!-- <Skeleton> -->
         <div class="add-or-remove">
@@ -34,7 +34,7 @@
         </div>
 
         <div class="img-section">
-          <img src='@/assets/img/product-sample-1.jpg' alt="">
+          <img :src='prod.avatar' alt="">
         </div>
         <!-- </Skeleton> -->
       </div>
@@ -60,10 +60,24 @@
         count: 0,
         activeProducts: [],
         totalCount: 0,
-        totalPrice: 0
+        totalPrice: 0,
+        orderList: []
       }
     },
     methods: {
+      sumbitOnTable(){
+        let orders = []
+        this.menu.forEach( cat => {
+          cat.products.forEach( prod => {
+            if (prod.count > 0) orders.push(prod)
+          })
+        })
+        let OrderInfo = {
+          totalPrice: this.totalPrice, orders
+        }
+        this.$store.commit('table/setOrder', OrderInfo)
+        this.$store.commit('changeNavigation', 'cp-table')
+      },
       changeActiveCategory(index) {
         this.menu[index].products.forEach(x => {
           if(x.count == undefined) x.count = 0
@@ -73,18 +87,21 @@
       },
       countChange(index, count){
         if (this.activeProducts[index].count == 0 && count == -1) return
-        else this.activeProducts[index].count += count 
+        else {
+          // this.activeProducts[index].count += count
+          this.$store.commit('cafe/changeCount', {productIndex: index, categoryIndex: this.activeCategory, count})
+        } 
         // changing property of one item of array dosent trigger v-for update
         // it also dosent effect the compution of computed property therefore we need a mix of watch and inial array + FORCEUPDATE
         this.$forceUpdate();
-        this.totalCount = this.menu.reduce((sum, activeCat) => {
-          let innerSum = activeCat.products.reduce( (innerSum, prod) => prod.count + innerSum,  0)
+        this.totalCount = this.menu.reduce((sum, cat) => {
+          let innerSum = cat.products.reduce( (innerSum, prod) => prod.count + innerSum,  0)
           // alert(innerSum)
           return innerSum + sum
         }, 0)
           // alert(this.totalCount)
-        this.totalPrice = this.menu.reduce((sum, activeCat) => {
-          let innerSum = activeCat.products.reduce( (innerSum, prod) => prod.price * prod.count + innerSum,  0)
+        this.totalPrice = this.menu.reduce((sum, cat) => {
+          let innerSum = cat.products.reduce( (innerSum, prod) => prod.price * prod.count + innerSum,  0)
           return innerSum + sum
         }, 0)
         
@@ -106,9 +123,6 @@
     },
     mounted(){
       if(this.menu.length > 0) {
-        this.menu[this.activeCategory].products.forEach(x => {
-          x.count = 0
-        });
         this.activeProducts = this.menu[this.activeCategory].products
       }
     },
@@ -122,10 +136,7 @@
         }
       },
       menu(newValue, oldValue) {
-        this.menu[this.activeCategory].products.forEach(x => {
-          if(x.count == undefined) x.count = 0
-        });
-        this.activeProducts =  this.menu[this.activeCategory].products
+        if (newValue.length > 0)this.activeProducts =  this.menu[this.activeCategory].products
       },
     },
   }

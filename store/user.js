@@ -4,7 +4,19 @@
 // 3. number that can be Changed
 import User from '../middleware/models/user'
 export const state = () => ({
-  user: {}
+  user: {
+    first_name: 'علی',
+    last_name: 'بیگی',
+    full_name: 'علی علی بیگی',
+    phone_number: '09170540081',
+    avatar: 'https://homepages.cae.wisc.edu/~ece533/images/girl.png',
+    wallet: {
+      amount: 78000,
+      transactions: []
+    },
+    wallet_amount: 78000
+
+  }
 })
 
 export const getters = {

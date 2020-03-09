@@ -34,27 +34,32 @@
     data() {
       return {
         ActiveTab: 3,
-        menu: []
+        // menu: []
       }
     },
     methods: {
-      getMenu(){
-        this.$axios.get('api/v1/cafe/' + this.cafeId + '/category-product-menu/active/',
-        { params: {}, headers: { 'Authorization': 'Token ' + '4a195a23fd29c57d4200d7eebc51644278a68eef' } })
-        .then(res => {
-          console.log('cafe menu', res.data);
-          this.menu = res.data.active_menu
+      // getMenu(){
+      //   this.$axios.get('api/v1/cafe/' + this.cafeId + '/category-product-menu/active/',
+      //   { params: {}, headers: { 'Authorization': 'Token ' + '4a195a23fd29c57d4200d7eebc51644278a68eef' } })
+      //   .then(res => {
+      //     console.log('cafe menu', res.data);
+      //     this.menu = res.data.active_menu
           
           
-        }).catch(err =>{
-          if (err.response){
-            console.log(err.response.data)
-          }
-        })
-      }
+      //   }).catch(err =>{
+      //     if (err.response){
+      //       console.log(err.response.data)
+      //     }
+      //   })
+      // }
+    },
+    computed: {
+      menu() {
+        return this.$store.state.cafe.categories 
+      },
     },
     mounted(){
-      this.getMenu()
+      // this.getMenu()
       let tabContent = document.getElementsByClassName('tab-content')
       console.log('tag', tabContent)
       for (var i = 0; i < tabContent.length; i++) {
