@@ -5,8 +5,8 @@ Vue.mixin({
         cloading (){
             return this.$store.state.loading
         },
-        activeCafeFlag(){
-          return this.$store.state.activeCafeFlag
+        hasActiveTable(){
+          return this.$store.state.hasActiveTable
         },
         token() {
           return this.$store.state.token

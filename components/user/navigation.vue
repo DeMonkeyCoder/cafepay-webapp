@@ -1,7 +1,7 @@
 <template>
   <div class="navigation-container">
    
-    <div @click="triggerChangeTab((activeCafeFlag) ? 'currentCafe' : 'scan')" class="nav-tab center-align" 
+    <div @click="triggerChangeTab((hasActiveTable) ? 'currentCafe' : 'scan')" class="nav-tab center-align" 
     :class="{'is-active': currentMainPage == 'scan' || currentMainPage == 'currentCafe'}">
       <img v-if="currentMainPage == 'scan' || currentMainPage == 'currentCafe'" src='@/assets/img/shape/icons/qr-code-color.png' alt="">
       <img v-else src='@/assets/img/shape/icons/qr-code.png' alt="">
@@ -58,6 +58,7 @@
   opacity: 1!important
 
 .navigation-container
+  z-index: 105
   position: fixed
   display: flex
   bottom: 0

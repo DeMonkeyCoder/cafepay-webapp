@@ -117,6 +117,16 @@ import walletIcon from '~/assets/img//shape/icons/wallet.png'
                   discount: 0,
                   price: 49000
                 },
+
+                {
+                  rate: 4.1,
+                  name: 'پیتزا مخصوص بزرگ',
+                  description: 'پیتزاست دیگه',
+                  avatar: 'https://media-cdn.tripadvisor.com/media/photo-s/0c/ac/c1/b8/tandoori-chicken-chorizo.jpg',
+                  original_price: 65000,
+                  discount: 0,
+                  price: 65000
+                },
          
               ]
             },
@@ -163,10 +173,10 @@ import walletIcon from '~/assets/img//shape/icons/wallet.png'
             
           
         }
-
+        // u need to set the table too, for api link
         this.$store.commit('cafe/set', Cafe)
         
- 
+
         // this.$axios.get('api/v1/table-token/' + this.tableCode + '/cafe-info/',
         // { params: {}, headers: { 'Authorization': 'Token ' + this.token } })
         // .then(res => {

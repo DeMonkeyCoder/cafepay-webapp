@@ -15,6 +15,10 @@
         height: 39px
         span
           font-size: 12px
+    .is-active
+      a
+        background-color: $primary!important
+
 
 .tab-content
   padding: 0!important
@@ -37,9 +41,16 @@
       color: white
     .cafe-rate
       top: $margin * 3
+      .mdi
+        &:before 
+          font-size: 18px!important
 
     .go-back
       flex: 1
+  .mdi
+    &:before 
+      font-size: 28px!important
+      
 
 
 @media screen and (max-width: 768px)

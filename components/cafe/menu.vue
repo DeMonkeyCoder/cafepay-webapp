@@ -46,6 +46,7 @@
 
 <script>
 // import Skeleton from 'vue-loading-skeleton';
+import {Order} from '~/middleware/models/cafe.js'
   export default {
     // components: {Skeleton},
     props: {
@@ -69,7 +70,7 @@
         let orders = []
         this.menu.forEach( cat => {
           cat.products.forEach( prod => {
-            if (prod.count > 0) orders.push(prod)
+            if (prod.count > 0) orders.push(new Order(prod))
           })
         })
         let OrderInfo = {
@@ -78,6 +79,8 @@
         this.$store.commit('table/setOrder', OrderInfo)
         this.$store.commit('changeNavigation', 'cp-table')
       },
+      
+
       changeActiveCategory(index) {
         this.menu[index].products.forEach(x => {
           if(x.count == undefined) x.count = 0
@@ -85,6 +88,8 @@
         this.activeProducts = this.menu[index].products
         this.activeCategory = index
       },
+
+
       countChange(index, count){
         if (this.activeProducts[index].count == 0 && count == -1) return
         else {
@@ -132,11 +137,19 @@
           document.getElementById('selected-products-preview').classList.add("selected-products-preview-is-shown")
         }
         else {
+          this.$store.commit('table/setOrder', {orders: [], totalPrice: 0})
           document.getElementById('selected-products-preview').classList.remove('selected-products-preview-is-shown')
         }
       },
       menu(newValue, oldValue) {
-        if (newValue.length > 0)this.activeProducts =  this.menu[this.activeCategory].products
+        if (newValue.length > 0){
+          this.totalCount = this.menu.reduce((sum, cat) => {
+            let innerSum = cat.products.reduce( (innerSum, prod) => prod.count + innerSum,  0)
+            // alert(innerSum)
+            return innerSum + sum
+          }, 0)
+          this.activeProducts =  this.menu[this.activeCategory].products
+        }
       },
     },
   }

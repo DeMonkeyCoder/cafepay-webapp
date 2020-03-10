@@ -28,7 +28,7 @@
         </b-rate>
       </div>
       <div @click="isCancelTableModalActive = true" class="go-back cp-tb-padding">
-                    <b-icon 
+                    <b-icon class="close-icon"
                 icon="close"
                 size="is-medium"
                 type="is-light">
@@ -86,8 +86,6 @@
 </script>
 
 <style scoped lang="sass">
-
- 
 
 
 </style>

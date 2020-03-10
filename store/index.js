@@ -7,15 +7,15 @@ export const state = () => ({
     loading: false,
     activeCafe: {},
     activeTable: {},
-    activeCafeFlag: false,
+    hasActiveTable: false,
     token: null,
-    currentMainPage: (state.activeCafeFlag) ? 'currentCafe' : 'scan'
+    currentMainPage: (state.hasActiveTable) ? 'currentCafe' : 'scan'
 })
   
 export const mutations = {
     toggleLoading (state, flag) {state.loading = flag},
     setActiveCafe(state, flag) {
-      state.activeCafeFlag = flag
+      state.hasActiveTable = flag
     },
     setActiveTable(state, table){
       state.activeTable = table

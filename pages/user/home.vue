@@ -18,7 +18,7 @@
     },
     data() {
       return {
-        dynamicComponent: (this.activeCafeFlag) ? 'currentCafe' :'scan'
+        dynamicComponent: (this.hasActiveTable) ? 'currentCafe' :'scan'
       }
     },
     methods: {

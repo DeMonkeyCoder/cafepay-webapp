@@ -30,3 +30,18 @@ export const Product = class Product {
 
 
 }
+
+
+export const Order = class Order {
+  constructor(product = {}) {
+    this.name = product.name
+    this.price = product.price
+    this.original_price = product.original_price
+    this.discount = product.discount,
+    this.count = product.count
+    this.paid = (product.paid) ? product.paid : 0
+    this.wish_to_pay = 0
+  }
+
+
+}

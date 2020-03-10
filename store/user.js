@@ -9,7 +9,7 @@ export const state = () => ({
     last_name: 'بیگی',
     full_name: 'علی علی بیگی',
     phone_number: '09170540081',
-    avatar: 'https://homepages.cae.wisc.edu/~ece533/images/girl.png',
+    avatar: 'https://avatars0.githubusercontent.com/u/23187274?s=460&v=4',
     wallet: {
       amount: 78000,
       transactions: []

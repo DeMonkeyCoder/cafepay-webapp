@@ -3,6 +3,7 @@
 @import 'variables.sass'
 @import 'cafeNavigator.sass'
 @import 'cafeMenu.sass'
+@import 'table.sass'
 
 
 body, html
@@ -65,7 +66,12 @@ h1
 .right-align
   text-align: right!important
 
+.p-text
+  color: $primary!important
 
+.primary
+  background-color: $primary!important
+  
 .lightblue
   background-color: $lightblue!important
 
@@ -79,7 +85,7 @@ h1
   background-color: $thirdinary!important
 
 .g-text
-  color: $thirdinary!important
+  color: $green!important
 
 .green
   background-color: $green!important
@@ -111,13 +117,7 @@ h1
 
 
   // PADDING SECTION -------------------------------------------------
-@mixin sidePadding($size)
-  padding-right: $size
-  padding-left: $size
 
-@mixin tbPadding($size)
-  padding-top: $size
-  padding-bottom: $size
 
 .cp-side-padding
   @include sidePadding($size: $padding)
@@ -132,13 +132,7 @@ h1
   @include tbPadding($size: 2 * $padding)
 
 // MARGIN SECTION --------------------------------------------------------
-@mixin sideMargin($size)
-  margin-right: $size
-  margin-left: $size
 
-@mixin tbMargin($size)
-  margin-top: $size
-  margin-bottom: $size
 
 .cp-side-margin
   @include sideMargin($size: $margin)
@@ -161,7 +155,9 @@ h1
 
 .cp-header-card
   border-radius: 10px
-  
+
+.cp-card
+  border-radius: 5px  
 
 
 

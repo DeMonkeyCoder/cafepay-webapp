@@ -1,0 +1,76 @@
+@import 'variables.sass'
+
+.has-active-table
+  padding-bottom: 75px
+.table-header
+  display: flex
+  .info
+    flex: 1
+    img
+      width: 75px
+      height: 75px
+      border-radius: 50px
+    .cafe-name, .cafe-rate
+      position: absolute
+      display: inline-block
+    .cafe-name
+      font-size: 16px
+      font-weight: 500
+      color: white
+    .cafe-rate
+      top: $margin * 3
+
+    .go-back
+      flex: 1
+  .table-number
+    position: absolute
+    display: inline-block
+    top: $margin * 3
+    font-size: 18px
+    color: white
+    direction: ltr
+
+.table-status-bar
+  height: 39px
+  position: relative
+  bottom: 19px
+  display: flex
+  justify-content: center
+  align-items: center
+  .total-payment
+    font-size: 18px
+  .total-cost
+    font-size: 18px
+
+.others
+  @include tbMargin($size: 4 * $margin)
+
+
+.table-person
+
+  .person-title
+    border-radius: 25px
+    display: flex
+    img
+      flex-basis: 46px
+      height: 46px
+      border-radius: 23px
+
+  .person-orders
+    position: relative
+    .person-title-and-selection
+      display: flex
+    .wish-to-pay, .person-payment, .person-total-order-info
+      font-size: 13px
+      color: $grey
+    .person-slider
+      position: absolute
+      bottom: -20px
+      left: 0
+      right: 0
+    .person-total-order-info
+      display: flex
+      span
+        flex: 1
+        font-size: 13px
+
