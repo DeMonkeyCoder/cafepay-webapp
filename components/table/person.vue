@@ -4,8 +4,8 @@
       <img :src="person.avatar" :alt="person.name">
       <p class="cp-side-padding cp-tb-padding">{{title}}</p>
     </div>
-    <div class="person-orders cp-side-padding cp-tb-margin-2x cp-tb-padding long-shadow has-background-white cp-card"
-     v-for="order in person.orders" :key="order.name">
+    <div class="person-orders cp-side-padding cp-side-margin cp-tb-padding-half long-shadow has-background-white cp-card"
+     v-for="(order, index) in person.orders" :key="order.name">
 
       <div class="person-title-and-selection">
         <div class="person-order-title font-norm">{{order.name}}</div>
@@ -13,20 +13,22 @@
       </div>
 
       <div class="person-total-order-info">
-        <span>مجموع:‌ {{order.count}} عدد | {{order.count * order.price | currency}} تومان</span> 
-        <span>- پرداخت شده:‌ <span class="g-text">{{order.paid | currency}}</span></span>
+        <span>مجموع:‌ {{order.count}} عدد | {{order.count * order.price | currency}}<span class="toman">تومان</span></span> 
+        
       </div>
 
       <div class="person-payment">
-
+        <span>پرداخت شده:‌ <span class="g-text">{{order.paid | currency}}<span class="toman">تومان</span></span></span>
+        <span>پرداخت شما:‌ <span class="p-text">{{order.you_paid | currency}}<span class="toman">تومان</span></span></span>
       </div>
 
       <div class="wish-to-pay">
-        <span>0</span> تومان از این محصول را میخواهید پرداخت کنید
+        <span>{{order.wish_to_pay | currency}}</span><span class="toman">تومان</span> 
+        <span id="wish-to-pay-text">از این محصول را میخواهید پرداخت کنید</span>
       </div>
 
       <div class="person-slider">
-        <b-slider lazy type="is-info" size="is-large" rounded :min="0" :max="order.count * order.price - order.paid" :step="500" ></b-slider>
+        <b-slider :value="order.wish_to_pay" @change="xyz($event, index, person.name)" lazy type="is-info" size="is-large" rounded :min="0" :max="order.count * order.price - order.paid" :step="500" ></b-slider>
       </div>
     </div>
   </div>
@@ -46,6 +48,12 @@
       return {
         kir: '1' 
       }
+    },
+    methods: {
+      xyz(value, index , personName) {
+        // for now i send peson name but later i will search by id
+        this.$store.commit('table/changeWishToPay', {value, index, name: personName})
+      },
     },
   }
 </script>

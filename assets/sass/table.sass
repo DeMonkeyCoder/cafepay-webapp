@@ -43,7 +43,7 @@
     font-size: 18px
 
 .others
-  @include tbMargin($size: 4 * $margin)
+  @include tbMargin($size: 3 * $margin)
 
 
 .table-person
@@ -55,9 +55,13 @@
       flex-basis: 46px
       height: 46px
       border-radius: 23px
-
   .person-orders
+    margin-bottom: $margin * 1.5
+    margin-top: $margin!important
     position: relative
+    .toman
+      font-size: 10px!important
+      margin-right: 2px
     .person-title-and-selection
       display: flex
     .wish-to-pay, .person-payment, .person-total-order-info
@@ -65,12 +69,79 @@
       color: $grey
     .person-slider
       position: absolute
-      bottom: -20px
+      bottom: -16px
       left: 0
       right: 0
+      .b-slider.is-large .b-slider-track 
+        height: 0.85rem
+        border-radius: 0px 0px 5px 5px
+      .b-slider-fill
+        border-radius: 0px 0px 5px 5px
+      
     .person-total-order-info
+      span
+        font-size: 13px
+
+    .person-payment
       display: flex
       span
         flex: 1
         font-size: 13px
+    .wish-to-pay
+      margin-bottom: $margin
+      #wish-to-pay-text
+        font-size: 12px
+
+#pay-checkout
+  opacity: 0
+  z-index: 100
+  position: fixed
+  display: flex
+  bottom: 0
+  left: 0
+  right: 0
+  background-color: white
+  height: 46px
+  transition-timing-function: ease-in
+  transition: 0.4s
+  background-color: $blueShade
+  display: flex
+  .pay-checkout-btn
+    color: white
+    display: flex
+    font-size: 16px
+    font-weight: 600!important
+    justify-content: center
+    align-items: center
+    .credit-card-icon
+      margin-left: 3px
+  .pc-child
+    flex: 1
+    display: flex
+    align-items: center
+  .pay-checkout-info
+    // flex-direction: row-reverse
+    justify-content: flex-end
+    align-items: center
+    .total-count, .total-price
+      display: inline-block
+    .total-price
+      font-size: 18px
+      .toman
+        font-size: 14px
+        color: $grey
+        position: relative
+        right: 3px
+
+  
+
+
+.pay-checkout-is-shown
+  box-shadow: 0px -1px 0px rgba(0,0 ,0 ,0.05)
+  bottom: 105px!important
+  transition: 0.3s!important
+  transition-timing-function: ease-out!important
+  transform: translateY(46px)!important
+  opacity: 1!important
+    
 

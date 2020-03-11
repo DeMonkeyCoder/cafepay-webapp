@@ -2,27 +2,27 @@
   <div class="container">
      <b-modal :active.sync="isComponentModalActive"
             has-modal-card full-screen :can-cancel="false">
-              <div class="modal-card" style="width: auto">
-                <header class="modal-card-head">
-                    <p class="modal-card-title">وارد کردن کد میز</p>
-                </header>
-                <section class="modal-card-body">
-                    <b-field >
-                        <b-input
-                          type="code"
-                          v-model="tableCode"
-                          placeholder="کد میز را وارد کنید"
-                          required>
-                        </b-input>
-                    </b-field>
-              <div class="buttons">
-                <b-button :loading="cloading" @click="sendCode" class="checkCode-btn" expanded type="is-info">ورود به میز</b-button>
-              </div>
-                </section>
-                <footer class="modal-card-foot">
-                    <button class="button" type="button" @click="closeModal">بستن پنجره</button>
-                </footer>
+            <div class="modal-card" style="width: auto">
+              <header class="modal-card-head">
+                  <p class="modal-card-title">وارد کردن کد میز</p>
+              </header>
+              <section class="modal-card-body">
+                  <b-field >
+                      <b-input
+                        type="code"
+                        v-model="tableCode"
+                        placeholder="کد میز را وارد کنید"
+                        required>
+                      </b-input>
+                  </b-field>
+            <div class="buttons">
+              <b-button :loading="cloading" @click="sendCode" class="checkCode-btn" expanded type="is-info">ورود به میز</b-button>
             </div>
+              </section>
+              <footer class="modal-card-foot">
+                  <button class="button" type="button" @click="closeModal">بستن پنجره</button>
+              </footer>
+          </div>
     </b-modal>
 
     <div class="camera">
@@ -120,7 +120,7 @@ import walletIcon from '~/assets/img//shape/icons/wallet.png'
 
                 {
                   rate: 4.1,
-                  name: 'پیتزا مخصوص بزرگ',
+                  name: 'ساندویچ هات داگ پنیری',
                   description: 'پیتزاست دیگه',
                   avatar: 'https://media-cdn.tripadvisor.com/media/photo-s/0c/ac/c1/b8/tandoori-chicken-chorizo.jpg',
                   original_price: 65000,
@@ -182,7 +182,7 @@ import walletIcon from '~/assets/img//shape/icons/wallet.png'
         // .then(res => {
 
         //   this.$store.commit('setActiveTable', {id: res.data.table})
-          this.$store.commit('setActiveCafe', true)
+          this.$store.commit('setActiveTable', true)
           this.$store.commit('changeNavigation', 'currentCafe')
           this.$store.commit('table/newPerson', {id: 1, name: this.user.full_name, avatar: this.user.avatar, orders: []})
           this.isComponentModalActive = false

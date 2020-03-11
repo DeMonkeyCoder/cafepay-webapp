@@ -40,7 +40,8 @@ export const Order = class Order {
     this.discount = product.discount,
     this.count = product.count
     this.paid = (product.paid) ? product.paid : 0
-    this.wish_to_pay = 0
+    this.you_paid = (product.you_paid) ? product.you_paid : 0
+    this.wish_to_pay = ( this.count * this.price ) - this.paid
   }
 
 

@@ -64,7 +64,7 @@
       closeModal(changeCommand){
         this.isCancelTableModalActive = false
         if (changeCommand) {
-          this.$store.commit('setActiveCafe', false)
+          this.$store.commit('setActiveTable', false)
           this.$store.commit('changeNavigation', 'scan')
           this.$store.commit('cafe/clear')
 

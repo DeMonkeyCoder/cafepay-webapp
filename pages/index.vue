@@ -193,14 +193,14 @@ export default {
   transition: all .5s
   transform: translateX(-100px)
   opacity: 0
-
-.field
-  margin-top: 15px
-  margin-bottom: 30px!important
-  display: flex
-  justify-content: space-between
-  .control
-    flex: 2
+.login
+  .field
+    margin-top: 15px
+    margin-bottom: 30px!important
+    display: flex
+    justify-content: space-between
+    .control
+      flex: 2
   
 
 .send-code-btn 

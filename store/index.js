@@ -14,12 +14,12 @@ export const state = () => ({
   
 export const mutations = {
     toggleLoading (state, flag) {state.loading = flag},
-    setActiveCafe(state, flag) {
+    setActiveTable(state, flag) {
       state.hasActiveTable = flag
     },
-    setActiveTable(state, table){
-      state.activeTable = table
-    },
+    // setActiveTable(state, table){
+    //   state.activeTable = table
+    // },
     setToken(state, token){
       state.token = token
       localStorage.setItem('token', token)

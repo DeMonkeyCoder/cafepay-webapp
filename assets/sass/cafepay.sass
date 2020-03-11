@@ -94,7 +94,8 @@ h1
   background: rgb(0,113,188)
   background: linear-gradient(90deg, rgba(0,113,188,1) 0%, rgba(30,215,229,1) 100%)
   width: 100%
-  height: 20vh
+  // height: 17vh
+  height: 140px
 
 .cp-full-width
   width: 100%
@@ -103,7 +104,7 @@ h1
 .long-shadow
   box-shadow: 0px 5px 15px rgba(0, 0 , 0 , 0.10)!important
 .short-shadow
-  box-shadow: 0 5 15 rgba(0, 0 , 0 , 0.10)!important
+  box-shadow: 0 1px 3px rgba(0, 0 , 0 , 0.10)!important
 
 .normal-radius
   border-radius: 5px
@@ -111,6 +112,9 @@ h1
 .header-radius
   border-radius: 10px
 
+
+.modal
+  z-index: 140
 
 // Cafe navigator TAB --------------------------------------------------
 
@@ -130,6 +134,12 @@ h1
   
 .cp-tb-padding-2x
   @include tbPadding($size: 2 * $padding)
+
+.cp-side-padding-half
+  @include sidePadding($size: 0.5 * $padding)
+  
+.cp-tb-padding-half
+  @include tbPadding($size: 0.5 * $padding)
 
 // MARGIN SECTION --------------------------------------------------------
 

@@ -1,6 +1,19 @@
 <template>
   <div>
     <div v-if="hasActiveTable" class="has-active-table">
+
+      <div dir="ltr" id="pay-checkout">
+        <div @click="paymentCheckout" dir="rtl" class="pc-child pay-checkout-btn green">
+          <b-icon class="credit-card-icon" icon="credit-card" type="is-light">
+          </b-icon>
+          پرداخت آنلاین
+        </div>
+        <div class="pc-child pay-checkout-info cp-side-padding">
+          <div dir="rtl" class="total-price cp-side-margin font-norm">{{totalWishToPay | currency}}<span class="toman">تومان</span></div>
+          <div class=""><b-icon icon="dots-vertical" type=""></b-icon></div>
+        </div>
+      </div>
+
       <div class="table-header cp-header cp-tb-padding cp-side-padding">
         <div class="info">
           <img :src="cafe.avatar" alt="">
@@ -63,11 +76,42 @@
       table() {
         return this.$store.state.table
       },
+      totalWishToPay() {
+        return this.$store.getters['table/totalWishToPay']
+      }
       // ordersTotalCost(){
       //   let others = this.table.persons.reduce( (Sum, person) => person.totalPrice + Sum,  0)
       //   return others + this.table.yt
       // }
  
+    },
+    methods: {
+      paymentCheckout() {
+        setTimeout(() => {
+          this.$store.commit('table/submitPayment', this.totalWishToPay)
+        }, 200);
+        this.$router.push('/paymentResult')
+
+        // this.cloading = true
+        // setTimeout(() => {
+        //   this.cloading = false
+        // }, 1000);
+      },
+    },
+    mounted(){
+      if (this.totalWishToPay > 0) document.getElementById('pay-checkout').classList.add("pay-checkout-is-shown")
+    },
+    watch: {
+       totalWishToPay(val, old) {
+        if (document.getElementById('pay-checkout') != null){
+          if (val> 0){
+            document.getElementById('pay-checkout').classList.add("pay-checkout-is-shown")
+          }
+          else {
+            document.getElementById('pay-checkout').classList.remove('pay-checkout-is-shown')
+          }
+        }
+      },
     },
   }
 </script>
