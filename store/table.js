@@ -6,7 +6,7 @@ export const state = () => ({
       {
         name: 'امیرعرفان',
         avatar: 'https://avatars0.githubusercontent.com/u/35772794?s=460&v=4',
-        totalPrice: 83000,
+        totalPrice: 128000,
         totalPaid: 34000,
         orders: [
           {
@@ -69,6 +69,23 @@ export const mutations = {
   setOrder(state, orderData) {
     state.yourOrdersCost = orderData.totalPrice
     state.you.orders = orderData.orders
+  },
+  payWholeBill(state){
+    for (const order of state.you.orders) {
+      order.wish_to_pay = order.count * order.price - order.paid
+    }
+    for (const person of state.persons) {
+      for (const order of person.orders) {
+        order.wish_to_pay = order.count * order.price - order.paid
+      }
+    }
+  },
+  setDefaultPayment(state) {
+    for (const person of state.persons) {
+      for (const order of person.orders) {
+        order.wish_to_pay = 0
+      }
+    }
   },
   changeWishToPay(state, orderIdentity) {
     if (state.you.name == orderIdentity.name) {

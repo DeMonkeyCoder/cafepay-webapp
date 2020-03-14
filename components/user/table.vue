@@ -1,7 +1,18 @@
 <template>
   <div>
     <div v-if="hasActiveTable" class="has-active-table">
-
+      <b-modal class="table-options-modal" :active.sync="isTableOptionsModalActive"
+              has-modal-card :can-cancel="false">
+                <div class="modal-card" style="width: auto">
+ 
+                  <section class="modal-card-body">
+                    <div class="field last-checkbox-field">
+                      <b-checkbox v-model="fullPayment" size="is-large" type="is-info">پرداخت کل فاکتور</b-checkbox>
+                    </div>
+                    <b-button @click="changeTableOptions" expanded class="change-table-options-btn" size="is-medium" type="is-info" >اعمال تغییرات</b-button>
+                  </section>
+              </div>
+      </b-modal>
       <div dir="ltr" id="pay-checkout">
         <div @click="paymentCheckout" dir="rtl" class="pc-child pay-checkout-btn green">
           <b-icon class="credit-card-icon" icon="credit-card" type="is-light">
@@ -10,7 +21,7 @@
         </div>
         <div class="pc-child pay-checkout-info cp-side-padding">
           <div dir="rtl" class="total-price cp-side-margin font-norm">{{totalWishToPay | currency}}<span class="toman">تومان</span></div>
-          <div class=""><b-icon icon="dots-vertical" type=""></b-icon></div>
+          <div @click="showOptionsModal" class=""><b-icon icon="dots-vertical" type=""></b-icon></div>
         </div>
       </div>
 
@@ -66,7 +77,8 @@
     data() {
       return {
         key: 1,
-        isCancelTableModalActive: false
+        isTableOptionsModalActive: false,
+        fullPayment: false
       }
     },
     computed: {
@@ -97,6 +109,14 @@
         //   this.cloading = false
         // }, 1000);
       },
+      showOptionsModal(){
+        this.isTableOptionsModalActive = true
+      },
+      changeTableOptions(){
+        if (this.fullPayment) this.$store.commit('table/payWholeBill')
+        else this.$store.commit('table/setDefaultPayment')
+        this.isTableOptionsModalActive = false
+      }
     },
     mounted(){
       if (this.totalWishToPay > 0) document.getElementById('pay-checkout').classList.add("pay-checkout-is-shown")
