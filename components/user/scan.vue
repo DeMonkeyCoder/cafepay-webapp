@@ -32,7 +32,7 @@
     <div class="landing white">
       <img class="user-img" :src="user.avatar" alt="">
       <h1 class="t-large">{{user.full_name}}</h1>
-      <h4>اعتبار:‌<span>{{user.wallet_amount | currency}} تومان</span></h4>
+      <h4>موجودی:‌<span>{{user.wallet_amount | currency}} تومان</span></h4>
       <div class="columns shortcut-btns is-mobile is-3-mobile">
         <div class="column ">
            <div class="has-background-white">

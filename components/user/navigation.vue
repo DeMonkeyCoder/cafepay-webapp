@@ -14,13 +14,14 @@
     </div>
 
     <div @click="triggerChangeTab('cp-table')" class="nav-tab chair center-align" :class="{'is-active': currentMainPage == 'cp-table'}">
-      <img v-if="currentMainPage == 'cp-table'" class="" src='@/assets/img/shape/icons/chair-color.png' alt="">
+      <img v-if="currentMainPage == 'cp-table'" src='@/assets/img/shape/icons/chair-color.png' alt="">
       <img v-else src='@/assets/img/shape/icons/chair.png' alt="">
       <p>میز سفارش</p>
     </div>
 
     <div @click="triggerChangeTab('profile')" class="nav-tab profile center-align" :class="{'is-active': currentMainPage == 'profile'}">
-      <img src='@/assets/img/shape/icons/user.png' alt="">
+      <img v-if="currentMainPage == 'profile'" src='@/assets/img/shape/icons/user-color.svg' alt="">
+      <img v-else src='@/assets/img/shape/icons/user.png' alt="">
       <p>پروفایل</p>
     </div>
 
