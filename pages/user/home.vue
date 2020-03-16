@@ -1,6 +1,6 @@
 <template>
   <div dir="rtl">
-    <keep-alive><component @changeView="changeViewTrigger" :is="currentMainPage"></component></keep-alive>
+    <keep-alive><component class="" @changeView="changeViewTrigger" :is="currentMainPage"></component></keep-alive>
     <navigation />
   </div>
 </template>
@@ -43,5 +43,6 @@
 </script>
 
 <style scoped lang="sass">
+
 
 </style>

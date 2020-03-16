@@ -48,11 +48,11 @@
 
       <div class="persons-on-table cp-side-margin-2x">
         <div class="you">
-          <person :person='table.you' title="سفارشات شما" />
+          <person :person='table.you' title="شما" />
         </div>
         <div class="others">
           <div class="cp-tb-margin" v-for="person in table.persons" :key="person.name">
-            <person :person='person' :title="'سفارشات' + ' ' +person.name" />
+            <person :person='person' :title="person.name" />
           </div>
         </div>
       </div>

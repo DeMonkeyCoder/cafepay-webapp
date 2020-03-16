@@ -18,7 +18,11 @@ export default {
       { hid: 'description', name: 'description', content: process.env.npm_package_description || '' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      {
+        rel: 'stylesheet',
+        href: 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css'
+      },
     ]
   },
   /*
@@ -30,7 +34,8 @@ export default {
   */
   css: [
     '@assets/fontawesome/css/all.min.css',
-    '@assets/sass/cafepay.sass'
+    '@assets/sass/cafepay.sass',
+    // "https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css"
   ],
   /*
   ** Plugins to load before mounting the App

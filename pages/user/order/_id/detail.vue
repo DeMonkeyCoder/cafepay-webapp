@@ -9,31 +9,28 @@
 
       <div  class="profile-info-bar cp-side-padding cp-tb-padding long-shadow cp-side-margin cp-header-card has-background-white">
          <div class="info">
-          <img class="no-pic" src="@/assets/img/shape/icons/shopping-cart.png" alt="">
-          <h4 class="header cp-tb-padding cp-side-padding">سفارشات من</h4>
+          <img class="no-pic" src="@/assets/img/shape/icons/order-detail.png" alt="">
+          <h4 class="header cp-tb-padding cp-side-padding">جزییات سفارش</h4>
           <p dir="rtl" class="detail cp-tb-padding cp-side-padding">
-            <span class="p-text font-18">{{orders.length}}</span> سفارش موفق</p>
+            در <span class="p-text">{{order.cafeName}}</span></p>
         </div>
       </div>
 
 
-      <div class="orders-history cp-side-margin">
-        <div class="order-history has-background-white cp-card cp-side-padding cp-tb-padding" 
-        v-for="oh in orders" :key="oh.id">
-          <div class="oh-info">
-            <img :src="oh.avatar" alt="">
-            <div class="oh-content cp-side-padding">
-              <p class="oh-header font-16 font-norm ">{{oh.cafeName}}</p>
-              <p class="oh-detail font-14">
-                {{oh.date}} - {{oh.bill | currency}}<span class="toman font-12">تومان</span>
-              </p>
-            </div>
+      <div class="persons-history cp-side-margin">
+          <div class="person-history " v-for="person in order.persons" :key="person.name">
+            <person :shadow="false" :history="true" :person='person' :title="person.name" />
           </div>
-          <div class="oh-actions">
-            <nuxt-link id="go-to-order-detail" :to="'/user/order/' + oh.id + '/detail'">جزییات</nuxt-link>
-            <nuxt-link id="go-to-order-poll" :to="'/user/order/' + oh.id + '/poll'">ثبت نظر و امتیاز</nuxt-link>
+      </div>
+
+      <div class="persons-history cp-side-margin">
+          <div class="person-history " v-for="person in order.persons" :key="person.name">
+            <person :shadow="false" :history="true" :person='person' :title="person.name" />
           </div>
-        </div>
+      </div>
+
+      <div class="order-fix-button">
+        <nuxt-link :to="'/user/order/' +$route.params.id + '/poll'" class="go-to-poll-btn">امتیازدهی به {{order.cafeName}}</nuxt-link>
       </div>
 
  
@@ -41,32 +38,33 @@
 </template>
 
 <script>
+  import person from '~/components/table/person.vue'
   export default {
+    components: {person},
     data() {
       return {
-
       }
     },
     computed: {
       user() {
         return this.$store.state.user.user 
       },
-      orders(){
-        return this.$store.state.orderHistory.orders
-      }
+      order(){
+        return this.$store.state.orderHistory.currentOrder
+      },
     },
     mounted(){
-      
+        this.$store.commit('orderHistory/get', this.$route.params.id)
     }
   }
 </script>
 
 <style scoped lang="sass">
 @import '~/assets/sass/variables.sass'
-.orders-history
+.persons-history
   position: relative 
-  bottom: 2 * $margin
-  .order-history
+  bottom: 3 * $margin
+  .person-history
     margin-bottom: $margin
     display: flex
     flex-direction: column
@@ -95,5 +93,11 @@
 
   .detail
     direction: rtl!important
+
+.order-fix-button
+  background-color: $primary
+  a
+    color: white
+    font-size: 16px
 
 </style>
