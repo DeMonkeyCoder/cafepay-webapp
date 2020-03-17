@@ -1,10 +1,15 @@
 import Vue from 'vue'
 
 Vue.mixin({
+    data() {
+      return {
+        cloading: false
+      }
+    },
     computed: {
-        cloading (){
-            return this.$store.state.loading
-        },
+        // cloading (){
+        //     return this.$store.state.loading
+        // },
         hasActiveTable(){
           return this.$store.state.hasActiveTable
         },
@@ -13,11 +18,11 @@ Vue.mixin({
         }
     },
     methods: {
-        toaster (massage, type) {
+        toaster (massage, type , position) {
             this.$buefy.toast.open({
-                duration: 5000,
+                duration: 3000,
                 message: massage,
-                position: 'is-bottom',
+                position,
                 type: type
             })
         }
