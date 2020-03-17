@@ -11,6 +11,7 @@ export const state = () => ({
               totalPrice: 128000,
               totalPaid: 34000,
               orders: [{
+                id: 5,
                 name: 'پیتزا پپرونی',
                 original_price: 38000,
                 discount: 0,
@@ -28,6 +29,7 @@ export const state = () => ({
               totalPrice: 128000,
               totalPaid: 34000,
               orders: [{
+                id: 2,
                 name: 'پیتزا پپرونی',
                 original_price: 38000,
                 discount: 0,
@@ -37,6 +39,7 @@ export const state = () => ({
                 price: 38000,
                 count: 1
               }, {
+                id: 34,
                 name: 'پیتزا قارچ و گوشت',
                 original_price: 45000,
                 discount: 0,
@@ -61,6 +64,7 @@ export const state = () => ({
             totalPrice: 128000,
             totalPaid: 34000,
             orders: [{
+              id: 1,
               name: 'پیتزا پپرونی',
               original_price: 38000,
               discount: 0,

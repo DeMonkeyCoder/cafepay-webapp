@@ -23,11 +23,6 @@
           </div>
       </div>
 
-      <div class="persons-history cp-side-margin">
-          <div class="person-history " v-for="person in order.persons" :key="person.name">
-            <person :shadow="false" :history="true" :person='person' :title="person.name" />
-          </div>
-      </div>
 
       <div class="order-fix-button">
         <nuxt-link :to="'/user/order/' +$route.params.id + '/poll'" class="go-to-poll-btn">امتیازدهی به {{order.cafeName}}</nuxt-link>
@@ -68,28 +63,6 @@
     margin-bottom: $margin
     display: flex
     flex-direction: column
-    .oh-info
-      display: flex
-      img
-        width: 50px
-        width: 50px
-        border-radius: 25px
-    .oh-actions
-      display: flex
-      margin: 0.75rem -0.75rem -0.75rem -0.75rem
-      a
-        flex: 1
-        text-align: center
-        padding: 5px
-      a#go-to-order-detail
-        color: $black
-        background-color: $lightGrey
-        border-radius: 0 0 5px 0
-
-      a#go-to-order-poll 
-        color: white
-        background-color: $primary
-        border-radius: 0 0 0 5px
 
   .detail
     direction: rtl!important

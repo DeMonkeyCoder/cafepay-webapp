@@ -1,0 +1,28 @@
+
+@import 'variables.sass'
+.poll-content
+  .tabs
+    ul
+      background: white
+      border-radius: 5px
+      li:first-child 
+        a
+          border: none!important
+          border-radius: 5px 0 0 5px!important
+      li:last-child
+        a
+          border: none!important
+          border-radius: 0 5px 5px 0!important
+      li
+        a
+          // border: none!important
+
+      .is-active
+        a
+          transition: 0.25s
+          background-color: $primary
+  .is-secondary-tab
+    .is-active
+      a
+        transition: 0.25s
+        background-color: $secondary!important

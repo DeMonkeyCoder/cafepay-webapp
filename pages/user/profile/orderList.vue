@@ -16,22 +16,23 @@
         </div>
       </div>
 
-
-      <div class="orders-history cp-side-margin">
-        <div class="order-history has-background-white cp-card cp-side-padding cp-tb-padding" 
-        v-for="oh in orders" :key="oh.id">
-          <div class="oh-info">
-            <img :src="oh.avatar" alt="">
-            <div class="oh-content cp-side-padding">
-              <p class="oh-header font-16 font-norm ">{{oh.cafeName}}</p>
-              <p class="oh-detail font-14">
-                {{oh.date}} - {{oh.bill | currency}}<span class="toman font-12">تومان</span>
-              </p>
+       <div class="content-below-profile-bar cp-side-margin">
+        <div class="orders-history ">
+          <div class="order-history has-background-white cp-card cp-side-padding cp-tb-padding" 
+          v-for="oh in orders" :key="oh.id">
+            <div class="oh-info">
+              <img :src="oh.avatar" alt="">
+              <div class="oh-content cp-side-padding">
+                <p class="oh-header font-16 font-norm ">{{oh.cafeName}}</p>
+                <p class="oh-detail font-14">
+                  {{oh.date}} - {{oh.bill | currency}}<span class="toman font-12">تومان</span>
+                </p>
+              </div>
             </div>
-          </div>
-          <div class="oh-actions">
-            <nuxt-link id="go-to-order-detail" :to="'/user/order/' + oh.id + '/detail'">جزییات</nuxt-link>
-            <nuxt-link id="go-to-order-poll" :to="'/user/order/' + oh.id + '/poll'">ثبت نظر و امتیاز</nuxt-link>
+            <div class="oh-actions">
+              <nuxt-link id="go-to-order-detail" :to="'/user/order/' + oh.id + '/detail'">جزییات</nuxt-link>
+              <nuxt-link id="go-to-order-poll" :to="'/user/order/' + oh.id + '/poll'">ثبت نظر و امتیاز</nuxt-link>
+            </div>
           </div>
         </div>
       </div>
@@ -63,37 +64,35 @@
 
 <style scoped lang="sass">
 @import '~/assets/sass/variables.sass'
-.orders-history
-  position: relative 
-  bottom: 2 * $margin
-  .order-history
-    margin-bottom: $margin
+
+.order-history
+  margin-bottom: $margin
+  display: flex
+  flex-direction: column
+  .oh-info
     display: flex
-    flex-direction: column
-    .oh-info
-      display: flex
-      img
-        width: 50px
-        width: 50px
-        border-radius: 25px
-    .oh-actions
-      display: flex
-      margin: 0.75rem -0.75rem -0.75rem -0.75rem
-      a
-        flex: 1
-        text-align: center
-        padding: 5px
-      a#go-to-order-detail
-        color: $black
-        background-color: $lightGrey
-        border-radius: 0 0 5px 0
+    img
+      width: 50px
+      width: 50px
+      border-radius: 25px
+  .oh-actions
+    display: flex
+    margin: 0.75rem -0.75rem -0.75rem -0.75rem
+    a
+      flex: 1
+      text-align: center
+      padding: 5px
+    a#go-to-order-detail
+      color: $black
+      background-color: $lightGrey
+      border-radius: 0 0 5px 0
 
-      a#go-to-order-poll 
-        color: white
-        background-color: $primary
-        border-radius: 0 0 0 5px
+    a#go-to-order-poll 
+      color: white
+      background-color: $primary
+      border-radius: 0 0 0 5px
 
-  .detail
-    direction: rtl!important
+.detail
+  direction: rtl!important
 
 </style>
