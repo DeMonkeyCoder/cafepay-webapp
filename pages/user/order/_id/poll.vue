@@ -72,7 +72,7 @@
 
 <script>
 import rateIconSVG from '@/components/profile/rateHeaderIcon.vue'
-import OrderPoll from '@/middleware/models/OrderPoll.js'
+import OrderPoll from '@/middleware/models/orderPoll.js'
 import {swipable} from '@/plugins/makeTabSwipe.js'
   export default {
     components: {'rate-icon' :rateIconSVG},
