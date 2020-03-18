@@ -33,6 +33,8 @@
                     :spaced="false">
                    </b-rate>
                   <p>{{singleOrder.name}}</p>
+                  <b-icon class="write-review" size="is-default" icon="pencil">
+                </b-icon>
                 </div>
               </div>
             </b-tab-item>
@@ -184,6 +186,7 @@ import {swipable} from '@/plugins/makeTabSwipe.js'
   .b-rate
     flex: 1
     margin-bottom: 0
+
 
 
 </style>

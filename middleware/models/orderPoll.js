@@ -7,6 +7,7 @@ export default class OrderPoll {
     this.id = rawData.id
     this.name = rawData.name
     this.rate = 0
+    this.comment = ''
   }
 
 }

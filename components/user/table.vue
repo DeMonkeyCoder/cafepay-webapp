@@ -1,7 +1,8 @@
 <template>
   <div>
     <div v-if="hasActiveTable" class="has-active-table">
-      <b-modal class="table-options-modal" :active.sync="isTableOptionsModalActive"
+
+      <!-- <b-modal class="table-options-modal" :active.sync="isTableOptionsModalActive"
               has-modal-card :can-cancel="false">
                 <div class="modal-card" style="width: auto">
  
@@ -12,7 +13,8 @@
                     <b-button @click="changeTableOptions" expanded class="change-table-options-btn" size="is-medium" type="is-info" >اعمال تغییرات</b-button>
                   </section>
               </div>
-      </b-modal>
+      </b-modal> -->
+      
       <div dir="ltr" id="pay-checkout">
         <div @click="paymentCheckout" dir="rtl" class="pc-child pay-checkout-btn green">
           <b-icon class="credit-card-icon" icon="credit-card" type="is-light">
