@@ -11,7 +11,7 @@
         <div class="action flex buttons are-medium">
           <!-- @click="state = 'login'" for ورود - ثبت نام -->
           <button class="btn is-danger button  is-fullwidth" @click="entertoApp">ورود - ثبت نام</button>
-          <button class="btn is-info button is-inverted  is-fullwidth" to="aboutus">درباره کافه‌پِی</button>
+          <button class="btn is-info button  is-fullwidth" to="aboutus">درباره کافه‌پِی</button>
         </div>
       </div>
 
