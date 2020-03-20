@@ -2,10 +2,12 @@
 @import 'variables.sass'
 .poll-content
   .tabs
+    
     ul
       margin-bottom: $margin
       background: white
       border-radius: 5px
+      box-shadow: $shortShadow
       li:first-child 
         a
           border: none!important
@@ -30,6 +32,7 @@
 
 
   .single-order
+    // box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1)
     .rate-text
       color: white
       width: 20px
@@ -44,6 +47,11 @@
       top: 1px
       span
         font-size: 13px
+
+  .is-not-rated
+    border: 1px solid red
+    // box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1)
+    transition: 0.25s
 
 .rate-is-5
   .rate-text
@@ -64,4 +72,17 @@
 .write-review
   margin-left: 10px
   .mdi
+    color: lighten($grey, 30)
+.is-written
+  .mdi
     color: $primary!important
+
+.order-rate
+  .set-on
+    .mdi
+      color: $primary
+
+.feature-rate
+  .set-on
+    .mdi
+      color: $secondary

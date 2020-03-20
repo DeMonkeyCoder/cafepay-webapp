@@ -47,6 +47,7 @@
 <script>
 // import Skeleton from 'vue-loading-skeleton';
 import {Order} from '~/middleware/models/cafe.js'
+  import {swipable} from '@/plugins/makeTabSwipe.js'
   export default {
     // components: {Skeleton},
     props: {
@@ -129,6 +130,7 @@ import {Order} from '~/middleware/models/cafe.js'
     mounted(){
       if(this.menu.length > 0) {
         this.activeProducts = this.menu[this.activeCategory].products
+        // swipable(this.menu.length ,'product-list', this, 'activeCategory')
       }
     },
     watch: {

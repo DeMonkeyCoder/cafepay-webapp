@@ -14,12 +14,14 @@
     "@nuxtjs/axios": "^5.9.5",
     "@nuxtjs/pwa": "^2.6.0",
     "jquery": "^3.4.1",
+    "leaflet": "^1.6.0",
     "node-sass": "^4.12.0",
     "nuxt": "^2.11.0",
     "nuxt-buefy": "^0.3.23",
     "sass-loader": "^8.0.2",
     "vue-currency-filter": "^4.0.3",
-    "vue-loading-skeleton": "^1.1.8"
+    "vue-loading-skeleton": "^1.1.8",
+    "vue2-leaflet": "^2.5.2"
   },
   "devDependencies": {
     "eslint-config-prettier": "^4.1.0",

@@ -23,6 +23,10 @@ export default {
         rel: 'stylesheet',
         href: 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css'
       },
+      {
+        rel: "stylesheet",
+        href: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.6.0/leaflet.css",
+      },
     ]
   },
   /*
@@ -44,7 +48,8 @@ export default {
     '~/plugins/axios',
     '~/plugins/mixin',
     '~/plugins/vue-currency',
-    '~/plugins/onReload'
+    '~/plugins/onReload',
+    '~/plugins/vue-leaflet',
   ],
   /*
   ** Nuxt.js modules

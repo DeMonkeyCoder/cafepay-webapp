@@ -1,4 +1,4 @@
-export const swipable = (tabCount, tabClass, component) => {
+export const swipable = (tabCount, tabClass, refrence ,navigator) => {
         let tabContent = document.getElementsByClassName(tabClass)
         for (var i = 0; i < tabContent.length; i++) {
           // tabContent[i].addEventListener('click', myFunction, false);
@@ -8,11 +8,11 @@ export const swipable = (tabCount, tabClass, component) => {
 
 
         function handleSwipe1(next) {
-          if (component.ActiveTab == tabCount && next == 1) {
-            component.ActiveTab = 0
-          } else if (component.ActiveTab == 0 && next == -1) {
-            component.ActiveTab = tabCount
-          } else component.ActiveTab += next
+          if (refrence[navigator] == tabCount && next == 1) {
+            refrence[navigator] = 0
+          } else if (refrence[navigator] == 0 && next == -1) {
+            refrence[navigator] = tabCount
+          } else refrence[navigator] += next
         }
 
         var xDown = null;

@@ -39,9 +39,13 @@
         <b-tabs :class="{'is-secondary-tab': ActiveTab == 1}" v-model="ActiveTab" class="" dir="ltr" type="is-toggle" expanded>
             <b-tab-item label="سفارشات" >
               <div class="orders cp-b-margin">
-                <div class="single-order cp-b-margin cp-card has-background-white cp-side-padding cp-tb-padding" 
+                <div class="" 
                 v-for="(singleOrder, index) in orders" :key="singleOrder.id">
-                  <b-rate class="b-rate"
+                <div class="single-order  cp-b-margin cp-card has-background-white cp-side-padding cp-tb-padding"
+                :class="{'is-not-rated': singleOrder.rate == 0 && singleOrder.comment != '' && borderValidate,
+                  'shake animated fast': singleOrder.rate == 0 && singleOrder.comment != '' && validate
+                }">
+                  <b-rate class="b-rate order-rate"
                     :class="{'rate-is-1': (singleOrder.rate == 1),
                     'rate-is-2': (singleOrder.rate == 2),
                     'rate-is-3': (singleOrder.rate == 3),
@@ -57,18 +61,19 @@
                    </b-rate>
                   <p>{{singleOrder.name}}</p>
                   <div class="icon-container" @click="openWriteCommentModal(index)">
-                    <b-icon class="write-review" size="is-default" icon="pencil">
+                    <b-icon class="write-review" :class="{'is-written': singleOrder.comment != ''}" size="is-default" icon="pencil">
                     </b-icon>
                   </div>
                 </div>
               </div>
-            </b-tab-item>
+            </div>
+          </b-tab-item>
 
             <b-tab-item class="secondary-tab" label="موارد کلی">
               <div class="orders cp-b-margin">
                 <div class="single-order cp-b-margin cp-card has-background-white cp-side-padding cp-tb-padding" 
                 v-for="feature in features" :key="feature.title">
-                  <b-rate class="b-rate" 
+                  <b-rate class="b-rate feature-rate" 
                     :class="{'rate-is-1': (feature.rate == 1),
                     'rate-is-2': (feature.rate == 2),
                     'rate-is-3': (feature.rate == 3),
@@ -121,7 +126,7 @@ import {swipable} from '@/plugins/makeTabSwipe.js'
           {title: 'محیط و دکوراسیون', icon: '', rate: 0},
           {title: 'سروس دهی', icon: '', rate: 0},
           {title: 'برخورد پرسنل', icon: '', rate: 0},
-          {title: 'ارزش در برابر قیمت', icon: '', rate: 0},
+          {title: 'ارزش در برابر قیمت', icon: '', rate: 0}, 
         ],
         isWriteCommentModalActive: false,
         currentIndex: 0,
@@ -129,17 +134,22 @@ import {swipable} from '@/plugins/makeTabSwipe.js'
           name: '',
           comment: ''
         },
-        cafeComment: null
+        cafeComment: null,
+        validate: false,
+        borderValidate: false
       }
     },
     methods: {
       submitPoll() {
+        this.validate = true
+        this.borderValidate = true
         this.cloading = true
         setTimeout(() => {
           this.cloading = false
-          this.toaster('نظر شما با موفقیت ثبت شد', 'is-success', 'is-top')
-          if (this.prevRoute == 'user-order-id-detail') this.$router.go(-2) 
-          else this.$router.go(-1)
+          // this.toaster('نظر شما با موفقیت ثبت شد', 'is-success', 'is-top')
+          // if (this.prevRoute == 'user-order-id-detail') this.$router.go(-2) 
+          // else this.$router.go(-1)
+          this.validate = false
         }, 1000);
       },
       setComment(){
@@ -164,7 +174,7 @@ import {swipable} from '@/plugins/makeTabSwipe.js'
             this.orders.push(new OrderPoll(order))
           }
         }
-        swipable(1,'tab-content', this)
+        swipable(1,'tab-content', this , 'ActiveTab')
     },
 
     beforeRouteEnter(to, from, next) {
@@ -177,6 +187,9 @@ import {swipable} from '@/plugins/makeTabSwipe.js'
 
 <style scoped lang="sass">
 @import '~/assets/sass/variables.sass'
+
+.content-below-profile-bar
+  padding-bottom: $padding * 4
 
 .order-fix-button
   background-color: $primary

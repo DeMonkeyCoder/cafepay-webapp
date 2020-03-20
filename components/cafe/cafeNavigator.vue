@@ -5,15 +5,19 @@
           <b-tab-item label="پست‌ها" >
             <h1>salam</h1>
           </b-tab-item>
+
           <b-tab-item label="نظرات" >
             <h1>bye bye</h1>
           </b-tab-item>
+          
           <b-tab-item label="اطلاعات" >
-            <h1>hi</h1>
+            <info :isActive="(ActiveTab == 2) ? true : false" />
           </b-tab-item>
+
           <b-tab-item label="منو" >
             <cp-menu :menu="menu" /> 
           </b-tab-item>
+
       </b-tabs>
     </div>
   </div>
@@ -24,7 +28,7 @@
   import cpMenu from '~/components/cafe/menu.vue'
   import posts from '~/components/cafe/posts.vue'
   import info from '~/components/cafe/info.vue'
-  import {swipable} from '@/plugins/makeTabSwipe.js'
+
   export default {
     components: {info, posts, cpMenu, comments},
     props: {
@@ -61,7 +65,7 @@
     },
     mounted(){
       // this.getMenu()
-      swipable(3,'tab-content', this)
+      
 
     }
   }
