@@ -8,10 +8,10 @@
       <p>اسکن</p>
     </div>
 
-    <div @click="triggerChangeTab('search')" class="nav-tab center-align" :class="{'is-active': currentMainPage == 'search'}">
+    <!-- <div @click="triggerChangeTab('search')" class="nav-tab center-align" :class="{'is-active': currentMainPage == 'search'}">
       <img src='@/assets/img/shape/icons/shop.png' alt="">
       <p>جست‌وجو</p>
-    </div>
+    </div> -->
 
     <div @click="triggerChangeTab('cp-table')" class="nav-tab chair center-align" :class="{'is-active': currentMainPage == 'cp-table'}">
       <img v-if="currentMainPage == 'cp-table'" src='@/assets/img/shape/icons/chair-color.png' alt="">

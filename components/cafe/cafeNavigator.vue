@@ -7,10 +7,11 @@
           </b-tab-item>
 
           <b-tab-item label="نظرات" >
-            <h1>bye bye</h1>
+            <comments/>
           </b-tab-item>
           
           <b-tab-item label="اطلاعات" >
+            <!-- passing prop to properly initial map component  -->
             <info :isActive="(ActiveTab == 2) ? true : false" />
           </b-tab-item>
 

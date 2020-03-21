@@ -1,0 +1,25 @@
+@import 'variables.sass'
+.feature-rating
+  display: flex
+  flex-wrap: wrap
+  .feature-box
+    flex-basis: 50%
+    .feature-icon
+      svg
+        width: 50%!important
+        margin: auto 25%
+
+.feature-box-is-purple-reverse
+  .cp-card
+    background-color: white
+    transition: 0.25s
+    color: $purple
+    svg
+      fill: $purple
+.feature-box-is-purple
+  .cp-card
+    transition: 0.25s
+    background-color: $purple
+    color: white
+    svg
+      fill: white

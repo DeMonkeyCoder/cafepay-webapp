@@ -111,7 +111,7 @@
 </template>
 
 <script>
-import rateIconSVG from '@/components/profile/rateHeaderIcon.vue'
+import rateIconSVG from '@/components/SVG/rateHeaderIcon.vue'
 import OrderPoll from '@/middleware/models/orderPoll.js'
 import {swipable} from '@/plugins/makeTabSwipe.js'
   export default {
