@@ -3,7 +3,7 @@
     <div class="cafe-navigator long-shadow cp-header-card has-background-white">
       <b-tabs v-model="ActiveTab" expanded dir="ltr" type="is-toggle">
           <b-tab-item label="پست‌ها" >
-            <h1>salam</h1>
+            <posts/>
           </b-tab-item>
 
           <b-tab-item label="نظرات" >

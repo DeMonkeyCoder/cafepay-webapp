@@ -1,6 +1,5 @@
 <template>
-      <div class="cp-side-padding cp-tb-padding" 
-     > 
+      <div class="cp-side-padding cp-tb-padding"> 
       <div class="cp-card cp-side-padding cp-tb-padding short-shadow">
         <div class="feature-icon">
           <slot></slot>
