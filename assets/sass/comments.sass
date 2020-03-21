@@ -4,22 +4,52 @@
   flex-wrap: wrap
   .feature-box
     flex-basis: 50%
-    .feature-icon
-      svg
-        width: 50%!important
-        margin: auto 25%
+    .cp-card
+      transition: 0.25s
+      .feature-icon
+        svg
+          width: 50%!important
+          margin: auto 25%
+
+
+@mixin feature-color($color, $background)
+  background-color: $background
+  color: $color
+  svg
+    fill: $color
+  
 
 .feature-box-is-purple-reverse
   .cp-card
-    background-color: white
-    transition: 0.25s
-    color: $purple
-    svg
-      fill: $purple
+    @include feature-color($purple, white)
+
 .feature-box-is-purple
   .cp-card
-    transition: 0.25s
-    background-color: $purple
-    color: white
-    svg
-      fill: white
+    @include feature-color(white, $purple)
+
+
+.feature-box-is-primary-reverse
+  .cp-card
+    @include feature-color($primary, white)
+
+.feature-box-is-primary
+  .cp-card
+    @include feature-color(white, $primary)
+    
+
+.feature-box-is-green-reverse
+  .cp-card
+    @include feature-color($green, white)
+
+.feature-box-is-green
+  .cp-card
+    @include feature-color(white, $green)
+
+
+.feature-box-is-secondary-reverse
+  .cp-card
+    @include feature-color($secondary, white)
+
+.feature-box-is-secondary
+  .cp-card
+    @include feature-color(white, $secondary)
