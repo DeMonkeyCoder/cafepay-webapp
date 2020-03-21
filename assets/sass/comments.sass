@@ -5,11 +5,16 @@
   .feature-box
     flex-basis: 50%
     .cp-card
+      text-align: center
       transition: 0.25s
       .feature-icon
         svg
-          width: 50%!important
-          margin: auto 25%
+          width: 40%!important
+          margin: auto 30%
+
+      .feature-rate
+        font-size: 24px
+
 
 
 @mixin feature-color($color, $background)
@@ -17,6 +22,13 @@
   color: $color
   svg
     fill: $color
+  .feature-rate-count 
+    @if $color == white
+      color: white!important
+    
+    @else 
+      color: $grey!important
+      
   
 
 .feature-box-is-purple-reverse
@@ -53,3 +65,44 @@
 .feature-box-is-secondary
   .cp-card
     @include feature-color(white, $secondary)
+
+
+.comment-section-container
+  padding-bottom: 6 * $margin
+
+.comment
+  display: flex
+  flex-direction: row-reverse
+  text-align: right
+  .name-and-rate
+    flex: 2
+    .cm-rate
+      margin-top: $margin
+      display: flex
+      justify-content: center
+      align-items: center
+      float: right
+      width: 30px
+      height: 30px
+      border-radius: 15px
+    .rate-is-5
+      border: 2px dashed green
+      color: green
+    .rate-is-4
+      border: 2px dashed #75c50b
+      color: #75c50b
+    .rate-is-3
+      border: 2px dashed #e6d721
+      color: #e6d721
+    .rate-is-2
+      border: 2px dashed orange
+      color: orange
+    .rate-is-1
+      border: 2px dashed red
+      color: red
+  .comment-and-reply
+    flex: 4
+    .cm-reply
+      margin-top: $margin * 0.5
+      background-color: $blueShade
+      padding: 0.5 * $padding

@@ -50,6 +50,7 @@ export default {
     '~/plugins/vue-currency',
     '~/plugins/onReload',
     '~/plugins/vue-leaflet',
+    '~/plugins/moment',
   ],
   /*
   ** Nuxt.js modules
