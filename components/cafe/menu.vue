@@ -19,7 +19,7 @@
 
 
       <div v-for="(prod, index) in activeProducts" :key="prod.name" class="normal-radius has-background-white
-         cp-tb-margin product-item">
+         cp-tb-margin cp-side-margin-half product-item">
         <!-- <Skeleton> -->
         <div class="add-or-remove">
           <span class="product-add" @click="countChange(index, 1)" ><div class="aor-shape">+</div></span>

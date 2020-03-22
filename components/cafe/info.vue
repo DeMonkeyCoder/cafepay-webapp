@@ -13,7 +13,7 @@
     </section>
     <section class="address cp-tb-margin">
       <header class="right-align font-18 font-norm">اطلاعات تماس</header>
-      <div class="cp-side-padding cp-tb-padding">
+      <div class="cp-side-padding cp-tb-padding cp-card has-background-white">
         
         <div class="iconed-text">
           <b-icon class="icon" size="is-default" icon="map-marker">
@@ -122,10 +122,18 @@ import map from '@/components/utils/map'
 .cp-map
   width: 100%
   margin-top: $margin
+  margin-bottom: $margin
   position: relative
   height: 150px
 
 .cafe-info-container
   padding-bottom: $padding * 6
+
+
+.address
+  header
+    margin-bottom: $margin
+
+  
 
 </style>
