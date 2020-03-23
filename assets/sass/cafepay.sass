@@ -10,12 +10,15 @@
 @import 'comments.sass'
 @import 'buefyCustomization.sass'
 @import  'post.sass'
+@import  'wallet.sass'
+@import  'profileInfo.sass'
 
   
 @import './components/modal'
 @import './components/input'
 @import './components/map'
 @import './components/switch'
+@import './components/button'
 
 
 
@@ -177,6 +180,9 @@ h1
 .cp-tb-padding-half
   @include tbPadding($size: 0.5 * $padding)
 
+.cp-padding
+  padding: $padding!important
+
 // MARGIN SECTION --------------------------------------------------------
 
 
@@ -197,6 +203,16 @@ h1
   
 .cp-tb-margin-half
   @include tbMargin($size: 0.5 * $margin)
+
+.cp-b-margin
+  margin-bottom: $margin!important
+
+.cp-b-margin-half
+  margin-bottom: $margin * 0.5!important
+
+.cp-b-margin-2x
+  margin-bottom: $margin * 2!important
+
 
 .cp-b-margin
   margin-bottom: $margin!important

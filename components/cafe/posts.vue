@@ -145,11 +145,11 @@
 
 
 .router-anim-enter-active 
-  animation: coming 0.25s
+  animation: coming 0.15s
   opacity: 0
 
 .router-anim-leave-active 
-  animation: going 0.25s
+  animation: going 0.15s
 
 
 @keyframes going 

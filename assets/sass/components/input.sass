@@ -14,3 +14,22 @@
   .input:focus, .taginput .taginput-container.is-focusable:focus, .textarea:focus, .select select:focus, .is-focused.input, .taginput .is-focused.taginput-container.is-focusable, .is-focused.textarea, .select select.is-focused, .input:active, .taginput .taginput-container.is-focusable:active, .textarea:active, .select select:active, .is-active.input, .taginput .is-active.taginput-container.is-focusable, .is-active.textarea, .select select.is-active
     border: none!important
 
+input, textarea, select
+  box-shadow: none!important
+  border-color: #f0f0f0!important
+
+.cp-input
+  input
+    padding-top: 1.50rem
+    padding-bottom: 1.50rem
+    &:focus
+      // border: 1px solid  $grey!important
+
+  span
+    padding-top: 1.10rem
+
+.cp-input-primary
+  input
+    &:focus
+      + span
+        color: $primary!important

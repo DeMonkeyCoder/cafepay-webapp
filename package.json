@@ -13,6 +13,7 @@
   "dependencies": {
     "@nuxtjs/axios": "^5.9.5",
     "@nuxtjs/pwa": "^2.6.0",
+    "autonumeric": "^4.5.13",
     "jquery": "^3.4.1",
     "leaflet": "^1.6.0",
     "moment-jalaali": "^0.9.2",
@@ -22,6 +23,7 @@
     "sass-loader": "^8.0.2",
     "vue-currency-filter": "^4.0.3",
     "vue-loading-skeleton": "^1.1.8",
+    "vue-moment-jalaali": "^2.0.0",
     "vue2-leaflet": "^2.5.2"
   },
   "devDependencies": {
