@@ -99,11 +99,11 @@ export default {
   methods: {
     changePayAmount(amount) {
       this.payAmount = amount
-      this.autoNumbricElement.set(amount, {decimalPlaces: 0,digitGroupSeparator : ','})
+      this.autoNumbricElement.set(amount, )
     },
   },
   mounted() {
-    this.autoNumbricElement = new AutoNumeric('.cp-input > input',);
+    this.autoNumbricElement = new AutoNumeric('.cp-input > input', {decimalPlaces: 0,digitGroupSeparator : ','})
     setTimeout(() => {
       let span = document.getElementById('amountInput').nextElementSibling
       span.innerHTML = 'تومان'
