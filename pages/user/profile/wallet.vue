@@ -61,7 +61,7 @@
 </template>
 
 <script>
-import AutoNumeric from 'AutoNumeric'
+import AutoNumeric from '@/node_modules/autonumeric/dist/autoNumeric.min.js'
 export default {
   data() {
     return {
