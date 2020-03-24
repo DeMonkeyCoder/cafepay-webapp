@@ -3,7 +3,20 @@ import Vue from 'vue'
 Vue.mixin({
     data() {
       return {
-        cloading: false
+        cloading: false,
+        colors: {
+          primary: '#009fe3',
+          secondary: '#E91E63',
+          thirdinary: '#006FB9',
+          black: '#4a4a4a',
+          darkGrey: '#595959',
+          grey: '#717070',
+          lightGrey: '#E4E4E4',
+          lightblue: '#29abe2',
+          blueShade: '#F2F6F9',
+          green: '#20BC32',
+          purple: '#8e24aa',
+        }
       }
     },
     computed: {

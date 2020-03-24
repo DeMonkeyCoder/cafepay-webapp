@@ -31,10 +31,11 @@
         </div>
 
         <b-field>
-          <b-input inputmode="numeric" v-model="payAmount" class="cp-input cp-input-primary" 
-          placeholder="مبلغ را وارد کنید" icon="wallet-plus"></b-input>
+          <b-input id="amountInput" inputmode="numeric" v-model="payAmount" class="cp-input cp-input-primary" 
+          placeholder="مبلغ را وارد کنید" icon="toman"></b-input>
         </b-field>
-        <b-button :disabled="payAmount == null || payAmount == ''" class="bcp-btn bcp-btn-large" type="is-success" expanded>پرداخت</b-button>
+        <b-button :disabled="payAmount == null || payAmount == ''" class="bcp-btn bcp-btn-large btn-font-bold"
+         type="is-success" expanded>پرداخت</b-button>
 
       </div>
 
@@ -103,6 +104,15 @@ export default {
   },
   mounted() {
     this.autoNumbricElement = new AutoNumeric('.cp-input > input',);
+    setTimeout(() => {
+      let span = document.getElementById('amountInput').nextElementSibling
+      span.innerHTML = 'تومان'
+      span.style.setProperty("font-weight", "600", "important")
+      span.style.fontSize = '12px'
+      span.style.left = "10px"
+      span.style.paddingTop = "1.25rem"
+    }, 100);
+    
   }
 }
 </script>

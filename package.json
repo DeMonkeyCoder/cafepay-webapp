@@ -24,6 +24,7 @@
     "vue-currency-filter": "^4.0.3",
     "vue-loading-skeleton": "^1.1.8",
     "vue-moment-jalaali": "^2.0.0",
+    "vue-persian-datetime-picker": "^2.1.4",
     "vue2-leaflet": "^2.5.2"
   },
   "devDependencies": {

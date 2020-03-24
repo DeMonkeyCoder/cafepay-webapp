@@ -103,7 +103,7 @@
 
 
       <div class="order-fix-button" :class="{'is-secondary-btn': ActiveTab == 1}">
-        <b-button :loading="cloading" expanded @click="submitPoll" class="go-to-poll-btn">ثبت نظر و امتیاز</b-button>
+        <b-button :loading="cloading" expanded @click="submitPoll" class="go-to-poll-btn btn-font-bold">ثبت نظر و امتیاز</b-button>
       </div>
 
  

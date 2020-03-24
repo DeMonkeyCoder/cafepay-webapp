@@ -1,7 +1,7 @@
 <template>
   <div>
     <div id="selected-products-preview">
-      <div @click="sumbitOnTable" dir="rtl" class="submit-order green">
+      <div @click="sumbitOnTable" dir="rtl" class="submit-order font-norm green">
         ثبت در میز سفارش
         <b-icon icon="chevron-left" type="is-light"></b-icon>
       </div>
