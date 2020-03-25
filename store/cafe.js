@@ -4,7 +4,9 @@ export const state = () => ({
   summery: {},
   info: {},
   posts: {},
-  categories: []
+  categories: [],
+  currentProduct: {},
+  productPageActive: false
 })
 
 export const getters = {
@@ -31,6 +33,15 @@ export const mutations = {
   },
   changeCount(state, setting) {
     state.categories[setting.categoryIndex].products[setting.productIndex].count += setting.count
+  },
+
+  setCurrentProduct(state, product){
+    state.currentProduct = product
+    state.productPageActive = true
+  },
+  clearProduct(state, product){
+    state.currentProduct = {}
+    state.productPageActive = false
   }
 
 }

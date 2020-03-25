@@ -28,7 +28,7 @@
       <div
         v-for="(prod, index) in activeProducts"
         :key="prod.name"
-        class="normal-radius has-background-white cp-tb-margin cp-side-margin-half product-item"
+        class="normal-radius short-shadow has-background-white cp-tb-margin cp-side-margin-half product-item"
       >
         <!-- <Skeleton> -->
         <div class="add-or-remove">
@@ -41,7 +41,7 @@
           </span>
         </div>
 
-        <div class="content-section cp-side-padding cp-tb-padding">
+        <div @click="$store.commit('cafe/setCurrentProduct', prod)" class="content-section cp-side-padding cp-tb-padding">
           <div class="product-title font-norm">{{prod.name}}</div>
           <div class="product-description">{{prod.description}}</div>
           <div class="product-price" dir="rtl">
@@ -50,7 +50,7 @@
           </div>
         </div>
 
-        <div class="img-section">
+        <div @click="$store.commit('cafe/setCurrentProduct', prod)" class="img-section">
           <img :src="prod.avatar" alt />
         </div>
         <!-- </Skeleton> -->

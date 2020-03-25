@@ -51,6 +51,7 @@ export default {
     '~/plugins/onReload',
     '~/plugins/vue-leaflet',
     '~/plugins/moment',
+    '~/plugins/ripple',
   ],
   /*
   ** Nuxt.js modules

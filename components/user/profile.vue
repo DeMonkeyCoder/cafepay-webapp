@@ -38,10 +38,10 @@
         </nuxt-link>
 
         <nuxt-link to="/user/profile/information">
-        <li class="cp-card has-background-white cp-side-padding cp-tb-padding">
-          <img src="@/assets/img/shape/icons/user-info-1.svg" alt />
-          اطلاعات کاربری
-        </li>
+          <li class="cp-card has-background-white cp-side-padding cp-tb-padding">
+            <img src="@/assets/img/shape/icons/user-info-1.svg" alt />
+            اطلاعات کاربری
+          </li>
         </nuxt-link>
 
         <li class="cp-card has-background-white cp-side-padding cp-tb-padding">

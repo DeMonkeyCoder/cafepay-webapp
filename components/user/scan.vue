@@ -3,20 +3,23 @@
      <b-modal :active.sync="isComponentModalActive"
             has-modal-card full-screen :can-cancel="false">
             <div class="modal-card" style="width: auto">
-              <header class="modal-card-head">
+              <!-- <header class="modal-card-head">
                   <p class="modal-card-title">وارد کردن کد میز</p>
-              </header>
+              </header> -->
               <section class="modal-card-body">
+                  <!-- <img src="@/assets/img/shape/icons/chair.png" alt=""> -->
                   <b-field >
-                      <b-input
+                      <b-input class="cp-input cp-input-primary cp-input-grey cp-input-shadow"
                         type="code"
                         v-model="tableCode"
-                        placeholder="کد میز را وارد کنید"
-                        required>
+                        icon="numeric"
+                        inputmode="numeric"
+                        placeholder="کد میز را وارد کنید">
                       </b-input>
                   </b-field>
             <div class="buttons">
-              <b-button :loading="cloading" @click="sendCode" class="checkCode-btn" expanded type="is-info">ورود به میز</b-button>
+              <b-button :loading="cloading" @click="sendCode" class="checkCode-btn bcp-btn bcp-btn-large"
+               expanded type="is-info">ورود به میز</b-button>
             </div>
               </section>
               <footer class="modal-card-foot">
@@ -41,7 +44,7 @@
           </div>
         </div>
         <div class="column">
-          <div class="has-background-white">
+          <div class="has-background-white ripple-effect" anim="ripple">
             <img :src="walletIcon" alt="" class="icon">
             <p>شارژ کیف پول</p>
           </div>
@@ -93,7 +96,7 @@ import walletIcon from '~/assets/img//shape/icons/wallet.png'
                 {
                   rate: 4.2,
                   name: 'پیتزا پپرونی',
-                  description: 'پیتزاست دیگه',
+                  description: '۱۱۰ گرم گوشت گوساله، پپرونی، پنیر پیتزا، زیتون، نان مخصوص',
                   avatar: 'https://lh4.googleusercontent.com/proxy/ubZ6IWAy3eySrWktztEcMuvQmNQtuX_3jOze62Lscr5fXQaY_Ts4tH6r9ViqEm5ODiGZA58H4DUbD14SZ4Xqx1j2qwVjPUuN9bO5TEpOLrkctK5SCCoMx_CbIOTvB7TVaQNGhdrmXDVnRLER5F79Kna1OfgPV1htN_8Oq31hphmv9PRJnpk',
                   original_price: 38000,
                   discount: 0,
@@ -102,7 +105,7 @@ import walletIcon from '~/assets/img//shape/icons/wallet.png'
                 {
                   rate: 4.1,
                   name: 'پیتزا قارچ و گوشت',
-                  description: 'پیتزاست دیگه',
+                  description: 'رست بیف، بادمجان با طعم سیر، فلفل دلمه رنگی، کبر (کاپاریس)، سس و پنیر مخصوص پرپروک',
                   avatar: 'https://freehotpizza.com/wp-content/uploads/2019/04/frame-square-01.jpg',
                   original_price: 45000,
                   discount: 0,

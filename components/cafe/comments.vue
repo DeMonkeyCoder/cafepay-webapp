@@ -29,7 +29,7 @@
 
     <section class="user-comments">
       <header class="center-align font-18 font-norm">نظرات کاربران</header>
-      <div class="cp-side-padding cp-tb-padding">
+      <div class="cp-side-padding cp-b-padding">
         <div class="comment cp-card cp-side-padding cp-tb-padding has-background-white cp-tb-margin" 
         v-for="cm in comments" :key="cm.date">
           <div class="name-and-rate">
@@ -63,7 +63,6 @@ import happyface from '@/components/SVG/happyface.vue'
 
 import moment from 'moment-jalaali'
 moment.loadPersian( {
-// usePersianDigits: true,
     dialect: 'persian-modern'
 })
   export default {

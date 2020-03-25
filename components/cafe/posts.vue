@@ -12,8 +12,8 @@
         {{post.type.title}}
       </span>
 
-      <div @click="setCurrentImg(post.img)" class="img" :style="{backgroundImage: `linear-gradient(to top, rgba(0, 0, 0, 0.5),rgba(0, 246, 252, 0.2)),
-          url(${post.img})`}">
+      <div @click="setCurrentImg(post.img)" class="img" 
+      :style="{backgroundImage: `linear-gradient(to top, rgba(0, 0, 0, 0.5),rgba(0, 246, 252, 0.2)),url(${post.img})`}">
            <p class="post-title font-16 right-align">{{post.title}}</p></div>
        
       <div class="post-content cp-tb-padding cp-side-padding">

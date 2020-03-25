@@ -18,16 +18,43 @@
 .bcp-btn
   border-radius: 5px
   &:focus
-    box-shadow: none!important 
-
+    box-shadow: none!important
 
 .bcp-btn-large
   height: 45px
   span
     font-size: 16px
 
+[anim="ripple"]
 
+  position: relative
+  overflow: hidden
 
+  &:before
+    content: ''
+    position: absolute
+    display: block
+    background: var(--ripple-background, white)
+    border-radius: 50%
+    pointer-events: none
 
+        //  position and size
+    top: calc(var(--y) * 1px)
+    left: calc(var(--x) * 1px)
+    width: calc(var(--d) * 1px)
+    height: calc(var(--d) * 1px)
 
-  
+        //  animated properties
+    opacity: calc(var(--o, 1) * var(--ripple-opacity, 0.3))
+    transition: calc(var(--t, 0) * var(--ripple-duration, 600ms)) var(--ripple-easing,linear)
+    transform: translate(-50%, -50%) scale(var(--s, 1))
+    transform-origin: center
+
+//  Just some styling
+.ripple-effect
+
+  --ripple-background: black
+  --ripple-opacity: 0.3
+  --ripple-duration: 600ms
+  -webkit-tap-highlight-color: rgba(0,0,0,0)
+
