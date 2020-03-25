@@ -240,7 +240,8 @@ import walletIcon from '~/assets/img//shape/icons/wallet.png'
       padding: 10px 15px
       box-shadow: 0px 5px 10px rgba(0,0 ,0 ,0.09 )
     p
-      font-size: 10px
+      font-size: 12px
+      font-weight: 500!important
     img
       width: 30px
 

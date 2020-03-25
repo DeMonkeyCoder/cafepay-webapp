@@ -68,6 +68,7 @@ export default {
       amountOptions: [30000, 50000, 100000],
       payAmount: null,
       autoNumbricElement: null,
+      tomanElement: null,
       transactions: [
         {
           date: "2020-09-27 22:10:48",
@@ -99,18 +100,19 @@ export default {
   methods: {
     changePayAmount(amount) {
       this.payAmount = amount
-      this.autoNumbricElement.set(amount, )
+      this.autoNumbricElement.set(amount)
+      this.tomanElement.style.color = this.colors.primary
     },
   },
   mounted() {
     this.autoNumbricElement = new AutoNumeric('.cp-input > input', {decimalPlaces: 0,digitGroupSeparator : ','})
     setTimeout(() => {
-      let span = document.getElementById('amountInput').nextElementSibling
-      span.innerHTML = 'تومان'
-      span.style.setProperty("font-weight", "600", "important")
-      span.style.fontSize = '12px'
-      span.style.left = "10px"
-      span.style.paddingTop = "1.25rem"
+      this.tomanElement = document.getElementById('amountInput').nextElementSibling
+      this.tomanElement.innerHTML = 'تومان'
+      this.tomanElement.style.setProperty("font-weight", "600", "important")
+      this.tomanElement.style.fontSize = '12px'
+      this.tomanElement.style.left = "10px"
+      this.tomanElement.style.paddingTop = "1.25rem"
     }, 100);
     
   }
