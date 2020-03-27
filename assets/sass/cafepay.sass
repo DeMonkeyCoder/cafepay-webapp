@@ -24,13 +24,16 @@
 
 
 *
-  cursor: none!important
+  -webkit-tap-highlight-color: rgba(0,0,0,0)
+  -webkit-tap-highlight-color: transparent
 
 
 
 body, html
   // background-color: #F3F3F3!important
   background-color: #f0f0f0!important
+  max-width: 998px
+  margin: auto
 .navigation-container
   box-shadow: $navbarBoxShadow
 
@@ -192,6 +195,12 @@ h1
   
 .cp-tb-padding-2x
   @include tbPadding($size: 2 * $padding)
+
+.cp-side-padding-4x
+  @include sidePadding($size: 4 * $padding)
+  
+.cp-tb-padding-4x
+  @include tbPadding($size: 4 * $padding)
 
 .cp-side-padding-half
   @include sidePadding($size: 0.5 * $padding)

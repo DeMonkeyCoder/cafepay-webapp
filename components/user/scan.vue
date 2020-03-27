@@ -216,7 +216,7 @@ import walletIcon from '~/assets/img//shape/icons/wallet.png'
   position: relative
   width: 100%
   background-color: grey
-  height: 300px
+  height: 40vh
   .enter-code-btn
     position: absolute
     right: 10px
