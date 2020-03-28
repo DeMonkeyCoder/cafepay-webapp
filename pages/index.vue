@@ -12,7 +12,7 @@
           <div class="action flex buttons are-medium">
             <!-- @click="state = 'login'" for ورود - ثبت نام -->
             <button class="btn is-danger button is-fullwidth" @click="entertoApp">ورود - ثبت نام</button>
-            <button class="btn is-info button is-fullwidth" to="aboutus">درباره کافه‌پِی</button>
+            <button @click="scrollllll" class="btn is-info button is-fullwidth">درباره کافه‌پِی</button>
           </div>
         </div>
 
@@ -74,7 +74,7 @@
       </transition>
     </section>
 
-    <section dir="rtl" class="about-us has-background-white cp-tb-padding-4x cp-side-padding-4x">
+    <section dir="rtl" id="about-us" class="about-us has-background-white cp-tb-padding-4x cp-side-padding-4x">
       <h1 class="header">کافه‌پِی چیه؟</h1>
       <p>کافه پی شیوه جدید پرداخت است که برای ا
         ولین بار در کافه و رستوران های ایران ا
@@ -145,6 +145,12 @@
         <div dir="ltr" class="buttons left-align">
         <b-button @click="sendForm" :loading="cloading" class="bcp-btn bcp-btn-large" type="is-info">ارسال پیام به کارشناسان</b-button>
         </div>
+    </section>
+    <section class="cp-tb-padding-4x cp-side-padding-2x center-align">
+      <P>آدرس: شیراز میدان پارسه یقطین جنوبی کوچه ۲۱ ساختمان اپادانا واحد ۸ 
+      - تلفن تماس: ۰۷۱۳۸۳۲۵۴۷۴</P>
+      <p dir="rtl" class="font-14 font-norm">کلیه حقوق این سایت (کافه‌پِی) متعلق به هوشمندسازان ویرا آرین می‌باشد.</p>
+ 
     </section>
   </div>
 </template>{
@@ -230,6 +236,9 @@ export default {
             console.log(err.response.data)
           }
         })
+    },
+    scrollllll(){
+      $('html, body').animate({scrollTop:$('#about-us').position().top});
     },
     sendForm(){
       this.cloading = true

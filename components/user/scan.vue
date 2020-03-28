@@ -38,16 +38,20 @@
       <h4>موجودی:‌<span>{{user.wallet_amount | currency}} تومان</span></h4>
       <div class="columns shortcut-btns is-mobile is-3-mobile">
         <div class="column ">
-           <div class="has-background-white">
-            <img :src="walletIcon" alt="" class="icon">
-            <p>شارژ کیف پول</p>
+          <nuxt-link to="/user/profile/wallet">
+           <div id="charge-wallet-icon" class="has-background-white">
+            <img  :src="walletIcon" alt="" class="icon">
+            <p>افزایش موجودی</p>
           </div>
+          </nuxt-link>
         </div>
         <div class="column">
-          <div class="has-background-white ripple-effect" anim="ripple">
-            <img :src="walletIcon" alt="" class="icon">
-            <p>شارژ کیف پول</p>
+          <nuxt-link to="/user/profile/wallet">
+          <div id="my-cafe-icon" class="has-background-white ripple-effect" anim="ripple">
+            <img  :src="myCafe" alt="" class="icon">
+            <p>کافه‌های من</p>
           </div>
+          </nuxt-link>
         </div>
 
     </div>
@@ -56,12 +60,13 @@
 </template>
 
 <script>
-import userImg from '~/assets/img//user.jpg'
-import walletIcon from '~/assets/img//shape/icons/wallet.png'
+import userImg from '~/assets/img/user.jpg'
+import walletIcon from '~/assets/img/shape/icons/wallet.png'
+import myCafe from '~/assets/img/shape/icons/my-cafe-2.svg'
   export default {
     data() {
       return {
-        userImg,walletIcon,
+        userImg, walletIcon, myCafe,
         isComponentModalActive: false,
         tableCode: null
       }
@@ -208,10 +213,6 @@ import walletIcon from '~/assets/img//shape/icons/wallet.png'
 <style scoped lang="sass">
 @import '~/assets/sass/variables.sass'
 
-.shortcut-btns
-  margin-right: 0!important
-  margin-left: 0!important
-
 .camera
   position: relative
   width: 100%
@@ -236,6 +237,8 @@ import walletIcon from '~/assets/img//shape/icons/wallet.png'
     border: 3px solid $primary
 
   .shortcut-btns
+    margin-right: 0!important
+    margin-left: 0!important
     padding: 10px 15px
     text-align: right
     .has-background-white
@@ -245,8 +248,20 @@ import walletIcon from '~/assets/img//shape/icons/wallet.png'
     p
       font-size: 12px
       font-weight: 500!important
-    img
-      width: 30px
+    a
+      color: $primary
+    #my-cafe-icon
+      padding-bottom: 4px
+      p
+        position: relative
+        bottom: 4px
+      img
+        width: 30px!important
+        height: 30px
+    #charge-wallet-icon
+      img
+        width: 24px!important
+
 
 
 @media (min-width: 992px)
