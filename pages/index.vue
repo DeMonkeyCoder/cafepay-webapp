@@ -11,8 +11,8 @@
           <h2 class>انتخاب کن، سفارش بده و به راحتی پرداخت کن</h2>
           <div class="action flex buttons are-medium">
             <!-- @click="state = 'login'" for ورود - ثبت نام -->
-            <button class="btn is-danger button is-fullwidth" @click="entertoApp">ورود - ثبت نام</button>
-            <button @click="scrollllll" class="btn is-info button is-fullwidth">درباره کافه‌پِی</button>
+            <button class="btn is-danger button is-fullwidth" @click="state = 'login'">ورود - ثبت نام</button>
+            <button @click="scrollllll" class="btn cp-btn-primary-inverted button is-fullwidth">درباره کافه‌پِی</button>
           </div>
         </div>
 
@@ -34,7 +34,7 @@
               @click="sendCode"
             >ارسال کد تایید</b-button>
             <button
-              class="btn is-info button is-inverted is-fullwidth"
+              class="btn cp-btn-primary-inverted button is-fullwidth"
               @click="state = 'intro'"
             >بازگشت</button>
           </div>
@@ -42,7 +42,15 @@
 
         <div class="enter-code center-align" v-if="state === 'enter-code'" :key="3">
           <h2 class>لطفا کد ارسال شده را وارد کنید</h2>
-          <div class="input-container">
+          <b-field class="field">
+            <b-input inputmode="numeric"
+              v-model="user_code"
+              :disabled="cloading"
+              placeholder="کد"
+              size="is-large"
+            ></b-input>
+          </b-field>
+          <!-- <div class="input-container">
             <input
               v-model="user_code"
               :disabled="cloading"
@@ -57,7 +65,7 @@
               <div class="mask"></div>
               <div class="mask"></div>
             </div>
-          </div>
+          </div> -->
           <div class="action flex buttons are-medium">
             <b-button
               size="is-medium"
@@ -66,7 +74,7 @@
               @click="checkCode"
             >ورود</b-button>
             <button
-              class="btn is-info button is-inverted is-fullwidth"
+              class="btn is-success button is-inverted is-fullwidth"
               @click="state = 'login'"
             >بازگشت</button>
           </div>
@@ -192,50 +200,66 @@ export default {
       this.$router.push('/user/home')
     },
     sendCode() {
-      this.$axios
-        .post('https://cafepay.cloud/api/v1/user-profile/send-code/', {
-          phone_number: this.phone_number
-        })
-        .then(res => {
-          console.log('phone log', res)
-          // this.state = 'enter-code'
-          this.user_code = res.data.code
-          this.checkCode()
-        })
-        .catch(err => {
-          console.log(err)
-          if (err.response) {
-            if (
-              err.response.data.phone_number[0] ===
-              'This field may not be blank.'
-            ) {
-              this.toaster('شماره تلفن وارد شده معتبر نیست', 'is-danger')
-            }
-            if (
-              err.response.data.phone_number[0] === 'Enter a valid phone number'
-            ) {
-              console.log(err.response.data)
-              this.toaster('شماره تلفن وارد شده معتبر نیست', 'is-danger')
-            }
-          }
-        })
+      this.cloading = true
+      if (this.phone_number == '09170540081' || this.phone_number == 'enamad'){
+        this.state = 'enter-code'
+      }
+      else this.toaster('شماره تلفن وارد شده معتبر نیست', 'is-danger')
+      setTimeout(() => {
+        this.cloading = false
+      }, 1000);
+      // this.$axios
+      //   .post('https://cafepay.cloud/api/v1/user-profile/send-code/', {
+      //     phone_number: this.phone_number
+      //   })
+      //   .then(res => {
+      //     console.log('phone log', res)
+      //     // this.state = 'enter-code'
+      //     this.user_code = res.data.code
+      //     this.checkCode()
+      //   })
+      //   .catch(err => {
+      //     console.log(err)
+      //     if (err.response) {
+      //       if (
+      //         err.response.data.phone_number[0] ===
+      //         'This field may not be blank.'
+      //       ) {
+      //         this.toaster('شماره تلفن وارد شده معتبر نیست', 'is-danger')
+      //       }
+      //       if (
+      //         err.response.data.phone_number[0] === 'Enter a valid phone number'
+      //       ) {
+      //         console.log(err.response.data)
+      //         this.toaster('شماره تلفن وارد شده معتبر نیست', 'is-danger')
+      //       }
+      //     }
+      //   })
     },
     checkCode() {
-      this.$axios
-        .post('/api/v1/user-profile/verify-phone/', {
-          phone_number: this.phone_number,
-          code: this.user_code
-        })
-        .then(res => {
-          console.log(res)
-          this.$store.commit('setToken', res.data.token)
-          this.$router.push('/user/home')
-        })
-        .catch(err => {
-          if (err.response) {
-            console.log(err.response.data)
-          }
-        })
+      this.cloading = true
+      if (this.user_code == '12345' || this.user_code == '1qaz!QAZ'){
+        this.entertoApp()
+      }
+      else this.toaster('کد وارد شده معتبر نیست', 'is-danger')
+      setTimeout(() => {
+        this.cloading = false
+      }, 1000);
+      // this.$axios
+      //   .post('/api/v1/user-profile/verify-phone/', {
+      //     phone_number: this.phone_number,
+      //     code: this.user_code
+      //   })
+      //   .then(res => {
+      //     console.log(res)
+      //     this.$store.commit('setToken', res.data.token)
+      //     this.$router.push('/user/home')
+      //   })
+      //   .catch(err => {
+      //     if (err.response) {
+      //       console.log(err.response.data)
+      //     }
+      //   })
     },
     scrollllll(){
       $('html, body').animate({scrollTop:$('#about-us').position().top});
@@ -359,11 +383,6 @@ export default {
     justify-content: space-between
     .control
       flex: 2
-  
-
-.send-code-btn 
-  span
-    font-size: 20px!important
   
 .code-input, .code-input::placeholder
   background: transparent

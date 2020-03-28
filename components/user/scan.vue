@@ -46,12 +46,12 @@
           </nuxt-link>
         </div>
         <div class="column">
-          <nuxt-link to="/user/profile/wallet">
-          <div id="my-cafe-icon" class="has-background-white ripple-effect" anim="ripple">
+          <!-- <nuxt-link to="/user/profile/wallet"> -->
+          <div @click="sendCode" id="my-cafe-icon" class="has-background-white ripple-effect" anim="ripple">
             <img  :src="myCafe" alt="" class="icon">
             <p>کافه‌های من</p>
           </div>
-          </nuxt-link>
+          <!-- </nuxt-link> -->
         </div>
 
     </div>
