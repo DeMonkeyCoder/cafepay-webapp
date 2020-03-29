@@ -11,7 +11,7 @@
           <h2 class>انتخاب کن، سفارش بده و به راحتی پرداخت کن</h2>
           <div class="action flex buttons are-medium">
             <!-- @click="state = 'login'" for ورود - ثبت نام -->
-            <button class="btn is-danger button is-fullwidth" @click="state = 'login'">ورود - ثبت نام</button>
+            <button class="btn is-danger button is-fullwidth" @click="entertoApp">ورود - ثبت نام</button>
             <button @click="scrollllll" class="btn cp-btn-primary-inverted button is-fullwidth">درباره کافه‌پِی</button>
           </div>
         </div>
