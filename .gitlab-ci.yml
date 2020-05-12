@@ -1,0 +1,14 @@
+iamge: "node:12.16.3"
+
+pages:
+  cache:
+    paths:
+      - node_modules/
+
+
+script:
+- npm install
+- npm run build
+
+only:
+- deploy
