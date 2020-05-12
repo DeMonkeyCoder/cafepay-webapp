@@ -7,6 +7,6 @@ deploy:
     - echo "$SSH_PRIVATE_KEY" >> ~/.ssh/id_dsa
     - chmod 600 ~/.ssh/id_dsa
     - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
-    - ssh spsina@cafepay.app "sh /home/spsina/dev/raw-webapp/deploy.sh"
+    - ssh -i ~/.ssh/id_dsa spsina@cafepay.app "sh /home/spsina/dev/raw-webapp/deploy.sh"
   only:
     - deploy
