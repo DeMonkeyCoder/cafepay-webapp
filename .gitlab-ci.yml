@@ -1,5 +1,4 @@
 deploy:
-  image: "node:12.16.3"
   stage: deploy
   script:
     - echo "$SSH_PRIVATE_KEY" >> ~/.ssh/id_dsa
