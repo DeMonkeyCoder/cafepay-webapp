@@ -2,7 +2,8 @@ build site:
   image: node:12
   stage: build
   script:
-    - npm install --progress=false
+    - npm install
+    - npm run build
     - npm run generate
   artifacts:
     expire_in: 1 week
