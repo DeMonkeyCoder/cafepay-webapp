@@ -25,6 +25,7 @@
     "vue-loading-skeleton": "^1.1.8",
     "vue-moment-jalaali": "^2.0.0",
     "vue-persian-datetime-picker": "^2.1.4",
+    "vue-qrcode-reader": "^2.3.0",
     "vue2-leaflet": "^2.5.2"
   },
   "devDependencies": {

@@ -29,6 +29,7 @@
     </b-modal>
 
     <div class="camera">
+      <qrcode-stream  @decode="onDecode"></qrcode-stream>
       <b-button @click="openCodeModal" class="enter-code-btn" type="is-info">وارد کردن کد میز</b-button>
     </div>
 
@@ -63,15 +64,27 @@
 import userImg from '~/assets/img/user.jpg'
 import walletIcon from '~/assets/img/shape/icons/wallet.png'
 import myCafe from '~/assets/img/shape/icons/my-cafe-2.svg'
+import { QrcodeStream, QrcodeDropZone, QrcodeCapture } from 'vue-qrcode-reader'
+
   export default {
+    components: {
+      QrcodeStream,
+      QrcodeDropZone,
+      QrcodeCapture
+    },
+
     data() {
       return {
         userImg, walletIcon, myCafe,
         isComponentModalActive: false,
-        tableCode: null
+        tableCode: null,
+        camera: true
       }
     },
     methods: {
+      onDecode () {
+        this.sendCode()
+      },
       closeModal(){
         this.isComponentModalActive = false
       },
@@ -119,7 +132,7 @@ import myCafe from '~/assets/img/shape/icons/my-cafe-2.svg'
                 {
                   rate: 4.3,
                   name: 'پیتزا مخصوص',
-                  description: 'پیتزاست دیگه',
+                  description: 'پیتزا',
                   avatar: 'https://media-cdn.tripadvisor.com/media/photo-s/0c/ac/c1/b8/tandoori-chicken-chorizo.jpg',
                   original_price: 49000,
                   discount: 0,
@@ -129,7 +142,7 @@ import myCafe from '~/assets/img/shape/icons/my-cafe-2.svg'
                 {
                   rate: 4.1,
                   name: 'ساندویچ هات داگ پنیری',
-                  description: 'پیتزاست دیگه',
+                  description: 'هات داگ',
                   avatar: 'https://media-cdn.tripadvisor.com/media/photo-s/0c/ac/c1/b8/tandoori-chicken-chorizo.jpg',
                   original_price: 65000,
                   discount: 0,
@@ -153,7 +166,7 @@ import myCafe from '~/assets/img/shape/icons/my-cafe-2.svg'
                 {
                   rate: 3.6,
                   name: 'چیلی برگر',
-                  description: 'همبرگر است دیگه',
+                  description: 'همبرگر ',
                   avatar: 'https://images2.minutemediacdn.com/image/upload/c_crop,h_1126,w_2000,x_0,y_181/f_auto,q_auto,w_1100/v1554932288/shape/mentalfloss/12531-istock-637790866.jpg',
                   original_price: 29000,
                   discount: 0,
