@@ -47,7 +47,7 @@
 
     <section class="content-below-profile-bar cp-side-margin">
       <div class="profile-information-form cp-b-margin-2x">
-        <div class="change-avatar cp-b-margin cp-card has-background-white cp-side-padding">
+        <!-- <div class="change-avatar cp-b-margin cp-card has-background-white cp-side-padding">
           <div class="info-user-avatar">
             <img :src="userx.avatar" alt />
           </div>
@@ -56,12 +56,12 @@
               class="font-16 cp-btn has-text-white cp-btn-primary cp-side-padding font-norm"
             >تغییر آواتار</span>
           </div>
-        </div>
+        </div> -->
 
         <b-field>
           <b-input
             v-model="user.first_name"
-            class="cp-input cp-input-primary"
+            class="cp-input cp-input-primary "
             placeholder="نام"
             icon="account"
           ></b-input>
@@ -70,7 +70,7 @@
         <b-field>
           <b-input
             v-model="user.last_name"
-            class="cp-input cp-input-primary"
+            class="cp-input cp-input-primary "
             placeholder="نام خانوادگی"
             icon="account"
           ></b-input>
@@ -81,7 +81,7 @@
             readonly="readonly"
             @click.native="openChangeNumberModal"
             v-model="user.phone_number"
-            class="cp-input cp-input-primary"
+            class="cp-input cp-input-primary "
             placeholder="شماره تلفن"
             icon="cellphone"
           ></b-input>
@@ -90,7 +90,7 @@
         <b-field>
           <b-input
             v-model="user.shaba_number"
-            class="cp-input cp-input-primary"
+            class="cp-input cp-input-primary "
             placeholder="شماره شبا"
             icon="credit-card"
           ></b-input>
@@ -103,7 +103,7 @@
               readonly="readonly"
               @click.native="openDatePicker"
               v-model="user.birthday"
-              class="cp-input cp-input-primary"
+              class="cp-input cp-input-primary "
               placeholder="تاریخ تولد"
               icon="cake-variant"
             ></b-input>

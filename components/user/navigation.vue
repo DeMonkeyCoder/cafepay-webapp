@@ -22,6 +22,7 @@
     <div @click="triggerChangeTab('profile')" class="nav-tab profile center-align" :class="{'is-active': currentMainPage == 'profile'}">
       <img v-if="currentMainPage == 'profile'" src='@/assets/img/shape/icons/user-color.svg' alt="">
       <img v-else src='@/assets/img/shape/icons/user.png' alt="">
+      <span class="notif-num has-background-danger">1</span>
       <p>پروفایل</p>
     </div>
 
@@ -68,6 +69,15 @@
   background-color: white
   height: 60px
   box-shadow: 0px -1px 2px rgba(0,0 ,0 ,0.15)
+
+  .nav-tab.profile
+    position: relative
+    .notif-num
+      width: 23px
+      height: 23px
+      position: absolute
+      left: calc(50% - 30px)
+      top: calc(50% - 15px)
 
   .nav-tab
     padding-top: 5px

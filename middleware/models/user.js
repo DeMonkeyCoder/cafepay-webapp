@@ -6,9 +6,8 @@ export default class Movie {
   constructor(userData = {}) {
     this.first_name = userData.first_name
     this.last_name = userData.last_name
-    this.avatar = userData.avatar
     this.phone_number = userData.phone_number
-    this.wallet_amount = userData.wallet.amount
+    this.wallet_amount = 12000
   }
 
   get full_name() {

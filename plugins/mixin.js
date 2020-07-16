@@ -3,6 +3,7 @@ import Vue from 'vue'
 Vue.mixin({
     data() {
       return {
+        baseUrl: 'https://cafepay.app/',
         cloading: false,
         colors: {
           primary: '#009fe3',
@@ -19,17 +20,7 @@ Vue.mixin({
         }
       }
     },
-    computed: {
-        // cloading (){
-        //     return this.$store.state.loading
-        // },
-        hasActiveTable(){
-          return this.$store.state.hasActiveTable
-        },
-        token() {
-          return this.$store.state.token
-        }
-    },
+
     methods: {
         toaster (massage, type , position) {
             this.$buefy.toast.open({
@@ -39,5 +30,33 @@ Vue.mixin({
                 type: type
             })
         }
-    }
+    },
+    mounted(){
+      
+      // if (this.token !== null && this.user == null) {
+        // this.$store.dispatch('user/retrive')
+      // }
+    },
+    computed: {
+      // cloading (){
+      //     return this.$store.state.loading
+      // },
+      hasActiveTable() {
+        return this.$store.state.hasActiveTable
+      },
+      token() {
+        return this.$store.state.token
+      },
+      globalLoading() {
+        return this.$store.state.globalLoading
+      },
+      user() {
+        return this.$store.state.user.user
+      }
+    },
+    watch: {
+      // token(newValue, oldValue) {
+        
+      // },
+    },
 })

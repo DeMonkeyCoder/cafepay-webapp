@@ -5,16 +5,6 @@
 import User from '../middleware/models/user'
 export const state = () => ({
   user: {
-    first_name: 'علی',
-    last_name: 'بیگی',
-    full_name: 'علی علی بیگی',
-    phone_number: '09170540081',
-    avatar: 'https://avatars0.githubusercontent.com/u/23187274?s=460&v=4',
-    wallet: {
-      amount: 78000,
-      transactions: []
-    },
-    wallet_amount: 78000
 
   }
 })
@@ -27,9 +17,24 @@ export const mutations = {
   set(state, user) { 
     state.user = new User(user)
   },
+  clear(state){
+    state.user = {} 
+  }
 
 }
 
 export const actions = {
-
+ 
+    async retrieve(context) {
+      let data = await this.$axios.$get('/api/v1/user-profile/', {
+        params: {}, headers: {
+        'Authorization': 'Token ' + context.rootState.token,
+        }
+      })
+      console.log('user', data);
+      context.commit('set', data)
+      
+      // context.commit('setCitiesData', data)
+    },
+  
 }

@@ -4,7 +4,7 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 export const state = () => ({
-    loading: false,
+    globalLoading: false,
     activeCafe: {},
     activeTable: {},
     hasActiveTable: false,
@@ -13,7 +13,9 @@ export const state = () => ({
 })
   
 export const mutations = {
-    toggleLoading (state, flag) {state.loading = flag},
+    toggleLoading(state, flag) {
+      state.globalLoading = flag
+    },
     setActiveTable(state, flag) {
       state.hasActiveTable = flag
     },
