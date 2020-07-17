@@ -1,98 +1,180 @@
 <template>
   <div class="home-container">
-    <section class="intro flex" :style="{backgroundImage: `url(${background})`}">
+    <section class="intro cp-side-padding flex" :style="{backgroundImage: (mobile) ? `url(${mobilebc})` : `url(${background})`}">
       <img class="logo" :src="logo" alt />
+      <h3 class="has-text-white-bis t-medium">انتخاب کن، سفارش بده
+            و به راحتی پرداخت کن</h3>
       <transition name="fade" mode="out-in">
         <div class="intro-state center-align" v-if="state === 'intro'" :key="1">
-          <h1 class="t-xxlarge">
-            کافه‌
-            <span class="t-xxlarge t-lightblue">پِی</span>
-          </h1>
-          <h2 class>انتخاب کن، سفارش بده و به راحتی پرداخت کن</h2>
+          <!-- <h1 class="t-xlarge has-text-white-bis">
+            کافه‌<span class="t-xlarge t-lightblue">پِی</span>
+          </h1> -->
+          
           <div class="action flex buttons are-medium">
             <!-- @click="state = 'login'" for ورود - ثبت نام -->
-            <button class="btn is-danger button is-fullwidth" @click="entertoApp">ورود - ثبت نام</button>
-            <button @click="scrollllll" class="btn cp-btn-primary-inverted button is-fullwidth">درباره کافه‌پِی</button>
+            <button class="btn cp-btn-primary button is-fullwidth" @click="changeState('login')">ورود - ثبت نام</button>
+             <!-- <b-button type="is-primary" outlined>Outlined</b-button> -->
+            <button @click="scrollllll" class="btn is-light button is-fullwidth">درباره کافه‌پِی</button>
           </div>
         </div>
 
-        <div class="login center-align" v-if="state === 'login'" :key="2">
-          <h2 class>ورود یا ثبت نام</h2>
-          <b-field class="field">
-            <b-input
+        <div class="login cp-tb-margin center-align" v-if="state === 'login'" :key="2">
+          <h2 class="has-text-white-bis font-bold">ورود یا ثبت نام</h2>
+          <b-field >
+            <b-input inputmode="numeric"
+              class="cp-input cp-input-primary cp-input-grey"
+              message="You can have a message too"
+              maxlength="11"
               v-model="phone_number"
-              :disabled="cloading"
+              :disabled="globalLoading"
               placeholder="۰۹xxxxxxxxx"
-              size="is-large"
+              size="is-medium"
             ></b-input>
           </b-field>
           <div class="action flex buttons are-medium">
             <b-button
               size="is-medium"
-              :loading="cloading"
-              class="send-code-btn btn is-info button is-fullwidth"
+              :loading="globalLoading"
+              class="send-code-btn forward ml-zero btn is-info button is-fullwidth"
               @click="sendCode"
-            >ارسال کد تایید</b-button>
-            <button
-              class="btn cp-btn-primary-inverted button is-fullwidth"
-              @click="state = 'intro'"
-            >بازگشت</button>
+              >ارسال کد تایید</b-button>
+              <b-button type="is-light" class="back" rounded
+                icon-right="chevron-right" @click="state = 'intro'" />
           </div>
         </div>
 
-        <div class="enter-code center-align" v-if="state === 'enter-code'" :key="3">
-          <h2 class>لطفا کد ارسال شده را وارد کنید</h2>
+        <div class="enter-code cp-tb-margin center-align" v-if="state === 'enter-code'" :key="3">
+          <h2 class="has-text-white-bis font-bold">لطفا کد ارسال شده را وارد کنید</h2>
           <b-field class="field">
             <b-input inputmode="numeric"
+              class="cp-input cp-input-primary cp-input-grey"
+              maxlength="5"
               v-model="user_code"
-              :disabled="cloading"
-              placeholder="کد"
-              size="is-large"
+              :disabled="globalLoading"
+              placeholder="12345"
+              size="is-medium"
             ></b-input>
           </b-field>
-          <!-- <div class="input-container">
-            <input
-              v-model="user_code"
-              :disabled="cloading"
-              maxlength="5"
-              class="is-medium"
-              custom-class="code-input"
-            />
-            <div class="input-masks">
-              <div class="mask"></div>
-              <div class="mask"></div>
-              <div class="mask"></div>
-              <div class="mask"></div>
-              <div class="mask"></div>
-            </div>
-          </div> -->
+
           <div class="action flex buttons are-medium">
             <b-button
               size="is-medium"
-              :loading="cloading"
-              class="send-code-btn btn is-success button is-fullwidth"
+              :loading="globalLoading"
+              class="send-code-btn forward ml-zero btn is-info button is-fullwidth"
               @click="checkCode"
-            >ورود</b-button>
-            <button
-              class="btn is-success button is-inverted is-fullwidth"
-              @click="state = 'login'"
-            >بازگشت</button>
+              >تایید کد</b-button>
+              <b-button type="is-light" class="back" rounded
+                icon-right="chevron-right" @click="state = 'login'" />
+          </div>
+        </div>
+
+
+          <div class="signup cp-tb-margin center-align" v-if="state === 'signup'" :key="4">
+          <h5 class="has-text-white-bis font-bold">جهت تکمیل ثبت نام و ورود به برنامه نام و نام‌خانوادگی خود را وارد کنید</h5>
+          
+          <b-field>
+            <b-input dir="rtl"
+              v-model="first_name"
+              class="cp-input cp-input-primary cp-input-grey "
+              placeholder="نام"
+              size="is-medium"
+            ></b-input>
+          </b-field>
+
+          <b-field>
+            <b-input dir="rtl"
+              v-model="last_name"
+              class="cp-input cp-input-primary cp-input-grey "
+              placeholder="نام خانوادگی"
+             size="is-medium"
+            ></b-input>
+          </b-field>
+
+          <div class="action cp-t-margin flex buttons are-medium">
+            <b-button
+              size="is-medium"
+              :loading="globalLoading"
+              class="send-code-btn forward ml-zero btn is-info button is-fullwidth"
+              @click="signup"
+              >ثبت نام</b-button>
+              <b-button type="is-light" class="back" rounded
+                icon-right="chevron-right" @click="state = 'login'" />
+    
           </div>
         </div>
       </transition>
     </section>
 
-    <section dir="rtl" id="about-us" class="about-us has-background-white cp-tb-padding-4x cp-side-padding-4x">
-      <h1 class="header">کافه‌پِی چیه؟</h1>
-      <p>کافه پی شیوه جدید پرداخت است که برای ا
-        ولین بار در کافه و رستوران های ایران ا
-        جرا شده است. تیم کافه پی در سال 1398 با رویکرد سهولت در پرداخت و ارتباط با مشتری شروع به کار کرد. با استفاده از پلتفرم کافه پی، کاربران می توانند با اسکن q
-        r کد روی میز کافه و رستوران، منوی رستوران را مشاهده و سفارش خود را ثبت نمایند و در انتها سفارش های روی میز را مشاهده نموده و دونگ خود را پرداخت کنند. همچنین قا
-        بلیت های متنوعی برای مدیران کافه و رستوران از جمله مدیریت ارتباط با مشتری در نظر گرفته شده است. تیم کافه پی امکانات متنوع دیگری از جمله قابلیت ثبت نظرات درباره کیفیت
-         غذا و سرویس دهی و پیدا کردن کافه و رستوران های مناسب برای کاربران تدارک دیده و همواره در تلاش برای افزودن امکانات جدید و بهبود خدمات به مشتریان عزیز می باشد.</p>
+
+
+    <section dir="rtl" id="about-us" class="about-us has-background-white cp-tb-padding-4x cp-side-padding-4x"><h1 class="header">کافه‌پِی چیست؟</h1> <p>
+      
+      کافه پی یک سیستم یکپارچه فروش، حسابداری و مدیریت ارتباط با مشتری در حوزه خدمات کافه، رستوران و فست فود مبتنی بر کلود است. علاوه بر خدمات هوشمند و متنوعی که کافه پی برای صاحبان کسب کار دارد، خدمتی نوین در راستای سهولت در ثبت سفارش و تسویه صورت حساب به مشتریان ارایه می دهد.
+
+      </p> <h1 class="header-second">سیستم فروش</h1> <p>
+      سیستم فروش، پر استفاده ترین قسمت نرم افزار می باشد که روزانه به دفعات توسط سالن دار ها، صندوق دار ها و صاحبان کسب کار استفاده می شود. با توجه به این امر، سعی شده سیستم فروش به گونه این طراحی شود که بدون نیاز به آموزش، به راحتی برای هر گروه افراد قابل استفاده باشد.
+      </p> <h1 class="header-second">سیستم حسابداری</h1> <p>
+      
+      تمامی داده های فروش، به صورت خودکار در سیستم حسابداری کافه پی ثبت و نگهداری می شود. از جمله امکانات این قسمت، دریافت انواع گزارش های حسابداری مرتبط با فروش است. این گزارش های می تواند به صورت تجمعی یا ریز تهیه شود. امکان اعمال انواع فیلتر مانند، بازه زمانی، مشتری خاص، دسته محصول خاص و ... در سیستم در نظر گرفته شده.
+      
+      </p> <h1 class="header-second">مدیریت ارتباط با مشتری</h1> <p>
+      یکی از خدمات نوینی که کافه پی ارایه می دهد، سیستم ثبت سفارش توسط مشتری است. با توجه به سیستمی شدن ثبت سفارش افراد، اطلاعات دقیقی از رفتار مشتریان به صورت کاملا خودکار به دست می آید. از جمله، تعداد دفعات مراجعه افراد، سفارش های پیشین، نظرات و امتیازات قبلی افراد، غذای مورد علاقه و سلیقه هر یک از مشتریان. با استفاده از این اطلاعات، صاحبان کسب کار می توانند، آفر ها و تخفیف های شخصی سازی شده به مشتریان خود ارایه کنند و با پلتفرمی که در اختیار دارند مشتریان خود را از این آفر ها و تخفیفات مطلع کنند. 
+      </p> <h1 class="header-second">سیستم ثبت سفارش توسط مشتری</h1> <p>
+      روی هر یک از میزهای کافه/رستوران، یک QR در نظر گرفته می شود، که با اسکن کردن آن از طریق اپ کافه پی، به صفحه منو کافه/رستوران منتقل می شوند، کاربران پس از انتخاب، می توانند به صورت آنلاین سفارش خود را ثبت و صورت حساب را آنلاین پرداخت کنند.
+
+      </p></section>
+
+    <section dir="rtl" id="how-to-use" class=" cp-tb-padding-4x cp-side-padding-4x">
+      <h1 class="header">راهنمای سفارش‌دهی و پرداخت</h1>
+
+      <div class="how-to-use-steps columns">
+        <div class=" htus-container column is-6">
+          <div class="htus has-background-white normal-radius long-shadow">
+            <div class="htus-num">
+              <p class="primary">۱</p>
+            </div>
+            <div class="htus-content">
+              روی دکمه <span class="htus-btn font-norm p-text">ورود - ثبت نام</span> کلیک کن، شماره همراهت وارد و تجربه کافه پی رو شروع کن
+            </div>
+          </div>
+        </div>
+          <div class=" htus-container column is-6">
+          <div class="htus has-background-white normal-radius long-shadow">
+            <div class="htus-num ">
+              <p class="secondary">۲</p>
+            </div>
+            <div class="htus-content">
+              	بارکد روی میز رو اسکن یا روی دکمه <span class="htus-btn font-norm s-text">وارد کردن کد میز</span> کد کلیک کن و کد مربوط به میز رو وارد کن
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="how-to-use-steps columns">
+        <div class=" htus-container column is-6">
+          <div class="htus has-background-white normal-radius long-shadow">
+            <div class="htus-num">
+              <p class="purple">۳</p>
+            </div>
+            <div class="htus-content">
+              	غذایی که میخوای رو از منو انتخاب کن و پرداختت رو همونجا آنلاین انجام بده.
+            </div>
+          </div>
+        </div>
+          <div class=" htus-container column is-6">
+          <div class="htus has-background-white normal-radius long-shadow">
+            <div class="htus-num">
+               <p class="green">۴</p>
+            </div>
+            <div class="htus-content">
+              بعد از اتمام غذا میتونی نظرت رو راجع به غذا و کافه یا رستورانی که توش بودی بدی
+            </div>
+          </div>
+        </div>
+      </div>
+
     </section>
 
-    <section dir="rtl" class="rules cp-tb-padding-4x cp-side-padding-4x">
+    <section dir="rtl" class="rules cp-tb-padding-4x cp-side-padding-4x has-background-white">
       <h2 class="header">قوانین استفاده از کافه‌پِی</h2>
       <ul class="cp-side-padding">
       <li>کافه پی در چارچوب قوانین جمهوری اسلامی ایران فعالیت میکند و شما متعهد می شوید از هرگونه استفاده مغایر قانون از این برنامه خودداری کنید.</li>
@@ -132,14 +214,14 @@
       <h6 class="header font-20">اگر پیشنهاد یا انتقادی از کافه‌پِی دارید برای ما ارسال کنید</h6>
       <b-field grouped>
         <b-input expanded
-          id="date-picker-input"
+          id=""
           v-model="form.name"
           class="cp-input cp-input-primary cp-input-grey cp-input-shadow"
           placeholder="نام و نام خانوادگی"
           icon="account"
         ></b-input>
         <b-input expanded
-          id="date-picker-input"
+          id=""
           v-model="form.phone_number"
           class="cp-input cp-input-primary cp-input-grey cp-input-shadow"
           placeholder="شماره تماس"
@@ -151,10 +233,11 @@
          dir="rtl" v-model="form.comment" maxlength="200" type="textarea" placeholder="پیام خود را بنویسید"></b-input>
         </b-field>
         <div dir="ltr" class="buttons left-align">
-        <b-button @click="sendForm" :loading="cloading" class="bcp-btn bcp-btn-large" type="is-info">ارسال پیام به کارشناسان</b-button>
+        <b-button @click="sendForm" :loading="globalLoading" class="bcp-btn bcp-btn-large" type="is-info">ارسال پیام به کارشناسان</b-button>
         </div>
     </section>
-    <section class="cp-tb-padding-4x cp-side-padding-2x center-align">
+    <section class="cp-tb-padding-2x cp-side-padding-2x center-align">
+      <a class="enamad" target="_blank" href="https://trustseal.enamad.ir/?id=151125&amp;Code=JqBoaBpmXtRClu4juASL"><img src="https://Trustseal.eNamad.ir/logo.aspx?id=151125&amp;Code=JqBoaBpmXtRClu4juASL" alt="" style="cursor:pointer" id="JqBoaBpmXtRClu4juASL"></a>
       <P>آدرس: شیراز میدان پارسه یقطین جنوبی کوچه ۲۱ ساختمان اپادانا واحد ۸ 
       - تلفن تماس: ۰۷۱۳۸۳۲۵۴۷۴</P>
       <p dir="rtl" class="font-14 font-norm">کلیه حقوق این سایت (کافه‌پِی) متعلق به هوشمندسازان ویرا آرین می‌باشد.</p>
@@ -165,8 +248,9 @@
 
 <script>
 // import Logo from '~/components/Logo.vue'
-import logo from '~/assets/img/shape/logo-transparent.png'
-import background from '~/assets/img/background/320.png'
+import logo from '~/assets/img/shape/logo-transparent-white-mixed.png'
+import background from '~/assets/img/background/320-2.jpg'
+import mobilebc from '~/assets/img/background/320-3.jpg'
 
 export default {
   data() {
@@ -176,20 +260,24 @@ export default {
       state: 'intro',
       phone_number: '',
       user_code: '',
-      background,
+      background,mobilebc,
       form: {
         name: null,
         phone_number: null,
         comment: null
-      }
+      },
+      first_name: null,
+      last_name: null,
+      mobile: false,
+      isUserExist: true,
     }
   },
   methods: {
     entertoApp() {
       let userData = {
-        first_name: 'علی',
-        last_name: 'بیگی',
-        phone_number: '09170540081',
+        first_name: '',
+        last_name: '',
+        phone_number: '',
         avatar: 'https://avatars0.githubusercontent.com/u/23187274?s=460&v=4',
         wallet: {
           amount: 78000,
@@ -199,83 +287,110 @@ export default {
       this.$store.commit('user/set', userData)
       this.$router.push('/user/home')
     },
+    changeState(state){
+      this.state = state
+    },
     sendCode() {
-      this.cloading = true
-      if (this.phone_number == '09170540081' || this.phone_number == 'enamad'){
-        this.state = 'enter-code'
+      let validation = /^(\0|0)?9\d{9}$/g
+      if (this.phone_number.match(validation)) {
+             this.$axios
+        .post('api/v1/user-profile/send-code/', {
+          phone_number: this.phone_number
+        })
+        .then(res => {
+          console.log('phone log', res)
+          this.state = 'enter-code'
+          this.user_code = res.data.code
+          
+        })
+        .catch(err => {
+          console.log(err.response)
+              
+          if (err.response) {
+ 
+            // signup
+
+            if (err.response.status == 303) {
+              this.isUserExist = false
+              this.state = 'enter-code'
+            }
+          }
+        })
       }
-      else this.toaster('شماره تلفن وارد شده معتبر نیست', 'is-danger')
-      setTimeout(() => {
-        this.cloading = false
-      }, 1000);
-      // this.$axios
-      //   .post('https://cafepay.cloud/api/v1/user-profile/send-code/', {
-      //     phone_number: this.phone_number
-      //   })
-      //   .then(res => {
-      //     console.log('phone log', res)
-      //     // this.state = 'enter-code'
-      //     this.user_code = res.data.code
-      //     this.checkCode()
-      //   })
-      //   .catch(err => {
-      //     console.log(err)
-      //     if (err.response) {
-      //       if (
-      //         err.response.data.phone_number[0] ===
-      //         'This field may not be blank.'
-      //       ) {
-      //         this.toaster('شماره تلفن وارد شده معتبر نیست', 'is-danger')
-      //       }
-      //       if (
-      //         err.response.data.phone_number[0] === 'Enter a valid phone number'
-      //       ) {
-      //         console.log(err.response.data)
-      //         this.toaster('شماره تلفن وارد شده معتبر نیست', 'is-danger')
-      //       }
-      //     }
-      //   })
+      else if (this.phone_number == ''){
+        this.toaster('لطفا شماره تلفن خود را وارد نمایید', 'is-danger')
+      }
+      else {
+        this.toaster('شماره تلفن وارد شده معتبر نیست', 'is-danger')
+      }
+ 
     },
     checkCode() {
-      this.cloading = true
-      if (this.user_code == '12345' || this.user_code == '1qaz!QAZ'){
-        this.entertoApp()
+      this.$axios
+        .post('/api/v1/user-profile/auth-token/', {
+          phone_number: this.phone_number,
+          code: this.user_code
+        })
+        .then(res => {
+          console.log('user loged in', res.data)
+          this.$store.commit('setToken', res.data.token)
+          this.$store.dispatch('user/retrieve')
+          this.$router.push('/user/home')
+        })
+        .catch(err => {
+          if (err.response) {
+            console.log(err.response.data)
+          }
+        })
+    },
+    signup(){
+        if (this.first_name != '' && this.last_name != ''){
+        this.$axios
+        .post('/api/v1/user-profile/add/', {
+          first_name: this.first_name,
+          last_name: this.last_name
+        })
+        .then(res => {
+          console.log('user loged in', res.data)
+          this.$store.commit('setToken', res.data.token)
+          this.$store.dispatch('user/retrieve')
+          this.$router.push('/user/home')
+        })
+        .catch(err => {
+          if (err.response) {
+            console.log(err.response.data)
+          }
+        })
       }
-      else this.toaster('کد وارد شده معتبر نیست', 'is-danger')
-      setTimeout(() => {
-        this.cloading = false
-      }, 1000);
-      // this.$axios
-      //   .post('/api/v1/user-profile/verify-phone/', {
-      //     phone_number: this.phone_number,
-      //     code: this.user_code
-      //   })
-      //   .then(res => {
-      //     console.log(res)
-      //     this.$store.commit('setToken', res.data.token)
-      //     this.$router.push('/user/home')
-      //   })
-      //   .catch(err => {
-      //     if (err.response) {
-      //       console.log(err.response.data)
-      //     }
-      //   })
+      if (this.first_name == '' && this.last_name == ''){
+         this.toaster('نام و نام خانوادگی خود را وارد کنید', 'is-danger')
+      }
+      else if (this.first_name == '' && this.last_name != ''){
+        this.toaster('نام خود را وارد کنید', 'is-danger')
+      }
+      else {
+        this.toaster('نام خانوادگی خود را وارد کنید', 'is-danger')
+      }
     },
     scrollllll(){
       $('html, body').animate({scrollTop:$('#about-us').position().top});
     },
     sendForm(){
-      this.cloading = true
+      this.globalLoading = true
       setTimeout(() => {
         this.toaster('پیام شما با برای کارشناسان ما ارسال شد', 'is-info', 'is-bottom')
-        this.cloading = false
+        this.globalLoading = false
       }, 1500);
     }
   },
   mounted() {
     let h = window.innerHeight
+    let w = window.innerWidth
+    if (w <= 601) this.mobile = true
     $('.intro').css({ 'min-height': h })
-  }
+  },
+  watch: {
+  },
 }
 </script>
 
@@ -312,8 +427,9 @@ export default {
   left: 0
   right: 0
 
+
 .logo
-  width: 300px   
+  width: 360px   
 .input-container
   position: relative
   input
@@ -348,24 +464,85 @@ export default {
       border-radius: 3px
 
 
+#how-to-use
+  .htus-container
+    padding: $padding
+    .htus
+      height: 75px
+      padding: $padding * 3
+      display: flex
+      align-items: center
+      .htus-content
+        flex: 6
+          
+      .htus-num
+        flex: 1
+        p
+          width: 40px
+          height: 40px
+          color: white
+          font-size: 20px
+          border-radius: 25px
+          display: flex
+          justify-content: center
+          align-items: center
+
+
+
+.header-second 
+  font-size: 20px
+  font-weight: 500
+  color: #29abe2!important
+  margin-bottom: .5rem
+  margin-top: .5rem
+  text-align: right
 
 
 .intro
+  background-position: 20px 20px 20px 200px
   background-size: cover
   justify-content: center
   align-items: center
   flex-direction: column
   h2
-    margin-top: 15px
+    font-size: 18px
+  h3
+    font-size: 16px!important
 
 .action
-  // flex-direction: column
+
   justify-content: center
   align-items: center
-  margin-top: 30px
-  button
+  // .button 
+  //   .icon
+  //     &:last-child
+  //       margin-left: 0!important
+  //       margin-right: 0!important
+  button    
     margin: 0 10px
-    flex: 1
+    &.forward
+      flex: 9 
+    &.back
+      flex: 1
+      margin-right: 0
+      padding-right: 0.5rem!important
+      padding-left: 0.5rem!important
+      .mdi
+        font-size: 28px!important
+
+    .icon:last-child
+      margin: 0!important
+
+.intro-state
+  width: 500px
+
+  .action
+    // flex-direction: column
+    margin-top: 0.75rem!important
+    justify-content: space-between
+    button
+      border: none
+      flex: 1
 
 .fade-enter-active, .fade-leave-active 
   transition: all .5s
@@ -375,10 +552,22 @@ export default {
   transition: all .5s
   transform: translateX(-100px)
   opacity: 0
-.login
+
+
+.enamad
+  display: block
+  width: 100px
+  margin: auto
+  margin-bottom: $margin
+
+
+.signup
+  
+.login, .enter-code, .signup
+  width: 500px
   .field
-    margin-top: 15px
-    margin-bottom: 30px!important
+    margin-top: 0.75rem
+    margin-bottom: 0!important
     display: flex
     justify-content: space-between
     .control
@@ -395,5 +584,13 @@ export default {
   text-align: center
   small
     display: none!important
+
+@media (max-width: 600px)
+  .logo
+    width: 80%!important
+  .intro-state
+    width: 100%
+  .login, .enter-code, .signup
+    width: 96%
 
 </style>

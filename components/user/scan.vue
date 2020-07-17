@@ -34,7 +34,9 @@
     </div>
 
     <div class="landing white">
-      <img class="user-img" :src="user.avatar" alt="">
+      <div id="user-img">
+      </div>
+      
       <h1 class="t-large">{{user.full_name}}</h1>
       <h4>موجودی:‌<span>{{user.wallet_amount | currency}} تومان</span></h4>
       <div class="columns shortcut-btns is-mobile is-3-mobile">
@@ -65,6 +67,8 @@ import userImg from '~/assets/img/user.jpg'
 import walletIcon from '~/assets/img/shape/icons/wallet.png'
 import myCafe from '~/assets/img/shape/icons/my-cafe-2.svg'
 import { QrcodeStream, QrcodeDropZone, QrcodeCapture } from 'vue-qrcode-reader'
+const identicon = require('identicon')
+ 
 
   export default {
     components: {
@@ -205,7 +209,7 @@ import { QrcodeStream, QrcodeDropZone, QrcodeCapture } from 'vue-qrcode-reader'
         //   this.$store.commit('setActiveTable', {id: res.data.table})
           this.$store.commit('setActiveTable', true)
           this.$store.commit('changeNavigation', 'currentCafe')
-          this.$store.commit('table/newPerson', {id: 1, name: this.user.full_name, avatar: this.user.avatar, orders: []})
+          // this.$store.commit('table/newPerson', {id: 1, name: this.user.full_name, avatar: this.user.avatar, orders: []})
           this.isComponentModalActive = false
 
         // }).catch(err =>{
@@ -220,6 +224,29 @@ import { QrcodeStream, QrcodeDropZone, QrcodeCapture } from 'vue-qrcode-reader'
         return this.$store.state.user.user 
       },
     },
+    watch: {
+      user(newValue, oldValue) {
+        if (newValue.first_name != ''  && newValue.first_name != undefined){
+          identicon.generate({ id: newValue.first_name,size: 75 }, (err, buffer) => {
+          if (err) throw err
+          const img = new Image()
+          img.src = buffer
+          document.getElementById('user-img').appendChild(img)
+          })
+        }
+      },
+    },
+    mounted(){
+        if (this.user.first_name != '' && this.user.first_name != undefined){
+          alert(typeof this.user.first_name)
+          identicon.generate({ id: this.user.first_name, size: 75}, (err, buffer) => {
+          if (err) throw err
+          const img = new Image()
+          img.src = buffer
+          document.getElementById('user-img').appendChild(img)
+          })
+        }
+    }
   }
 </script>
 
@@ -242,12 +269,13 @@ import { QrcodeStream, QrcodeDropZone, QrcodeCapture } from 'vue-qrcode-reader'
 .landing
   margin-top: 20px
   text-align: center
-  .user-img
-    width: 75px
-    height: 75px
-    object-fit: cover
-    border-radius: 40px
-    border: 3px solid $primary
+  #user-img
+    img
+      width: 75px
+      height: 75px
+      object-fit: cover
+      border-radius: 40px
+      border: 3px solid $primary
 
   .shortcut-btns
     margin-right: 0!important

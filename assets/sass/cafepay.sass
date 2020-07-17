@@ -13,6 +13,7 @@
 @import  'post.sass'
 @import  'wallet.sass'
 @import  'profileInfo.sass'
+@import  'index.sass'
 
   
 @import './components/modal'
@@ -20,6 +21,7 @@
 @import './components/map'
 @import './components/switch'
 @import './components/button'
+@import './components/tab'
 
 
 
@@ -121,10 +123,17 @@ h1
   text-align: right!important
 
 .p-text
-  color: $primary!important
+  color: $primary
 
 .primary
-  background-color: $primary!important
+  background-color: $primary
+  
+
+.secondary
+  background-color: $secondary
+
+.s-text
+  color: $secondary
   
 .lightblue
   background-color: $lightblue!important
@@ -143,6 +152,12 @@ h1
 
 .green
   background-color: $green!important
+
+.purple
+  background-color: $purple!important
+
+.purple-text
+  color: $purple!important
 
 .grey-text
   color: $grey!important
@@ -242,8 +257,21 @@ h1
   margin-bottom: $margin * 2!important
 
 
-.cp-b-margin
-  margin-bottom: $margin!important
+.cp-t-margin
+  margin-top: $margin!important
+
+
+.ml-zero
+  margin-left: 0!important
+
+.mr-zero
+  margin-right: 0!important
+
+.mt-zero
+  margin-top: 0!important
+
+.mb-zero
+  margin-bottom: 0!important
 
 .btn
   box-shadow: 0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px 0 rgba(0,0,0,.06)!important
@@ -264,7 +292,6 @@ h1
   right: 2px
 
 
-
 .order-fix-button
   position: fixed
   left: 0
@@ -275,6 +302,14 @@ h1
   display: flex
   justify-content: center
   align-items: center
+
+.notif-num
+  color: white
+  border-radius: 100px
+  display: flex
+  justify-content: center
+  align-items: center
+  font-weight: 600!important
 
 html 
   -webkit-overflow-scrolling: touch

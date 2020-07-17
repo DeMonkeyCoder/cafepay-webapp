@@ -3,7 +3,27 @@
     <nuxt />
   </div>
 </template>
+<script>
+  export default {
+    data() {
+      return {
+      }
+    },
+    mounted(){
 
+      if (this.token !== null && this.user == null) {
+        this.$store.dispatch('user/retrive')
+      }
+    },
+    watch: {
+      // token(newValue, oldValue) {
+      //   if (newValue !== null && this.user == null) {
+     
+      //   }
+      // },
+    },
+  }
+</script>
 <style>
 html {
   font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',

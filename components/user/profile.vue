@@ -11,7 +11,7 @@
       class="profile-info-bar cp-side-padding cp-tb-padding long-shadow cp-side-margin cp-header-card has-background-white"
     >
       <div class="info">
-        <img :src="user.avatar" alt />
+        <!-- <img :src="user.avatar" alt /> -->
         <h4 class="header cp-tb-padding cp-side-padding">{{user.full_name}}</h4>
         <p dir="ltr" class="detail cp-tb-padding cp-side-padding">
           موجودی:
@@ -21,8 +21,34 @@
       </div>
     </div>
 
+      <b-modal class="simple-action-modal" :active.sync="exitModalActive" has-modal-card >
+        <div class="modal-card" style="width: auto">
+
+          <section class="modal-dialog">
+            <p>آیا میخواهید از حساب کاربری خود خارج شوید؟</p>
+          </section>
+
+          <section class="modal-caption"></section>
+
+          <section class="modal-action">
+            <button class="button ma-child is-light" type="button" @click="closeModal(false)">خیر</button>
+            <b-button class="ma-child" type="is-danger" @click="closeModal(true)">خروج از حساب کاربری</b-button>
+          </section>
+          
+        </div>
+      </b-modal>
+
     <div class="profile-navigation cp-side-padding">
       <ul>
+
+        <nuxt-link to="/user/profile/staffrequest">
+          <li class="cp-card staff-request has-background-white cp-side-padding cp-tb-padding">
+            <img src="@/assets/img/shape/icons/shopping-cart.png" alt />
+            درخواست‌ها
+          <span class="notif-num has-background-danger">1</span>
+          </li>
+        </nuxt-link>
+
         <nuxt-link to="/user/profile/orderlist">
           <li class="cp-card has-background-white cp-side-padding cp-tb-padding">
             <img src="@/assets/img/shape/icons/shopping-cart.png" alt />
@@ -60,6 +86,10 @@
           <img src="@/assets/img/shape/logo-icon-1.png" alt />
           کافه پی
         </li>
+        <li @click="exitModalActive = true" class="cp-card has-background-white cp-side-padding cp-tb-padding">
+          <img src="@/assets/img/shape/icons/logout.svg" alt />
+          خروج از حساب کاربری
+        </li>
       </ul>
     </div>
   </div>
@@ -69,8 +99,20 @@
 export default {
   data() {
     return {
-      xyz: 1
+      exitModalActive: false
     }
+  },
+  methods: {
+    closeModal(changeCommand) {
+      this.exitModalActive = false
+      if (changeCommand) {
+        this.$router.push('/')
+        setTimeout(() => {
+          this.$store.commit('user/clear')
+        }, 500);
+      }
+  
+    },
   },
   computed: {
     user() {

@@ -5,19 +5,21 @@
       <product />
     </div>
 
-    <div v-else class="cafe-component">
-      <b-modal :active.sync="isCancelTableModalActive" has-modal-card :can-cancel="false">
+    <div v-else class="">
+      <b-modal class="simple-action-modal" :active.sync="isCancelTableModalActive" has-modal-card >
         <div class="modal-card" style="width: auto">
-          <header class="modal-card-head">
-            <p class="modal-card-title">لغو اسکن میز</p>
-          </header>
-          <section class="modal-card-body">
+
+          <section class="modal-dialog">
             <p>آیا میخواهید به صفحه اسکن بازگردید؟</p>
           </section>
-          <footer class="modal-card-foot">
-            <button class="button" type="button" @click="closeModal(false)">خیر</button>
-            <b-button class="cp-side-margin" type="is-danger" @click="closeModal(true)">بله</b-button>
-          </footer>
+
+          <section class="modal-caption"></section>
+
+          <section class="modal-action">
+            <button class="button ma-child is-light" type="button" @click="closeModal(false)">خیر</button>
+            <b-button class="ma-child cp-btn-primary" @click="closeModal(true)">بازگشت به صفحه اسکن</b-button>
+          </section> 
+       
         </div>
       </b-modal>
 

@@ -27,7 +27,11 @@ export default {
         rel: "stylesheet",
         href: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.6.0/leaflet.css",
       },
-    ]
+      
+    ],
+    script: [{
+      src: 'https://cdn.jsdelivr.net/npm/jdenticon@2.2.0', async: true
+    }],
   },
   /*
   ** Customize the progress-bar color
@@ -51,7 +55,8 @@ export default {
     '~/plugins/onReload',
     '~/plugins/vue-leaflet',
     '~/plugins/moment',
-    '~/plugins/ripple',
+    // '~/plugins/jdenticon-2.2.0.js',
+    // '~/plugins/ripple',
   ],
   /*
   ** Nuxt.js modules
@@ -70,7 +75,7 @@ export default {
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
-    baseURL: 'https://cafepay.cloud',
+    baseURL: 'https://cafepay.app/',
     proxyHeaders: false,
     credentials: false
   },
