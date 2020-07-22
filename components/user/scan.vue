@@ -238,7 +238,6 @@ const identicon = require('identicon')
     },
     mounted(){
         if (this.user.first_name != '' && this.user.first_name != undefined){
-          alert(typeof this.user.first_name)
           identicon.generate({ id: this.user.first_name, size: 75}, (err, buffer) => {
           if (err) throw err
           const img = new Image()
