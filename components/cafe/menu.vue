@@ -27,7 +27,7 @@
     <div class="product-list">
       <div
         v-for="(prod, index) in activeProducts"
-        :key="prod.name"
+        :key="prod.pk"
         class="normal-radius short-shadow has-background-white cp-tb-margin cp-side-margin-half product-item"
       >
         <!-- <Skeleton> -->
@@ -51,20 +51,19 @@
         </div>
 
         <div @click="$store.commit('cafe/setCurrentProduct', prod)" class="img-section">
-          <img :src="prod.avatar" alt />
+          <img :src="(prod.avatar == null) ? productDefaultImage : (baseUrl + prod.avatar) " alt />
         </div>
-        <!-- </Skeleton> -->
+
       </div>
     </div>
   </div>
 </template>
 
 <script>
-// import Skeleton from 'vue-loading-skeleton';
 import { Order } from '~/middleware/models/cafe.js'
 import { swipable } from '@/plugins/makeTabSwipe.js'
+import productDefaultImage from '@/assets/img/product-default.png'
 export default {
-  // components: {Skeleton},
   props: {
     menu: {
       default: 3
@@ -78,7 +77,8 @@ export default {
       activeProducts: [],
       totalCount: 0,
       totalPrice: 0,
-      orderList: []
+      orderList: [],
+      productDefaultImage
     }
   },
   methods: {

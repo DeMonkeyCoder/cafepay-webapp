@@ -40,7 +40,7 @@
 
       <div class="table-header cp-header cp-tb-padding cp-side-padding">
         <div class="info">
-          <img :src="cafe.avatar" alt />
+          <img :src="(cafe.avatar == null) ? cafeDefaultImage : cafe.avatar " alt />
           <p class="cafe-name cp-tb-padding cp-side-padding">{{cafe.name}}</p>
           <h5 class="table-number cp-tb-padding cp-side-padding">{{table.table_number}} میز شماره</h5>
         </div>
@@ -89,18 +89,20 @@
 
 <script>
 import person from '~/components/table/person.vue'
+import cafeDefaultImage from '@/assets/img/cafe-default.png'
 export default {
   components: { person },
   data() {
     return {
       key: 1,
       isTableOptionsModalActive: false,
-      fullPayment: false
+      fullPayment: false,
+      cafeDefaultImage
     }
   },
   computed: {
     cafe() {
-      return this.$store.state.cafe.summery
+      return this.$store.state.cafe
     },
     table() {
       return this.$store.state.table

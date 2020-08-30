@@ -25,7 +25,7 @@
 
       <div class="cafe-header cp-header cp-tb-padding cp-side-padding">
         <div class="info">
-          <img :src="cafe.avatar" alt />
+          <img :src="(cafe.avatar == null) ? cafeDefaultImage : cafe.avatar " alt />
           <p class="cafe-name cp-tb-padding cp-side-padding">{{cafe.name}}</p>
           <b-rate
             class="cafe-rate cp-tb-padding cp-side-padding"
@@ -49,6 +49,7 @@
 <script>
 import cafeNavigator from '~/components/cafe/cafeNavigator.vue'
 import product from '@/components/cafe/product.vue'
+import cafeDefaultImage from '@/assets/img/cafe-default.png'
 export default {
   components: { cafeNavigator, product },
   head() {},
@@ -56,6 +57,7 @@ export default {
     return {
       dynamicComponent: 'cpMenu',
       isCancelTableModalActive: false,
+      cafeDefaultImage
     }
   },
   methods: {
@@ -76,7 +78,7 @@ export default {
   },
   computed: {
     cafe() {
-      return this.$store.state.cafe.summery
+      return this.$store.state.cafe
     },
     productPageActive(){
       return this.$store.state.cafe.productPageActive

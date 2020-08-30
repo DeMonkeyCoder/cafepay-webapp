@@ -5,7 +5,7 @@
 import User from '../middleware/models/user'
 export const state = () => ({
   user: {
-
+    
   }
 })
 
@@ -34,7 +34,6 @@ export const actions = {
       console.log('user', data);
       context.commit('set', data)
       
-      // context.commit('setCitiesData', data)
     },
   
 }

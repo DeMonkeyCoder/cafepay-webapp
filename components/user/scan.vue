@@ -1,31 +1,36 @@
 <template>
   <div class="container">
-     <b-modal :active.sync="isComponentModalActive"
-            has-modal-card full-screen :can-cancel="false">
-            <div class="modal-card" style="width: auto">
-              <!-- <header class="modal-card-head">
+    <b-modal :active.sync="isComponentModalActive" has-modal-card full-screen :can-cancel="false">
+      <div class="modal-card" style="width: auto">
+        <!-- <header class="modal-card-head">
                   <p class="modal-card-title">وارد کردن کد میز</p>
-              </header> -->
-              <section class="modal-card-body">
-                  <!-- <img src="@/assets/img/shape/icons/chair.png" alt=""> -->
-                  <b-field >
-                      <b-input class="cp-input cp-input-primary cp-input-grey cp-input-shadow"
-                        type="code"
-                        v-model="tableCode"
-                        icon="numeric"
-                        inputmode="numeric"
-                        placeholder="کد میز را وارد کنید">
-                      </b-input>
-                  </b-field>
-            <div class="buttons">
-              <b-button :loading="cloading" @click="sendCode" class="checkCode-btn bcp-btn bcp-btn-large"
-               expanded type="is-info">ورود به میز</b-button>
-            </div>
-              </section>
-              <footer class="modal-card-foot">
-                  <button class="button" type="button" @click="closeModal">بستن پنجره</button>
-              </footer>
+        </header>-->
+        <section class="modal-card-body">
+          <!-- <img src="@/assets/img/shape/icons/chair.png" alt=""> -->
+          <b-field>
+            <b-input
+              class="cp-input cp-input-primary cp-input-grey cp-input-shadow"
+              type="code"
+              v-model="tableCode"
+              icon="numeric"
+              inputmode="numeric"
+              placeholder="کد میز را وارد کنید"
+            ></b-input>
+          </b-field>
+          <div class="buttons">
+            <b-button
+              :loading="cloading"
+              @click="sendCode"
+              class="checkCode-btn bcp-btn bcp-btn-large"
+              expanded
+              type="is-info"
+            >ورود به میز</b-button>
           </div>
+        </section>
+        <footer class="modal-card-foot">
+          <button class="button" type="button" @click="closeModal">بستن پنجره</button>
+        </footer>
+      </div>
     </b-modal>
 
     <div class="camera">
@@ -34,29 +39,37 @@
 
     <div class="landing white">
       <div id="user-img">
+        <img :src="user.avatar" alt />
       </div>
-      
+
       <h1 class="t-large">{{user.full_name}}</h1>
-      <h4>موجودی:‌<span>{{user.wallet_amount | currency}} تومان</span></h4>
+      <h4>
+        موجودی:‌
+        <span>{{user.wallet_amount | currency}} تومان</span>
+      </h4>
       <div class="columns shortcut-btns is-mobile is-3-mobile">
-        <div class="column ">
+        <div class="column">
           <nuxt-link to="/user/profile/wallet">
-           <div id="charge-wallet-icon" class="has-background-white">
-            <img  :src="walletIcon" alt="" class="icon">
-            <p>افزایش موجودی</p>
-          </div>
+            <div id="charge-wallet-icon" class="has-background-white">
+              <img :src="walletIcon" alt class="icon" />
+              <p>افزایش موجودی</p>
+            </div>
           </nuxt-link>
         </div>
         <div class="column">
           <!-- <nuxt-link to="/user/profile/wallet"> -->
-          <div @click="sendCode" id="my-cafe-icon" class="has-background-white ripple-effect" anim="ripple">
-            <img  :src="myCafe" alt="" class="icon">
+          <div
+            @click="sendCode"
+            id="my-cafe-icon"
+            class="has-background-white ripple-effect"
+            anim="ripple"
+          >
+            <img :src="myCafe" alt class="icon" />
             <p>کافه‌های من</p>
           </div>
           <!-- </nuxt-link> -->
         </div>
-
-    </div>
+      </div>
     </div>
   </div>
 </template>
@@ -65,171 +78,69 @@
 import userImg from '~/assets/img/user.jpg'
 import walletIcon from '~/assets/img/shape/icons/wallet.png'
 import myCafe from '~/assets/img/shape/icons/my-cafe-2.svg'
-const identicon = require('identicon')
- 
 
-  export default {
-    data() {
-      return {
-        userImg, walletIcon, myCafe,
-        isComponentModalActive: false,
-        tableCode: null
-      }
-    },
-    methods: {
-      closeModal(){
-        this.isComponentModalActive = false
-      },
-      openCodeModal() {
-        this.isComponentModalActive = true
-      },
-      sendCode(){
-
-        let Cafe = {
-          name: 'کافه هدایت',
-          avatar: 'https://icoff.ee/cafe/wp-content/uploads/2014/10/6.-Hedayat-Cafe-Restaurant-%DA%A9%D8%A7%D9%81%D9%87-%D8%B1%D8%B3%D8%AA%D9%88%D8%B2%D8%A7%D9%86-%D9%87%D8%AF%D8%A7%DB%8C%D8%AA.jpg',
-          rate: 4.4,
-          table: 2,
-          review: {
-
-          },
-          info: {
-
-          },
-          posts: {
-
-          },
-          products_by_category: [
-  
-            {
-              name: 'پاستاها',
-              products: [
-                {
-                  rate: 4.3,
-                  name: 'پاستا آلفردو',
-                  description: '۲۴۰ گرم گوشت گوساله',
-                  avatar: 'https://www.jessicagavin.com/wp-content/uploads/2019/08/chicken-alfredo-8-1200.jpg',
-                  original_price: 27000,
-                  discount: 0,
-                  price: 27000
-                }
-         
-              ]
-            }
-          ]
-            
-          
-        }
-        // u need to set the table too, for api link
-        this.$store.commit('cafe/set', Cafe)
-        
-
-        // this.$axios.get('api/v1/table-token/' + this.tableCode + '/cafe-info/',
-        // { params: {}, headers: { 'Authorization': 'Token ' + this.token } })
-        // .then(res => {
-
-        //   this.$store.commit('setActiveTable', {id: res.data.table})
-          this.$store.commit('setActiveTable', true)
-          this.$store.commit('changeNavigation', 'currentCafe')
-          // this.$store.commit('table/newPerson', {id: 1, name: this.user.full_name, avatar: this.user.avatar, orders: []})
-          this.isComponentModalActive = false
-
-        // }).catch(err =>{
-        //   if (err.response){
-        //     console.log(err.response.data)
-        //   }
-        // })
-      }
-    },
-    computed: {
-      user() {
-        return this.$store.state.user.user 
-      },
-    },
-    watch: {
-      user(newValue, oldValue) {
-        if (newValue.first_name != ''  && newValue.first_name != undefined){
-          identicon.generate({ id: newValue.first_name,size: 75 }, (err, buffer) => {
-          if (err) throw err
-          const img = new Image()
-          img.src = buffer
-          document.getElementById('user-img').appendChild(img)
-          })
-        }
-      },
-    },
-    mounted(){
-        if (this.user.first_name != '' && this.user.first_name != undefined){
-          alert(typeof this.user.first_name)
-          identicon.generate({ id: this.user.first_name, size: 75}, (err, buffer) => {
-          if (err) throw err
-          const img = new Image()
-          img.src = buffer
-          document.getElementById('user-img').appendChild(img)
-          })
-        }
+export default {
+  data() {
+    return {
+      userImg,
+      walletIcon,
+      myCafe,
+      isComponentModalActive: false,
+      tableCode: null
     }
-  }
+  },
+  methods: {
+    closeModal() {
+      this.isComponentModalActive = false
+    },
+    openCodeModal() {
+      this.isComponentModalActive = true
+    },
+    sendCode() {
+      // u need to set the table too, for api link
+
+      this.$axios
+        .get('api/v1/table-token/' + this.tableCode + '/cafe-info/', {
+          params: {},
+          headers: { Authorization: 'Token ' + this.token }
+        })
+        .then(res => {
+          // sets pk, avatar, name and table id
+          this.$store.commit('cafe/setBasic', res.data.cafe)
+          // execute the action for getting menu, detailed info, comments and posts
+          this.$store.dispatch('cafe/retrieveMenu')
+          this.$store.commit('setActiveTable', true)
+          this.$store.commit('table/newPerson', this.user)
+          // this.$store.commit('table/set', res.data.table)
+          this.$store.commit('changeNavigation', 'currentCafe')
+          this.isComponentModalActive = false
+        })
+        .catch(err => {
+          if (err.response) {
+            this.$buefy.toast.open({
+              duration: 3000,
+              message: `کد وارد شده نادرست است`,
+              position: 'is-top',
+              type: 'is-danger'
+            })
+          }
+        })
+    }
+  },
+  computed: {
+    user() {
+      return this.$store.state.user.user
+    }
+  },
+  watch: {},
+  mounted() {}
+}
 </script>
 
 <style scoped lang="sass">
 @import '~/assets/sass/variables.sass'
 
-.camera
-  position: relative
-  width: 100%
-  background-color: grey
-  height: 40vh
-  .enter-code-btn
-    position: absolute
-    right: 10px
-    bottom: 10px
 
-.checkCode-btn
-  width: 100%
-
-.landing
-  margin-top: 20px
-  text-align: center
-  #user-img
-    img
-      width: 75px
-      height: 75px
-      object-fit: cover
-      border-radius: 40px
-      border: 3px solid $primary
-
-  .shortcut-btns
-    margin-right: 0!important
-    margin-left: 0!important
-    padding: 10px 15px
-    text-align: right
-    .has-background-white
-      border-radius: 5px
-      padding: 10px 15px
-      box-shadow: 0px 5px 10px rgba(0,0 ,0 ,0.09 )
-    p
-      font-size: 12px
-      font-weight: 500!important
-    a
-      color: $primary
-    #my-cafe-icon
-      padding-bottom: 4px
-      p
-        position: relative
-        bottom: 4px
-      img
-        width: 30px!important
-        height: 30px
-    #charge-wallet-icon
-      img
-        width: 24px!important
-
-
-
-@media (min-width: 992px)
-  .camera
-    // display: none
 
 
 </style>

@@ -11,7 +11,7 @@
       class="profile-info-bar cp-side-padding cp-tb-padding long-shadow cp-side-margin cp-header-card has-background-white"
     >
       <div class="info">
-        <!-- <img :src="user.avatar" alt /> -->
+        <img :src="user.avatar" :alt='user.first_name' />
         <h4 class="header cp-tb-padding cp-side-padding">{{user.full_name}}</h4>
         <p dir="ltr" class="detail cp-tb-padding cp-side-padding">
           موجودی:

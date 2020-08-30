@@ -4,7 +4,7 @@
 
 export const Category = class Category {
   constructor(rawData = {}) {
-    this.name = rawData.name
+    this.name = rawData.title
     this.products = []
     for (const product of rawData.products) {
       this.products.push(new Product(product))
@@ -19,7 +19,8 @@ export const Category = class Category {
 export const Product = class Product {
   constructor(rawData = {}) {
     this.name = rawData.name
-    this.avatar = rawData.avatar
+    this.pk = rawData.pk
+    this.avatar = (rawData.images.length > 0) ? rawData.images[0].image : null 
     this.description = rawData.description
     this.price = rawData.price
     this.rate = rawData.rate
