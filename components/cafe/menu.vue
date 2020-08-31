@@ -32,11 +32,11 @@
       >
         <!-- <Skeleton> -->
         <div class="add-or-remove">
-          <span class="product-add" @click="countChange(index, 1)">
+          <span class="product-add" @click="countChange(index, 1, prod.pk)">
             <div class="aor-shape">+</div>
           </span>
           <span class="product-count">{{prod.count}}</span>
-          <span class="product-remove" @click="countChange(index, -1)">
+          <span class="product-remove" @click="countChange(index, -1, prod.pk)">
             <div class="aor-shape">-</div>
           </span>
         </div>
@@ -105,7 +105,9 @@ export default {
       this.activeCategory = index
     },
 
-    countChange(index, count) {
+    countChange(index, count, productId) {
+      let method = (count == 1) ? 'POST' : 'DELETE'
+       this.$store.dispatch('table/addProduct', {method , productId})
       if (this.activeProducts[index].count == 0 && count == -1) return
       else {
         // this.activeProducts[index].count += count

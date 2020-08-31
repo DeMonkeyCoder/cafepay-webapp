@@ -19,7 +19,7 @@
           </b-field>
           <div class="buttons">
             <b-button
-              :loading="cloading"
+              :loading="globalLoading"
               @click="sendCode"
               class="checkCode-btn bcp-btn bcp-btn-large"
               expanded
@@ -78,6 +78,7 @@
 import userImg from '~/assets/img/user.jpg'
 import walletIcon from '~/assets/img/shape/icons/wallet.png'
 import myCafe from '~/assets/img/shape/icons/my-cafe-2.svg'
+import Vue from 'vue'
 
 export default {
   data() {
@@ -86,7 +87,7 @@ export default {
       walletIcon,
       myCafe,
       isComponentModalActive: false,
-      tableCode: null
+      tableCode: '846233316753'
     }
   },
   methods: {
@@ -111,7 +112,11 @@ export default {
           this.$store.dispatch('cafe/retrieveMenu')
           this.$store.commit('setActiveTable', true)
           this.$store.commit('table/newPerson', this.user)
-          // this.$store.commit('table/set', res.data.table)
+          res.data.table['token'] = res.data.token
+          this.$store.commit('table/set', res.data.table)
+          // connect to socket
+          Vue.prototype.$connect()
+          // attach token to table
           this.$store.commit('changeNavigation', 'currentCafe')
           this.isComponentModalActive = false
         })
@@ -119,7 +124,7 @@ export default {
           if (err.response) {
             this.$buefy.toast.open({
               duration: 3000,
-              message: `کد وارد شده نادرست است`,
+              message: `کد وارد شده نادرست است ${err.response.data}`,
               position: 'is-top',
               type: 'is-danger'
             })
