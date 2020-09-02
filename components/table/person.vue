@@ -29,7 +29,12 @@
       </div>
 
       <div class="person-slider">
-        <b-slider v-if="order.payment_info.payed_amount != order.payment_info.total_amount && history == false" :value="order.wish_to_pay" @change="changeWishToPay($event, index, person.name)" lazy type="is-info" size="is-large" rounded :min="0" :max="order.payment_info.total_amount - order.payment_info.payed_amount" :step="500" ></b-slider>
+        <b-slider v-if="order.payment_info.payed_amount != order.payment_info.total_amount && history == false"
+         :value="order.wish_to_pay" @change="changeWishToPay($event, index, person.name)" 
+         lazy type="is-info" size="is-large" rounded :min="0" 
+         :max="order.payment_info.total_amount - order.payment_info.payed_amount" 
+         :step="(order.payment_info.total_amount - order.payment_info.payed_amount >= 500) ?
+          500 : order.payment_info.total_amount - order.payment_info.payed_amount" ></b-slider>
       </div>
 
       <div v-if="order.payment_info.payed_amount == order.payment_info.total_amount && history == false" class="order-payment-done green">

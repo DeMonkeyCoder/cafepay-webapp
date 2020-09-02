@@ -320,7 +320,7 @@ export default {
       name: 'کافه پِی',
       logo,
       state: 'intro',
-      phone_number: '09384755090',
+      phone_number: '',
       user_code: '',
       background,
       mobilebc,

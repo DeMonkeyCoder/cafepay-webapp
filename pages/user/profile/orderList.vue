@@ -69,6 +69,7 @@
   margin-bottom: $margin
   display: flex
   flex-direction: column
+  max-height: 150px
   .oh-info
     display: flex
     img
