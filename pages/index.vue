@@ -407,8 +407,6 @@ export default {
         }
       })
           .then(res => {
-            console.log('user loged in', res.data)
-            this.$store.commit('setToken', res.data.token)
             this.$store.dispatch('user/retrieve')
             this.$router.push('/user/home')
           })
@@ -420,7 +418,7 @@ export default {
       }
       if (this.first_name == '' ) {
         this.toaster('نام خود را وارد کنید', 'is-danger')
-      } else if (this.last_name != '') {
+      } else if (this.last_name == '') {
         this.toaster('نام خانوادگی خود را وارد کنید', 'is-danger')
       } 
     },
