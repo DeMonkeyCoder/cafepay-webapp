@@ -6,13 +6,13 @@ export const socketTable = class socketTable {
   constructor(rawData = {}, products = {}) {
 
 
-    this.persons = this.productsByPerson(rawData.bill_products, 'user_profile', products)
+    this.persons = this.productsByPerson(rawData.bill_products, products)
 
   }
 
-  productsByPerson(arr, key, products) {
+  productsByPerson(arr, products) {
     let personRawProduct_noProperty = [...arr.reduce((acc, obj) =>
-      acc.set(obj[key], (acc.get(obj[key]) || []).concat(obj)), new Map).values()];
+      acc.set(obj.user_profile.pk, (acc.get(obj.user_profile.pk) || []).concat(obj)), new Map).values()];
 
     let personRawProduct = []
     personRawProduct_noProperty.forEach(orders => {
@@ -29,7 +29,8 @@ export const socketTable = class socketTable {
           name: findProduct.name,
         }
         // user info is in each order so remove it from them and add to parent (person)
-        user_name = (order.user_profile == null) ? 'صندوق دار' : order.user_profile.toString()
+        user_name = (order.is_staff) ? 'صندوق دار' : order.user_profile.full_name
+        // user_name = order.user_profile.full_name
         delete prodObj.user_profile
 
         newOrders.push(prodObj)

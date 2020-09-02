@@ -99,30 +99,30 @@ export const mutations = {
 
   setPayment: (state, value) => state.tpayment = value,
 
-  submitPayment(state, payload) {
+  // submitPayment(state, payload) {
 
-    // your orders
-    state.yourOrdersPaid += state.you.orders.reduce((sum, order) => order.wish_to_pay + sum, 0)
-    for (const order of state.you.orders) {
-      if (order.wish_to_pay > 0) {
-        order.order.my_payments.payed_amount += order.wish_to_pay
-        order.payment_info.payed_amount += order.order.my_payments.payed_amount
-        order.wish_to_pay = 0
-      }
-    }
+  //   // your orders
+  //   state.yourOrdersPaid += state.you.orders.reduce((sum, order) => order.wish_to_pay + sum, 0)
+  //   for (const order of state.you.orders) {
+  //     if (order.wish_to_pay > 0) {
+  //       order.order.my_payments.payed_amount += order.wish_to_pay
+  //       order.payment_info.payed_amount += order.order.my_payments.payed_amount
+  //       order.wish_to_pay = 0
+  //     }
+  //   }
 
-    // other orders
-    for (const person of state.persons) {
-      person.totalPaid += person.orders.reduce((sum, order) => order.wish_to_pay + sum, 0)
-      for (const order of person.orders) {
-        if (order.wish_to_pay > 0) {
-          order.order.my_payments.payed_amount += order.wish_to_pay
-          order.payment_info.payed_amount += order.order.my_payments.payed_amount
-          order.wish_to_pay = 0
-        }
-      }
-    }
-  },
+  //   // other orders
+  //   for (const person of state.persons) {
+  //     person.totalPaid += person.orders.reduce((sum, order) => order.wish_to_pay + sum, 0)
+  //     for (const order of person.orders) {
+  //       if (order.wish_to_pay > 0) {
+  //         order.order.my_payments.payed_amount += order.wish_to_pay
+  //         order.payment_info.payed_amount += order.order.my_payments.payed_amount
+  //         order.wish_to_pay = 0
+  //       }
+  //     }
+  //   }
+  // },
 
   clearWishToPay(state) {
     // wish to pay to 0 because we dont have redirection to the bank yet
@@ -190,7 +190,7 @@ export const actions = {
       }
     }
     context.commit('setPayment', payload)
-    context.commit('clearWishToPay')
+    // context.commit('clearWishToPay')
     try {
       let data = await this.$axios.$post(`/api/v1/pbr/session/create/`, {
         payments
@@ -207,7 +207,7 @@ export const actions = {
   },
   async paymentVerify(context, id) {
     try {
-      let data = await this.$axios.$get(`payment/verify/${id}/`, {
+      let data = await this.$axios.$get(`/api/v1/payment/verify/${id}/`, {
         headers: {
           'Authorization': 'Token ' + context.rootState.token,
         }

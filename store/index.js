@@ -40,6 +40,8 @@ export const mutations = {
 
   },
   SOCKET_ONCLOSE(state, event) {
+    console.log('server is disconnected');
+    
     state.socket.isConnected = false
   },
   SOCKET_ONERROR(state, event) {

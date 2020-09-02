@@ -24,9 +24,10 @@
   export default {
     methods: {
       backtoapp() {
+         this.$store.commit('table/clearWishToPay')
         this.$store.commit('changeNavigation', 'cp-table')
         this.$router.push('user/home')
-        this.$store.commit('setPayment', 0)
+        this.$store.commit('table/setPayment', 0)
       },
     },
     computed: {

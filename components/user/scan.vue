@@ -34,7 +34,7 @@
     </b-modal>
 
     <div class="camera">
-      <qrcode-stream  @decode="onDecode"></qrcode-stream>
+      <!-- <qrcode-stream  @decode="onDecode"></qrcode-stream> -->
       <b-button @click="openCodeModal" class="enter-code-btn" type="is-info">وارد کردن کد میز</b-button>
     </div>
 
@@ -88,7 +88,7 @@ export default {
       walletIcon,
       myCafe,
       isComponentModalActive: false,
-      tableCode: '846233316753'
+      tableCode: '1'
     }
   },
   methods: {
