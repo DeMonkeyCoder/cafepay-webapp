@@ -19,6 +19,7 @@ export const socketTable = class socketTable {
       // make orders from product class
       let newOrders = []
       let user_name;
+      let userId;
       orders.forEach(order => {
         let findProduct = products.find(x => x.pk == order.product)
 
@@ -30,6 +31,7 @@ export const socketTable = class socketTable {
         }
         // user info is in each order so remove it from them and add to parent (person)
         user_name = (order.is_staff) ? 'صندوق دار' : order.user_profile.full_name
+        userId = order.user_profile.pk
         // user_name = order.user_profile.full_name
         delete prodObj.user_profile
 
@@ -58,7 +60,8 @@ export const socketTable = class socketTable {
         totalPaid,
         avatar,
         name: user_name.slice(0, 20),
-        orders: newOrders
+        orders: newOrders,
+        id: userId
       })
     });
     return personRawProduct

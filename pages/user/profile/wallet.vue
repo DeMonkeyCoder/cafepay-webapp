@@ -14,7 +14,7 @@
         <h4 class="header cp-tb-padding cp-side-padding">موجودی و تراکنش‌ها</h4>
         <p dir="rtl" class="detail cp-tb-padding cp-side-padding">
           موجودی:
-          <span class="p-text font-18">{{user.wallet_amount | currency}}</span>
+          <span class="p-text font-18">{{user.balance | currency}}</span>
           <span class="toman">تومان</span>
         </p>
       </div>

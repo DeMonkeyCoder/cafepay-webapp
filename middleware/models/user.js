@@ -8,7 +8,8 @@ export default class User {
     this.first_name = userData.first_name
     this.last_name = userData.last_name
     this.phone_number = userData.phone_number
-    this.wallet_amount = 12000,
+    this.balance = userData.balance,
+    this.id = userData.pk
     this.orders = []
     identicon.generate({
       id: this.phone_number+ this.full_name,

@@ -46,7 +46,7 @@
       <h1 class="t-large">{{user.full_name}}</h1>
       <h4>
         موجودی:‌
-        <span>{{user.wallet_amount | currency}} تومان</span>
+        <span>{{user.balance | currency}} تومان</span>
       </h4>
       <div class="columns shortcut-btns is-mobile is-3-mobile">
         <div class="column">

@@ -47,9 +47,14 @@ export const mutations = {
     let products = this.state.cafe.categories.map(c => c.products)
     products = [].concat.apply([], products)
     let table = new socketTable(rawData, products)
-    console.log('table', table);
     state.persons = table.persons
     state.payment = rawData.payment_info
+    
+    // bind the user's orders count to menu data
+    // first we need to find the user using the app from persons array
+    let user = table.persons.find(p => p.id == this.state.user.user.id) 
+    console.log('table !', table);
+    this.commit('cafe/bindProductCount', user)
 
   },
 
@@ -78,16 +83,7 @@ export const mutations = {
     }
   },
   changeWishToPay(state, orderIdentity) {
-    // if (state.you.name == orderIdentity.name) {
-    //   state.you.orders[orderIdentity.index].wish_to_pay = orderIdentity.value
-    // } else {
-    //   for (const person of state.persons) {
-    //     if (person.name == orderIdentity.name) {
-    //       person.orders[orderIdentity.index].wish_to_pay = orderIdentity.value
-    //       break
-    //     }
-    //   }
-    // }
+
     for (const person of state.persons) {
 
       if (person.name == orderIdentity.name) {
@@ -99,30 +95,7 @@ export const mutations = {
 
   setPayment: (state, value) => state.tpayment = value,
 
-  // submitPayment(state, payload) {
 
-  //   // your orders
-  //   state.yourOrdersPaid += state.you.orders.reduce((sum, order) => order.wish_to_pay + sum, 0)
-  //   for (const order of state.you.orders) {
-  //     if (order.wish_to_pay > 0) {
-  //       order.order.my_payments.payed_amount += order.wish_to_pay
-  //       order.payment_info.payed_amount += order.order.my_payments.payed_amount
-  //       order.wish_to_pay = 0
-  //     }
-  //   }
-
-  //   // other orders
-  //   for (const person of state.persons) {
-  //     person.totalPaid += person.orders.reduce((sum, order) => order.wish_to_pay + sum, 0)
-  //     for (const order of person.orders) {
-  //       if (order.wish_to_pay > 0) {
-  //         order.order.my_payments.payed_amount += order.wish_to_pay
-  //         order.payment_info.payed_amount += order.order.my_payments.payed_amount
-  //         order.wish_to_pay = 0
-  //       }
-  //     }
-  //   }
-  // },
 
   clearWishToPay(state) {
     // wish to pay to 0 because we dont have redirection to the bank yet

@@ -49,8 +49,18 @@ export const mutations = {
   clearProduct(state, product) {
     state.currentProduct = {}
     state.productPageActive = false
-  }
+  },
 
+  bindProductCount(state, user) {
+    for (const cateogry of state.categories) {
+      for (const product of cateogry.products) {
+        let matchedOrder = user.orders.find(p => p.product == product.pk)
+        if (matchedOrder) product.count = matchedOrder.count
+      }
+    }
+    console.log('tada find your user', user);
+
+  }
 }
 
 export const actions = {

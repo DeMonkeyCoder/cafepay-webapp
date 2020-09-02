@@ -74,7 +74,7 @@
     display: flex
     img
       width: 50px
-      width: 50px
+      height: 50px
       border-radius: 25px
   .oh-actions
     display: flex
