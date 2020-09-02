@@ -22,15 +22,21 @@ export const mutations = {
     console.log('event', event);
     Vue.prototype.$socket = event.currentTarget
     state.socket.isConnected = true
-
-
     this.dispatch('table/tableConnection')
 
   },
-  SOCKET_ONMESSAGE(state, message) {
+  SOCKET_ONMESSAGE(state, rawMessage) {
 
-    state.socket.message = JSON.parse(message.data)
-    console.log('socket message', state.socket.message);
+    state.socket.message = JSON.parse(rawMessage.data)
+    let message = state.socket.message.message
+    console.log('message', message.data);
+    
+
+    // check if message is for table watch
+    if (message.source ==
+      `table.${state.table.token}.join.simple.by-token.` && message.status_code == 200) {
+      this.commit('table/setData', message.data)
+    }
 
   },
   SOCKET_ONCLOSE(state, event) {

@@ -20,7 +20,7 @@
         v-for="(cat, index) in menu"
         :class="{'active-category':  (index == activeCategory)}"
         @click="changeActiveCategory(index)"
-        :key="cat.name"
+        :key="cat.pk"
       >{{cat.name}}</div>
     </div>
 
@@ -84,16 +84,16 @@ export default {
   methods: {
     sumbitOnTable() {
       let orders = []
-      this.menu.forEach(cat => {
-        cat.products.forEach(prod => {
-          if (prod.count > 0) orders.push(new Order(prod))
-        })
-      })
-      let OrderInfo = {
-        totalPrice: this.totalPrice,
-        orders
-      }
-      this.$store.commit('table/setOrder', OrderInfo)
+      // this.menu.forEach(cat => {
+      //   cat.products.forEach(prod => {
+      //     if (prod.count > 0) orders.push(new Order(prod))
+      //   })
+      // })
+      // let OrderInfo = {
+      //   totalPrice: this.totalPrice,
+      //   orders
+      // }
+      // this.$store.commit('table/setOrder', OrderInfo)
       this.$store.commit('changeNavigation', 'cp-table')
     },
 

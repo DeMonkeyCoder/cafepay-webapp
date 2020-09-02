@@ -113,7 +113,7 @@ export default {
           this.$store.commit('setActiveTable', true)
           this.$store.commit('table/newPerson', this.user)
           res.data.table['token'] = res.data.token
-          this.$store.commit('table/set', res.data.table)
+          this.$store.commit('table/setToken', res.data.table)
           // connect to socket
           Vue.prototype.$connect()
           // attach token to table

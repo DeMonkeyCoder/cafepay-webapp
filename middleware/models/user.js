@@ -11,7 +11,7 @@ export default class User {
     this.wallet_amount = 12000,
     this.orders = []
     identicon.generate({
-      id: this.phone_number,
+      id: this.phone_number+ this.full_name,
       size: 75
     }, (err, buffer) => {
       if (err) throw err
