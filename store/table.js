@@ -206,15 +206,15 @@ export const actions = {
     }
   },
   async paymentVerify(context, id) {
-    this.app.router.push('/paymentResult')
-    // try {
-    //   let data = await this.$axios.$get(`payment/verify/${id}/`, {
-    //     headers: {
-    //       'Authorization': 'Token ' + context.rootState.token,
-    //     }
-    //   })
-    // } catch (err) {
+    try {
+      let data = await this.$axios.$get(`payment/verify/${id}/`, {
+        headers: {
+          'Authorization': 'Token ' + context.rootState.token,
+        }
+      })
+      this.app.router.push('/paymentResult')
+    } catch (err) {
 
-    // }
+    }
   }
 }
