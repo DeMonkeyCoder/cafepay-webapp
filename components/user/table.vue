@@ -40,7 +40,7 @@
 
       <div class="table-header cp-header cp-tb-padding cp-side-padding">
         <div class="info">
-          <img :src="cafe.avatar" alt />
+          <img :src="(cafe.avatar == null) ? cafeDefaultImage : cafe.avatar " alt />
           <p class="cafe-name cp-tb-padding cp-side-padding">{{cafe.name}}</p>
           <h5 class="table-number cp-tb-padding cp-side-padding">{{table.table_number}} میز شماره</h5>
         </div>
@@ -57,15 +57,15 @@
           پرداخت شده:‌
           <span
             class="g-text font-norm total-payment"
-          >{{$store.getters['table/ordersTotalPaid'] | currency}}</span> تومان از
-          <span class="total-cost">{{$store.getters['table/ordersTotalCost'] | currency}}</span> تومان
+          >{{table.payment.payed_amount | currency}}</span> تومان از
+          <span class="total-cost">{{table.payment.total_amount | currency}}</span> تومان
         </p>
       </div>
 
       <div class="persons-on-table cp-side-margin-2x">
-        <div class="you">
+        <!-- <div class="you">
           <person :person="table.you" title="شما" />
-        </div>
+        </div> -->
         <div class="others">
           <div class="cp-tb-margin" v-for="person in table.persons" :key="person.name">
             <person :person="person" :title="person.name" />
@@ -89,18 +89,20 @@
 
 <script>
 import person from '~/components/table/person.vue'
+import cafeDefaultImage from '@/assets/img/cafe-default.png'
 export default {
   components: { person },
   data() {
     return {
       key: 1,
       isTableOptionsModalActive: false,
-      fullPayment: false
+      fullPayment: false,
+      cafeDefaultImage
     }
   },
   computed: {
     cafe() {
-      return this.$store.state.cafe.summery
+      return this.$store.state.cafe
     },
     table() {
       return this.$store.state.table
@@ -115,15 +117,10 @@ export default {
   },
   methods: {
     paymentCheckout() {
-      setTimeout(() => {
-        this.$store.commit('table/submitPayment', this.totalWishToPay)
-      }, 200)
-      this.$router.push('/paymentResult')
 
-      // this.cloading = true
-      // setTimeout(() => {
-      //   this.cloading = false
-      // }, 1000);
+      this.$store.dispatch('table/submitPayment', this.totalWishToPay)
+      // this.$router.push('/paymentResult')
+
     },
     showOptionsModal() {
       this.isTableOptionsModalActive = true

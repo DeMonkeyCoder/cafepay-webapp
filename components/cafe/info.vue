@@ -102,7 +102,7 @@ export default {
   },
   computed: {
     cafe() {
-      return this.$store.state.cafe.summery
+      return this.$store.state.cafe
     }
   }
 }

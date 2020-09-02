@@ -10,9 +10,10 @@
       }
     },
     mounted(){
-
-      if (this.token !== null && this.user == null) {
-        this.$store.dispatch('user/retrive')
+      console.log('token', this.token);
+      
+      if (this.token !== null) {
+        this.$store.dispatch('user/retrieve')
       }
     },
     watch: {

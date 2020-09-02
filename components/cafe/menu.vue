@@ -20,23 +20,23 @@
         v-for="(cat, index) in menu"
         :class="{'active-category':  (index == activeCategory)}"
         @click="changeActiveCategory(index)"
-        :key="cat.name"
+        :key="cat.pk"
       >{{cat.name}}</div>
     </div>
 
     <div class="product-list">
       <div
         v-for="(prod, index) in activeProducts"
-        :key="prod.name"
+        :key="prod.pk"
         class="normal-radius short-shadow has-background-white cp-tb-margin cp-side-margin-half product-item"
       >
         <!-- <Skeleton> -->
         <div class="add-or-remove">
-          <span class="product-add" @click="countChange(index, 1)">
+          <span class="product-add" @click="countChange(index, 1, prod.pk)">
             <div class="aor-shape">+</div>
           </span>
           <span class="product-count">{{prod.count}}</span>
-          <span class="product-remove" @click="countChange(index, -1)">
+          <span class="product-remove" @click="countChange(index, -1, prod.pk)">
             <div class="aor-shape">-</div>
           </span>
         </div>
@@ -51,20 +51,19 @@
         </div>
 
         <div @click="$store.commit('cafe/setCurrentProduct', prod)" class="img-section">
-          <img :src="prod.avatar" alt />
+          <img :src="(prod.avatar == null) ? productDefaultImage : (baseUrl + prod.avatar) " alt />
         </div>
-        <!-- </Skeleton> -->
+
       </div>
     </div>
   </div>
 </template>
 
 <script>
-// import Skeleton from 'vue-loading-skeleton';
 import { Order } from '~/middleware/models/cafe.js'
 import { swipable } from '@/plugins/makeTabSwipe.js'
+import productDefaultImage from '@/assets/img/product-default.png'
 export default {
-  // components: {Skeleton},
   props: {
     menu: {
       default: 3
@@ -78,22 +77,23 @@ export default {
       activeProducts: [],
       totalCount: 0,
       totalPrice: 0,
-      orderList: []
+      orderList: [],
+      productDefaultImage
     }
   },
   methods: {
     sumbitOnTable() {
       let orders = []
-      this.menu.forEach(cat => {
-        cat.products.forEach(prod => {
-          if (prod.count > 0) orders.push(new Order(prod))
-        })
-      })
-      let OrderInfo = {
-        totalPrice: this.totalPrice,
-        orders
-      }
-      this.$store.commit('table/setOrder', OrderInfo)
+      // this.menu.forEach(cat => {
+      //   cat.products.forEach(prod => {
+      //     if (prod.count > 0) orders.push(new Order(prod))
+      //   })
+      // })
+      // let OrderInfo = {
+      //   totalPrice: this.totalPrice,
+      //   orders
+      // }
+      // this.$store.commit('table/setOrder', OrderInfo)
       this.$store.commit('changeNavigation', 'cp-table')
     },
 
@@ -105,7 +105,9 @@ export default {
       this.activeCategory = index
     },
 
-    countChange(index, count) {
+    countChange(index, count, productId) {
+      let method = (count == 1) ? 'POST' : 'DELETE'
+       this.$store.dispatch('table/addProduct', {method , productId})
       if (this.activeProducts[index].count == 0 && count == -1) return
       else {
         // this.activeProducts[index].count += count
