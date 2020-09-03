@@ -27,7 +27,7 @@
     "vue-moment-jalaali": "^2.0.0",
     "vue-native-websocket": "^2.0.14",
     "vue-persian-datetime-picker": "^2.1.4",
-    "vue-qrcode-reader": "^2.3.0",
+    "vue-qrcode-reader": "^2.3.13",
     "vue2-leaflet": "^2.5.2"
   },
   "devDependencies": {

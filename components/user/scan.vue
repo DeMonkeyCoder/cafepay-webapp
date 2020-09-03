@@ -34,8 +34,9 @@
     </b-modal>
 
     <div class="camera">
-      <!-- <qrcode-stream  @decode="onDecode"></qrcode-stream> -->
+      <qrcode-stream camera="front" @decode="onDecode"></qrcode-stream>
       <b-button @click="openCodeModal" class="enter-code-btn" type="is-info">وارد کردن کد میز</b-button>
+      <div class="camera__border"></div>
     </div>
 
     <div class="landing white">
@@ -80,8 +81,12 @@ import userImg from '~/assets/img/user.jpg'
 import walletIcon from '~/assets/img/shape/icons/wallet.png'
 import myCafe from '~/assets/img/shape/icons/my-cafe-2.svg'
 import Vue from 'vue'
+import { QrcodeStream } from 'vue-qrcode-reader'
 
 export default {
+  components: {
+    QrcodeStream
+  },
   data() {
     return {
       userImg,
@@ -95,6 +100,11 @@ export default {
     closeModal() {
       this.isComponentModalActive = false
     },
+    onDecode(token) {
+      this.tableCode = token
+      this.sendCode()
+    },
+
     openCodeModal() {
       this.isComponentModalActive = true
     },
@@ -131,6 +141,10 @@ export default {
             })
           }
         })
+    },
+    mounted() {
+      let w = window.innerWidth
+      // $('.camera').css({ ' height': w })
     }
   },
   computed: {

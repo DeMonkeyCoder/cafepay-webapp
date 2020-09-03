@@ -55,7 +55,11 @@ export const mutations = {
     for (const cateogry of state.categories) {
       for (const product of cateogry.products) {
         let matchedOrder = user.orders.find(p => p.product == product.pk)
-        if (matchedOrder) product.count = matchedOrder.count
+        if (matchedOrder) {
+          // check if order has payments for reduce order count
+          let locked_count = Math.ceil(matchedOrder.payment_info.payed_amount / matchedOrder.unit_amount)
+          product.count = matchedOrder.count - locked_count
+        }
       }
     }
     console.log('tada find your user', user);

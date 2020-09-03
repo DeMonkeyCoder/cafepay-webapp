@@ -43,7 +43,7 @@ export const mutations = {
     // compute data by person and his orders
     // back-end doesn't give product name on table ... 
     //.. so get it from cafe store
-    // first compute an array of products from categories
+    // first compute an array of products from categories (flatten products then)
     let products = this.state.cafe.categories.map(c => c.products)
     products = [].concat.apply([], products)
     let table = new socketTable(rawData, products)
@@ -54,7 +54,7 @@ export const mutations = {
     // first we need to find the user using the app from persons array
     let user = table.persons.find(p => p.id == this.state.user.user.id) 
     console.log('table !', table);
-    this.commit('cafe/bindProductCount', user)
+    if (user) this.commit('cafe/bindProductCount', user)
 
   },
 
