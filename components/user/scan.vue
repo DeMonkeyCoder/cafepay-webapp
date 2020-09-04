@@ -34,7 +34,7 @@
     </b-modal>
 
     <div class="camera">
-      <qrcode-stream camera="front" @decode="onDecode"></qrcode-stream>
+      <qrcode-stream  @decode="onDecode"></qrcode-stream>
       <b-button @click="openCodeModal" class="enter-code-btn" type="is-info">وارد کردن کد میز</b-button>
       <div class="camera__border"></div>
     </div>
@@ -121,12 +121,11 @@ export default {
           this.$store.commit('cafe/setBasic', res.data.cafe)
           // execute the action for getting menu, detailed info, comments and posts
           this.$store.dispatch('cafe/retrieveMenu')
+          
           this.$store.commit('setActiveTable', true)
-          this.$store.commit('table/newPerson', this.user)
           res.data.table['token'] = res.data.token
           this.$store.commit('table/setToken', res.data.table)
-          // connect to socket
-          Vue.prototype.$connect()
+          
           // attach token to table
           this.$store.commit('changeNavigation', 'currentCafe')
           this.isComponentModalActive = false

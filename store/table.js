@@ -49,10 +49,10 @@ export const mutations = {
     let table = new socketTable(rawData, products)
     state.persons = table.persons
     state.payment = rawData.payment_info
-    
+
     // bind the user's orders count to menu data
     // first we need to find the user using the app from persons array
-    let user = table.persons.find(p => p.id == this.state.user.user.id) 
+    let user = table.persons.find(p => p.id == this.state.user.user.id)
     console.log('table !', table);
     if (user) this.commit('cafe/bindProductCount', user)
 
@@ -129,7 +129,22 @@ export const actions = {
 
   },
 
-  addProduct(context, command) {
+  async changeProductsOnTable(context, command) {
+    
+    try {
+      let data = await this.$axios.
+      $post(`table/${context.state.token}/products/bulk/${command.method}/`, {
+        payments
+      }, {
+        headers: {
+          'Authorization': 'Token ' + context.rootState.token,
+        }
+      })
+      console.log('invoice data', data);
+      context.dispatch('paymentVerify', data.invoice_uuid)
+    } catch (err) {
+
+    }
     let addProductRequest = {
       request: {
         endpoint: `table/${context.state.token}/product/${command.productId}/`,

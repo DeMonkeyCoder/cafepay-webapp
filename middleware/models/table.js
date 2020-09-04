@@ -5,7 +5,8 @@ const identicon = require('identicon')
 export const socketTable = class socketTable {
   constructor(rawData = {}, products = {}) {
 
-
+    console.log('products in table model', products);
+    
     this.persons = this.productsByPerson(rawData.bill_products, products)
 
   }

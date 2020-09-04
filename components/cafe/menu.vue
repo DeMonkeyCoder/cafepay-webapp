@@ -41,7 +41,10 @@
           </span>
         </div>
 
-        <div @click="$store.commit('cafe/setCurrentProduct', prod)" class="content-section cp-side-padding cp-tb-padding">
+        <div
+          @click="$store.commit('cafe/setCurrentProduct', prod)"
+          class="content-section cp-side-padding cp-tb-padding"
+        >
           <div class="product-title font-norm">{{prod.name}}</div>
           <div class="product-description">{{prod.description}}</div>
           <div class="product-price" dir="rtl">
@@ -53,7 +56,6 @@
         <div @click="$store.commit('cafe/setCurrentProduct', prod)" class="img-section">
           <img :src="(prod.avatar == null) ? productDefaultImage : (baseUrl + prod.avatar) " alt />
         </div>
-
       </div>
     </div>
   </div>
@@ -106,29 +108,32 @@ export default {
     },
 
     countChange(index, count, productId) {
-      let method = (count == 1) ? 'POST' : 'DELETE'
-       this.$store.dispatch('table/addProduct', {method , productId})
+      // check for 0 count and deletion
       if (this.activeProducts[index].count == 0 && count == -1) return
       else {
-        // this.activeProducts[index].count += count
+        // change number of product count locally on menu data (cafe.js model and store)
         this.$store.commit('cafe/changeCount', {
           productIndex: index,
           categoryIndex: this.activeCategory,
           count
         })
-      }
+
+        // detect change
+        this.$store.commit('cafe/changeDetection', {id: productId, count})
+
+      
       // changing property of one item of array dosent trigger v-for update
-      // it also dosent effect the compution of computed property therefore we need a mix of watch and inial array + FORCEUPDATE
+      // it also dosent effect the compution of computed property therefore
+      // we need a mix of watch and inial array + FORCEUPDATE
       this.$forceUpdate()
+
+      // total count of anything user wants to add to table (show in add to table btn)
       this.totalCount = this.menu.reduce((sum, cat) => {
-        let innerSum = cat.products.reduce(
-          (innerSum, prod) => prod.count + innerSum,
-          0
-        )
-        // alert(innerSum)
+        let innerSum = cat.products.reduce((innerSum, prod) => prod.count + innerSum,0)
         return innerSum + sum
       }, 0)
-      // alert(this.totalCount)
+
+      // total Price of anything user wants to add to table (show in add to table btn)
       this.totalPrice = this.menu.reduce((sum, cat) => {
         let innerSum = cat.products.reduce(
           (innerSum, prod) => prod.price * prod.count + innerSum,
@@ -136,6 +141,7 @@ export default {
         )
         return innerSum + sum
       }, 0)
+    } // end of else
     }
   },
   computed: {
