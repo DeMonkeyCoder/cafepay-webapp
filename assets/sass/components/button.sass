@@ -14,8 +14,30 @@
   &:hover
     border: none!important
     color: white!important
-    background-color: darken(white, 7%)
-  
+    background-color: darken($primaryNotImportant, 7%)
+
+.cp-btn-green
+  background-color: $green
+  color: white
+  &:hover
+    border: none!important
+    color: white!important
+    background-color: darken($green, 7%)
+
+.cp-btn-submit-order
+  width: 100%!important
+  height: 50px
+  font-size: 24px!important
+  border-radius: 0!important
+  box-shadow: none
+  span
+    font-size: 18px
+    font-weight: 500!important
+  &:focus
+    border: none
+    color: white
+    box-shadow: none!important
+
 .cp-btn-primary-inverted
   background-color: white!important
   color: $primary
@@ -30,16 +52,12 @@
   span
     font-size: 16px
 
-.send-code-btn 
+.send-code-btn
   span
     font-size: 20px!important
 
-
-
 .button.is-light
   background-color: #e6e6e6
-
-
 
 [anim="ripple"]
 
@@ -74,3 +92,17 @@
   --ripple-duration: 600ms
   -webkit-tap-highlight-color: rgba(0,0,0,0)
 
+#pay-checkout, #selected-products-preview
+  opacity: 0
+  z-index: 100
+  position: fixed
+  display: flex
+  bottom: 0
+  left: 0
+  right: 0
+  background-color: white
+  height: 50px
+  transition-timing-function: ease-in
+  transition: 0.4s
+  background-color: $blueShade
+  display: flex

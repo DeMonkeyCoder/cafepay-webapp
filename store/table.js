@@ -1,4 +1,5 @@
 import Vue from 'vue'
+
 import {
   socketTable
 } from '../middleware/models/table'
@@ -107,6 +108,38 @@ export const mutations = {
         }
       }
     }
+  },
+  productsPayloadSeperator(state, productChangeArray) {
+    // delete capital because we don't need it
+    let PayloadGeneral = productChangeArray.map(x => {
+      return {
+        product: x.product,
+        count: x.count
+      }
+    })
+    let deletionPayload = PayloadGeneral.filter(x => x.count < 0)
+      .map(y => {
+        return {
+          count: y.count * -1,
+          product: y.product
+        }
+      })
+    let additionPayload = PayloadGeneral.filter(x => x.count > 0)
+
+    console.log('deletion', deletionPayload, 'additon', additionPayload);
+    // define states of requests , maybe both deletation and addition or one of them alone
+    let requestState;
+    if (additionPayload.length && deletionPayload.length) requestState = 'both'
+    if (additionPayload.length && !deletionPayload.length) requestState = 'addition'
+    if (deletionPayload.length && !additionPayload.length) requestState = 'deletion'
+    console.log('request state', requestState);
+
+    this.dispatch('table/changeProductsOnTable', {
+      add: additionPayload,
+      del: deletionPayload,
+      state: requestState
+    })
+
   }
 
 
@@ -129,36 +162,45 @@ export const actions = {
 
   },
 
-  async changeProductsOnTable(context, command) {
-    
-    try {
-      let data = await this.$axios.
-      $post(`table/${context.state.token}/products/bulk/${command.method}/`, {
-        payments
-      }, {
-        headers: {
-          'Authorization': 'Token ' + context.rootState.token,
-        }
-      })
-      console.log('invoice data', data);
-      context.dispatch('paymentVerify', data.invoice_uuid)
-    } catch (err) {
+  async changeProductsOnTable(context, req) {
 
-    }
-    let addProductRequest = {
-      request: {
-        endpoint: `table/${context.state.token}/product/${command.productId}/`,
-        data: {},
-        headers: {
-          Authorization: "Token " + context.rootState.token
-        },
-        method: command.method
+    if (req.state == 'both') {
+      axios([
+          axios.post(context.rootState.baseUrl + 'api/v1/category/list/', {}, {
+            Authorization: "Token " + context.rootState.token
+          }, ),
+          axios.post(context.rootState.baseUrl + 'api/v1/city/list/', {}, {
+            Authorization: "Token " + context.rootState.token
+          }, ),
+
+        ])
+        .then(axios.spread((add, remove) => {
+          //... but this callback will be executed only when both requests are complete.
+          console.log('categories', categories.data);
+          console.log('cities', cities.data);
+          commit('setBasicData', {
+            cities: cities.data,
+            categories: categories.data,
+            stores: stores.data
+          })
+        }))
+    } else {
+      let method = (req.state == 'addition') ? 'post' : 'delete'
+      let table_products = (method == 'post') ? req.add : req.del
+      try {
+        let data = await this.$axios.$post(`api/v1/table/${context.state.token}/products/bulk/${method}/`, {
+          table_products
+        }, {
+          headers: {
+            'Authorization': 'Token ' + context.rootState.token,
+          }
+        })
+        context.state.productChangeArray = []
+      } catch (err) {
+
       }
-    };
+    }
 
-    let addProductRequest_str = JSON.stringify(addProductRequest);
-    console.log('add product', addProductRequest_str);
-    Vue.prototype.$socket.send(addProductRequest_str);
 
   },
 

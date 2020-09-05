@@ -597,7 +597,7 @@ export default {
       border: none
       flex: 1
 
-.fade-enter-active, .fade-leave-active 
+.fade-enter-active, .fade-leave-active
   transition: all .5s
   // transform: translateX(-100px)
 

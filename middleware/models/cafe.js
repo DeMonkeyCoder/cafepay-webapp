@@ -27,6 +27,8 @@ export const Product = class Product {
     this.original_price = rawData.original_price
     this.discount = rawData.discount,
     this.count = 0
+    // reduce limit refers to limitation of delete product due to payment
+    this.reduceLimit = 0
   }
 
 

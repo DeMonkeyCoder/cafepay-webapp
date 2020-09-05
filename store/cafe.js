@@ -7,7 +7,7 @@ export const state = () => ({
   pk: null,
   name: null,
   avatar: null,
-
+  productChangeArray: [],
   info: {},
   posts: {},
   categories: [],
@@ -62,52 +62,37 @@ export const mutations = {
         let matchedOrder = user.orders.find(p => p.product == product.pk)
         if (matchedOrder) {
           // check if order has payments for reduce order count
-          let locked_count = Math.ceil(matchedOrder.payment_info.payed_amount / matchedOrder.unit_amount)
-          product.count = matchedOrder.count - locked_count
+          product.reduceLimit = Math.ceil(matchedOrder.payment_info.payed_amount / matchedOrder.unit_amount)
+          product.count = matchedOrder.count
         }
       }
     }
     // fork menu for detect changes
-    let productsForkStr = JSON.stringify(this.getters.productsFlatten)
-    state.productsFork = JSON.parse(productsForkStr)
+    // let productsForkStr = JSON.stringify(this.getters.productsFlatten)
+    // state.productsFork = JSON.parse(productsForkStr)
   },
 
   changeDetection(state, product) {
-    // compare menu product count with its fork
-    let productMenu = this.getters.productsFlatten.find(p => p.id)
-    let productFork = state.productsFork.find(p => p.id)
-    let change = productFork.count - productMenu.count
+    // let's see if its already exist in product change array
+    let MatchIndex = state.productChangeArray.findIndex(p => p.product == product.id)
 
-    // we need to separate addition from deletion if its addition we store the chanage
-    // then on submit btn send changes to the server
-    // if its deletion we dispatch it on every delete click and notify user
-    switch (change) {
-      case value:
+    if (MatchIndex != -1) {
+      // if it exist find it on the array and change it
+      state.productChangeArray[MatchIndex].count += product.count
+      state.productChangeArray[MatchIndex].capital += product.count * product.price
+      if ( state.productChangeArray[MatchIndex].count == 0 ) {
+         state.productChangeArray = state.productChangeArray.filter(p => p.product != product.id)
+      }
 
-        break;
-
-      case value:
-
-        break;
-
-      case value:
-
-        break;
-
-      default:
-        break;
     }
-    let method = product.count == 1 ? 'POST' : 'DELETE'
-    if (product.count == 1) {
-      // addition here
+    else {
+      // if not push it to the array
+      state.productChangeArray.push({product: product.id, count: product.count, capital: product.count * product.price})
 
-    } else {
-      // deletion here
-      // this.dispatch('table/changeProductsOnTable', {
-      //   method,
-      //   productId
-      // })
     }
+    console.log('rpoduct change array', state.productChangeArray);
+    
+
   },
 
   flattenProducts(state) {

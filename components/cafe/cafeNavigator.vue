@@ -16,7 +16,7 @@
           </b-tab-item>
 
           <b-tab-item label="منو" >
-            <cp-menu :menu="menu" /> 
+            <cp-menu :menu="menu" :active="(ActiveTab == 3) ? true : false" /> 
           </b-tab-item>
 
       </b-tabs>

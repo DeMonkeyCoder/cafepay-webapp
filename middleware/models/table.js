@@ -21,6 +21,10 @@ export const socketTable = class socketTable {
       let newOrders = []
       let user_name;
       let userId;
+      console.log('orders', orders)
+      console.log('products', products);
+      
+      
       orders.forEach(order => {
         let findProduct = products.find(x => x.pk == order.product)
 
