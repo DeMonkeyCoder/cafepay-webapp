@@ -76,7 +76,7 @@ export default {
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
-    baseURL: 'https://ir.cafepay.app/',
+    baseURL: 'https://cafe.shirazsuf.ir/',
     proxyHeaders: false,
     credentials: false
   },

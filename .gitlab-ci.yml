@@ -19,4 +19,4 @@ deploy:
     - echo "$SSH_PRIVATE_KEY" >> ~/.ssh/id_dsa
     - chmod 600 ~/.ssh/id_dsa
     - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
-    - rsync -rav --delete dist/ spsina@ir.cafepay.app:/home/spsina/dev/raw-webapp/dist/
+    - rsync -rav --delete dist/ spsina@cafe.shirazsuf.ir:/home/spsina/dev/raw-webapp/dist/
