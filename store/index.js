@@ -40,7 +40,6 @@ export const mutations = {
       this.commit('table/setData', message.data)
     }
     else if (message.data.pk == undefined) {
-      alert('x')
       this.commit('table/clearData')
     }
 
