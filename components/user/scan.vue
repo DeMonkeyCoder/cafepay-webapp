@@ -34,7 +34,7 @@
     </b-modal>
 
     <div class="camera">
-      <component :is="(currentMainPage == 'scan') ? QrcodeStream : null"></component>
+      <!-- <component :is="(currentMainPage == 'scan') ? QrcodeStream : null"></component> -->
       <qrcode-stream  @decode="onDecode"></qrcode-stream>
       <b-button @click="openCodeModal" class="enter-code-btn" type="is-info">وارد کردن کد میز</b-button>
       <div class="camera__border"></div>

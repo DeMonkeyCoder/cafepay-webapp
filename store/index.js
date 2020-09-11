@@ -39,6 +39,10 @@ export const mutations = {
       `table.${state.table.token}.join.simple.by-token.` && message.status_code == 200) {
       this.commit('table/setData', message.data)
     }
+    else if (message.data.pk == undefined) {
+      alert('x')
+      this.commit('table/clearData')
+    }
 
   },
   SOCKET_ONCLOSE(state, event) {

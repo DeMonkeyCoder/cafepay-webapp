@@ -42,7 +42,7 @@
         <div class="info">
           <img :src="(cafe.avatar == null) ? cafeDefaultImage : cafe.avatar " alt />
           <p class="cafe-name cp-tb-padding cp-side-padding">{{cafe.name}}</p>
-          <h5 class="table-number cp-tb-padding cp-side-padding">{{table.table_number}} میز شماره</h5>
+          <h5 class="table-number cp-tb-padding cp-side-padding">{{table.table_number}}</h5>
         </div>
         <div
           @click="$store.commit('changeNavigation', 'currentCafe')"
@@ -62,10 +62,14 @@
         </p>
       </div>
 
+      <!-- <div class="table--status"></div> -->
+
+      <div v-if="table.persons.length == 0" class="empty-table"> سفارشی برروی میز سفارش شما وجود ندارد</div>
+
       <div class="persons-on-table cp-side-margin-2x">
         <!-- <div class="you">
           <person :person="table.you" title="شما" />
-        </div> -->
+        </div>-->
         <div class="others">
           <div class="cp-tb-margin" v-for="person in table.persons" :key="person.name">
             <person :person="person" :title="person.name" />
@@ -79,7 +83,10 @@
         <img src="@/assets/img/shape/icons/burger.svg" alt />
         <p class="cp-side-margin-2x">
           برای مشاهده میز به تب
-          <span @click="$store.commit('changeNavigation', 'scan')" class="p-text">اسکن</span> بروید
+          <span
+            @click="$store.commit('changeNavigation', 'scan')"
+            class="p-text"
+          >اسکن</span> بروید
         </p>
         <p>و QR مربوط به میز را اکسن کنید</p>
       </div>
@@ -117,10 +124,8 @@ export default {
   },
   methods: {
     paymentCheckout() {
-
       this.$store.dispatch('table/submitPayment', this.totalWishToPay)
       // this.$router.push('/paymentResult')
-
     },
     showOptionsModal() {
       this.isTableOptionsModalActive = true
@@ -132,22 +137,21 @@ export default {
     }
   },
   mounted() {
-    if (this.totalWishToPay > 0)
-      document
-        .getElementById('pay-checkout')
-        .classList.add('pay-checkout-is-shown')
   },
   watch: {
-    totalWishToPay(val, old) {
-      if (document.getElementById('pay-checkout') != null) {
-        if (val > 0) {
-          document
-            .getElementById('pay-checkout')
-            .classList.add('pay-checkout-is-shown')
-        } else {
-          document
-            .getElementById('pay-checkout')
-            .classList.remove('pay-checkout-is-shown')
+    totalWishToPay: {
+      immediate: true,
+      handler(val, old) {
+        if (document.getElementById('pay-checkout') != null) {
+          if (val > 0) {
+            // document
+            //   .getElementById('pay-checkout')
+            //   .classList.add('pay-checkout-is-shown')
+          } else {
+            document
+              .getElementById('pay-checkout')
+              .classList.remove('pay-checkout-is-shown')
+          }
         }
       }
     }

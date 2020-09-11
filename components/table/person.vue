@@ -56,7 +56,7 @@
         default: {}
       },
       history: {
-        default: false
+        default: true
       },
       shadow: {
         default: true

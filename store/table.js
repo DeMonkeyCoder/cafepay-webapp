@@ -6,7 +6,7 @@ import {
 } from '../middleware/models/table'
 export const state = () => ({
 
-  table_number: 3,
+  table_number: null,
   token: null,
   tpayment: 0,
   persons: [],
@@ -35,9 +35,16 @@ export const getters = {
 export const mutations = {
   setToken(state, table) {
     state.token = table.token
+    state.table_number = table.number
   },
   newPerson(state, person) {
     state.you = person
+  },
+
+  clearData(state) {
+    state.persons = []
+    state.tpayment = 0
+    state.payment = {}
   },
 
   setData(state, rawData) {
