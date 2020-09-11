@@ -34,6 +34,7 @@
     </b-modal>
 
     <div class="camera">
+      <component :is="(currentMainPage == 'scan') ? QrcodeStream : null"></component>
       <qrcode-stream  @decode="onDecode"></qrcode-stream>
       <b-button @click="openCodeModal" class="enter-code-btn" type="is-info">وارد کردن کد میز</b-button>
       <div class="camera__border"></div>
@@ -50,7 +51,7 @@
         <span>{{user.balance | currency}} تومان</span>
       </h4>
       <div class="columns shortcut-btns is-mobile is-3-mobile">
-        <div class="column">
+        <div class="column disable-profile-navigator--noafter">
           <nuxt-link to="/user/profile/wallet">
             <div id="charge-wallet-icon" class="has-background-white">
               <img :src="walletIcon" alt class="icon" />
@@ -58,7 +59,7 @@
             </div>
           </nuxt-link>
         </div>
-        <div class="column">
+        <div class="column column disable-profile-navigator--noafter">
           <!-- <nuxt-link to="/user/profile/wallet"> -->
           <div
             @click="sendCode"
@@ -149,6 +150,9 @@ export default {
   computed: {
     user() {
       return this.$store.state.user.user
+    },
+    currentMainPage() {
+      return this.$store.state.currentMainPage
     }
   },
   watch: {},

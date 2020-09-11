@@ -2,15 +2,15 @@
   <div class="root cp-side-padding">
     <div class="cafe-navigator long-shadow cp-header-card has-background-white">
       <b-tabs v-model="ActiveTab" expanded dir="ltr" type="is-toggle">
-          <b-tab-item label="پست‌ها" >
+          <b-tab-item :disabled="true" label="پست‌ها" >
             <posts/>
           </b-tab-item>
 
-          <b-tab-item label="نظرات" >
+          <b-tab-item :disabled="true" label="نظرات" >
             <comments/>
           </b-tab-item>
           
-          <b-tab-item label="اطلاعات" >
+          <b-tab-item :disabled="true" label="اطلاعات" >
             <!-- passing prop to properly initial map component  -->
             <info :isActive="(ActiveTab == 2) ? true : false" />
           </b-tab-item>

@@ -41,47 +41,47 @@
     <div class="profile-navigation cp-side-padding">
       <ul>
 
-        <nuxt-link to="/user/profile/staffrequest">
+        <!-- <nuxt-link to="/user/profile/staffrequest">
           <li class="cp-card staff-request has-background-white cp-side-padding cp-tb-padding">
             <img src="@/assets/img/shape/icons/shopping-cart.png" alt />
             درخواست‌ها
           <span class="notif-num has-background-danger">1</span>
           </li>
-        </nuxt-link>
+        </nuxt-link> -->
 
-        <nuxt-link to="/user/profile/orderlist">
-          <li class="cp-card has-background-white cp-side-padding cp-tb-padding">
+        <!-- <nuxt-link to="/user/profile/orderlist"> -->
+          <li class="cp-card disable-profile-navigator has-background-white cp-side-padding cp-tb-padding">
             <img src="@/assets/img/shape/icons/shopping-cart.png" alt />
             لیست سفارشات
           </li>
-        </nuxt-link>
+        <!-- </nuxt-link> -->
 
-        <nuxt-link to="/user/profile/wallet">
-          <li class="cp-card has-background-white cp-side-padding cp-tb-padding">
+        <!-- <nuxt-link to="/user/profile/wallet"> -->
+          <li class="cp-card disable-profile-navigator navigation has-background-white cp-side-padding cp-tb-padding">
             <img src="@/assets/img/shape/icons/wallet.png" alt />
             افزایش موجودی
           </li>
-        </nuxt-link>
+        <!-- </nuxt-link> -->
 
-        <nuxt-link to="/user/profile/information">
-          <li class="cp-card has-background-white cp-side-padding cp-tb-padding">
+        <!-- <nuxt-link to="/user/profile/information"> -->
+          <li class="cp-card has-background-white disable-profile-navigator cp-side-padding cp-tb-padding">
             <img src="@/assets/img/shape/icons/user-info-1.svg" alt />
             اطلاعات کاربری
           </li>
-        </nuxt-link>
+        <!-- </nuxt-link> -->
 
-        <li class="cp-card has-background-white cp-side-padding cp-tb-padding">
+        <li class="cp-card has-background-white disable-profile-navigator cp-side-padding cp-tb-padding">
           <img src="@/assets/img/shape/icons/remote-assistance.svg" alt />
           پشتیبانی
         </li>
 
-        <li class="cp-card has-background-white cp-side-padding cp-tb-padding">
+        <li class="cp-card has-background-white disable-profile-navigator cp-side-padding cp-tb-padding">
           <img src="@/assets/img/shape/icons/love.svg" alt />
           مورد علاقه‌ها
         </li>
         <li
           id="cafepay-li-profile"
-          class="cp-card has-background-white cp-side-padding cp-tb-padding"
+          class="cp-card has-background-white disable-profile-navigator cp-side-padding cp-tb-padding"
         >
           <img src="@/assets/img/shape/logo-icon-1.png" alt />
           کافه پی

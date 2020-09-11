@@ -272,7 +272,9 @@ export const actions = {
         }
       })
       console.log('invoice data', data);
-      context.dispatch('paymentVerify', data.invoice_uuid)
+      context.commit('clearWishToPay')
+      context.commit('setPayment', 0)
+      // context.dispatch('paymentVerify', data.invoice_uuid)
     } catch (err) {
 
     }

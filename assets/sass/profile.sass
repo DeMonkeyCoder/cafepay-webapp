@@ -1,9 +1,20 @@
+.disable-profile-navigator
+  filter: saturate(0%)
+  color: lighten($grey, 20%)
+  img
+    opacity: 0.5
+  &::after
+    content: 'به زودی!'
+    position: absolute
+    left: $padding
+    font-weight: bold
 
 .profile-info-bar
   display: flex
   position: relative
   bottom: 54px
-  // height: 60px
+  // height: 60px.disable-profile-navigator
+
   .info
     flex: 1
     height: 75px

@@ -1,7 +1,10 @@
 <template>
   <div dir="rtl">
-    <keep-alive><component class="" @changeView="changeViewTrigger" :is="currentMainPage"></component></keep-alive>
+    <keep-alive>
+      <component v-if="currentMainPage != 'scan'" class="" @changeView="changeViewTrigger" :is="currentMainPage"></component>
+    </keep-alive>
     <navigation />
+    <component v-if="currentMainPage == 'scan'" class="" @changeView="changeViewTrigger" :is="currentMainPage"></component>
   </div>
 </template>
 

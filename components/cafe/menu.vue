@@ -55,8 +55,8 @@
             <span class="toman">تومان</span>
           </div>
         </div>
-
-        <div @click="$store.commit('cafe/setCurrentProduct', prod)" class="img-section">
+        <!-- on div below we need to add @click="$store.commit('cafe/setCurrentProduct', prod)" later for product page navigation -->
+        <div  class="img-section"> 
           <img :src="(prod.avatar == null) ? productDefaultImage : (baseUrl + prod.avatar) " alt />
         </div>
       </div>
@@ -201,9 +201,7 @@ export default {
       }
     },
 
-    errorMsg(newValue, oldValue) {
-      this.toaster(newValue, 'is-danger', 'is-bottom')
-    }
+
   }
 }
 </script>
