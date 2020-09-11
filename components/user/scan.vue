@@ -93,7 +93,7 @@ export default {
       walletIcon,
       myCafe,
       isComponentModalActive: false,
-      tableCode: '220304524920'
+      tableCode: '1'
     }
   },
   methods: {

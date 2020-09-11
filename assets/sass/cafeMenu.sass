@@ -3,8 +3,8 @@
   direction: rtl
   margin-top: 1.5 * $margin!important
   margin-left: (-$margin)
-  margin-right: (-$margin)
-  overflow:scroll !important
+  // margin-right: (-$margin)
+  overflow: scroll !important
   white-space: nowrap
   .category-item
     font-size: 14px
@@ -20,7 +20,7 @@
 .product-list
   padding-bottom: 100px
   .product-item
-    height: 15vh
+    height: 18vh
     display: flex
     .img-section
       flex: 6
@@ -30,6 +30,7 @@
         width: 100%
         border-radius: 10px
         object-fit: cover
+        background-color: lighten($primaryNotImportant, 50%)
         // border-radius: 50px 5px 5px 50px
         // : 100%/30px 30px 5px 5px
     .content-section
@@ -48,7 +49,8 @@
         position: absolute
         right: $padding
         bottom: $padding
-        font-size: 15px
+        font-size: 18px
+        font-weight: 500!important
 
     .add-or-remove
       text-align: center
@@ -129,4 +131,4 @@
   .product-list
     padding-bottom: 100px
     .product-item
-      height: 17vh
+      height: 20vh

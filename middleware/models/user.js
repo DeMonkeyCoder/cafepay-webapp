@@ -12,7 +12,7 @@ export default class User {
     this.id = userData.pk
     this.orders = []
     identicon.generate({
-      id: this.phone_number+ this.full_name,
+      id: this.full_name,
       size: 75
     }, (err, buffer) => {
       if (err) throw err

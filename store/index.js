@@ -4,6 +4,7 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 export const state = () => ({
+  errorMessage: null,
   globalLoading: false,
   baseUrl: 'https://cafepay.shirazsuf.ir/',
   activeCafe: {},
@@ -15,7 +16,7 @@ export const state = () => ({
     message: '',
     reconnectError: false,
   },
-  currentMainPage: (state.hasActiveTable) ? 'currentCafe' : 'scan'
+  currentMainPage: (state.hasActiveTable) ? 'currentCafe' : 'scan',
 })
 
 export const mutations = {
@@ -76,6 +77,9 @@ export const mutations = {
   },
   changeNavigation(state, PageName) {
     state.currentMainPage = PageName
+  },
+  errorMsg(state, err) {
+    state.errorMessage = err.message
   }
 }
 

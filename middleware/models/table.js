@@ -5,7 +5,7 @@ const identicon = require('identicon')
 export const socketTable = class socketTable {
   constructor(rawData = {}, products = {}) {
 
-    console.log('products in table model', products);
+
     
     this.persons = this.productsByPerson(rawData.bill_products, products)
 
@@ -20,9 +20,9 @@ export const socketTable = class socketTable {
       // make orders from product class
       let newOrders = []
       let user_name;
+      let identiconId;
       let userId;
-      console.log('orders', orders)
-      console.log('products', products);
+
       
       
       orders.forEach(order => {
@@ -37,6 +37,8 @@ export const socketTable = class socketTable {
         // user info is in each order so remove it from them and add to parent (person)
         user_name = (order.is_staff) ? 'صندوق دار' : order.user_profile.full_name
         userId = order.user_profile.pk
+        // generate id for identicon base on full_name + phone number
+        identiconId = order.user_profile.full_name
         // user_name = order.user_profile.full_name
         delete prodObj.user_profile
 
@@ -49,10 +51,9 @@ export const socketTable = class socketTable {
       let totalPaid = newOrders.reduce(
         (total, order) => order.payment_info.payed_amount + total, 0)
         let avatar;
-        console.log('user',user_name);
         
         identicon.generate({
-            id: user_name,
+            id: identiconId,
             size: 75
           }, (err, buffer) => {
             if (err) throw err

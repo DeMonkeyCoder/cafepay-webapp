@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import axios from 'axios'
 
 import {
   socketTable
@@ -165,25 +166,53 @@ export const actions = {
   async changeProductsOnTable(context, req) {
 
     if (req.state == 'both') {
-      axios([
-          axios.post(context.rootState.baseUrl + 'api/v1/category/list/', {}, {
-            Authorization: "Token " + context.rootState.token
+      context.commit("toggleLoading", true, {
+        root: true
+      })
+      axios.all([
+          axios.post(context.rootState.baseUrl + `api/v1/table/${context.state.token}/products/bulk/post/`, {
+            table_products: req.add
+          }, {
+            headers: {
+              'Authorization': 'Token ' + context.rootState.token,
+            }
           }, ),
-          axios.post(context.rootState.baseUrl + 'api/v1/city/list/', {}, {
-            Authorization: "Token " + context.rootState.token
+          axios.post(context.rootState.baseUrl + `api/v1/table/${context.state.token}/products/bulk/delete/`, {
+            table_products: req.del
+          }, {
+            headers: {
+              'Authorization': 'Token ' + context.rootState.token,
+            }
           }, ),
 
         ])
         .then(axios.spread((add, remove) => {
-          //... but this callback will be executed only when both requests are complete.
-          console.log('categories', categories.data);
-          console.log('cities', cities.data);
-          commit('setBasicData', {
-            cities: cities.data,
-            categories: categories.data,
-            stores: stores.data
+          //... but this callback will be executed only when both requests are complete.\
+          context.commit("toggleLoading", false, {
+            root: true
           })
+          context.commit('cafe/clearPCA', null, {
+            root: true
+          })
+          setTimeout(() => {
+            context.commit('changeNavigation', 'cp-table', {
+              root: true
+            })
+          }, 200);
+
         }))
+        .catch(err => {
+          context.commit("toggleLoading", false, {
+            root: true
+          })
+          //... but this callback will be executed only when both requests are complete.
+          if (err.response) {
+            context.dispatch('errorMsg', err.response.data, {
+              root: true
+            })
+          }
+
+        })
     } else {
       let method = (req.state == 'addition') ? 'post' : 'delete'
       let table_products = (method == 'post') ? req.add : req.del
@@ -195,9 +224,22 @@ export const actions = {
             'Authorization': 'Token ' + context.rootState.token,
           }
         })
-        context.state.productChangeArray = []
-      } catch (err) {
+        // clear the array of product changes
+        context.commit('cafe/clearPCA', null, {
+          root: true
+        })
+        setTimeout(() => {
+          context.commit('changeNavigation', 'cp-table', {
+            root: true
+          })
+        }, 200);
 
+      } catch (err) {
+        if (err.response) {
+          context.dispatch('errorMsg', err.response.data, {
+            root: true
+          })
+        }
       }
     }
 

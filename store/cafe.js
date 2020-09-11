@@ -56,6 +56,8 @@ export const mutations = {
     state.productPageActive = false
   },
 
+  clearPCA: (state) => { state.productChangeArray = [] },
+
   bindProductCount(state, user) {
     for (const cateogry of state.categories) {
       for (const product of cateogry.products) {

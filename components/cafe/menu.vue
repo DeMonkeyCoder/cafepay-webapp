@@ -12,8 +12,12 @@
         </div>
         <div class="total-count green">{{totalCount}}</div>
       </div>-->
-      <b-button @click="sumbitOnTable" :loading="globalLoading" class="cp-btn-green cp-btn-submit-order" size="is-medium">
-        ثبت تغییرات در میز سفارش</b-button>
+      <b-button
+        @click="sumbitOnTable"
+        :loading="globalLoading"
+        class="cp-btn-green button cp-btn-submit-order"
+        size="is-medium"
+      >ثبت تغییرات در میز سفارش</b-button>
     </div>
 
     <div class="category-list cp-tb-margin">
@@ -90,7 +94,6 @@ export default {
         'table/productsPayloadSeperator',
         this.productChangeArray
       )
-      this.$store.commit('changeNavigation', 'cp-table')
     },
 
     changeActiveCategory(index) {
@@ -194,16 +197,12 @@ export default {
     },
     menu(newValue, oldValue) {
       if (newValue.length > 0) {
-        // this.totalCount = this.menu.reduce((sum, cat) => {
-        //   let innerSum = cat.products.reduce(
-        //     (innerSum, prod) => prod.count + innerSum,
-        //     0
-        //   )
-        //   // alert(innerSum)
-        //   return innerSum + sum
-        // }, 0)
         this.activeProducts = this.menu[this.activeCategory].products
       }
+    },
+
+    errorMsg(newValue, oldValue) {
+      this.toaster(newValue, 'is-danger', 'is-bottom')
     }
   }
 }
