@@ -13,6 +13,10 @@ export default {
 
     if (this.token !== null) {
       this.$store.dispatch('user/retrieve')
+      console.log('current route', this.$router.currentRoute);
+      if (this.$router.currentRoute.path == '/') {
+        this.$router.push('/user/home')
+      }
     }
   },
   watch: {
