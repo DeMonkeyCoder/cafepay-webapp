@@ -94,7 +94,7 @@ export default {
       walletIcon,
       myCafe,
       isComponentModalActive: false,
-      tableCode: '1'
+      tableCode: ''
     }
   },
   methods: {
