@@ -109,6 +109,7 @@ export default {
         this.$router.push('/')
         setTimeout(() => {
           this.$store.commit('user/clear')
+          this.$store.commit('clearToken')
         }, 500);
       }
   

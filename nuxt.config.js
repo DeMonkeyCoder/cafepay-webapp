@@ -24,7 +24,7 @@ export default {
       {
         hid: 'description',
         name: 'description',
-        content: process.env.npm_package_description || ''
+        content: 'کافه پی | پرداخت آنلاین در کافه‌ها و رستوران‌ها'
       },
     ],
     link: [{
@@ -110,8 +110,12 @@ export default {
     manifest: {
       name: 'کافه‌پی',
       lang: 'fa',
-      useWebmanifestExtension: false
-    }
+      display: 'standalone',
+       theme_color: '#009fe3',
+    },
+     workbox: {
+       dev: true // or use a global variable to track the current NODE_ENV, etc to determine dev mode
+     }
   },
   /*
    ** Build configuration
