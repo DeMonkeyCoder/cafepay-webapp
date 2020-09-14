@@ -23,6 +23,7 @@
               @click="sendCode"
               class="checkCode-btn bcp-btn bcp-btn-large"
               expanded
+              :disabled="(tableCode == '') ? true : false"
               type="is-info"
             >ورود به میز</b-button>
           </div>
@@ -68,7 +69,7 @@
             anim="ripple"
           >
             <img :src="myCafe" alt class="icon" />
-            <p>کافه‌های من</p>
+            <p>علاقه‌مندی های من</p>
           </div>
           <!-- </nuxt-link> -->
         </div>
@@ -135,7 +136,7 @@ export default {
           if (err.response) {
             this.$buefy.toast.open({
               duration: 3000,
-              message: `کد وارد شده نادرست است ${err.response.data}`,
+              message: `کد وارد شده نادرست است`,
               position: 'is-top',
               type: 'is-danger'
             })
