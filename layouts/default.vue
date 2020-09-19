@@ -9,14 +9,15 @@ export default {
     return {}
   },
   mounted() {
-    console.log('token', this.token)
-
-    if (this.token !== null) {
+    console.log('token', typeof this.token, this.token)
+    if (this.token != null) {
       this.$store.dispatch('user/retrieve')
-      console.log('current route', this.$router.currentRoute);
       if (this.$router.currentRoute.path == '/') {
         this.$router.push('/user/home')
       }
+    }
+    else {
+      this.$router.push('/')
     }
   },
   watch: {

@@ -11,9 +11,10 @@ export default function ({ $axios, store, $buefy }) {
     })
   
     $axios.onError(error => {
+      store.commit("toggleLoading", false)
       if (error.response) {
       const code = parseInt(error.response && error.response.status)
-      store.commit("toggleLoading", false)
+      
     }
     else {
       store.commit("errorMsg", {

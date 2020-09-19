@@ -144,9 +144,9 @@ export default {
       handler(val, old) {
         if (document.getElementById('pay-checkout') != null) {
           if (val > 0) {
-            // document
-            //   .getElementById('pay-checkout')
-            //   .classList.add('pay-checkout-is-shown')
+            document
+              .getElementById('pay-checkout')
+              .classList.add('pay-checkout-is-shown')
           } else {
             document
               .getElementById('pay-checkout')
