@@ -132,7 +132,7 @@
       </transition>
     </section>
 
-    <!-- <section
+    <section
       dir="rtl"
       id="about-us"
       class="about-us has-background-white cp-tb-padding-4x cp-side-padding-4x"
@@ -304,7 +304,7 @@
         dir="rtl"
         class="font-14 font-norm"
       >کلیه حقوق این سایت (کافه‌پِی) متعلق به هوشمندسازان ویرا آرین می‌باشد.</p>
-    </section> -->
+    </section>
   </div>
 </template>{
 

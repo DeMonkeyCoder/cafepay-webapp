@@ -1,7 +1,7 @@
 
 export default function ({ $axios, store, $buefy }) {
 
-    // $axios.setToken(store.state.token, 'Token')
+    $axios.setToken(store.state.token, 'Token')
     $axios.onRequest(config => {
         store.commit("toggleLoading", true)
     })

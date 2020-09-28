@@ -226,10 +226,6 @@ export const actions = {
       try {
         let data = await this.$axios.$post(`api/v1/table/${context.state.token}/products/bulk/${method}/`, {
           table_products
-        }, {
-          headers: {
-            'Authorization': 'Token ' + context.rootState.token,
-          }
         })
         // clear the array of product changes
         context.commit('cafe/clearPCA', null, {
@@ -273,10 +269,6 @@ export const actions = {
     try {
       let data = await this.$axios.$post(`/api/v1/pbr/session/create/`, {
         payments
-      }, {
-        headers: {
-          'Authorization': 'Token ' + context.rootState.token,
-        }
       })
       console.log('invoice data', data);
       context.commit('clearWishToPay')
@@ -289,11 +281,7 @@ export const actions = {
   },
   async paymentVerify(context, id) {
     try {
-      let data = await this.$axios.$get(`/api/v1/payment/verify/${id}/`, {
-        headers: {
-          'Authorization': 'Token ' + context.rootState.token,
-        }
-      })
+      await this.$axios.$get(`/api/v1/payment/verify/${id}/`)
       this.app.router.push('/paymentResult')
     } catch (err) {
 
