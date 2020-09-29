@@ -37,8 +37,21 @@
   display: flex
   justify-content: center
   align-items: center
+  
+  #table-status-bar-progress-wrapper
+    transition: 0.3s
+    position: absolute
+    top: 0
+    right: 0
+    bottom: 0
+    border-radius: 0 10px 10px 0
+    background-color: #c7f2ff
+    
+    z-index: 2
   p
-    width: 100%
+    margin-left: 0.5rem
+    position: relative
+    z-index: 3
     text-align: center
     .total-payment
       font-size: 18px

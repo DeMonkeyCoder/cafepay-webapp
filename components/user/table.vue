@@ -29,13 +29,12 @@
           @click="paymentCheckout"
           class="checkCode-btn pay-checkout-btn bcp-btn bcp-btn-large"
           expanded
-          :disabled="(tableCode == '') ? true : false"
           type="is-info"
         >پرداخت آنلاین</b-button>
 
         <!-- <div @click="paymentCheckout" dir="rtl" class="pc-child pay-checkout-btn green">
           <b-icon class="credit-card-icon" icon="credit-card" type="is-light"></b-icon>پرداخت آنلاین
-        </div> -->
+        </div>-->
         <div class="pc-child pay-checkout-info cp-side-padding">
           <div dir="rtl" class="total-price cp-side-margin font-norm">
             {{totalWishToPay | currency}}
@@ -62,13 +61,16 @@
       </div>
 
       <div class="table-status-bar long-shadow cp-side-margin cp-header-card has-background-white">
-        <p>
-          پرداخت شده:‌
+        <div id="table-status-bar-progress-wrapper" class=""></div>
+        <p v-if="PaymentProgress != 100">
+       باقی‌مانده:
           <span
             class="g-text font-norm total-payment"
-          >{{table.payment.payed_amount | currency}}</span> تومان از
+          >{{table.payment.total_amount - table.payment.payed_amount | currency}}</span> تومان از
           <span class="total-cost">{{table.payment.total_amount | currency}}</span> تومان
         </p>
+        <p v-else class="font-norm total-payment">پرداخت میز کامل شده است </p>
+        <b-icon class="g-text" icon="sticker-check"></b-icon>
       </div>
 
       <!-- <div class="table--status"></div> -->
@@ -128,6 +130,15 @@ export default {
     },
     totalWishToPay() {
       return this.$store.getters['table/totalWishToPay']
+    },
+
+    PaymentProgress() {
+      let percent =  this.table.payment.payed_amount / this.table.payment.total_amount
+      console.log('percent', percent);
+      
+      if (percent == NaN) return 0
+      return percent * 100
+      
     }
     // ordersTotalCost(){
     //   let others = this.table.persons.reduce( (Sum, person) => person.totalPrice + Sum,  0)
@@ -150,6 +161,17 @@ export default {
   },
   mounted() {},
   watch: {
+    immediate: true,
+    PaymentProgress: {
+      handler(val, old) {
+        let progressBar = document.getElementById('table-status-bar-progress-wrapper')
+        if (progressBar != null) {
+        progressBar.style.width = `${val}%`
+        if (val == 100) progressBar.style.borderRadius = '10px 10px 10px 10px'
+        }
+      }
+    },
+
     totalWishToPay: {
       immediate: true,
       handler(val, old) {

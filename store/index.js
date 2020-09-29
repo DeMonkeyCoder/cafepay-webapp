@@ -6,7 +6,7 @@ Vue.use(Vuex)
 export const state = () => ({
   errorMessage: null,
   globalLoading: false,
-  baseUrl: 'https://cafepay.app/',
+  baseUrl: 'https://alpha.cafepay.app/',
   activeCafe: {},
   activeTable: {},
   hasActiveTable: false,

@@ -97,7 +97,7 @@ export default {
    ** See https://axios.nuxtjs.org/options
    */
   axios: {
-    baseURL: 'https://cafepay.app/',
+    baseURL: 'https://alpha.cafepay.app/',
     proxyHeaders: false,
     credentials: false
   },
