@@ -15,9 +15,19 @@
       <b-button
         @click="sumbitOnTable"
         :loading="globalLoading"
-        class="cp-btn-green button cp-btn-submit-order"
+        class="button bcp-btn cp-btn-submit-order"
         size="is-medium"
+        type="is-info"
       >ثبت تغییرات در میز سفارش</b-button>
+
+      <!-- <b-button
+        :loading="globalLoading"
+        @click="sendCode"
+        class="checkCode-btn bcp-btn bcp-btn-large"
+        expanded
+        :disabled="(tableCode == '') ? true : false"
+        type="is-info"
+      >ورود به میز</b-button> -->
     </div>
 
     <div class="category-list cp-tb-margin">
@@ -56,7 +66,7 @@
           </div>
         </div>
         <!-- on div below we need to add @click="$store.commit('cafe/setCurrentProduct', prod)" later for product page navigation -->
-        <div  class="img-section"> 
+        <div class="img-section">
           <img :src="(prod.avatar == null) ? productDefaultImage : (baseUrl + prod.avatar) " alt />
         </div>
       </div>
@@ -199,9 +209,7 @@ export default {
       if (newValue.length > 0) {
         this.activeProducts = this.menu[this.activeCategory].products
       }
-    },
-
-
+    }
   }
 }
 </script>

@@ -2,19 +2,37 @@
   position: relative
   background-color: grey
   height: 40vh
+  text-align: center
+  & > *
+    position: absolute
   &__border
     width: 50%
     height: 50%
     border: 3px dashed $primary
     border-radius: 15px
-    position: absolute
     top: 25%
     left: 25%
 
-  .enter-code-btn
-    position: absolute
-    right: 10px
-    bottom: 10px
+  &__btn
+    right: 25%
+    width: 50%
+    top: 50%
+    background: white!important
+    color: $black
+
+  &__scan-text
+    top: 30%
+    width: 80%
+    left: 10%
+    color: white
+    font-weight: 500
+
+  &__scan-text-or
+    top: 40%
+    width: 80%
+    left: 10%
+    color: white
+    font-weight: 500
 
 .checkCode-btn
   width: 100%

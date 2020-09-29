@@ -3,7 +3,7 @@ import Vue from 'vue'
 Vue.mixin({
   data() {
     return {
-      baseUrl: 'https://cafepay.shirazsuf.ir/',
+      baseUrl: 'https://cafepay.app/',
       cloading: false,
       colors: {
         primary: '#009fe3',

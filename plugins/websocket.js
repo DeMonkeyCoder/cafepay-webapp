@@ -4,7 +4,7 @@ import VueNativeSock from "vue-native-websocket";
 export default function ({
   store,
 }) {
-Vue.use(VueNativeSock, "wss://cafepay.shirazsuf.ir/ws/v1/", {
+Vue.use(VueNativeSock, "wss://cafepay.app/ws/v1/", {
   connectManually: true,
   store: store, // connect to store
   reconnection: true, // (Boolean) whether to reconnect automatically (false)

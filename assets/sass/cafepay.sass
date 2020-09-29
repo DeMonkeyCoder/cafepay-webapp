@@ -16,7 +16,6 @@
 @import  'index.sass'
 @import  'scan.sass'
 
-  
 @import './components/modal'
 @import './components/input'
 @import './components/map'
@@ -25,13 +24,9 @@
 @import './components/tab'
 @import './components/toast'
 
-
-
 *
   -webkit-tap-highlight-color: rgba(0,0,0,0)
   -webkit-tap-highlight-color: transparent
-
-
 
 body, html
   // background-color: #F3F3F3!important
@@ -42,8 +37,8 @@ body, html
   box-shadow: $navbarBoxShadow
 
 .font-ul
- font-weight: 200!important
- font-family: "IRANSans"
+  font-weight: 200!important
+  font-family: "IRANSans"
 
 .font-l
   font-weight: 300!important
@@ -58,9 +53,8 @@ body, html
   font-family: "IRANSans"
 
 .font-bold
-    font-weight: bold!important
-    font-family: "IRANSans"
-
+  font-weight: bold!important
+  font-family: "IRANSans"
 
 .btn-font-norm
   span
@@ -91,9 +85,9 @@ body, html
 .font-12
   font-size: 12px!important
 
-h1 
+h1
   font-weight: 400
-    
+
 .flex
   display: flex
 
@@ -129,14 +123,13 @@ h1
 
 .primary
   background-color: $primary
-  
 
 .secondary
   background-color: $secondary
 
 .s-text
   color: $secondary
-  
+
 .lightblue
   background-color: $lightblue!important
 
@@ -167,7 +160,6 @@ h1
 .postfix-margin
   margin-right: 3px
 
-
 .cp-header
   background: rgb(0,113,188)
   background: linear-gradient(90deg, rgba(0,113,188,1) 0%, rgba(30,215,229,1) 100%)
@@ -177,7 +169,6 @@ h1
 
 .cp-full-width
   width: 100%
-
 
 .long-shadow
   box-shadow: $longShadow!important
@@ -190,38 +181,34 @@ h1
 .header-radius
   border-radius: 10px
 
-
 .modal
   z-index: 140
 
 // Cafe navigator TAB --------------------------------------------------
 
-
-
   // PADDING SECTION -------------------------------------------------
-
 
 .cp-side-padding
   @include sidePadding($size: $padding)
-  
+
 .cp-tb-padding
   @include tbPadding($size: $padding)
 
 .cp-side-padding-2x
   @include sidePadding($size: 2 * $padding)
-  
+
 .cp-tb-padding-2x
   @include tbPadding($size: 2 * $padding)
 
 .cp-side-padding-4x
   @include sidePadding($size: 4 * $padding)
-  
+
 .cp-tb-padding-4x
   @include tbPadding($size: 4 * $padding)
 
 .cp-side-padding-half
   @include sidePadding($size: 0.5 * $padding)
-  
+
 .cp-tb-padding-half
   @include tbPadding($size: 0.5 * $padding)
 
@@ -230,22 +217,21 @@ h1
 
 // MARGIN SECTION --------------------------------------------------------
 
-
 .cp-side-margin
   @include sideMargin($size: $margin)
-  
+
 .cp-tb-margin
   @include tbMargin($size: $margin)
 
 .cp-side-margin-2x
   @include sideMargin($size: 2 * $margin)
-  
+
 .cp-tb-margin-2x
   @include tbMargin($size: 2 * $margin)
 
 .cp-side-margin-half
   @include sideMargin($size: 0.5 * $margin)
-  
+
 .cp-tb-margin-half
   @include tbMargin($size: 0.5 * $margin)
 
@@ -258,10 +244,8 @@ h1
 .cp-b-margin-2x
   margin-bottom: $margin * 2!important
 
-
 .cp-t-margin
   margin-top: $margin!important
-
 
 .ml-zero
   margin-left: 0!important
@@ -281,18 +265,16 @@ h1
   // border-radius: .25rem!important
   // border-color: #cbd5e0!important
 
-
 .cp-header-card
   border-radius: 10px
 
 .cp-card
-  border-radius: 5px  
+  border-radius: 5px
 
 .toman
   color: $grey
   position: relative
   right: 2px
-
 
 .order-fix-button
   position: fixed
@@ -313,8 +295,31 @@ h1
   align-items: center
   font-weight: 600!important
 
-html 
+html
   -webkit-overflow-scrolling: touch
   overflow-scrolling: touch
-  
 
+//  shadows
+.shadow-xs  
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05)!important
+.shadow-sm  
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05)!important
+.shadow  
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)!important
+.shadow-md  
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)!important
+.shadow-lg  
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)!important
+.shadow-xl  
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)!important
+.shadow-2xl  
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25)!important
+.shadow-inner  
+  box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)!important
+.shadow-outline  
+  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5)
+.shadow-none  
+  box-shadow: none
+
+.shadow-newm
+  box-shadow: 5px 5px 6px -1px rgba(0, 0, 0, 0.1), -3px -2px 15px 0px rgba(255, 255, 255, 0.4), inset 0 2px 4px 0 rgba(0, 0, 0, 0.06) !important

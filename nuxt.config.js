@@ -69,10 +69,10 @@ export default {
    ** Plugins to load before mounting the App
    */
   plugins: [
+    '~/plugins/onReload',
     '~/plugins/axios',
     '~/plugins/mixin',
     '~/plugins/vue-currency',
-    '~/plugins/onReload',
     '~/plugins/vue-leaflet',
     '~/plugins/moment',
     '~/plugins/websocket.js'
@@ -97,7 +97,7 @@ export default {
    ** See https://axios.nuxtjs.org/options
    */
   axios: {
-    baseURL: 'https://cafepay.shirazsuf.ir/',
+    baseURL: 'https://cafepay.app/',
     proxyHeaders: false,
     credentials: false
   },

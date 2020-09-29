@@ -37,8 +37,10 @@
     <div class="camera">
       <!-- <component :is="(currentMainPage == 'scan') ? QrcodeStream : null"></component> -->
       <qrcode-stream  @decode="onDecode"></qrcode-stream>
-      <b-button @click="openCodeModal" class="enter-code-btn" type="is-info">وارد کردن کد میز</b-button>
-      <div class="camera__border"></div>
+      <p class="camera__scan-text">بارکد روی میز را با دوربین این قسمت اسکن کنید</p>
+      <p class="camera__scan-text-or">و یا</p>
+      <b-button @click="openCodeModal" class="camera__btn shadow-lg bcp-btn-large " >کد میز را وارد کنید</b-button>
+      <!-- <div class="camera__border"></div> -->
     </div>
 
     <div class="landing white">
@@ -116,7 +118,7 @@ export default {
       this.$axios
         .get('api/v1/table-token/' + this.tableCode + '/cafe-info/', {
           params: {},
-          headers: { Authorization: 'Token ' + this.token }
+          // headers: { Authorization: 'Token ' + this.token }
         })
         .then(res => {
           // sets pk, avatar, name and table id
