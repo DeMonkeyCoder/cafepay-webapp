@@ -17,7 +17,7 @@
               placeholder="کد میز را وارد کنید"
             ></b-input>
           </b-field>
-          <div class="buttons">
+
             <b-button
               :loading="globalLoading"
               @click="sendCode"
@@ -26,7 +26,7 @@
               :disabled="(tableCode == '') ? true : false"
               type="is-info"
             >ورود به میز</b-button>
-          </div>
+       
         </section>
         <footer class="modal-card-foot">
           <button class="button" type="button" @click="closeModal">بستن پنجره</button>

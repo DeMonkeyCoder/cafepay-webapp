@@ -24,9 +24,18 @@
       </b-modal>
 
       <div dir="ltr" id="pay-checkout">
-        <div @click="paymentCheckout" dir="rtl" class="pc-child pay-checkout-btn green">
+        <b-button
+          :loading="globalLoading"
+          @click="paymentCheckout"
+          class="checkCode-btn pay-checkout-btn bcp-btn bcp-btn-large"
+          expanded
+          :disabled="(tableCode == '') ? true : false"
+          type="is-info"
+        >پرداخت آنلاین</b-button>
+
+        <!-- <div @click="paymentCheckout" dir="rtl" class="pc-child pay-checkout-btn green">
           <b-icon class="credit-card-icon" icon="credit-card" type="is-light"></b-icon>پرداخت آنلاین
-        </div>
+        </div> -->
         <div class="pc-child pay-checkout-info cp-side-padding">
           <div dir="rtl" class="total-price cp-side-margin font-norm">
             {{totalWishToPay | currency}}
@@ -64,7 +73,10 @@
 
       <!-- <div class="table--status"></div> -->
 
-      <div v-if="table.persons.length == 0" class="empty-table"> سفارشی برروی میز سفارش شما وجود ندارد</div>
+      <div
+        v-if="table.persons.length == 0"
+        class="empty-table"
+      >سفارشی برروی میز سفارش شما وجود ندارد</div>
 
       <div class="persons-on-table cp-side-margin-2x">
         <!-- <div class="you">
@@ -136,8 +148,7 @@ export default {
       this.isTableOptionsModalActive = false
     }
   },
-  mounted() {
-  },
+  mounted() {},
   watch: {
     totalWishToPay: {
       immediate: true,
