@@ -71,7 +71,7 @@
         </p>
         
         <p v-if="PaymentProgress == 100" class="font-norm total-payment">پرداخت میز کامل شده است </p>
-        <b-icon v-if="PaymentProgress == 100" class="g-text" icon="sticker-check"></b-icon>
+        <b-icon v-if="PaymentProgress == 100" class="g-text payment-completed-icon" icon="sticker-check"></b-icon>
         
       </div>
 
