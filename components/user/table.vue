@@ -69,8 +69,8 @@
           >{{table.payment.total_amount - table.payment.payed_amount | currency}}</span> تومان از
           <span class="total-cost">{{table.payment.total_amount | currency}}</span> تومان
         </p>
-        <p v-else class="font-norm total-payment">پرداخت میز کامل شده است </p>
-        <b-icon class="g-text" icon="sticker-check"></b-icon>
+        <p v-if="PaymentProgress == 100" class="font-norm total-payment">پرداخت میز کامل شده است </p>
+        <b-icon v-if="PaymentProgress == 100" class="g-text" icon="sticker-check"></b-icon>
       </div>
 
       <!-- <div class="table--status"></div> -->
