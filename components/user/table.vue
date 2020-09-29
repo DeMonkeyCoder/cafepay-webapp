@@ -69,8 +69,10 @@
           >{{table.payment.total_amount - table.payment.payed_amount | currency}}</span> تومان از
           <span class="total-cost">{{table.payment.total_amount | currency}}</span> تومان
         </p>
+        
         <p v-if="PaymentProgress == 100" class="font-norm total-payment">پرداخت میز کامل شده است </p>
         <b-icon v-if="PaymentProgress == 100" class="g-text" icon="sticker-check"></b-icon>
+        
       </div>
 
       <!-- <div class="table--status"></div> -->
@@ -133,11 +135,11 @@ export default {
     },
 
     PaymentProgress() {
-      let percent =  this.table.payment.payed_amount / this.table.payment.total_amount
-      console.log('percent', percent);
+      let percent =  (this.table.payment.payed_amount / this.table.payment.total_amount) * 100
+      console.log('percent', percent.toFixed(0));
       
       if (percent == NaN) return 0
-      return percent * 100
+      return  percent.toFixed(0)
       
     }
     // ordersTotalCost(){
@@ -165,10 +167,11 @@ export default {
     PaymentProgress: {
       handler(val, old) {
         let progressBar = document.getElementById('table-status-bar-progress-wrapper')
-        if (progressBar != null) {
-        progressBar.style.width = `${val}%`
-        if (val == 100) progressBar.style.borderRadius = '10px 10px 10px 10px'
-        }
+        setTimeout(() => {
+          progressBar.style.width = `${val}%`
+          if (val == 100) progressBar.style.borderRadius = '10px 10px 10px 10px'
+        }, 300);
+        
       }
     },
 
