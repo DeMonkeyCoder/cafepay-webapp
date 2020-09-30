@@ -397,15 +397,11 @@ export default {
       console.log('f l', this.first_name , this.last_name);
       
       if (this.first_name != '' && this.last_name != '') {
-        this.$axios
+        this.$api
           .put('/api/v1/user-profile/', {
             first_name: this.first_name,
             last_name: this.last_name
-          } , {
-        headers: {
-          'Authorization': 'Token ' + this.token,
-        }
-      })
+          })
           .then(res => {
             this.$store.dispatch('user/retrieve')
             this.$router.push('/user/home')

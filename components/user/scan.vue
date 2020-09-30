@@ -115,7 +115,7 @@ export default {
     sendCode() {
       // u need to set the table too, for api link
 
-      this.$axios
+      this.$api
         .get('api/v1/table-token/' + this.tableCode + '/cafe-info/', {
           params: {},
           // headers: { Authorization: 'Token ' + this.token }

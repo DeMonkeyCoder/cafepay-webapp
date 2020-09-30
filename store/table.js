@@ -224,7 +224,7 @@ export const actions = {
       let method = (req.state == 'addition') ? 'post' : 'delete'
       let table_products = (method == 'post') ? req.add : req.del
       try {
-        let data = await this.$axios.$post(`api/v1/table/${context.state.token}/products/bulk/${method}/`, {
+        let data = await this.$api.$post(`api/v1/table/${context.state.token}/products/bulk/${method}/`, {
           table_products
         })
         // clear the array of product changes
@@ -267,7 +267,7 @@ export const actions = {
     context.commit('setPayment', payload)
     // context.commit('clearWishToPay')
     try {
-      let data = await this.$axios.$post(`/api/v1/pbr/session/create/`, {
+      let data = await this.$api.$post(`/api/v1/pbr/session/create/`, {
         payments
       })
       console.log('invoice data', data);
@@ -281,7 +281,7 @@ export const actions = {
   },
   async paymentVerify(context, id) {
     try {
-      await this.$axios.$get(`/api/v1/payment/verify/${id}/`)
+      await this.$api.$get(`/api/v1/payment/verify/${id}/`)
       this.app.router.push('/paymentResult')
     } catch (err) {
 

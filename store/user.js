@@ -27,10 +27,8 @@ export const mutations = {
 export const actions = {
  
     async retrieve(context) {
-      let data = await this.$axios.$get('/api/v1/user-profile/', {
-        params: {}, headers: {
-        'Authorization': 'Token ' + context.rootState.token,
-        }
+      let data = await this.$api.$get('/api/v1/user-profile/', {
+        params: {}
       })
       console.log('user', data);
       context.commit('set', data)
