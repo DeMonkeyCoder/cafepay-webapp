@@ -9,21 +9,27 @@ export default {
     return {}
   },
   mounted() {
+    window.addEventListener('load', function() {
+      window.history.pushState({}, '')
+    })
+
+    window.addEventListener('popstate', function() {
+      window.history.pushState({}, '')
+    })
     console.log('token', typeof this.token, this.token)
     if (this.token != null) {
       this.$store.dispatch('user/retrieve')
       if (this.$router.currentRoute.path == '/') {
         this.$router.push('/user/home')
       }
-    }
-    else {
+    } else {
       this.$router.push('/')
     }
   },
   watch: {
     errorMsg(newValue, oldValue) {
       this.toaster(newValue, 'is-danger', 'is-bottom')
-    } 
+    }
   }
 }
 </script>
