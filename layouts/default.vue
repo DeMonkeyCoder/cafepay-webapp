@@ -14,6 +14,9 @@ export default {
     })
 
     window.addEventListener('popstate', function() {
+      alert(this.currentMainNav)
+      if (this.currentMainNav == 'table')
+        this.$store.commit('changeNavigation', 'currentCafe')
       window.history.pushState({}, '')
     })
     console.log('token', typeof this.token, this.token)
@@ -24,6 +27,11 @@ export default {
       }
     } else {
       this.$router.push('/')
+    }
+  },
+  computed: {
+    currentMainNav() {
+      return this.$store.state.currentMainPage
     }
   },
   watch: {

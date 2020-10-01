@@ -6,16 +6,17 @@
   // margin-right: (-$margin)
   overflow: scroll !important
   white-space: nowrap
-  .category-item
-    font-size: 14px
+  .category-item-wrapper
     display: inline-block
-    margin: 0 5px
-    background-color: grey
-    border-radius: 25px
-    padding: 5px 20px
-    color: white
-  .category-item.active-category
-    background-color: $primary_hue2
+    .category-item
+      font-size: 14px
+      margin: 0 5px
+      background-color: grey
+      border-radius: 25px
+      padding: 5px 20px
+      color: white
+    .category-item.active-category
+      background-color: $primary_hue2
 
 .product-list
   padding-bottom: 100px

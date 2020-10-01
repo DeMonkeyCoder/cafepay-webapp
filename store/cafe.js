@@ -42,6 +42,11 @@ export const mutations = {
   },
 
   setMenu(state, menu) {
+    // push current basket of orders first for editing current orders
+    state.categories.push({
+      name: 'سفارشات فعلی شما',
+      products: []
+    })
     for (const category of menu.categories) {
       state.categories.push(new Category(category))
     }
@@ -56,19 +61,44 @@ export const mutations = {
     state.productPageActive = false
   },
 
-  clearPCA: (state) => { state.productChangeArray = [] },
+  clearPCA: (state) => {
+    state.productChangeArray = []
+  },
 
   bindProductCount(state, user) {
+    let firstCategory = true
+
     for (const cateogry of state.categories) {
-      for (const product of cateogry.products) {
-        let matchedOrder = user.orders.find(p => p.product == product.pk)
-        if (matchedOrder) {
-          // check if order has payments for reduce order count
-          product.reduceLimit = Math.ceil(matchedOrder.payment_info.payed_amount / matchedOrder.unit_amount)
-          product.count = matchedOrder.count
+      // if user == false that means we dont have any order anymore so clear products of user current category and reset counts on other categories
+      if (!user && firstCategory) category.products = []
+      // we dont want to check user current orders category so we use this flag to check if that's it or not!
+      if (firstCategory) firstCategory = false
+      else {
+        if (user) {
+          for (const product of cateogry.products) {
+            let matchedOrder = user.orders.find(p => p.product == product.pk)
+            if (matchedOrder) {
+              // check if order has payments for reduce order count
+              product.reduceLimit = Math.ceil(matchedOrder.payment_info.payed_amount / matchedOrder.unit_amount)
+              product.count = matchedOrder.count
+
+              // check if product exist or not
+              let matchedOrder_currentOrderCat = state.categories[0].products.find(p => p.pk == matchedOrder.product)
+              if (matchedOrder_currentOrderCat) {
+                matchedOrder_currentOrderCat.reduceLimit = Math.ceil(matchedOrder.payment_info.payed_amount / matchedOrder.unit_amount)
+                matchedOrder_currentOrderCat.count = matchedOrder.count
+              }
+              else state.categories[0].products.push(product)
+            }
+          }
+        } else {
+          for (const product of cateogry.products) {
+              product.count = 0
+            }
+          }
         }
       }
-    }
+    
     // fork menu for detect changes
     // let productsForkStr = JSON.stringify(this.getters.productsFlatten)
     // state.productsFork = JSON.parse(productsForkStr)
@@ -82,18 +112,21 @@ export const mutations = {
       // if it exist find it on the array and change it
       state.productChangeArray[MatchIndex].count += product.count
       state.productChangeArray[MatchIndex].capital += product.count * product.price
-      if ( state.productChangeArray[MatchIndex].count == 0 ) {
-         state.productChangeArray = state.productChangeArray.filter(p => p.product != product.id)
+      if (state.productChangeArray[MatchIndex].count == 0) {
+        state.productChangeArray = state.productChangeArray.filter(p => p.product != product.id)
       }
 
-    }
-    else {
+    } else {
       // if not push it to the array
-      state.productChangeArray.push({product: product.id, count: product.count, capital: product.count * product.price})
+      state.productChangeArray.push({
+        product: product.id,
+        count: product.count,
+        capital: product.count * product.price
+      })
 
     }
     console.log('rpoduct change array', state.productChangeArray);
-    
+
 
   },
 

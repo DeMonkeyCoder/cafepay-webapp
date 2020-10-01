@@ -41,6 +41,7 @@ export const mutations = {
     }
     else if (message.data.pk == undefined) {
       this.commit('table/clearData')
+      this.commit('cafe/bindProductCount', false)
     }
 
   },

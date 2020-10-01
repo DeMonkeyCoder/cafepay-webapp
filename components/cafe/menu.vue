@@ -31,13 +31,15 @@
     </div>
 
     <div class="category-list cp-tb-margin">
-      <div
+      <div class="category-item-wrapper" v-for="(cat, index) in menu" :key="cat.pk">
+      <div v-if="cat.products.length > 0"
         class="category-item"
-        v-for="(cat, index) in menu"
+        
         :class="{'active-category':  (index == activeCategory)}"
         @click="changeActiveCategory(index)"
-        :key="cat.pk"
+        
       >{{cat.name}}</div>
+      </div>
     </div>
 
     <div class="product-list">
@@ -90,7 +92,7 @@ export default {
   data() {
     return {
       key: 'value',
-      activeCategory: 0,
+      activeCategory: 1,
       count: 0,
       activeProducts: [],
       totalPrice: 0,

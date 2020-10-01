@@ -52,7 +52,8 @@ Vue.mixin({
     },
     errorMsg() {
       return this.$store.state.errorMessage
-    }
+    },
+ 
   },
  
 })

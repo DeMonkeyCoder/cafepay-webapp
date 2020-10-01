@@ -61,18 +61,21 @@
       </div>
 
       <div class="table-status-bar long-shadow cp-side-margin cp-header-card has-background-white">
-        <div id="table-status-bar-progress-wrapper" class=""></div>
+        <div id="table-status-bar-progress-wrapper" class></div>
         <p v-if="PaymentProgress != 100">
-       باقی‌مانده:
+          باقی‌مانده:
           <span
             class="g-text font-norm total-payment"
           >{{table.payment.total_amount - table.payment.payed_amount | currency}}</span> تومان از
           <span class="total-cost">{{table.payment.total_amount | currency}}</span> تومان
         </p>
-        
-        <p v-if="PaymentProgress == 100" class="font-norm total-payment">پرداخت میز کامل شده است </p>
-        <b-icon v-if="PaymentProgress == 100" class="g-text payment-completed-icon" icon="sticker-check"></b-icon>
-        
+
+        <p v-if="PaymentProgress == 100" class="font-norm total-payment">پرداخت میز کامل شده است</p>
+        <b-icon
+          v-if="PaymentProgress == 100"
+          class="g-text payment-completed-icon"
+          icon="sticker-check"
+        ></b-icon>
       </div>
 
       <!-- <div class="table--status"></div> -->
@@ -135,12 +138,13 @@ export default {
     },
 
     PaymentProgress() {
-      let percent =  (this.table.payment.payed_amount / this.table.payment.total_amount) * 100
-      console.log('percent', percent.toFixed(0));
-      
+      let percent =
+        (this.table.payment.payed_amount / this.table.payment.total_amount) *
+        100
+      console.log('percent', percent.toFixed(0))
+
       if (percent == NaN) return 0
-      return  percent.toFixed(0)
-      
+      return percent.toFixed(0)
     }
     // ordersTotalCost(){
     //   let others = this.table.persons.reduce( (Sum, person) => person.totalPrice + Sum,  0)
@@ -166,12 +170,18 @@ export default {
     immediate: true,
     PaymentProgress: {
       handler(val, old) {
-        let progressBar = document.getElementById('table-status-bar-progress-wrapper')
-        setTimeout(() => {
-          progressBar.style.width = `${val}%`
-          if (val == 100) progressBar.style.borderRadius = '10px 10px 10px 10px'
-        }, 300);
-        
+        function paymentDOMCheck(params) {
+          let progressBar = document.getElementById(
+            'table-status-bar-progress-wrapper'
+          )
+          if (progressBar == null) paymentDOMCheck()
+          else {
+              progressBar.style.width = `${val}%`
+              if (val == 100)
+                progressBar.style.borderRadius = '10px 10px 10px 10px'
+          }
+        }
+        paymentDOMCheck()
       }
     },
 
