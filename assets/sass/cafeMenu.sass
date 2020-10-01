@@ -1,22 +1,33 @@
 @import 'variables.sass'
 .category-list
   direction: rtl
-  margin-top: 1.5 * $margin!important
+  // margin-top: 1.5 * $margin!important
   margin-left: (-$margin)
   // margin-right: (-$margin)
   overflow: scroll !important
   white-space: nowrap
   .category-item-wrapper
     display: inline-block
+    padding-top: $padding
+    padding-bottom: 1rem
     .category-item
       font-size: 14px
       margin: 0 5px
-      background-color: grey
+      background-color: $darkGrey
       border-radius: 25px
-      padding: 5px 20px
+      padding: 9px 20px
       color: white
+
+    .current-order-category
+      // box-shadow: 0 4px 7px -2px rgba(0, 0, 0, 0.35) !important
+      border-radius: $border-md
+      background-color: white
+      color: $primary_hue2
+
     .category-item.active-category
       background-color: $primary_hue2
+      transition: 0.3s
+      color: white
 
 .product-list
   padding-bottom: 100px
@@ -127,6 +138,24 @@
   transition-timing-function: ease-out!important
   transform: translateY(46px)!important
   opacity: 1!important
+
+// .slide-enter-active, .slide-leave-active
+//   transition: opacity .5s
+
+// .slide-enter, .slide-leave-to /* .fade-leave-active below version 2.1.8 */
+//   opacity: 0
+
+.slide-leave-active,
+.slide-enter-active
+  transition: 1s
+
+.slide-enter
+  transform: translate(100%, 0)
+  max-height: 100%
+
+.slide-leave-to
+  transform: translate(-100%, 0)
+  max-height: 100%
 
 @media screen and (max-width: 370px)
   .product-list

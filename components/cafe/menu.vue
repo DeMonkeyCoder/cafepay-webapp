@@ -27,52 +27,58 @@
         expanded
         :disabled="(tableCode == '') ? true : false"
         type="is-info"
-      >ورود به میز</b-button> -->
+      >ورود به میز</b-button>-->
     </div>
 
-    <div class="category-list cp-tb-margin">
+    <div class="category-list">
       <div class="category-item-wrapper" v-for="(cat, index) in menu" :key="cat.pk">
-      <div v-if="cat.products.length > 0"
-        class="category-item"
-        
-        :class="{'active-category':  (index == activeCategory)}"
-        @click="changeActiveCategory(index)"
-        
-      >{{cat.name}}</div>
+        <div
+          v-if="cat.products.length > 0"
+          class="category-item"
+          :class="{'active-category':  (index == activeCategory), 'current-order-category': (index == 0), 'shadow-lg': (index == 0)}"
+          @click="changeActiveCategory(index)"
+        >{{cat.name}}</div>
       </div>
     </div>
+    <transition-group name="slide" tag="div" mode="in-out">
+      <div v-show="activeCategory == i" v-for="(cat, i) in menu" :key="cat.name" class="product-list">
+        <div :key="cat.pk" class="product-list-wrapper-inner">
+          <div
+            v-for="(prod, index) in cat.products"
+            :key="prod.pk"
+            class="normal-radius shadow-md has-background-white cp-tb-margin cp-side-margin-half product-item"
+          >
+      
+            <div class="add-or-remove">
+              <span class="product-add" @click="countChange(index, 1, prod.pk, prod.price)">
+                <div class="aor-shape">+</div>
+              </span>
+              <span class="product-count">{{prod.count}}</span>
+              <span class="product-remove" @click="countChange(index, -1, prod.pk, prod.price)">
+                <div class="aor-shape">-</div>
+              </span>
+            </div>
 
-    <div class="product-list">
-      <div
-        v-for="(prod, index) in activeProducts"
-        :key="prod.pk"
-        class="normal-radius short-shadow has-background-white cp-tb-margin cp-side-margin-half product-item"
-      >
-        <!-- <Skeleton> -->
-        <div class="add-or-remove">
-          <span class="product-add" @click="countChange(index, 1, prod.pk, prod.price)">
-            <div class="aor-shape">+</div>
-          </span>
-          <span class="product-count">{{prod.count}}</span>
-          <span class="product-remove" @click="countChange(index, -1, prod.pk, prod.price)">
-            <div class="aor-shape">-</div>
-          </span>
-        </div>
-
-        <div class="content-section cp-side-padding cp-tb-padding">
-          <div class="product-title font-norm">{{prod.name}}</div>
-          <div class="product-description">{{prod.description}}</div>
-          <div class="product-price" dir="rtl">
-            {{prod.price | currency}}
-            <span class="toman">تومان</span>
+            <div class="content-section cp-side-padding cp-tb-padding">
+              <div class="product-title font-norm">{{prod.name}}</div>
+              <div class="product-description">{{prod.description}}</div>
+              <div class="product-price" dir="rtl">
+                {{prod.price | currency}}
+                <span class="toman">تومان</span>
+              </div>
+            </div>
+            <!-- on div below we need to add @click="$store.commit('cafe/setCurrentProduct', prod)" later for product page navigation -->
+            <div class="img-section">
+              <img
+                :src="(prod.avatar == null) ? productDefaultImage : (baseUrl + prod.avatar) "
+                alt
+              />
+            </div>
           </div>
-        </div>
-        <!-- on div below we need to add @click="$store.commit('cafe/setCurrentProduct', prod)" later for product page navigation -->
-        <div class="img-section">
-          <img :src="(prod.avatar == null) ? productDefaultImage : (baseUrl + prod.avatar) " alt />
+
         </div>
       </div>
-    </div>
+    </transition-group>
   </div>
 </template>
 
@@ -109,10 +115,11 @@ export default {
     },
 
     changeActiveCategory(index) {
-      this.menu[index].products.forEach(x => {
-        if (x.count == undefined) x.count = 0
-      })
-      this.activeProducts = this.menu[index].products
+      
+      // this.menu[index].products.forEach(x => {
+      //   if (x.count == undefined) x.count = 0
+      // })
+      // this.activeProducts = this.menu[index].products
       this.activeCategory = index
     },
 

@@ -38,7 +38,7 @@
       <!-- <component :is="(currentMainPage == 'scan') ? QrcodeStream : null"></component> -->
       <qrcode-stream  @decode="onDecode"></qrcode-stream>
       <p class="camera__scan-text">بارکد روی میز را با دوربین این قسمت اسکن کنید</p>
-      <p class="camera__scan-text-or">و یا</p>
+      <p class="camera__scan-text-or">یا</p>
       <b-button @click="openCodeModal" class="camera__btn shadow-lg bcp-btn-large " >کد میز را وارد کنید</b-button>
       <!-- <div class="camera__border"></div> -->
     </div>
@@ -112,11 +112,26 @@ export default {
     openCodeModal() {
       this.isComponentModalActive = true
     },
+    convertPersian(str){
+      let
+      persianNumbers = [/۰/g, /۱/g, /۲/g, /۳/g, /۴/g, /۵/g, /۶/g, /۷/g, /۸/g, /۹/g],
+      arabicNumbers  = [/٠/g, /١/g, /٢/g, /٣/g, /٤/g, /٥/g, /٦/g, /٧/g, /٨/g, /٩/g]
+
+        if(typeof str === 'string')
+        {
+          for(let i=0; i<10; i++)
+          {
+            str = str.replace(persianNumbers[i], i).replace(arabicNumbers[i], i);
+          }
+        }
+        return str;
+      
+    },
     sendCode() {
       // u need to set the table too, for api link
-
+      let tableToken = this.convertPersian(this.tableCode)
       this.$api
-        .get('api/v1/table-token/' + this.tableCode + '/cafe-info/', {
+        .get('api/v1/table-token/' + tableToken + '/cafe-info/', {
           params: {},
           // headers: { Authorization: 'Token ' + this.token }
         })
