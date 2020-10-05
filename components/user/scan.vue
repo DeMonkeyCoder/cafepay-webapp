@@ -20,7 +20,7 @@
 
             <b-button
               :loading="globalLoading"
-              @click="sendCode"
+              @click="dispatchSendCode"
               class="checkCode-btn bcp-btn bcp-btn-large"
               expanded
               :disabled="(tableCode == '') ? true : false"
@@ -86,6 +86,7 @@ import walletIcon from '~/assets/img/shape/icons/wallet.png'
 import myCafe from '~/assets/img/shape/icons/my-cafe-2.svg'
 import Vue from 'vue'
 import { QrcodeStream } from 'vue-qrcode-reader'
+import {mapActions} from 'vuex'
 
 export default {
   components: {
@@ -101,11 +102,13 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['sendCode']),
     closeModal() {
       this.isComponentModalActive = false
     },
     onDecode(token) {
-      this.tableCode = token
+      // to do : we need to change this to /?token=code insted of ?code
+      this.tableCode = token.split('?')[1]
       this.sendCode()
     },
 
@@ -127,26 +130,11 @@ export default {
         return str;
       
     },
-    sendCode() {
+    dispatchSendCode() {
       // u need to set the table too, for api link
       let tableToken = this.convertPersian(this.tableCode)
-      this.$api
-        .get('api/v1/table-token/' + tableToken + '/cafe-info/', {
-          params: {},
-          // headers: { Authorization: 'Token ' + this.token }
-        })
+        this.sendCode(tableToken)
         .then(res => {
-          // sets pk, avatar, name and table id
-          this.$store.commit('cafe/setBasic', res.data.cafe)
-          // execute the action for getting menu, detailed info, comments and posts
-          this.$store.dispatch('cafe/retrieveMenu')
-          
-          this.$store.commit('setActiveTable', true)
-          res.data.table['token'] = res.data.token
-          this.$store.commit('table/setToken', res.data.table)
-          
-          // attach token to table
-          this.$store.commit('changeNavigation', 'currentCafe')
           this.isComponentModalActive = false
         })
         .catch(err => {

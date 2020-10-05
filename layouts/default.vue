@@ -6,7 +6,9 @@
 <script>
 export default {
   data() {
-    return {}
+    return {
+      name: ''
+    }
   },
   mounted() {
     window.addEventListener('load', function() {
@@ -20,18 +22,25 @@ export default {
       window.history.pushState({}, '')
     })
     console.log('token', typeof this.token, this.token)
-    if (this.token != null) {
-      this.$store.dispatch('user/retrieve')
-      if (this.$router.currentRoute.path == '/') {
-        this.$router.push('/user/home')
-      }
+    if (this.userIsloggedIn) {
+      this.$store.dispatch('user/retrieve').then(res => {
+        if (this.$router.currentRoute.path == '/') {
+          this.name = res.first_name 
+          this.$router.push('/user/home')
+        }
+      })
     } else {
-      this.$router.push('/')
+      console.log('router', this.$route);
+      if (this.$route.path == "/")
+      this.$router.push(this.$route.fullPath)
     }
   },
   computed: {
     currentMainNav() {
       return this.$store.state.currentMainPage
+    },
+    userIsloggedIn(){
+      return  (this.token != null && this.token != 'undefiend' && this.token != undefined && this.name != '')
     }
   },
   watch: {

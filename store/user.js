@@ -6,33 +6,44 @@ import Vue from 'vue'
 import User from '../middleware/models/user'
 export const state = () => ({
   user: {
-    
+
   }
 })
 
 export const getters = {
-  
+
 }
 
 export const mutations = {
-  set(state, user) { 
+  set(state, user) {
     state.user = new User(user)
   },
-  clear(state){
-    state.user = {} 
+  clear(state) {
+    state.user = {}
   }
 
 }
 
 export const actions = {
- 
-    async retrieve(context) {
-      let data = await this.$api.$get('/api/v1/user-profile/', {
-        params: {}
-      })
-      console.log('user', data);
-      context.commit('set', data)
-      
-    },
-  
+
+  retrieve(context) {
+    return new Promise((resolve, reject) => {
+
+      this.$api.$get('/api/v1/user-profile/', {
+          params: {}
+        }).then(res => {
+          console.log('user', res);
+          context.commit('set', res)
+          resolve(res)
+        })
+
+        .catch(err => {
+          reject(err)
+
+        })
+    })
+
+
+  },
+
 }

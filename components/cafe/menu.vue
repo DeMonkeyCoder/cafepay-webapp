@@ -1,17 +1,6 @@
 <template>
   <div>
     <div id="selected-products-preview">
-      <!-- <div @click="sumbitOnTable" dir="rtl" class="submit-order font-norm green">
-        ثبت در میز سفارش
-        <b-icon icon="chevron-left" type="is-light"></b-icon>
-      </div>
-      <div class="sp-info cp-side-padding">
-        <div dir="rtl" class="total-price cp-side-margin font-norm">
-          {{totalCap | currency}}
-          <span class="toman">تومان</span>
-        </div>
-        <div class="total-count green">{{totalCount}}</div>
-      </div>-->
       <b-button
         @click="sumbitOnTable"
         :loading="globalLoading"
@@ -19,15 +8,6 @@
         size="is-medium"
         type="is-info"
       >ثبت تغییرات در میز سفارش</b-button>
-
-      <!-- <b-button
-        :loading="globalLoading"
-        @click="sendCode"
-        class="checkCode-btn bcp-btn bcp-btn-large"
-        expanded
-        :disabled="(tableCode == '') ? true : false"
-        type="is-info"
-      >ورود به میز</b-button>-->
     </div>
 
     <div class="category-list">
@@ -40,9 +20,9 @@
         >{{cat.name}}</div>
       </div>
     </div>
-    <transition-group name="slide" tag="div" mode="in-out">
+    <transition-group :name="slideTransition" tag="div" class="product-list-wrapper">
       <div v-show="activeCategory == i" v-for="(cat, i) in menu" :key="cat.name" class="product-list">
-        <div :key="cat.pk" class="product-list-wrapper-inner">
+        <div :key="cat.pk" class="">
           <div
             v-for="(prod, index) in cat.products"
             :key="prod.pk"
@@ -103,7 +83,8 @@ export default {
       activeProducts: [],
       totalPrice: 0,
       orderList: [],
-      productDefaultImage
+      productDefaultImage,
+      slideTransition: 'slide-category-next'
     }
   },
   methods: {
@@ -120,6 +101,8 @@ export default {
       //   if (x.count == undefined) x.count = 0
       // })
       // this.activeProducts = this.menu[index].products
+      if (this.activeCategory > index) this.slideTransition = 'slide-category-prev'
+      else this.slideTransition = 'slide-category-next'
       this.activeCategory = index
     },
 

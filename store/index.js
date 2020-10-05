@@ -32,14 +32,13 @@ export const mutations = {
     state.socket.message = JSON.parse(rawMessage.data)
     let message = state.socket.message.message
     console.log('message', message.data);
-    
+
 
     // check if message is for table watch
     if (message.source ==
       `table.${state.table.token}.join.simple.by-token.` && message.status_code == 200) {
       this.commit('table/setData', message.data)
-    }
-    else if (message.data.pk == undefined) {
+    } else if (message.data.pk == undefined) {
       this.commit('table/clearData')
       this.commit('cafe/bindProductCount', false)
     }
@@ -47,7 +46,7 @@ export const mutations = {
   },
   SOCKET_ONCLOSE(state, event) {
     console.log('server is disconnected');
-    
+
     state.socket.isConnected = false
   },
   SOCKET_ONERROR(state, event) {
@@ -89,4 +88,37 @@ export const mutations = {
 
 export const actions = {
 
+
+  sendCode({
+    commit,
+    dispatch
+  }, tableToken) {
+    return new Promise((resolve, reject) => {
+      // u need to set the table too, for api link
+      this.$api
+        .get('api/v1/table-token/' + tableToken + '/cafe-info/', {
+          params: {},
+          // headers: { Authorization: 'Token ' + this.token }
+        })
+        .then(res => {
+
+          // sets pk, avatar, name and table id
+          commit('cafe/setBasic', res.data.cafe)
+          // execute the action for getting menu, detailed info, comments and posts
+          dispatch('cafe/retrieveMenu')
+
+          commit('setActiveTable', true)
+          res.data.table['token'] = res.data.token
+          commit('table/setToken', res.data.table)
+
+          // attach token to table
+          commit('changeNavigation', 'currentCafe')
+          resolve(res)
+        })
+        .catch(err => {
+          reject(err)
+        })
+    })
+
+  },
 }

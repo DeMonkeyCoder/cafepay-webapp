@@ -2,12 +2,13 @@
   <div class="home-container">
     <section
       class="intro cp-side-padding flex"
-      :style="{backgroundImage: (mobile) ? `url(${mobilebc})` : `url(${background})`}"
+      :style="{
+        backgroundImage: mobile ? `url(${mobilebc})` : `url(${background})`
+      }"
     >
       <img class="logo" :src="logo" alt />
       <h3 class="has-text-white-bis t-medium">
-        انتخاب کن، سفارش بده
-        و به راحتی پرداخت کن
+        انتخاب کن، سفارش بده و به راحتی پرداخت کن
       </h3>
       <transition name="fade" mode="out-in">
         <div class="intro-state center-align" v-if="state === 'intro'" :key="1">
@@ -20,14 +21,25 @@
             <button
               class="btn cp-btn-primary button is-fullwidth"
               @click="changeState('login')"
-            >ورود - ثبت نام</button>
+            >
+              ورود به کافه‌پِی
+            </button>
             <!-- <b-button type="is-primary" outlined>Outlined</b-button> -->
-            <button @click="scrollllll" class="btn is-light button is-fullwidth">درباره کافه‌پِی</button>
+            <button
+              @click="scrollllll"
+              class="btn is-light button is-fullwidth"
+            >
+              درباره کافه‌پِی
+            </button>
           </div>
         </div>
 
-        <div class="login cp-tb-margin center-align" v-if="state === 'login'" :key="2">
-          <h2 class="has-text-white-bis font-bold">ورود یا ثبت نام</h2>
+        <div
+          class="login cp-tb-margin center-align"
+          v-if="state === 'login'"
+          :key="2"
+        >
+          <h2 class="has-text-white-bis font-bold">ورود</h2>
           <b-field>
             <b-input
               inputmode="numeric"
@@ -46,7 +58,8 @@
               :loading="globalLoading"
               class="send-code-btn forward ml-zero btn is-info button is-fullwidth"
               @click="sendCode"
-            >ارسال کد تایید</b-button>
+              >ارسال کد تایید</b-button
+            >
             <b-button
               type="is-light"
               class="back"
@@ -57,8 +70,14 @@
           </div>
         </div>
 
-        <div class="enter-code cp-tb-margin center-align" v-if="state === 'enter-code'" :key="3">
-          <h2 class="has-text-white-bis font-bold">لطفا کد ارسال شده را وارد کنید</h2>
+        <div
+          class="enter-code cp-tb-margin center-align"
+          v-if="state === 'enter-code'"
+          :key="3"
+        >
+          <h2 class="has-text-white-bis font-bold">
+            لطفا کد ارسال شده را وارد کنید
+          </h2>
           <b-field class="field">
             <b-input
               inputmode="numeric"
@@ -77,7 +96,8 @@
               :loading="globalLoading"
               class="send-code-btn forward ml-zero btn is-info button is-fullwidth"
               @click="checkCode"
-            >تایید کد</b-button>
+              >تایید کد</b-button
+            >
             <b-button
               type="is-light"
               class="back"
@@ -88,10 +108,15 @@
           </div>
         </div>
 
-        <div class="signup cp-tb-margin center-align" v-if="state === 'signup'" :key="4">
-          <h5
-            class="has-text-white-bis font-bold"
-          >جهت تکمیل ثبت نام و ورود به برنامه نام و نام‌خانوادگی خود را وارد کنید</h5>
+        <div
+          class="signup cp-tb-margin center-align"
+          v-if="state === 'signup'"
+          :key="4"
+        >
+          <h5 class="has-text-white-bis font-bold">
+            جهت تکمیل ثبت نام و ورود به برنامه نام و نام‌خانوادگی خود را وارد
+            کنید
+          </h5>
 
           <b-field>
             <b-input
@@ -116,10 +141,12 @@
           <div class="action cp-t-margin flex buttons are-medium">
             <b-button
               size="is-medium"
+              :disabled="!fullnameEntered"
               :loading="globalLoading"
               class="send-code-btn forward ml-zero btn is-info button is-fullwidth"
               @click="signup"
-            >ثبت نام</b-button>
+              >ثبت اطلاعات</b-button
+            >
             <b-button
               type="is-light"
               class="back"
@@ -138,18 +165,27 @@
       class="about-us has-background-white cp-tb-padding-4x cp-side-padding-4x"
     >
       <h1 class="header">کافه‌پِی چیست؟</h1>
-      <p>کافه پی یک سیستم یکپارچه فروش، حسابداری و مدیریت ارتباط با مشتری در حوزه خدمات کافه، رستوران و فست فود مبتنی بر کلود است. علاوه بر خدمات هوشمند و متنوعی که کافه پی برای صاحبان کسب کار دارد، خدمتی نوین در راستای سهولت در ثبت سفارش و تسویه صورت حساب به مشتریان ارایه می دهد.</p>
-      <h1 class="header-second">سیستم فروش</h1>
+      <p>
+        کافه پی یک سیستم یکپارچه فروش، حسابداری و مدیریت ارتباط با مشتری در حوزه
+        خدمات کافه، رستوران و فست فود مبتنی بر کلود است. علاوه بر خدمات هوشمند و
+        متنوعی که کافه پی برای صاحبان کسب کار دارد، خدمتی نوین در راستای سهولت
+        در ثبت سفارش و تسویه صورت حساب به مشتریان ارایه می دهد.
+      </p>
+      <!-- <h1 class="header-second">سیستم فروش</h1>
       <p>سیستم فروش، پر استفاده ترین قسمت نرم افزار می باشد که روزانه به دفعات توسط سالن دار ها، صندوق دار ها و صاحبان کسب کار استفاده می شود. با توجه به این امر، سعی شده سیستم فروش به گونه این طراحی شود که بدون نیاز به آموزش، به راحتی برای هر گروه افراد قابل استفاده باشد.</p>
       <h1 class="header-second">سیستم حسابداری</h1>
       <p>تمامی داده های فروش، به صورت خودکار در سیستم حسابداری کافه پی ثبت و نگهداری می شود. از جمله امکانات این قسمت، دریافت انواع گزارش های حسابداری مرتبط با فروش است. این گزارش های می تواند به صورت تجمعی یا ریز تهیه شود. امکان اعمال انواع فیلتر مانند، بازه زمانی، مشتری خاص، دسته محصول خاص و ... در سیستم در نظر گرفته شده.</p>
       <h1 class="header-second">مدیریت ارتباط با مشتری</h1>
       <p>یکی از خدمات نوینی که کافه پی ارایه می دهد، سیستم ثبت سفارش توسط مشتری است. با توجه به سیستمی شدن ثبت سفارش افراد، اطلاعات دقیقی از رفتار مشتریان به صورت کاملا خودکار به دست می آید. از جمله، تعداد دفعات مراجعه افراد، سفارش های پیشین، نظرات و امتیازات قبلی افراد، غذای مورد علاقه و سلیقه هر یک از مشتریان. با استفاده از این اطلاعات، صاحبان کسب کار می توانند، آفر ها و تخفیف های شخصی سازی شده به مشتریان خود ارایه کنند و با پلتفرمی که در اختیار دارند مشتریان خود را از این آفر ها و تخفیفات مطلع کنند.</p>
       <h1 class="header-second">سیستم ثبت سفارش توسط مشتری</h1>
-      <p>روی هر یک از میزهای کافه/رستوران، یک QR در نظر گرفته می شود، که با اسکن کردن آن از طریق اپ کافه پی، به صفحه منو کافه/رستوران منتقل می شوند، کاربران پس از انتخاب، می توانند به صورت آنلاین سفارش خود را ثبت و صورت حساب را آنلاین پرداخت کنند.</p>
+      <p>روی هر یک از میزهای کافه/رستوران، یک QR در نظر گرفته می شود، که با اسکن کردن آن از طریق اپ کافه پی، به صفحه منو کافه/رستوران منتقل می شوند، کاربران پس از انتخاب، می توانند به صورت آنلاین سفارش خود را ثبت و صورت حساب را آنلاین پرداخت کنند.</p> -->
     </section>
 
-    <section dir="rtl" id="how-to-use" class="cp-tb-padding-4x cp-side-padding-4x">
+    <section
+      dir="rtl"
+      id="how-to-use"
+      class="cp-tb-padding-4x cp-side-padding-4x"
+    >
       <h1 class="header">راهنمای سفارش‌دهی و پرداخت</h1>
 
       <div class="how-to-use-steps columns">
@@ -160,7 +196,8 @@
             </div>
             <div class="htus-content">
               روی دکمه
-              <span class="htus-btn font-norm p-text">ورود - ثبت نام</span> کلیک کن، شماره همراهت وارد و تجربه کافه پی رو شروع کن
+              <span class="htus-btn font-norm p-text">ورود - ثبت نام</span> کلیک
+              کن، شماره همراهت وارد و تجربه کافه پی رو شروع کن
             </div>
           </div>
         </div>
@@ -171,7 +208,8 @@
             </div>
             <div class="htus-content">
               بارکد روی میز رو اسکن یا روی دکمه
-              <span class="htus-btn font-norm s-text">وارد کردن کد میز</span> کد کلیک کن و کد مربوط به میز رو وارد کن
+              <span class="htus-btn font-norm s-text">وارد کردن کد میز</span> کد
+              کلیک کن و کد مربوط به میز رو وارد کن
             </div>
           </div>
         </div>
@@ -182,9 +220,10 @@
             <div class="htus-num">
               <p class="purple">۳</p>
             </div>
-            <div
-              class="htus-content"
-            >غذایی که میخوای رو از منو انتخاب کن و پرداختت رو همونجا آنلاین انجام بده.</div>
+            <div class="htus-content">
+              غذایی که میخوای رو از منو انتخاب کن و پرداختت رو همونجا آنلاین
+              انجام بده.
+            </div>
           </div>
         </div>
         <div class="htus-container column is-6">
@@ -192,60 +231,106 @@
             <div class="htus-num">
               <p class="green">۴</p>
             </div>
-            <div
-              class="htus-content"
-            >بعد از اتمام غذا میتونی نظرت رو راجع به غذا و کافه یا رستورانی که توش بودی بدی</div>
+            <div class="htus-content">
+              بعد از اتمام غذا میتونی نظرت رو راجع به غذا و کافه یا رستورانی که
+              توش بودی بدی
+            </div>
           </div>
         </div>
       </div>
     </section>
 
-    <section dir="rtl" class="rules cp-tb-padding-4x cp-side-padding-4x has-background-white">
+    <section
+      dir="rtl"
+      class="rules cp-tb-padding-4x cp-side-padding-4x has-background-white"
+    >
       <h2 class="header">قوانین استفاده از کافه‌پِی</h2>
       <ul class="cp-side-padding">
-        <li>کافه پی در چارچوب قوانین جمهوری اسلامی ایران فعالیت میکند و شما متعهد می شوید از هرگونه استفاده مغایر قانون از این برنامه خودداری کنید.</li>
-
-        <li>امکان پرداخت توسط شما، منوط به اتصال به اینترنت و داشتن شماره کارت بانکی، رمز دوم، تاریخ انقضای کارت و ccv2 می‌باشد.</li>
-
-        <li>جهت استفاده از این سرویس، شما باید شماره موبایل خود را وارد کنید تا کد فعالسازی برای شما ارسال شود. شما با استفاده از این سرویس می‌پذیرد که از موبایل خود استفاده می‌کنید.</li>
-
         <li>
-          کد فعالسازی امکان استفاده از نرم افزار را
-          برای شما فراهم می‌آورد. به منظور جلوگیری از سوء استفاده اشخاص ثالث، از افشای آن خودداری کنید. در صورتی که کد فعالسازی در اختیار اشخاص دیگر قرار گیرد، مسئولیت آن بر عهده شما خواهد بود.
+          کافه پی در چارچوب قوانین جمهوری اسلامی ایران فعالیت میکند و شما متعهد
+          می شوید از هرگونه استفاده مغایر قانون از این برنامه خودداری کنید.
         </li>
 
         <li>
-          شما هنگام تکمیل مراحل فعالسازی نرم افزار، اطلاعات کاربری خود را اعلام می‌نمایید. جهت استفاده از امکان دریافت پول باید شماره کارت بانکی یا شماره شبای خود را اعلام کنید. چنانچه شماره حساب شخص دی
-          گری را به عنوان شماره حساب خود اعلام نمایید کافه پی مسئولیتی در این خصوص نداشته و درخواست واریز به حساب شما مسکوت می ماند. مسئولیت صحت اطلاعات وارد شده بر عهده شما است
+          امکان پرداخت توسط شما، منوط به اتصال به اینترنت و داشتن شماره کارت
+          بانکی، رمز دوم، تاریخ انقضای کارت و ccv2 می‌باشد.
         </li>
 
         <li>
-          شماره تماس، نام و نام خانوادگی و تراکنش‌ها در کافه پی، کاملا جنبه محرمانه داشته و کافه پی به هیچ عنوان آنها
-          را در اختیار اشخاص ثالث قرار نخواهد داد. اعلام این اطلاعات، صرفا حسب دستور مقام قضایی و یا استعلام مراجع ذیصلاح، طی مکاتبات محرمانه انجام میگردد.
+          جهت استفاده از این سرویس، شما باید شماره موبایل خود را وارد کنید تا کد
+          فعالسازی برای شما ارسال شود. شما با استفاده از این سرویس می‌پذیرد که
+          از موبایل خود استفاده می‌کنید.
         </li>
 
         <li>
-          لازم است هنگام معرفی حساب بانکی و همچنین انجام تراکنش، مشخصات به دقت بررسی نموده و از صحت مندرجات آن اطمینان حاصل کنید. مسئولیت پرداخت اشتباه ناشی از اعلام مشخصات نادرست بر عهده شما خواهد بود.
-          کاربر متعهد می شود تنها نسخه اصلی و دستکاری نشده برنامه را از طریق وب سایت کافه پی و یا از فروشگاه‌ها
-          ی و رسمی اندروید و اپل نصب کند. کافه پی مسوولیتی در قبال مشکلات ناشی از نسخه های متفرقه که از طریق منابع دیگر نصب می‌شود ندارد.
+          کد فعالسازی امکان استفاده از نرم افزار را برای شما فراهم می‌آورد. به
+          منظور جلوگیری از سوء استفاده اشخاص ثالث، از افشای آن خودداری کنید. در
+          صورتی که کد فعالسازی در اختیار اشخاص دیگر قرار گیرد، مسئولیت آن بر
+          عهده شما خواهد بود.
         </li>
-
-        <li>چنانچه معرفی حساب بانکی و و یا تراکنش آن مشمول مقررات پولشویی، یا درآمد ناشی از ربا و یا هر وصف کیفری دیگری باشد، مسئولیت آن بر عهده کاربر و پرداخت کننده میباشد.</li>
 
         <li>
-          پرداخت‌های کافه پی از طریق شبکه شاپرک انجام می‌شود. در این شبکه بازه تسویه، یک مرتبه در شبانه روز است. تمامی پرداخت‌های اینترنتی از طریق شبکه شاپرک انجام می‌شود. وقتی در کا
-          فه پی پرداختی انجام می‌شود پول همان لحظه از حساب پرداخت کننده کسر می‌شود و به حساب شاپر
-          ک منتقل می‌شود و شاپرک فردای آن روز با کافه پی تسویه می‌کند و کافه پی بلافاصله پول را به حساب دریافت کننده پول واریز می‌کند. این زمان در اختیار مجموعه کافه پی نیست.
+          شما هنگام تکمیل مراحل فعالسازی نرم افزار، اطلاعات کاربری خود را اعلام
+          می‌نمایید. جهت استفاده از امکان دریافت پول باید شماره کارت بانکی یا
+          شماره شبای خود را اعلام کنید. چنانچه شماره حساب شخص دی گری را به عنوان
+          شماره حساب خود اعلام نمایید کافه پی مسئولیتی در این خصوص نداشته و
+          درخواست واریز به حساب شما مسکوت می ماند. مسئولیت صحت اطلاعات وارد شده
+          بر عهده شما است
         </li>
 
-        <li>در صورتی که از کاربری شکایت شود و سواستفاده آن کاربر محرز شود، کافه پی آن حساب کاربری و مبالغ پرداخت شده را تا اعلام تصمیم مراجع ذیصلاح مسدود می‌نماید.</li>
+        <li>
+          شماره تماس، نام و نام خانوادگی و تراکنش‌ها در کافه پی، کاملا جنبه
+          محرمانه داشته و کافه پی به هیچ عنوان آنها را در اختیار اشخاص ثالث قرار
+          نخواهد داد. اعلام این اطلاعات، صرفا حسب دستور مقام قضایی و یا استعلام
+          مراجع ذیصلاح، طی مکاتبات محرمانه انجام میگردد.
+        </li>
 
-        <li>اگر تا پیش از تسویه پول توسط کافه پی، پرداخت کننده شکایت کند و مستندات کافی ارائه کند، از تسویه پول جلوگیری خواهد شد.</li>
+        <li>
+          لازم است هنگام معرفی حساب بانکی و همچنین انجام تراکنش، مشخصات به دقت
+          بررسی نموده و از صحت مندرجات آن اطمینان حاصل کنید. مسئولیت پرداخت
+          اشتباه ناشی از اعلام مشخصات نادرست بر عهده شما خواهد بود. کاربر متعهد
+          می شود تنها نسخه اصلی و دستکاری نشده برنامه را از طریق وب سایت کافه پی
+          و یا از فروشگاه‌ها ی و رسمی اندروید و اپل نصب کند. کافه پی مسوولیتی در
+          قبال مشکلات ناشی از نسخه های متفرقه که از طریق منابع دیگر نصب می‌شود
+          ندارد.
+        </li>
+
+        <li>
+          چنانچه معرفی حساب بانکی و و یا تراکنش آن مشمول مقررات پولشویی، یا
+          درآمد ناشی از ربا و یا هر وصف کیفری دیگری باشد، مسئولیت آن بر عهده
+          کاربر و پرداخت کننده میباشد.
+        </li>
+
+        <li>
+          پرداخت‌های کافه پی از طریق شبکه شاپرک انجام می‌شود. در این شبکه بازه
+          تسویه، یک مرتبه در شبانه روز است. تمامی پرداخت‌های اینترنتی از طریق
+          شبکه شاپرک انجام می‌شود. وقتی در کا فه پی پرداختی انجام می‌شود پول
+          همان لحظه از حساب پرداخت کننده کسر می‌شود و به حساب شاپر ک منتقل
+          می‌شود و شاپرک فردای آن روز با کافه پی تسویه می‌کند و کافه پی بلافاصله
+          پول را به حساب دریافت کننده پول واریز می‌کند. این زمان در اختیار
+          مجموعه کافه پی نیست.
+        </li>
+
+        <li>
+          در صورتی که از کاربری شکایت شود و سواستفاده آن کاربر محرز شود، کافه پی
+          آن حساب کاربری و مبالغ پرداخت شده را تا اعلام تصمیم مراجع ذیصلاح مسدود
+          می‌نماید.
+        </li>
+
+        <li>
+          اگر تا پیش از تسویه پول توسط کافه پی، پرداخت کننده شکایت کند و مستندات
+          کافی ارائه کند، از تسویه پول جلوگیری خواهد شد.
+        </li>
       </ul>
     </section>
 
-    <section dir="rtl" class="contact-us has-background-white cp-tb-padding-4x cp-side-padding-4x">
-      <h6 class="header font-20">اگر پیشنهاد یا انتقادی از کافه‌پِی دارید برای ما ارسال کنید</h6>
+    <section
+      dir="rtl"
+      class="contact-us has-background-white cp-tb-padding-4x cp-side-padding-4x"
+    >
+      <h6 class="header font-20">
+        اگر پیشنهاد یا انتقادی از کافه‌پِی دارید برای ما ارسال کنید
+      </h6>
       <b-field grouped>
         <b-input
           expanded
@@ -280,7 +365,8 @@
           :loading="globalLoading"
           class="bcp-btn bcp-btn-large"
           type="is-info"
-        >ارسال پیام به کارشناسان</b-button>
+          >ارسال پیام به کارشناسان</b-button
+        >
       </div>
     </section>
     <section class="cp-tb-padding-2x cp-side-padding-2x center-align">
@@ -297,13 +383,12 @@
         />
       </a>
       <P>
-        آدرس: شیراز میدان پارسه یقطین جنوبی کوچه ۲۱ ساختمان اپادانا واحد ۸
-        - تلفن تماس: ۰۷۱۳۸۳۲۵۴۷۴
+        آدرس: شیراز میدان پارسه یقطین جنوبی کوچه ۲۱ ساختمان اپادانا واحد ۸ -
+        تلفن تماس: ۰۷۱۳۸۳۲۵۴۷۴
       </P>
-      <p
-        dir="rtl"
-        class="font-14 font-norm"
-      >کلیه حقوق این سایت (کافه‌پِی) متعلق به هوشمندسازان ویرا آرین می‌باشد.</p>
+      <p dir="rtl" class="font-14 font-norm">
+        کلیه حقوق این سایت (کافه‌پِی) متعلق به هوشمندسازان ویرا آرین می‌باشد.
+      </p>
     </section>
   </div>
 </template>{
@@ -329,10 +414,20 @@ export default {
         phone_number: null,
         comment: null
       },
-      first_name: null,
-      last_name: null,
+      first_name: '',
+      last_name: '',
       mobile: false,
       isUserExist: true
+    }
+  },
+  computed: {
+    fullnameEntered() {
+      return this.first_name != '' && this.last_name != '' ? true : false
+    },
+    tableScannedToken() {
+      // to do : we need to change this to /?token=code insted of ?code
+      let token = this.$route.fullPath.split('?')[1]
+      return token
     }
   },
   methods: {
@@ -382,8 +477,15 @@ export default {
           if (res.data.full_name.trim() == '') {
             this.state = 'signup'
           } else {
-            this.$store.dispatch('user/retrieve')
-            this.$router.push('/user/home')
+            this.$store.dispatch('user/retrieve').then(res => {
+              if (this.tableScannedToken) {
+                this.$store
+                  .dispatch('sendCode', this.tableScannedToken)
+                  .then(res => {
+                    this.$router.push('/user/home')
+                  })
+              } else this.$router.push('/user/home')
+            })
           }
         })
         .catch(err => {
@@ -394,8 +496,8 @@ export default {
     },
     signup() {
       // actualy this is user update info
-      console.log('f l', this.first_name , this.last_name);
-      
+      console.log('f l', this.first_name, this.last_name)
+
       if (this.first_name != '' && this.last_name != '') {
         this.$api
           .put('/api/v1/user-profile/', {
@@ -403,8 +505,15 @@ export default {
             last_name: this.last_name
           })
           .then(res => {
-            this.$store.dispatch('user/retrieve')
-            this.$router.push('/user/home')
+            this.$store.dispatch('user/retrieve').then(res => {
+              if (this.tableScannedToken) {
+                this.$store
+                  .dispatch('sendCode', this.tableScannedToken)
+                  .then(res => {
+                    this.$router.push('/user/home')
+                  })
+              } else this.$router.push('/user/home')
+            })
           })
           .catch(err => {
             if (err.response) {
@@ -412,11 +521,11 @@ export default {
             }
           })
       }
-      if (this.first_name == '' ) {
-        this.toaster('نام خود را وارد کنید', 'is-danger')
+      if (this.first_name == '') {
+        this.toaster('لطفاْ نام خود را وارد کنید', 'is-danger')
       } else if (this.last_name == '') {
         this.toaster('نام خانوادگی خود را وارد کنید', 'is-danger')
-      } 
+      }
     },
     scrollllll() {
       $('html, body').animate({ scrollTop: $('#about-us').position().top })
@@ -495,8 +604,8 @@ export default {
     input:focus
       color: white!important
       border: none!important
-      outline:none!important
-      box-shadow:none!important 
+      outline: none!important
+      box-shadow: none!important 
   .input-masks
     display: flex
     -webkit-box-pack: justify
