@@ -16,8 +16,8 @@ export default {
     })
 
     window.addEventListener('popstate', function() {
-      alert(this.currentMainNav)
-      if (this.currentMainNav == 'table')
+      // alert(this.currentMainNav)
+      // if (this.currentMainNav == 'table')
         this.$store.commit('changeNavigation', 'currentCafe')
       window.history.pushState({}, '')
     })

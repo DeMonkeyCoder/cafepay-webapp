@@ -2,6 +2,7 @@
   <div class="container">
     <b-modal :active.sync="isComponentModalActive" has-modal-card full-screen :can-cancel="false">
       <div class="modal-card" style="width: auto">
+        <b-loading :is-full-page="true" v-model="globalLoading"></b-loading>
         <!-- <header class="modal-card-head">
                   <p class="modal-card-title">وارد کردن کد میز</p>
         </header>-->
@@ -109,7 +110,9 @@ export default {
     onDecode(token) {
       // to do : we need to change this to /?token=code insted of ?code
       this.tableCode = token.split('?')[1]
-      this.sendCode()
+      console.log('parse token', token, this.tableCode);
+      let tableToken = this.convertPersian(this.tableCode)
+      this.sendCode(tableToken)
     },
 
     openCodeModal() {

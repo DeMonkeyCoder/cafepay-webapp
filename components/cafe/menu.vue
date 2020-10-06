@@ -20,9 +20,9 @@
         >{{cat.name}}</div>
       </div>
     </div>
-    <transition-group :name="slideTransition" tag="div" class="product-list-wrapper">
-      <div v-show="activeCategory == i" v-for="(cat, i) in menu" :key="cat.name" class="product-list">
-        <div :key="cat.pk" class="">
+    <!-- <transition-group :name="slideTransition" tag="div" class=""> -->
+      <div v-for="(cat, i) in menu" :key="cat.name" class="product-list-wrapper">
+        <div  v-if="activeCategory == i" :key="cat.pk" class="product-list">
           <div
             v-for="(prod, index) in cat.products"
             :key="prod.pk"
@@ -58,7 +58,7 @@
 
         </div>
       </div>
-    </transition-group>
+    <!-- </transition-group> -->
   </div>
 </template>
 
