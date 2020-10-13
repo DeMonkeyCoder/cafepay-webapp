@@ -68,14 +68,14 @@ export const mutations = {
   bindProductCount(state, user) {
     let firstCategory = true
 
-    for (const cateogry of state.categories) {
+    for (const category of state.categories) {
       // if user == false that means we dont have any order anymore so clear products of user current category and reset counts on other categories
       if (!user && firstCategory) category.products = []
       // we dont want to check user current orders category so we use this flag to check if that's it or not!
       if (firstCategory) firstCategory = false
       else {
         if (user) {
-          for (const product of cateogry.products) {
+          for (const product of category.products) {
             let matchedOrder = user.orders.find(p => p.product == product.pk)
             if (matchedOrder) {
               // check if order has payments for reduce order count
@@ -92,8 +92,9 @@ export const mutations = {
             }
           }
         } else {
-          for (const product of cateogry.products) {
+          for (const product of category.products) {
               product.count = 0
+              product.reduceLimit = 0
             }
           }
         }

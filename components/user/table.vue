@@ -70,7 +70,7 @@
           <span class="total-cost">{{table.payment.total_amount | currency}}</span> تومان
         </p>
 
-        <p v-if="PaymentProgress == 100" class="font-norm total-payment">پرداخت میز کامل شده است</p>
+        <p :class="{'complete-payment-p': PaymentProgress}" v-if="PaymentProgress == 100" class="font-norm total-payment">پرداخت میز کامل شده است</p>
         <b-icon
           v-if="PaymentProgress == 100"
           class="g-text payment-completed-icon"
@@ -170,18 +170,18 @@ export default {
     immediate: true,
     PaymentProgress: {
       handler(val, old) {
-        function paymentDOMCheck(params) {
-          let progressBar = document.getElementById(
-            'table-status-bar-progress-wrapper'
-          )
-          if (progressBar == null) paymentDOMCheck()
-          else {
-              progressBar.style.width = `${val}%`
-              if (val == 100)
-                progressBar.style.borderRadius = '10px 10px 10px 10px'
-          }
-        }
-        paymentDOMCheck()
+      //   function paymentDOMCheck(params) {
+      //     let progressBar = document.getElementById(
+      //       'table-status-bar-progress-wrapper'
+      //     )
+      //     if (progressBar == null) paymentDOMCheck()
+      //     else {
+      //         progressBar.style.width = `${val}%`
+      //         if (val == 100)
+      //           progressBar.style.borderRadius = '10px 10px 10px 10px'
+      //     }
+      //   }
+      //   paymentDOMCheck()
       }
     },
 

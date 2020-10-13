@@ -44,6 +44,9 @@ Vue.mixin({
     token() {
       return this.$store.state.token
     },
+    tableToken(){
+      return this.$store.state.table.token
+    },
     globalLoading() {
       return this.$store.state.globalLoading
     },

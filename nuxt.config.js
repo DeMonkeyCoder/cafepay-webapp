@@ -89,6 +89,10 @@ export default {
     'nuxt-buefy',
   ],
 
+  router: {
+    fallback: true
+  },
+
   buefy: {
     /* buefy options */
   },

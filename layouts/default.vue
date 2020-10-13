@@ -12,40 +12,60 @@ export default {
   },
   mounted() {
     window.addEventListener('load', function() {
-      window.history.pushState({}, '')
+      // window.history.pushState({}, '')
     })
 
-    window.addEventListener('popstate', function() {
+    window.addEventListener('popstate', (e) => {
+      console.log('popstate', e)
+      console.log('state', e.state.state)
+
+      this.$store.commit('changeNavigation', e.state.state)
       // alert(this.currentMainNav)
       // if (this.currentMainNav == 'table')
-        this.$store.commit('changeNavigation', 'currentCafe')
-      window.history.pushState({}, '')
+      // this.$store.commit('changeNavigation', 'currentCafe')
+      // window.history.pushState({}, '')
     })
-    console.log('token', typeof this.token, this.token)
-    if (this.userIsloggedIn) {
-      this.$store.dispatch('user/retrieve').then(res => {
-        if (this.$router.currentRoute.path == '/') {
-          this.name = res.first_name 
-          this.$router.push('/user/home')
-        }
-      })
-    } else {
-      console.log('router', this.$route);
-      if (this.$route.path == "/")
-      this.$router.push(this.$route.fullPath)
-    }
+    console.log('token', typeof this.token, this.token, this.tableActive)
   },
   computed: {
     currentMainNav() {
       return this.$store.state.currentMainPage
     },
-    userIsloggedIn(){
-      return  (this.token != null && this.token != 'undefiend' && this.token != undefined && this.name != '')
+    userIsloggedIn() {
+      return (
+        this.token != null &&
+        this.token != 'undefiend' &&
+        this.token != undefined
+      )
+    },
+    tableActive() {
+      return (
+        this.tableToken != null &&
+        this.tableToken != 'undefiend' &&
+        this.tableToken != undefined
+      )
     }
   },
   watch: {
     errorMsg(newValue, oldValue) {
       this.toaster(newValue, 'is-danger', 'is-bottom')
+    },
+    userIsloggedIn: {
+      immediate: true,
+      handler(val) {
+        if (this.userIsloggedIn) {
+          this.$store.dispatch('user/retrieve').then(res => {
+            if (this.tableActive)
+              this.$store.dispatch('sendCode', this.tableToken)
+            if (this.$router.currentRoute.path == '/') {
+              if (res.first_name != '') this.$router.push('/user/home')
+            }
+          })
+        } else {
+          console.log('router', this.$route)
+          if (this.$route.path == '/') this.$router.push(this.$route.fullPath)
+        }
+      }
     }
   }
 }

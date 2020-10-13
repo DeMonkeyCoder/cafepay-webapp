@@ -7,57 +7,83 @@
         class="button bcp-btn cp-btn-submit-order"
         size="is-medium"
         type="is-info"
-      >ثبت تغییرات در میز سفارش</b-button>
+        >ثبت تغییرات در میز سفارش</b-button
+      >
     </div>
 
     <div class="category-list">
-      <div class="category-item-wrapper" v-for="(cat, index) in menu" :key="cat.pk">
+      <div
+        class="category-item-wrapper"
+        v-for="(cat, index) in menu"
+        :key="cat.pk"
+      >
         <div
           v-if="cat.products.length > 0"
           class="category-item"
-          :class="{'active-category':  (index == activeCategory), 'current-order-category': (index == 0), 'shadow-lg': (index == 0)}"
+          :class="{
+            'active-category': index == activeCategory,
+            'current-order-category': index == 0,
+            'shadow-lg': index == 0
+          }"
           @click="changeActiveCategory(index)"
-        >{{cat.name}}</div>
+        >
+          {{ cat.name }}
+        </div>
       </div>
     </div>
     <!-- <transition-group :name="slideTransition" tag="div" class=""> -->
-      <div v-for="(cat, i) in menu" :key="cat.name" class="product-list-wrapper">
-        <div  v-if="activeCategory == i" :key="cat.pk" class="product-list">
-          <div
-            v-for="(prod, index) in cat.products"
-            :key="prod.pk"
-            class="normal-radius shadow-md has-background-white cp-tb-margin cp-side-margin-half product-item"
-          >
-      
-            <div class="add-or-remove">
-              <span class="product-add" @click="countChange(index, 1, prod.pk, prod.price)">
-                <div class="aor-shape">+</div>
-              </span>
-              <span class="product-count">{{prod.count}}</span>
-              <span class="product-remove" @click="countChange(index, -1, prod.pk, prod.price)">
-                <div class="aor-shape">-</div>
-              </span>
-            </div>
-
-            <div class="content-section cp-side-padding cp-tb-padding">
-              <div class="product-title font-norm">{{prod.name}}</div>
-              <div class="product-description">{{prod.description}}</div>
-              <div class="product-price" dir="rtl">
-                {{prod.price | currency}}
-                <span class="toman">تومان</span>
-              </div>
-            </div>
-            <!-- on div below we need to add @click="$store.commit('cafe/setCurrentProduct', prod)" later for product page navigation -->
-            <div class="img-section">
-              <img
-                :src="(prod.avatar == null) ? productDefaultImage : (baseUrl + prod.avatar) "
-                alt
-              />
-            </div>
+    <div v-for="(cat, i) in menu" :key="cat.name" class="product-list-wrapper">
+      <div v-if="activeCategory == i" :key="cat.pk" class="product-list">
+        <div
+          v-for="(prod, index) in cat.products"
+          :key="prod.pk"
+          class="normal-radius shadow-md has-background-white cp-tb-margin cp-side-margin-half product-item"
+        >
+          <div class="add-or-remove">
+            <span
+              class="product-add"
+              @click="countChange(index, 1, prod.pk, prod.price)"
+            >
+              <div class="aor-shape">+</div>
+            </span>
+            <span class="product-count">{{ prod.count }}</span>
+            <span
+              class="product-remove"
+              @click="countChange(index, -1, prod.pk, prod.price)"
+            >
+              <div class="aor-shape">-</div>
+            </span>
           </div>
 
+          <div class="content-section cp-side-padding cp-tb-padding">
+            <div class="product-title font-norm">{{ prod.name }}</div>
+            <div class="product-description">{{ prod.description }}</div>
+            <div class="product-price" dir="rtl">
+              <div v-if="prod.discount > 0" class="product-discount">
+                <span>{{ prod.discount }}%</span>
+                <p>
+                  {{ prod.original_price | currency }}
+                </p>
+              </div>
+
+              {{ prod.price | currency }}
+              <span class="toman">تومان</span>
+            </div>
+          </div>
+          <!-- on div below we need to add @click="$store.commit('cafe/setCurrentProduct', prod)" later for product page navigation -->
+          <div class="img-section">
+            <img
+              :src="
+                prod.avatar == null
+                  ? productDefaultImage
+                  : baseUrl + prod.avatar
+              "
+              alt
+            />
+          </div>
         </div>
       </div>
+    </div>
     <!-- </transition-group> -->
   </div>
 </template>
@@ -96,12 +122,12 @@ export default {
     },
 
     changeActiveCategory(index) {
-      
       // this.menu[index].products.forEach(x => {
       //   if (x.count == undefined) x.count = 0
       // })
       // this.activeProducts = this.menu[index].products
-      if (this.activeCategory > index) this.slideTransition = 'slide-category-prev'
+      if (this.activeCategory > index)
+        this.slideTransition = 'slide-category-prev'
       else this.slideTransition = 'slide-category-next'
       this.activeCategory = index
     },

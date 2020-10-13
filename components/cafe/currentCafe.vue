@@ -73,6 +73,7 @@ export default {
         this.$store.commit('setActiveTable', false)
         this.$store.commit('changeNavigation', 'scan')
         this.$store.commit('cafe/clear')
+        this.$store.commit('table/clearData')
       }
     }
   },

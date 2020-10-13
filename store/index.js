@@ -80,6 +80,9 @@ export const mutations = {
   },
   changeNavigation(state, PageName) {
     state.currentMainPage = PageName
+    history.pushState({
+      state: PageName
+    }, '/user/home?' + PageName)
   },
   errorMsg(state, err) {
     state.errorMessage = err.message
@@ -101,7 +104,7 @@ export const actions = {
           // headers: { Authorization: 'Token ' + this.token }
         })
         .then(res => {
-
+          
           // sets pk, avatar, name and table id
           commit('cafe/setBasic', res.data.cafe)
           // execute the action for getting menu, detailed info, comments and posts
@@ -109,6 +112,7 @@ export const actions = {
 
           commit('setActiveTable', true)
           res.data.table['token'] = res.data.token
+          // save active table state in localstorage for refresh
           commit('table/setToken', res.data.table)
 
           // attach token to table

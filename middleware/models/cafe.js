@@ -20,7 +20,13 @@ export const Product = class Product {
   constructor(rawData = {}) {
     this.name = rawData.name
     this.pk = rawData.pk
-    this.avatar = (rawData.images.length > 0) ? rawData.images[0].image : null 
+    if (rawData.images.length > 0) {
+      let avatar = rawData.images.find(img => img.is_avatar == true)
+      console.log('avatar', avatar)
+      if (avatar) this.avatar = avatar.image
+      else this.avatar = rawData.images[0].image
+    }
+    else this.avatar = null
     this.description = rawData.description
     this.price = rawData.price
     this.rate = rawData.rate

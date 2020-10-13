@@ -39,6 +39,7 @@
       triggerChangeTab(componentName) {
         this.tabName = componentName
         this.$store.commit('changeNavigation', componentName)
+        
         // this.$emit('changeTab',componentName)
       },
     },
