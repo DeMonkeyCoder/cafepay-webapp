@@ -1,6 +1,36 @@
 <template>
   <div class="container">
-    <b-modal :active.sync="isComponentModalActive" has-modal-card full-screen :can-cancel="false">
+    <login :loginActive="loginActive" @successful="dispatchSendCode" />
+    <b-modal
+      class="simple-action-modal camera-guide-modal"
+      :active.sync="accessCameraActive"
+      has-modal-card
+    >
+      <div class="modal-card" style="width: auto">
+        <section class="modal-dialog">
+          <p>
+            جهت اسکن بارکد توسط دوربین درون برنامه، لطفا بعد از مشاهده پیام زیر
+            گزینه <span class="t-text font-norm">Allow</span> را انتخاب نمایید
+          </p>
+          <img src="@/assets/img/camera-guide.png" alt="" />
+        </section>
+
+        <section class="modal-caption"></section>
+
+        <section class="modal-action">
+          <!-- <button class="button ma-child is-light" type="button" @click="closeModal(false)">خیر</button> -->
+          <b-button class="ma-child" type="is-info" @click="openCamera"
+            >باز کردن دوربین</b-button
+          >
+        </section>
+      </div>
+    </b-modal>
+
+    <b-modal
+      :active.sync="enterCodeModalActive"
+      has-modal-card
+      class="simple-action-modal"
+    >
       <div class="modal-card" style="width: auto">
         <b-loading :is-full-page="true" v-model="globalLoading"></b-loading>
         <!-- <header class="modal-card-head">
@@ -19,28 +49,39 @@
             ></b-input>
           </b-field>
 
-            <b-button
-              :loading="globalLoading"
-              @click="dispatchSendCode"
-              class="checkCode-btn bcp-btn bcp-btn-large"
-              expanded
-              :disabled="(tableCode == '') ? true : false"
-              type="is-info"
-            >ورود به میز</b-button>
-       
+          <b-button
+            :loading="globalLoading"
+            @click="tokenProccessor"
+            class="checkCode-btn bcp-btn bcp-btn-large"
+            expanded
+            :disabled="tableCode == '' ? true : false"
+            type="is-info"
+            >ورود به میز</b-button
+          >
         </section>
-        <footer class="modal-card-foot">
-          <button class="button" type="button" @click="closeModal">بستن پنجره</button>
-        </footer>
+        <!-- <footer class="modal-card-foot">
+          <button class="button" type="button" @click="closeModal">
+            بستن پنجره
+          </button>
+        </footer> -->
       </div>
     </b-modal>
-
     <div class="camera">
-      <!-- <component :is="(currentMainPage == 'scan') ? QrcodeStream : null"></component> -->
-      <qrcode-stream  @decode="onDecode"></qrcode-stream>
-      <p class="camera__scan-text">بارکد روی میز را با دوربین این قسمت اسکن کنید</p>
+      <component
+        @decode="tokenProccessor"
+        :is="qrcodeComponentLaunch"
+      ></component>
+
+      <!-- <qrcode-stream  @decode="onDecode"></qrcode-stream> -->
+      <p class="camera__scan-text">
+        بارکد روی میز را با دوربین این قسمت اسکن کنید
+      </p>
       <p class="camera__scan-text-or">یا</p>
-      <b-button @click="openCodeModal" class="camera__btn shadow-lg bcp-btn-large " >کد میز را وارد کنید</b-button>
+      <b-button
+        @click="openCodeModal"
+        class="camera__btn shadow-lg bcp-btn-large "
+        >کد میز را وارد کنید</b-button
+      >
       <!-- <div class="camera__border"></div> -->
     </div>
 
@@ -49,10 +90,10 @@
         <img :src="user.avatar" alt />
       </div>
 
-      <h1 class="t-large">{{user.full_name}}</h1>
+      <h1 class="t-large">{{ user.full_name }}</h1>
       <h4>
         موجودی:‌
-        <span>{{user.balance | currency}} تومان</span>
+        <span>{{ user.balance | currency }} تومان</span>
       </h4>
       <div class="columns shortcut-btns is-mobile is-3-mobile">
         <div class="column disable-profile-navigator--noafter">
@@ -66,7 +107,6 @@
         <div class="column column disable-profile-navigator--noafter">
           <!-- <nuxt-link to="/user/profile/wallet"> -->
           <div
-            @click="sendCode"
             id="my-cafe-icon"
             class="has-background-white ripple-effect"
             anim="ripple"
@@ -82,63 +122,64 @@
 </template>
 
 <script>
+import login from '~/components/user/login'
 import userImg from '~/assets/img/user.jpg'
 import walletIcon from '~/assets/img/shape/icons/wallet.png'
 import myCafe from '~/assets/img/shape/icons/my-cafe-2.svg'
 import Vue from 'vue'
 import { QrcodeStream } from 'vue-qrcode-reader'
-import {mapActions} from 'vuex'
+import { mapActions } from 'vuex'
 
 export default {
   components: {
-    QrcodeStream
+    QrcodeStream,
+    login
   },
   data() {
     return {
       userImg,
       walletIcon,
       myCafe,
-      isComponentModalActive: false,
-      tableCode: ''
+      qrcodeComponentLaunch: null,
+      enterCodeModalActive: false,
+      tableCode: '',
+      accessCameraActive: false,
+      loginActive: false
     }
   },
   methods: {
     ...mapActions(['sendCode']),
     closeModal() {
-      this.isComponentModalActive = false
+      this.enterCodeModalActive = false
+    },
+    openCamera() {
+      this.accessCameraActive = false
+      this.qrcodeComponentLaunch = QrcodeStream
     },
     onDecode(token) {
       // to do : we need to change this to /?token=code insted of ?code
-      this.tableCode = token.split('?')[1]
-      console.log('parse token', token, this.tableCode);
-      let tableToken = this.convertPersian(this.tableCode)
-      this.sendCode(tableToken)
     },
 
-    openCodeModal() {
-      this.isComponentModalActive = true
+    tokenProccessor(token) {
+      console.log('token', this.userIsloggedIn)
+      // token proccessor called by camera or input if it is called by camera it returns string if not it's an input entery
+      // by CAMERA
+      if (typeof token == 'string') {
+        this.tableCode = token.split('?token=')[1]
+      }
+      if (this.userIsloggedIn) this.dispatchSendCode()
+      else {
+        this.enterCodeModalActive = false
+        this.loginActive = true
+      }
     },
-    convertPersian(str){
-      let
-      persianNumbers = [/۰/g, /۱/g, /۲/g, /۳/g, /۴/g, /۵/g, /۶/g, /۷/g, /۸/g, /۹/g],
-      arabicNumbers  = [/٠/g, /١/g, /٢/g, /٣/g, /٤/g, /٥/g, /٦/g, /٧/g, /٨/g, /٩/g]
 
-        if(typeof str === 'string')
-        {
-          for(let i=0; i<10; i++)
-          {
-            str = str.replace(persianNumbers[i], i).replace(arabicNumbers[i], i);
-          }
-        }
-        return str;
-      
-    },
     dispatchSendCode() {
       // u need to set the table too, for api link
       let tableToken = this.convertPersian(this.tableCode)
-        this.sendCode(tableToken)
+      this.sendCode(tableToken)
         .then(res => {
-          this.isComponentModalActive = false
+          this.enterCodeModalActive = false
         })
         .catch(err => {
           if (err.response) {
@@ -151,10 +192,55 @@ export default {
           }
         })
     },
-    mounted() {
-      let w = window.innerWidth
-      // $('.camera').css({ ' height': w })
+
+    openCodeModal() {
+      this.loginActive = false
+      this.enterCodeModalActive = true
+    },
+    convertPersian(str) {
+      let persianNumbers = [
+          /۰/g,
+          /۱/g,
+          /۲/g,
+          /۳/g,
+          /۴/g,
+          /۵/g,
+          /۶/g,
+          /۷/g,
+          /۸/g,
+          /۹/g
+        ],
+        arabicNumbers = [
+          /٠/g,
+          /١/g,
+          /٢/g,
+          /٣/g,
+          /٤/g,
+          /٥/g,
+          /٦/g,
+          /٧/g,
+          /٨/g,
+          /٩/g
+        ]
+
+      if (typeof str === 'string') {
+        for (let i = 0; i < 10; i++) {
+          str = str.replace(persianNumbers[i], i).replace(arabicNumbers[i], i)
+        }
+      }
+      return str
     }
+  },
+  mounted() {
+
+    if (this.$route.fullPath.split('?token=')[1]) this.tableCode = this.$route.fullPath.split('?token=')[1]
+
+    navigator.permissions.query({ name: 'camera' }).then(permissionStatus => {
+      if (permissionStatus.state == 'prompt') this.accessCameraActive = true
+      else if (permissionStatus.state == 'granted')
+        this.qrcodeComponentLaunch = QrcodeStream
+   
+    })
   },
   computed: {
     user() {
@@ -162,10 +248,14 @@ export default {
     },
     currentMainPage() {
       return this.$store.state.currentMainPage
+    },
+    tableScannedToken() {
+      // to do : we need to change this to /?token=code insted of ?code
+      let token = this.$route.fullPath.split('?token=')[1]
+      return token
     }
   },
-  watch: {},
-  mounted() {}
+  watch: {}
 }
 </script>
 

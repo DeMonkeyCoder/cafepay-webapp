@@ -30,7 +30,7 @@
               </div>
             </div>
             <div class="oh-actions">
-              <nuxt-link id="go-to-order-detail" :to="'/user/order/' + oh.id + '/detail'">جزییات</nuxt-link>
+              <!-- <nuxt-link id="go-to-order-detail" :to="'/user/order/' + oh.id + '/detail'">جزییات</nuxt-link> -->
               <nuxt-link id="go-to-order-poll" :to="'/user/order/' + oh.id + '/poll'">ثبت نظر و امتیاز</nuxt-link>
             </div>
           </div>

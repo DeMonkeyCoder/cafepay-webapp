@@ -1,5 +1,18 @@
 <template>
-  <div>
+<div>
+  <div :key="1" v-if="!userIsloggedIn" class="profile-noLogin">
+    <login :loginActive="loginActive" @close="loginActive = false"  />
+       <b-button
+       @click="loginActive = true"
+        icon-left="account-arrow-left"
+        type="is-info"
+        size="large"
+        class="login-btn shadow-lg bcp-btn-large "
+        >ورود به حساب کاربری</b-button
+      >
+
+  </div>
+  <div v-else :key="2" class="profile-loggedIn">
     <div class="cp-header cp-tb-padding cp-side-padding">
       <div @click="$store.commit('changeNavigation', 'currentCafe')" class="go-back cp-tb-padding">
         <!-- <b-icon size="is-medium" icon="chevron-left" type="is-light">
@@ -70,7 +83,7 @@
           </li>
         </nuxt-link>
 
-        <li class="cp-card has-background-white disable-profile-navigator cp-side-padding cp-tb-padding">
+        <!-- <li class="cp-card has-background-white disable-profile-navigator cp-side-padding cp-tb-padding">
           <img src="@/assets/img/shape/icons/remote-assistance.svg" alt />
           پشتیبانی
         </li>
@@ -85,7 +98,7 @@
         >
           <img src="@/assets/img/shape/logo-icon-1.png" alt />
           کافه پی
-        </li>
+        </li> -->
         <li @click="exitModalActive = true" class="cp-card has-background-white cp-side-padding cp-tb-padding">
           <img src="@/assets/img/shape/icons/logout.svg" alt />
           خروج از حساب کاربری
@@ -93,13 +106,19 @@
       </ul>
     </div>
   </div>
+  </div>
 </template>
 
 <script>
+import login from '~/components/user/login'
 export default {
+  components: {
+    login,
+  },
   data() {
     return {
-      exitModalActive: false
+      exitModalActive: false,
+      loginActive: false
     }
   },
   methods: {
@@ -107,11 +126,12 @@ export default {
       this.exitModalActive = false
       if (changeCommand) {
         setTimeout(() => {
+          this.loginActive = false
           this.$store.commit('user/clear')
           this.$store.commit('clearToken')
-          this.$store.commit('changeNavigation', 'scan')
+          this.$store.commit('changeNavigation', 'profile')
         }, 500);
-        this.$router.push('/')
+        // this.$router.push('/')
       }
   
     },

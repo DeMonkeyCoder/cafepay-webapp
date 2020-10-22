@@ -44,7 +44,14 @@ Vue.mixin({
     token() {
       return this.$store.state.token
     },
-    tableToken(){
+    userIsloggedIn() {
+      return (
+        this.token != null &&
+        this.token != 'undefiend' &&
+        this.token != undefined
+      )
+    },
+    tableToken() {
       return this.$store.state.table.token
     },
     globalLoading() {
@@ -56,7 +63,7 @@ Vue.mixin({
     errorMsg() {
       return this.$store.state.errorMessage
     },
- 
+
   },
- 
+
 })

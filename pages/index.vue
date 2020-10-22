@@ -10,21 +10,19 @@
       <h3 class="has-text-white-bis t-medium">
         انتخاب کن، سفارش بده و به راحتی پرداخت کن
       </h3>
-      <transition name="fade" mode="out-in">
+      <!-- <transition name="fade" mode="out-in">
         <div class="intro-state center-align" v-if="state === 'intro'" :key="1">
-          <!-- <h1 class="t-xlarge has-text-white-bis">
-            کافه‌<span class="t-xlarge t-lightblue">پِی</span>
-          </h1>-->
+       
 
           <div class="action flex buttons are-medium">
-            <!-- @click="state = 'login'" for ورود - ثبت نام -->
+          
             <button
               class="btn cp-btn-primary button is-fullwidth"
               @click="changeState('login')"
             >
               ورود به کافه‌پِی
             </button>
-            <!-- <b-button type="is-primary" outlined>Outlined</b-button> -->
+           
             <button
               @click="scrollllll"
               class="btn is-light button is-fullwidth"
@@ -156,7 +154,7 @@
             />
           </div>
         </div>
-      </transition>
+      </transition> -->
     </section>
 
     <section
@@ -407,17 +405,18 @@ export default {
       state: 'intro',
       phone_number: '',
       user_code: '',
-      background,
-      mobilebc,
+
+      first_name: '',
+      last_name: '',
+      mobile: false,
+      isUserExist: true,
       form: {
         name: null,
         phone_number: null,
         comment: null
       },
-      first_name: '',
-      last_name: '',
-      mobile: false,
-      isUserExist: true
+      background,
+      mobilebc
     }
   },
   computed: {
@@ -434,99 +433,99 @@ export default {
     changeState(state) {
       this.state = state
     },
-    sendCode() {
-      let validation = /^(\0|0)?9\d{9}$/g
-      if (this.phone_number.match(validation)) {
-        this.$axios
-          .post('api/v1/user-profile/send-code/', {
-            phone_number: this.phone_number
-          })
-          .then(res => {
-            console.log('phone log', res)
-            this.state = 'enter-code'
-            this.user_code = res.data.code
-          })
-          .catch(err => {
-            console.log(err.response)
+    // sendCode() {
+    //   let validation = /^(\0|0)?9\d{9}$/g
+    //   if (this.phone_number.match(validation)) {
+    //     this.$axios
+    //       .post('api/v1/user-profile/send-code/', {
+    //         phone_number: this.phone_number
+    //       })
+    //       .then(res => {
+    //         console.log('phone log', res)
+    //         this.state = 'enter-code'
+    //         this.user_code = res.data.code
+    //       })
+    //       .catch(err => {
+    //         console.log(err.response)
 
-            if (err.response) {
-              // signup
+    //         if (err.response) {
+    //           // signup
 
-              if (err.response.status == 303) {
-                this.isUserExist = false
-                this.state = 'enter-code'
-              }
-            }
-          })
-      } else if (this.phone_number == '') {
-        this.toaster('لطفا شماره تلفن خود را وارد نمایید', 'is-danger')
-      } else {
-        this.toaster('شماره تلفن وارد شده معتبر نیست', 'is-danger')
-      }
-    },
-    checkCode() {
-      this.$axios
-        .post('/api/v1/user-profile/auth-token/', {
-          phone_number: this.phone_number,
-          code: this.user_code
-        })
-        .then(res => {
-          console.log('user loged in', res.data)
-          this.$store.commit('setToken', res.data.token)
-          // check if it's the first time that user logged in by full name
-          if (res.data.full_name.trim() == '') {
-            this.state = 'signup'
-          } else {
-            this.$store.dispatch('user/retrieve').then(res => {
-              if (this.tableScannedToken) {
-                this.$store
-                  .dispatch('sendCode', this.tableScannedToken)
-                  .then(res => {
-                    this.$router.push('/user/home')
-                  })
-              } else this.$router.push('/user/home')
-            })
-          }
-        })
-        .catch(err => {
-          if (err.response) {
-            console.log(err.response.data)
-          }
-        })
-    },
-    signup() {
-      // actualy this is user update info
-      console.log('f l', this.first_name, this.last_name)
+    //           if (err.response.status == 303) {
+    //             this.isUserExist = false
+    //             this.state = 'enter-code'
+    //           }
+    //         }
+    //       })
+    //   } else if (this.phone_number == '') {
+    //     this.toaster('لطفا شماره تلفن خود را وارد نمایید', 'is-danger')
+    //   } else {
+    //     this.toaster('شماره تلفن وارد شده معتبر نیست', 'is-danger')
+    //   }
+    // },
+    // checkCode() {
+    //   this.$axios
+    //     .post('/api/v1/user-profile/auth-token/', {
+    //       phone_number: this.phone_number,
+    //       code: this.user_code
+    //     })
+    //     .then(res => {
+    //       console.log('user loged in', res.data)
+    //       this.$store.commit('setToken', res.data.token)
+    //       // check if it's the first time that user logged in by full name
+    //       if (res.data.full_name.trim() == '') {
+    //         this.state = 'signup'
+    //       } else {
+    //         this.$store.dispatch('user/retrieve').then(res => {
+    //           if (this.tableScannedToken) {
+    //             this.$store
+    //               .dispatch('sendCode', this.tableScannedToken)
+    //               .then(res => {
+    //                 this.$router.push('/user/home')
+    //               })
+    //           } else this.$router.push('/user/home')
+    //         })
+    //       }
+    //     })
+    //     .catch(err => {
+    //       if (err.response) {
+    //         console.log(err.response.data)
+    //       }
+    //     })
+    // },
+    // signup() {
+    //   // actualy this is user update info
+    //   console.log('f l', this.first_name, this.last_name)
 
-      if (this.first_name != '' && this.last_name != '') {
-        this.$api
-          .put('/api/v1/user-profile/', {
-            first_name: this.first_name,
-            last_name: this.last_name
-          })
-          .then(res => {
-            this.$store.dispatch('user/retrieve').then(res => {
-              if (this.tableScannedToken) {
-                this.$store
-                  .dispatch('sendCode', this.tableScannedToken)
-                  .then(res => {
-                    this.$router.push('/user/home')
-                  })
-              } else this.$router.push('/user/home')
-            })
-          })
-          .catch(err => {
-            if (err.response) {
-              console.log(err.response.data)
-            }
-          })
-      }
-      if (this.first_name == '') {
-        this.toaster('لطفاْ نام خود را وارد کنید', 'is-danger')
-      } else if (this.last_name == '') {
-        this.toaster('نام خانوادگی خود را وارد کنید', 'is-danger')
-      }
-    },
+    //   if (this.first_name != '' && this.last_name != '') {
+    //     this.$api
+    //       .put('/api/v1/user-profile/', {
+    //         first_name: this.first_name,
+    //         last_name: this.last_name
+    //       })
+    //       .then(res => {
+    //         this.$store.dispatch('user/retrieve').then(res => {
+    //           if (this.tableScannedToken) {
+    //             this.$store
+    //               .dispatch('sendCode', this.tableScannedToken)
+    //               .then(res => {
+    //                 this.$router.push('/user/home')
+    //               })
+    //           } else this.$router.push('/user/home')
+    //         })
+    //       })
+    //       .catch(err => {
+    //         if (err.response) {
+    //           console.log(err.response.data)
+    //         }
+    //       })
+    //   }
+    //   if (this.first_name == '') {
+    //     this.toaster('لطفاْ نام خود را وارد کنید', 'is-danger')
+    //   } else if (this.last_name == '') {
+    //     this.toaster('نام خانوادگی خود را وارد کنید', 'is-danger')
+    //   }
+    // },
     scrollllll() {
       $('html, body').animate({ scrollTop: $('#about-us').position().top })
     },
@@ -541,6 +540,9 @@ export default {
         this.globalLoading = false
       }, 1500)
     }
+  },
+  beforeCreate() {
+    this.$router.push('/user/home')
   },
   mounted() {
     let h = window.innerHeight

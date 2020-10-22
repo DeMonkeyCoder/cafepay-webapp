@@ -11,15 +11,12 @@ export default {
     }
   },
   mounted() {
-    window.addEventListener('load', function() {
-      // window.history.pushState({}, '')
-    })
 
     window.addEventListener('popstate', (e) => {
       console.log('popstate', e)
       console.log('state', e.state.state)
-
-      this.$store.commit('changeNavigation', e.state.state)
+  
+      // if (this.$route)this.$store.commit('changeNavigation', e.state.state)
       // alert(this.currentMainNav)
       // if (this.currentMainNav == 'table')
       // this.$store.commit('changeNavigation', 'currentCafe')
@@ -31,7 +28,7 @@ export default {
     currentMainNav() {
       return this.$store.state.currentMainPage
     },
-    userIsloggedIn() {
+    userIsloggedInRoot() {
       return (
         this.token != null &&
         this.token != 'undefiend' &&
@@ -50,20 +47,21 @@ export default {
     errorMsg(newValue, oldValue) {
       this.toaster(newValue, 'is-danger', 'is-bottom')
     },
-    userIsloggedIn: {
+    userIsloggedInRoot: {
       immediate: true,
       handler(val) {
-        if (this.userIsloggedIn) {
+       
+        if (val) {
           this.$store.dispatch('user/retrieve').then(res => {
-            if (this.tableActive)
-              this.$store.dispatch('sendCode', this.tableToken)
+            if (this.tableActive && res.data.first_name != '') this.$store.dispatch('sendCode', this.tableToken)
             if (this.$router.currentRoute.path == '/') {
               if (res.first_name != '') this.$router.push('/user/home')
             }
           })
         } else {
+          // this.$router.push('/')
           console.log('router', this.$route)
-          if (this.$route.path == '/') this.$router.push(this.$route.fullPath)
+          // if (this.$route.path == '/') this.$router.push(this.$route.fullPath)
         }
       }
     }

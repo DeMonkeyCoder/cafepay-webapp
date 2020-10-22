@@ -34,6 +34,8 @@ export const getters = {
 
 export const mutations = {
   setToken(state, table) {
+    state.token = null
+    state.table_number = null
     localStorage.setItem('tableToken', table.token)
     localStorage.setItem('tableName', table.number)
     state.token = table.token

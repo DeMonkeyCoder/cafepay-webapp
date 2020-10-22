@@ -22,7 +22,6 @@ export const Product = class Product {
     this.pk = rawData.pk
     if (rawData.images.length > 0) {
       let avatar = rawData.images.find(img => img.is_avatar == true)
-      console.log('avatar', avatar)
       if (avatar) this.avatar = avatar.image
       else this.avatar = rawData.images[0].image
     }

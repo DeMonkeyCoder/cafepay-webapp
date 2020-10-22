@@ -28,7 +28,8 @@
     "vue-native-websocket": "^2.0.14",
     "vue-persian-datetime-picker": "^2.1.4",
     "vue-qrcode-reader": "^2.3.13",
-    "vue2-leaflet": "^2.5.2"
+    "vue2-leaflet": "^2.5.2",
+    "xbs-enjoyhint": "^4.0.2"
   },
   "devDependencies": {
     "eslint-config-prettier": "^4.1.0",

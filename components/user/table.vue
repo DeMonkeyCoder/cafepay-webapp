@@ -101,13 +101,14 @@
       <div>
         <img src="@/assets/img/shape/icons/burger.svg" alt />
         <p class="cp-side-margin-2x">
-          برای مشاهده میز به تب
+          ابتدا به بخش
           <span
             @click="$store.commit('changeNavigation', 'scan')"
             class="p-text"
           >اسکن</span> بروید
         </p>
-        <p>و QR مربوط به میز را اکسن کنید</p>
+        <p>و بارکد مربوط به میز را اسکن کنید</p>
+        <p>یا کد میز را وارد نمایید</p>
       </div>
     </div>
   </div>

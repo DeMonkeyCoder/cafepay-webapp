@@ -13,7 +13,8 @@ export const state = () => ({
   categories: [],
   currentProduct: {},
   productsFork: [],
-  productPageActive: false
+  productPageActive: false,
+  flowType: null
 })
 
 export const getters = {
