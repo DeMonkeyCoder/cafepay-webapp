@@ -26,6 +26,7 @@ export const Product = class Product {
       else this.avatar = rawData.images[0].image
     }
     else this.avatar = null
+    this.available = rawData.available
     this.description = rawData.description
     this.price = rawData.price
     this.rate = rawData.rate

@@ -110,7 +110,7 @@
           .product-discount
             p
               display: inline-block
-              text-decoration: line-through;
+              text-decoration: line-through
               text-decoration-color: $grey
             span
               display: inline-block
@@ -122,6 +122,18 @@
               font-weight: 500
               direction: ltr
               background-color: $secondary
+
+      .out-of-order
+        display: flex
+        justify-content: center
+        align-items: center
+        p
+          transform: rotate(270deg)
+          border: 1px solid gainsboro
+          padding: 0.25rem 0.5rem
+          width: 100p
+          border-radius: 5px
+          color: #989898
 
       .add-or-remove
         text-align: center

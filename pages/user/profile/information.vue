@@ -21,7 +21,8 @@
             class="change-table-options-btn bcp-btn btn-font-bold"
             size="is-medium"
             type="is-info"
-          >ارسال کد تایید</b-button>
+            >ارسال کد تایید</b-button
+          >
         </section>
       </div>
     </b-modal>
@@ -36,11 +37,15 @@
       class="profile-info-bar cp-side-padding cp-tb-padding long-shadow cp-side-margin cp-header-card has-background-white"
     >
       <div class="info">
-        <img class="no-pic" src="@/assets/img/shape/icons/user-info-1.svg" alt />
+        <img
+          class="no-pic"
+          src="@/assets/img/shape/icons/user-info-1.svg"
+          alt
+        />
         <h4 class="header cp-tb-padding cp-side-padding">اطلاعات کاربری</h4>
         <p dir="rtl" class="detail cp-tb-padding cp-side-padding">
           عضویت در:
-          <span class="p-text font-18">{{'2020-09-27' | moment('LL')}}</span>
+          <span class="p-text font-18">{{ '2020-09-27' | moment('LL') }}</span>
         </p>
       </div>
     </div>
@@ -60,7 +65,7 @@
 
         <b-field>
           <b-input
-            v-model="user.first_name"
+            v-model="userLocal.first_name"
             class="cp-input cp-input-primary "
             placeholder="نام"
             icon="account"
@@ -69,7 +74,7 @@
 
         <b-field>
           <b-input
-            v-model="user.last_name"
+            v-model="userLocal.last_name"
             class="cp-input cp-input-primary "
             placeholder="نام خانوادگی"
             icon="account"
@@ -80,21 +85,21 @@
           <b-input
             readonly="readonly"
             @click.native="openChangeNumberModal"
-            v-model="user.phone_number"
+            v-model="userLocal.phone_number"
             class="cp-input cp-input-primary "
             placeholder="شماره تلفن"
             icon="cellphone"
           ></b-input>
         </b-field>
 
-        <b-field>
+        <!-- <b-field>
           <b-input
-            v-model="user.shaba_number"
+            v-model="userLocal.shaba_number"
             class="cp-input cp-input-primary "
             placeholder="شماره شبا"
             icon="credit-card"
           ></b-input>
-        </b-field>
+        </b-field> -->
 
         <div class="birthday-field">
           <b-field>
@@ -119,7 +124,14 @@
           />
         </div>
 
-        <b-button class="bcp-btn bcp-btn-large btn-font-bold" type="is-info" expanded>تغییر مشخصات</b-button>
+        <b-button
+          :loading="globalLoading"
+          class="bcp-btn bcp-btn-large btn-font-bold"
+          type="is-info"
+          expanded
+          @click="updateInformation"
+          >تغییر مشخصات</b-button
+        >
       </div>
     </section>
   </div>
@@ -132,6 +144,7 @@ export default {
   components: { 'date-picker': VuePersianDatetimePicker },
   data() {
     return {
+      userLocal: {},
       user: {
         first_name: 'علی',
         last_name: 'علی بیگی',
@@ -140,16 +153,23 @@ export default {
         birthday: null
       },
       isChangeNumberModalActive: false,
-      newPhoneNumber: null,
+      newPhoneNumber: null
+    }
+  },
+  watch: {
+    user: {
+      immediate: true,
+      handler(newValue, oldValue) {
+        this.userLocal = JSON.parse(JSON.stringify(this.$store.state.user.user))
+      }
     }
   },
   computed: {
-    userx() {
-      return this.$store.state.user.user
-    },
-    today(){
-     let today =  moment(new Date()).subtract(1,'years').jYear()
-     console.log('tag', today + '/12/30')
+    today() {
+      let today = moment(new Date())
+        .subtract(1, 'years')
+        .jYear()
+      console.log('tag', today + '/12/30')
       return today + '/12/30'
     }
   },
@@ -159,6 +179,26 @@ export default {
     },
     openChangeNumberModal() {
       this.isChangeNumberModalActive = true
+    },
+    updateInformation() {
+      this.$api
+        .put('/api/v1/user-profile/', this.userLocal)
+        .then(res => {
+              this.$store.commit('user/set', res.data)
+            
+              this.$buefy.toast.open({
+              duration: 3000,
+              message: `اطلاعات با موفقیت ویرایش شد`,
+              position: 'is-bottom',
+              type: 'is-success'
+            })
+         
+        })
+        .catch(err => {
+          if (err.response) {
+            console.log(err.response.data)
+          }
+        })
     }
   },
   mounted() {}
