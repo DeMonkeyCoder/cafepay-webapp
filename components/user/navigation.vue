@@ -16,7 +16,7 @@
     <div @click="triggerChangeTab('cp-table')" class="nav-tab chair center-align" :class="{'is-active': currentMainPage == 'cp-table'}">
       <img v-if="currentMainPage == 'cp-table'" src='@/assets/img/shape/icons/chair-color.png' alt="">
       <img v-else src='@/assets/img/shape/icons/chair.png' alt="">
-      <p>میز سفارش</p>
+      <p>میز</p>
     </div>
 
     <div @click="triggerChangeTab('profile')" class="nav-tab profile center-align" :class="{'is-active': currentMainPage == 'profile'}">
@@ -62,6 +62,7 @@
 
 .navigation-container
   z-index: 105
+  border-radius: 1rem 1rem 0 0
   position: fixed
   display: flex
   bottom: 0
@@ -69,7 +70,7 @@
   right: 0
   background-color: white
   height: 60px
-  box-shadow: 0px -1px 2px rgba(0,0 ,0 ,0.15)
+  // box-shadow: 0px -1px 2px rgba(0,0 ,0 ,0.15)
 
   .nav-tab.profile
     position: relative

@@ -25,7 +25,7 @@
 
       <div class="cafe-header cp-header cp-tb-padding cp-side-padding">
         <div class="info">
-          <img :src="(cafe.avatar == null) ? cafeDefaultImage : cafe.avatar " alt />
+          <img :src="(cafe.avatar == null) ? cafeDefaultImage : baseUrl + cafe.avatar " alt />
           <p class="cafe-name cp-tb-padding cp-side-padding">{{cafe.name}}</p>
           <b-rate
             class="cafe-rate cp-tb-padding cp-side-padding"

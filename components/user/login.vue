@@ -269,6 +269,7 @@ export default {
             this.$store.dispatch('user/retrieve').then(res => {
 
                     // for entering to table
+                    this.$store.commit('setFirstTime')
                     this.$emit('successful')
                     this.loginActiveLocal = false
             

@@ -24,23 +24,7 @@
     color: white!important
     background-color: darken($green, 7%)
 
-.cp-btn-submit-order
-  width: 100%!important
-  height: 50px
-  font-size: 24px!important
-  border-radius: 0!important
-  box-shadow: none
-  span
-    font-size: 18px
-    font-weight: 500!important
-  &:focus
-    border: none
-    color: white
-    box-shadow: none!important
 
-.cp-btn-primary-inverted
-  background-color: white!important
-  color: $primary
 
 .bcp-btn
   border-radius: 5px
@@ -96,17 +80,53 @@
   --ripple-duration: 600ms
   -webkit-tap-highlight-color: rgba(0,0,0,0)
 
+.cp-btn-submit-order
+  width: 100%!important
+  height: 50px
+  font-size: 24px!important
+  border-radius: 5px!important
+  box-shadow: none
+  span
+    font-size: 18px
+    font-weight: 500!important
+  &:focus
+    border: none
+    color: white
+    box-shadow: none!important
+
+.cp-btn-primary-inverted
+  background-color: white!important
+  color: $primary
+
 #pay-checkout, #selected-products-preview
   opacity: 0
   z-index: 100
   position: fixed
   display: flex
   bottom: 0
-  left: 0
-  right: 0
+  left: 15%
+  right: 15%
   background-color: white
   height: 50px
   transition-timing-function: ease-in
   transition: 0.4s
   background-color: $blueShade
   display: flex
+
+.selected-products-preview-is-shown
+  bottom: 7.5rem!important
+  transition: 0.3s!important
+  transition-timing-function: ease-out!important
+  transform: translateY(46px)!important
+  opacity: 1!important
+
+
+.v-step
+  &__button
+    background: #ffffff!important
+    color: $black!important
+    border-radius: 5px
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important
+
+  &__button-skip
+    display: none!important

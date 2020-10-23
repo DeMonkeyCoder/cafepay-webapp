@@ -4,10 +4,10 @@
       <b-button
         @click="sumbitOnTable"
         :loading="globalLoading"
-        class="button bcp-btn cp-btn-submit-order"
+        class="button shadow-md bcp-btn cp-btn-submit-order"
         size="is-medium"
-        type="is-info"
-        >ثبت تغییرات در میز سفارش</b-button
+        type="is-danger"
+        >سفارش خود را ثبت کنید</b-button
       >
     </div>
 
@@ -42,14 +42,14 @@
           <div v-if="prod.available" class="add-or-remove">
             <span
               class="product-add"
-              @click="countChange(index, 1, prod.pk, prod.price)"
+              @click="countChange(index, 1, prod)"
             >
               <div class="aor-shape">+</div>
             </span>
             <span class="product-count">{{ prod.count }}</span>
             <span
               class="product-remove"
-              @click="countChange(index, -1, prod.pk, prod.price)"
+              @click="countChange(index, -1, prod)"
             >
               <div class="aor-shape">-</div>
             </span>
@@ -110,7 +110,6 @@ export default {
       key: 'value',
       activeCategory: 1,
       count: 0,
-      activeProducts: [],
       totalPrice: 0,
       orderList: [],
       productDefaultImage,
@@ -126,25 +125,22 @@ export default {
     },
 
     changeActiveCategory(index) {
-      // this.menu[index].products.forEach(x => {
-      //   if (x.count == undefined) x.count = 0
-      // })
-      // this.activeProducts = this.menu[index].products
+
       if (this.activeCategory > index)
         this.slideTransition = 'slide-category-prev'
       else this.slideTransition = 'slide-category-next'
       this.activeCategory = index
     },
 
-    countChange(index, count, productId, productPrice) {
+    countChange(index, count, product) {
       // check for 0 count and deletion
-      if (this.activeProducts[index].count == 0 && count == -1) return
+      if (product.count == 0 && count == -1) return
       if (
-        this.activeProducts[index].count + count <
-        this.activeProducts[index].reduceLimit
+        product.count + count <
+        product.reduceLimit
       ) {
         this.toaster(
-          `روی ${this.activeProducts[index].reduceLimit} عدد ازین محصول پرداخت انجام داده اید`,
+          `روی ${product.reduceLimit} عدد ازین محصول پرداخت انجام داده اید`,
           'is-danger',
           'is-bottom'
         )
@@ -159,9 +155,9 @@ export default {
 
       // detect change
       this.$store.commit('cafe/changeDetection', {
-        id: productId,
+        id: product.pk,
         count,
-        price: productPrice
+        price: product.price
       })
 
       // changing property of one item of array dosent trigger v-for update
@@ -197,12 +193,7 @@ export default {
       return this.$store.state.cafe.productChangeArray.length
     }
   },
-  mounted() {
-    if (this.menu.length > 0) {
-      this.activeProducts = this.menu[this.activeCategory].products
-      // swipable(this.menu.length ,'product-list', this, 'activeCategory')
-    }
-  },
+  mounted() {},
   watch: {
     showSubmitBtn(val, old) {
       if (val > 0) {
@@ -227,9 +218,13 @@ export default {
           .classList.add('selected-products-preview-is-shown')
       }
     },
-    menu(newValue, oldValue) {
-      if (newValue.length > 0) {
-        this.activeProducts = this.menu[this.activeCategory].products
+    menu: {
+      immediate: true,
+      handler(newValue, oldValue) {
+        if (newValue.length > 0) {
+          this.activeProducts = this.menu[this.activeCategory].products
+          // swipable(this.menu.length ,'product-list', this, 'activeCategory')
+        }
       }
     }
   }

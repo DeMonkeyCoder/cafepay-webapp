@@ -44,8 +44,10 @@ export default {
     }
   },
   watch: {
-    errorMsg(newValue, oldValue) {
-      this.toaster(newValue, 'is-danger', 'is-bottom')
+    errorThrow(newValue, oldValue) {
+      if (newValue) this.toaster(this.errorMsg, 'is-danger', 'is-bottom')
+      this.$store.commit('unsetErrorFlag')
+
     },
     userIsloggedInRoot: {
       immediate: true,
@@ -53,7 +55,7 @@ export default {
        
         if (val) {
           this.$store.dispatch('user/retrieve').then(res => {
-            if (this.tableActive && res.data.first_name != '') this.$store.dispatch('sendCode', this.tableToken)
+            if (this.tableActive && res.first_name != '') this.$store.dispatch('sendCode', this.tableToken)
             if (this.$router.currentRoute.path == '/') {
               if (res.first_name != '') this.$router.push('/user/home')
             }

@@ -24,6 +24,7 @@
 @import './components/button'
 @import './components/tab'
 @import './components/toast'
+@import './components/slider'
 
 *
   -webkit-tap-highlight-color: rgba(0,0,0,0)
@@ -35,7 +36,7 @@ body, html
   max-width: 998px
   margin: auto
 .navigation-container
-  box-shadow: $navbarBoxShadow
+  // box-shadow: $navbarBoxShadow
 
 .font-ul
   font-weight: 200!important
@@ -163,7 +164,7 @@ h1
 
 .cp-header
   background: rgb(0,113,188)
-  background: linear-gradient(90deg, rgba(0,113,188,1) 0%, rgba(30,215,229,1) 100%)
+  // background: linear-gradient(90deg, rgba(0,113,188,1) 0%, rgba(30,215,229,1) 100%)
   width: 100%
   // height: 17vh
   height: 140px
@@ -300,6 +301,8 @@ html
   -webkit-overflow-scrolling: touch
   overflow-scrolling: touch
 
+
+
 //  shadows
 .shadow-xs  
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05)!important
@@ -324,3 +327,6 @@ html
 
 .shadow-newm
   box-shadow: 5px 5px 6px -1px rgba(0, 0, 0, 0.1), -3px -2px 15px 0px rgba(255, 255, 255, 0.4), inset 0 2px 4px 0 rgba(0, 0, 0, 0.06) !important
+
+.v-tour__target--highlighted 
+  box-shadow: 0 0 0 99999px rgba(0,0,0,.4)!important

@@ -21,6 +21,10 @@ export const getters = {
   productsFlatten: state => {
     let products = state.categories.map(c => c.products)
     return [].concat.apply([], products)
+  },
+
+  productById: (state, getters) => (id) => {
+    return getters.productsFlatten.find(p => p.pk == id)
   }
 }
 
@@ -88,19 +92,18 @@ export const mutations = {
               if (matchedOrder_currentOrderCat) {
                 matchedOrder_currentOrderCat.reduceLimit = Math.ceil(matchedOrder.payment_info.payed_amount / matchedOrder.unit_amount)
                 matchedOrder_currentOrderCat.count = matchedOrder.count
-              }
-              else state.categories[0].products.push(product)
+              } else state.categories[0].products.push(product)
             }
           }
         } else {
           for (const product of category.products) {
-              product.count = 0
-              product.reduceLimit = 0
-            }
+            product.count = 0
+            product.reduceLimit = 0
           }
         }
       }
-    
+    }
+
     // fork menu for detect changes
     // let productsForkStr = JSON.stringify(this.getters.productsFlatten)
     // state.productsFork = JSON.parse(productsForkStr)
@@ -132,9 +135,7 @@ export const mutations = {
 
   },
 
-  flattenProducts(state) {
-    stateproducts = state.categories.map(c => c.products)
-  }
+
 }
 
 export const actions = {

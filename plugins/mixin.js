@@ -38,6 +38,7 @@ Vue.mixin({
     // }
   },
   computed: {
+    // ...mapState(['']),
     hasActiveTable() {
       return this.$store.state.hasActiveTable
     },
@@ -62,6 +63,9 @@ Vue.mixin({
     },
     errorMsg() {
       return this.$store.state.errorMessage
+    },
+    errorThrow() {
+      return this.$store.state.errorThrow
     },
 
   },

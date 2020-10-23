@@ -75,6 +75,7 @@ export default {
     '~/plugins/vue-currency',
     '~/plugins/vue-leaflet',
     '~/plugins/moment',
+    '~/plugins/productTour.js',
     '~/plugins/websocket.js'
     // '~/plugins/jdenticon-2.2.0.js',
     // '~/plugins/ripple',

@@ -76,16 +76,20 @@
       <p class="camera__scan-text">
         بارکد روی میز را با دوربین این قسمت اسکن کنید
       </p>
-      <p class="camera__scan-text-or">یا</p>
-      <b-button
+      <!-- <p class="camera__scan-text-or">یا</p> -->
+      <div class="camera__btn-container">
+      <div><p>یا</p></div>
+          <b-button
         @click="openCodeModal"
-        class="camera__btn shadow-lg bcp-btn-large "
+        class="shadow-lg bcp-btn-large "
         >کد میز را وارد کنید</b-button
       >
+      </div>
+    
       <!-- <div class="camera__border"></div> -->
     </div>
 
-    <div class="landing white">
+    <div v-if="userIsloggedIn" class="landing white">
       <div id="user-img">
         <img :src="user.avatar" alt />
       </div>
@@ -118,6 +122,12 @@
         </div>
       </div>
     </div>
+
+    <div v-if="!userIsloggedIn" class="landing white notLogged-landing">
+        
+    </div>
+
+
   </div>
 </template>
 

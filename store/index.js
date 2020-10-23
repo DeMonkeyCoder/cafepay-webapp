@@ -6,8 +6,10 @@ Vue.use(Vuex)
 export const state = () => ({
   errorMessage: null,
   globalLoading: false,
+  errorThrow: false,
   baseUrl: 'https://alpha.cafepay.app/',
   activeCafe: {},
+  firstTimeActive: false,
   activeTable: {},
   hasActiveTable: false,
   token: null,
@@ -85,7 +87,16 @@ export const mutations = {
     }, '/user/home?' + PageName)
   },
   errorMsg(state, err) {
-    state.errorMessage = err.message
+    state.errorThrow = true
+    state.errorMessage = err
+    // setTimeout(() => {
+    // }, 200); 
+  },
+  unsetErrorFlag(state){
+    state.errorThrow = false
+  },
+  setFirstTime(state){
+    state.firstTimeActive = true
   }
 }
 

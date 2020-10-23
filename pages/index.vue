@@ -10,6 +10,15 @@
       <h3 class="has-text-white-bis t-medium">
         انتخاب کن، سفارش بده و به راحتی پرداخت کن
       </h3>
+      
+        <b-button
+          @click="$router.push('/user/home')"
+          class="go-to-user bcp-btn bcp-btn-large"
+          expanded
+          type="is-info"
+          >ورود به کافه‌پِی</b-button
+        >
+      
       <!-- <transition name="fade" mode="out-in">
         <div class="intro-state center-align" v-if="state === 'intro'" :key="1">
        
@@ -542,7 +551,8 @@ export default {
     }
   },
   beforeCreate() {
-    this.$router.push('/user/home')
+    let w = window.innerWidth
+    if (w < 600) this.$router.push('/user/home')
   },
   mounted() {
     let h = window.innerHeight
@@ -559,6 +569,10 @@ export default {
 .field.is-grouped > .control:not(:last-child)
   margin-right: 0!important
   margin-left: 0.75rem!important
+
+.go-to-user
+  margin-top: 1rem
+  width: 300px!important
 
 .rules
   li
