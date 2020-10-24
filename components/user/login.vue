@@ -236,9 +236,8 @@ export default {
           console.log('firstname', res.data.first_name)
           if (res.data.first_name == '') {
             this.state = 'signup'
-            alert('xyz')
           } else {
-            alert('false')
+            this.$store.commit('setToken', this.tempToken)
             this.$store.dispatch('user/retrieve').then(res => {
               //for entering to table
               this.$emit('successful')

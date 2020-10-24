@@ -6,7 +6,7 @@
         :loading="globalLoading"
         class="button shadow-md bcp-btn cp-btn-submit-order"
         size="is-medium"
-        type="is-warning"
+        type="is-danger"
         >سفارش خود را ثبت کنید</b-button
       >
     </div>
