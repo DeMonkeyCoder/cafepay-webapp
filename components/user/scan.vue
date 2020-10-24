@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <login :loginActive="loginActive" @successful="dispatchSendCode" />
+    <login key="loginmodal-scan" id="loginmodal-scan" :loginActive="loginActive" @successful="dispatchSendCode" />
     <b-modal
       class="simple-action-modal camera-guide-modal"
       :active.sync="accessCameraActive"

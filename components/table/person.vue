@@ -1,6 +1,12 @@
 <template>
   <div class="table-person">
-    <v-tour name="myTour" :steps="steps" :options="myOptions" :callbacks="myCallbacks"></v-tour>
+    <v-tour
+      v-if="first"
+      name="myTour"
+      :steps="steps"
+      :options="myOptions"
+      :callbacks="myCallbacks"
+    ></v-tour>
 
     <div class="person-title has-background-white cp-tb-margin">
       <img :src="person.avatar" :alt="person.name" />
@@ -67,7 +73,6 @@
           "
           :value="order.wish_to_pay"
           @change="changeWishToPay($event, index, person.name)"
-          lazy
           bigger-slider-focus
           type="is-info"
           size="is-large"
@@ -173,18 +178,50 @@ export default {
       // if it's slider tour start the animation
       if (currentStep === 0) {
         setTimeout(() => {
-          this.changeWishToPay(this.person.orders[0].payment_info.total_amount / 2, 0, this.person.name)
-        }, 500);
+          $('.b-slider-fill').addClass('animated-slider')
+          $('.b-slider-thumb-wrapper').addClass('animated-slider')
+          this.changeWishToPay(
+            this.person.orders[0].payment_info.total_amount / 2,
+            0,
+            this.person.name
+          )
+        }, 500)
         setTimeout(() => {
           this.changeWishToPay(0, 0, this.person.name)
-        }, 1500);
+        }, 1500)
+
+        setTimeout(() => {
+          $('.b-slider-fill').removeClass('animated-slider')
+          $('.b-slider-thumb-wrapper').removeClass('animated-slider')
+        }, 2500)
       }
     }
   },
-  mounted() {
-    setTimeout(() => {
-      this.$tours['myTour'].start()
-    }, 1000)
+  mounted() {},
+  computed: {
+    isTablePage() {
+      return (this.$store.state.currentMainPage == 'cp-table')
+    },
+    firstTimeActive() {
+      return this.$store.state.firstTimeActive
+    },
+    initialTour() {
+      // it must be the first component and user must be new and page must be table
+      return this.first && this.isTablePage && this.firstTimeActive
+    }
+  },
+  watch: {
+    initialTour: {
+      immediate: true,
+      handler(val, old) {
+        if (val) {
+          setTimeout(() => {
+            this.$tours['myTour'].start()
+            this.$store.commit('setFirstTime', false)
+          }, 500)
+        }
+      }
+    }
   }
 }
 </script>

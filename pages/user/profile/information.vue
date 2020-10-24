@@ -80,11 +80,13 @@
             icon="account"
           ></b-input>
         </b-field>
-
+            
+            
+            <!-- @click.native="openChangeNumberModal" -->
         <b-field>
           <b-input
+            disabled
             readonly="readonly"
-            @click.native="openChangeNumberModal"
             v-model="userLocal.phone_number"
             class="cp-input cp-input-primary "
             placeholder="شماره تلفن"

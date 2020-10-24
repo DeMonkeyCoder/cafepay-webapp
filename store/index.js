@@ -95,8 +95,8 @@ export const mutations = {
   unsetErrorFlag(state){
     state.errorThrow = false
   },
-  setFirstTime(state){
-    state.firstTimeActive = true
+  setFirstTime(state , flag){
+    state.firstTimeActive = flag
   }
 }
 

@@ -439,9 +439,6 @@ export default {
     }
   },
   methods: {
-    changeState(state) {
-      this.state = state
-    },
     // sendCode() {
     //   let validation = /^(\0|0)?9\d{9}$/g
     //   if (this.phone_number.match(validation)) {

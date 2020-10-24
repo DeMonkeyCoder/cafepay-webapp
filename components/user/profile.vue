@@ -1,7 +1,7 @@
 <template>
 <div>
   <div :key="1" v-if="!userIsloggedIn" class="profile-noLogin">
-    <login :loginActive="loginActive" @close="loginActive = false"  />
+    <login-profile key="loginmodal-profile" id="loginmodal-profile" :loginActive="loginActive" @close="loginActive = false" />
        <b-button
        @click="loginActive = true"
         icon-left="account-arrow-left"
@@ -110,10 +110,10 @@
 </template>
 
 <script>
-import login from '~/components/user/login'
+import loginProfile from '~/components/user/loginProfile'
 export default {
   components: {
-    login,
+    loginProfile,
   },
   data() {
     return {
