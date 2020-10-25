@@ -76,6 +76,7 @@ export default {
     '~/plugins/vue-leaflet',
     '~/plugins/moment',
     '~/plugins/productTour.js',
+    // '~/plugins/lottie.js',
     '~/plugins/websocket.js'
     // '~/plugins/jdenticon-2.2.0.js',
     // '~/plugins/ripple',

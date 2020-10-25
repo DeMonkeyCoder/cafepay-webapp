@@ -47,38 +47,6 @@
 .button.is-info[disabled]
   opacity: 0.75
 
-[anim="ripple"]
-
-  position: relative
-  overflow: hidden
-
-  &:before
-    content: ''
-    position: absolute
-    display: block
-    background: var(--ripple-background, white)
-    border-radius: 50%
-    pointer-events: none
-
-        //  position and size
-    top: calc(var(--y) * 1px)
-    left: calc(var(--x) * 1px)
-    width: calc(var(--d) * 1px)
-    height: calc(var(--d) * 1px)
-
-        //  animated properties
-    opacity: calc(var(--o, 1) * var(--ripple-opacity, 0.3))
-    transition: calc(var(--t, 0) * var(--ripple-duration, 600ms)) var(--ripple-easing,linear)
-    transform: translate(-50%, -50%) scale(var(--s, 1))
-    transform-origin: center
-
-//  Just some styling
-.ripple-effect
-
-  --ripple-background: black
-  --ripple-opacity: 0.3
-  --ripple-duration: 600ms
-  -webkit-tap-highlight-color: rgba(0,0,0,0)
 
 .cp-btn-submit-order
   width: 100%!important
@@ -99,13 +67,14 @@
   color: $primary
 
 #pay-checkout, #selected-products-preview
+  border-radius: 5px!important
   opacity: 0
   z-index: 100
   position: fixed
   display: flex
   bottom: 0
-  left: 15%
-  right: 15%
+  left: 2rem
+  right: 2rem
   background-color: white
   height: 50px
   transition-timing-function: ease-in
@@ -113,8 +82,8 @@
   background-color: $blueShade
   display: flex
 
-.selected-products-preview-is-shown
-  bottom: 7.5rem!important
+.selected-products-preview-is-shown , .pay-checkout-is-shown
+  bottom: 8.5rem!important
   transition: 0.3s!important
   transition-timing-function: ease-out!important
   transform: translateY(46px)!important

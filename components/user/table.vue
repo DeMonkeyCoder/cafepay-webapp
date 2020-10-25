@@ -30,10 +30,10 @@
         <b-button
           @click="paymentCheckout"
           :loading="globalLoading"
-          class="button shadow-md bcp-btn cp-btn-submit-order"
+          class="button shadow-lg-bb bcp-btn cp-btn-submit-order"
           size="is-medium"
-          type="is-danger"
-          >سفارش خود را ثبت کنید</b-button
+          type="is-success"
+          >نمایش پیش فاکتور</b-button
         >
       </div>
 

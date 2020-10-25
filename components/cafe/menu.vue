@@ -1,13 +1,19 @@
 <template>
   <div>
+        <v-tour
+      name="menuTour"
+      :steps="steps"
+      :options="myOptions"
+      :callbacks="myCallbacks"
+    ></v-tour>
     <div id="selected-products-preview">
       <b-button
         @click="sumbitOnTable"
         :loading="globalLoading"
-        class="button shadow-md bcp-btn cp-btn-submit-order"
+        class="button shadow-md bcp-btn cp-btn-submit-order shadow-lg-bb"
         size="is-medium"
-        type="is-danger"
-        >سفارش خود را ثبت کنید</b-button
+        type="is-info"
+        >ثبت سفارش</b-button
       >
     </div>
 
@@ -40,17 +46,11 @@
           class="normal-radius shadow-md has-background-white cp-tb-margin cp-side-margin-half product-item"
         >
           <div v-if="prod.available" class="add-or-remove">
-            <span
-              class="product-add"
-              @click="countChange(index, 1, prod)"
-            >
+            <span class="product-add" @click="countChange(index, 1, prod)">
               <div class="aor-shape">+</div>
             </span>
             <span class="product-count">{{ prod.count }}</span>
-            <span
-              class="product-remove"
-              @click="countChange(index, -1, prod)"
-            >
+            <span class="product-remove" @click="countChange(index, -1, prod)">
               <div class="aor-shape">-</div>
             </span>
           </div>
@@ -113,7 +113,41 @@ export default {
       totalPrice: 0,
       orderList: [],
       productDefaultImage,
-      slideTransition: 'slide-category-next'
+      slideTransition: 'slide-category-next',
+          myOptions: {
+        highlight: true,
+        useKeyboardNavigation: false,
+        labels: {
+          buttonSkip: false,
+          buttonPrevious: 'قبلی',
+          buttonNext: 'چگونه پرداخت کنم؟',
+          buttonStop: 'فهمیدم!'
+        }
+      },
+      myCallbacks: {
+        onNextStep: this.sliderAnimate
+      },
+      steps: [
+        {
+          target: '#selected-products-preview', // We're using document.querySelector() under the hood
+          content: `با انتخاب این گزینه سفارش خود را ثبت کنید`,
+            params: {
+            placement: 'top' // Any valid Popper.js placement. See https://popper.js.org/popper-documentation.html#Popper.placements
+          }
+        },
+      
+        // {
+        //   target: '.v-step-1',
+        //   content: 'An awesome plugin made with Vue.js!'
+        // },
+        // {
+        //   target: '[data-v-step="2"]',
+        //   content: 'Try it, you\'ll love it!<br>You can put HTML in the steps and completely customize the DOM to suit your needs.',
+        //   params: {
+        //     placement: 'top' // Any valid Popper.js placement. See https://popper.js.org/popper-documentation.html#Popper.placements
+        //   }
+        // }
+      ]
     }
   },
   methods: {
@@ -171,7 +205,18 @@ export default {
       // end of else
     }
   },
+ 
   computed: {
+     isMenuPage() {
+      return (this.$store.state.currentMainPage == 'currentCafe')
+    },
+    firstTimeActive() {
+      return this.$store.state.firstTimeActive
+    },
+    initialTour() {
+      // it must be the first component and user must be new and page must be table
+      return this.showSubmitBtn > 0 && this.isMenuPage  && this.firstTimeActive
+    },
     productChangeArray() {
       return this.$store.state.cafe.productChangeArray
     },
@@ -195,6 +240,16 @@ export default {
   },
   mounted() {},
   watch: {
+        initialTour: {
+      immediate: true,
+      handler(val, old) {
+        if (val) {
+          setTimeout(() => {
+            this.$tours['menuTour'].start()
+          }, 500)
+        }
+      }
+    },
     showSubmitBtn(val, old) {
       if (val > 0) {
         document

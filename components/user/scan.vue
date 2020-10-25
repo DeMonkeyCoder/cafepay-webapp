@@ -5,6 +5,7 @@
       class="simple-action-modal camera-guide-modal"
       :active.sync="accessCameraActive"
       has-modal-card
+      :can-cancel="false"
     >
       <div class="modal-card" style="width: auto">
         <section class="modal-dialog">
@@ -40,6 +41,7 @@
           <!-- <img src="@/assets/img/shape/icons/chair.png" alt=""> -->
           <b-field>
             <b-input
+              ref="tablecode"
               class="cp-input cp-input-primary cp-input-grey cp-input-shadow"
               type="code"
               v-model="tableCode"
@@ -73,10 +75,11 @@
       ></component>
 
       <!-- <qrcode-stream  @decode="onDecode"></qrcode-stream> -->
-      <p class="camera__scan-text">
+      <div id="qr-animation"></div>
+      <!-- <p class="camera__scan-text">
         بارکد روی میز را با دوربین این قسمت اسکن کنید
       </p>
-      <!-- <p class="camera__scan-text-or">یا</p> -->
+  
       <div class="camera__btn-container">
       <div><p>یا</p></div>
           <b-button
@@ -84,11 +87,11 @@
         class="shadow-lg bcp-btn-large "
         >کد میز را وارد کنید</b-button
       >
-      </div>
+      </div> -->
     
       <!-- <div class="camera__border"></div> -->
     </div>
-
+<!-- 
     <div v-if="userIsloggedIn" class="landing white">
       <div id="user-img">
         <img :src="user.avatar" alt />
@@ -109,7 +112,7 @@
           </nuxt-link>
         </div>
         <div class="column column disable-profile-navigator--noafter">
-          <!-- <nuxt-link to="/user/profile/wallet"> -->
+          <nuxt-link to="/user/profile/wallet">
           <div
             id="my-cafe-icon"
             class="has-background-white ripple-effect"
@@ -118,13 +121,28 @@
             <img :src="myCafe" alt class="icon" />
             <p>علاقه‌مندی های من</p>
           </div>
-          <!-- </nuxt-link> -->
+          </nuxt-link>
         </div>
       </div>
-    </div>
+    </div> -->
 
-    <div v-if="!userIsloggedIn" class="landing white notLogged-landing">
-        
+    <div  class="landing white notLogged-landing" id="bm">
+      <div class="camera-scan-guide">
+      <img class="camera-scan-guide__icon" :src="qrIcon" alt="">
+     <p class="camera-scan-guide__text">
+        بارکد روی میز را با دوربین دورن برنامه اسکن کنید
+      </p>
+      </div>
+      <!-- <p class="camera__scan-text-or">یا</p> -->
+      <div class="enter-code-guide">
+      <div><p>یا</p></div>
+          <b-button
+        @click="openCodeModal"
+        class="bcp-btn-large shadow-lg-b"
+        type="is-info"
+        >کد میز را وارد کنید</b-button
+      >
+      </div>
     </div>
 
 
@@ -132,10 +150,15 @@
 </template>
 
 <script>
-import login from '~/components/user/login'
+import animationJson from '~/assets/img/lf30_editor_3x8g47cn.json'
 import userImg from '~/assets/img/user.jpg'
 import walletIcon from '~/assets/img/shape/icons/wallet.png'
 import myCafe from '~/assets/img/shape/icons/my-cafe-2.svg'
+import qrIcon from '~/assets/img/shape/icons/qr-code-scan.svg'
+
+
+import lottie from 'lottie-web';
+import login from '~/components/user/login'
 import Vue from 'vue'
 import { QrcodeStream } from 'vue-qrcode-reader'
 import { mapActions } from 'vuex'
@@ -143,13 +166,15 @@ import { mapActions } from 'vuex'
 export default {
   components: {
     QrcodeStream,
-    login
+    login,
   },
   data() {
     return {
+      animationJson,
       userImg,
       walletIcon,
       myCafe,
+      qrIcon,
       qrcodeComponentLaunch: null,
       enterCodeModalActive: false,
       tableCode: '',
@@ -206,6 +231,9 @@ export default {
     openCodeModal() {
       this.loginActive = false
       this.enterCodeModalActive = true
+      setTimeout(() => {
+        this.$refs.tablecode.focus()
+      }, 200);
     },
     convertPersian(str) {
       let persianNumbers = [
@@ -242,6 +270,18 @@ export default {
     }
   },
   mounted() {
+
+    let h = window.innerHeight
+    $('.camera').css({'height': h})
+
+     let animObj = lottie.loadAnimation({
+      container: document.getElementById('qr-animation'), // the dom element that will contain the animation
+      renderer: 'svg',
+      loop: true,
+      autoplay: true,
+      animationData: this.animationJson // the path to the animation json
+    });
+    animObj.play()
 
     if (this.$route.fullPath.split('?token=')[1]) this.tableCode = this.$route.fullPath.split('?token=')[1]
 

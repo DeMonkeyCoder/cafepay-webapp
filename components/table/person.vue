@@ -2,7 +2,7 @@
   <div class="table-person">
     <v-tour
       v-if="first"
-      name="myTour"
+      name="sliderTour"
       :steps="steps"
       :options="myOptions"
       :callbacks="myCallbacks"
@@ -185,15 +185,15 @@ export default {
             0,
             this.person.name
           )
-        }, 500)
+        }, 1000)
         setTimeout(() => {
           this.changeWishToPay(0, 0, this.person.name)
-        }, 1500)
+        }, 2500)
 
         setTimeout(() => {
           $('.b-slider-fill').removeClass('animated-slider')
           $('.b-slider-thumb-wrapper').removeClass('animated-slider')
-        }, 2500)
+        }, 3500)
       }
     }
   },
@@ -216,7 +216,7 @@ export default {
       handler(val, old) {
         if (val) {
           setTimeout(() => {
-            this.$tours['myTour'].start()
+            this.$tours['sliderTour'].start()
             this.$store.commit('setFirstTime', false)
           }, 500)
         }

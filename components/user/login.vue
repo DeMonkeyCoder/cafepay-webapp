@@ -5,7 +5,7 @@
       class="simple-action-modal login-modal"
       :active.sync="loginActiveLocal"
       has-modal-card
-      :can-cancel="false"
+      :can-cancel="['x']"
     >
       <div class="modal-card" style="width: auto">
         <transition name="fade" mode="out-in">
@@ -21,6 +21,7 @@
             </p>
             <b-field class="center-align">
               <b-input
+                ref="phoneInput"
                 dir="ltr"
                 inputmode="numeric"
                 class="cp-input cp-input-primary cp-input-grey"
@@ -47,6 +48,7 @@
             </p>
             <b-field class="field">
               <b-input
+                ref="codeInput"
                 inputmode="numeric"
                 class="cp-input cp-input-primary cp-input-grey"
                 maxlength="5"
@@ -174,6 +176,11 @@ export default {
       immediate: true,
       handler(val) {
         this.loginActiveLocal = JSON.parse(JSON.stringify(this.loginActive))
+        if (val) {
+          setTimeout(() => {
+            this.$refs.phoneInput.focus()
+          }, 200)
+        }
       }
     }
   },
@@ -204,6 +211,9 @@ export default {
             this.runTimer()
             console.log('phone log', res)
             this.state = 'enter-code'
+            setTimeout(() => {
+              this.$refs.codeInput.focus()
+            }, 200)
             this.user_code = res.data.code
           })
           .catch(err => {
@@ -252,7 +262,6 @@ export default {
         })
     },
     signup() {
-      
       // actualy this is user update info
       console.log('f l', this.first_name, this.last_name)
 
@@ -265,7 +274,6 @@ export default {
             last_name: this.last_name
           })
           .then(res => {
-            
             this.$store.dispatch('user/retrieve').then(res => {
               // for entering to table
               this.$store.commit('setFirstTime', true)
@@ -285,7 +293,8 @@ export default {
         this.toaster('نام خانوادگی خود را وارد کنید', 'is-danger')
       }
     }
-  }
+  },
+  mounted() {}
 }
 </script>
 

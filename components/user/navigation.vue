@@ -62,15 +62,16 @@
 
 .navigation-container
   z-index: 105
-  border-radius: 1rem 1rem 0 0
+  // border-radius: 1rem 1rem 0 0
+  // border-radius: 25px 25px 0 0
   position: fixed
   display: flex
   bottom: 0
   left: 0
   right: 0
   background-color: white
-  height: 60px
-  // box-shadow: 0px -1px 2px rgba(0,0 ,0 ,0.15)
+  height: 75px
+  box-shadow: 0px 0px 3px rgba(0,0 ,0 ,0.05)
 
   .nav-tab.profile
     position: relative
@@ -82,7 +83,7 @@
       top: calc(50% - 15px)
 
   .nav-tab
-    padding-top: 5px
+    padding-top: 15px
     flex: 1
     p
       font-size: 11px
