@@ -26,14 +26,67 @@
         </div>
       </b-modal>
 
+      <b-modal
+        class="pre-invoice-modal simple-action-modal"
+        :active.sync="preInvoiceActive"
+        has-modal-card
+        :can-cancel="true"
+      >
+        <div class="modal-card" style="width: auto">
+          <section class="modal-dialog">
+            <ol class="order-summery">
+              <li v-for="order in ordersToPay" :key="order.pk">
+                <p class="pre-invoice-modal__name">{{ order.name }}</p>
+                <p class="pre-invoice-modal__amount">
+                  {{ order.amount | currency }} <span class="toman">تومان</span>
+                </p>
+              </li>
+            </ol>
+
+            <ul class="payment-summery">
+              <li>
+                <p class="pre-invoice-modal__name">مجموع سفارشات</p>
+                <p class="pre-invoice-modal__amount">
+                  {{ totalWishToPayOrder | currency }}
+                  <span class="toman">تومان</span>
+                </p>
+              </li>
+              <li>
+                <p class="pre-invoice-modal__name font-l">خدمات</p>
+                <p class="pre-invoice-modal__amount font-l">
+                  {{ cafepayFee | currency }}
+                  <span class="toman">تومان</span>
+                </p>
+              </li>
+              <li>
+                <p class="pre-invoice-modal__name font-bold">جمع کل</p>
+                <p class="pre-invoice-modal__amount font-bold">
+                  {{ totaltoPay | currency }}
+                  <span class="toman">تومان</span>
+                </p>
+              </li>
+            </ul>
+          </section>
+          <section class="modal-action">
+            <b-button
+              @click="paymentCheckout"
+              :loading="globalLoading"
+              class="ma-child"
+              type="is-success"
+              >پرداخت آنلاین
+            </b-button>
+          </section>
+        </div>
+      </b-modal>
+
       <div id="pay-checkout">
         <b-button
-          @click="paymentCheckout"
+          @click="showPreInvoice"
           :loading="globalLoading"
           class="button shadow-lg-bb bcp-btn cp-btn-submit-order"
           size="is-medium"
           type="is-success"
-          >نمایش پیش فاکتور</b-button
+          >نمایش پیش فاکتور ({{totalWishToPayOrder | currency}})</b-button
         >
       </div>
 
@@ -47,10 +100,10 @@
           >پرداخت آنلاین</b-button
         > -->
 
-        <!-- <div @click="paymentCheckout" dir="rtl" class="pc-child pay-checkout-btn green">
+      <!-- <div @click="paymentCheckout" dir="rtl" class="pc-child pay-checkout-btn green">
           <b-icon class="credit-card-icon" icon="credit-card" type="is-light"></b-icon>پرداخت آنلاین
         </div>-->
-        <!-- <div class="pc-child pay-checkout-info cp-side-padding">
+      <!-- <div class="pc-child pay-checkout-info cp-side-padding">
           <div dir="rtl" class="total-price cp-side-margin font-norm">
             {{ totalWishToPay | currency }}
             <span class="toman">تومان</span>
@@ -84,13 +137,14 @@
         </div>
       </div>
 
-      <div id="table-status-bar"
+      <div
+        id="table-status-bar"
         class="table-status-bar long-shadow cp-side-margin cp-header-card has-background-white"
       >
         <div id="table-status-bar-progress-wrapper" class></div>
         <p v-if="PaymentProgress != 100">
           باقی‌مانده:
-          <span class="g-text font-norm total-payment">{{
+          <span class="p-text font-norm total-payment">{{
             (table.payment.total_amount - table.payment.payed_amount) | currency
           }}</span>
           از
@@ -120,8 +174,6 @@
         سفارشی برروی میز شما وجود ندارد
       </div>
 
-      
-
       <div class="persons-on-table cp-side-margin-2x">
         <!-- <div class="you">
           <person :person="table.you" title="شما" />
@@ -130,9 +182,13 @@
           <div
             class="cp-tb-margin"
             v-for="(person, index) in table.persons"
-            :key="person+'-'+index"
+            :key="person + '-' + index"
           >
-            <person :first="(index == 0) ? true : false" :person="person" :title="person.name" />
+            <person
+              :first="index == 0 ? true : false"
+              :person="person"
+              :title="person.name"
+            />
           </div>
         </div>
       </div>
@@ -168,17 +224,26 @@ export default {
       isTableOptionsModalActive: false,
       fullPayment: false,
       cafeDefaultImage,
-     
+      ordersToPay: [],
+      ordersToPayforServer: [],
+      preInvoiceActive: false
     }
   },
   computed: {
     cafe() {
       return this.$store.state.cafe
     },
+    cafepayFee() {
+      return this.totalWishToPayOrder * (this.cafe.cafepay_fee / 100)
+    },
+    totaltoPay() {
+      return this.totalWishToPayOrder + this.cafepayFee 
+      
+    },
     table() {
       return this.$store.state.table
     },
-    totalWishToPay() {
+    totalWishToPayOrder() {
       return this.$store.getters['table/totalWishToPay']
     },
 
@@ -197,8 +262,37 @@ export default {
     // }
   },
   methods: {
+    showPreInvoice() {
+      // first generate it
+      this.ordersToPay = []
+      this.ordersToPayforServer = []
+      for (const person of this.table.persons) {
+        for (const order of person.orders) {
+          if (order.wish_to_pay > 0) {
+            this.ordersToPayforServer.push({
+              pbr: order.pk,
+              amount: order.wish_to_pay
+            })
+
+            let productExist = this.ordersToPay.findIndex(
+              o => o.product == order.product
+            )
+            if (productExist != -1)
+              this.ordersToPay[productExist].amount += order.wish_to_pay
+            else
+              this.ordersToPay.push({
+                pbr: order.pk,
+                amount: order.wish_to_pay,
+                name: order.name,
+                product: order.product
+              })
+          }
+        }
+      }
+      this.preInvoiceActive = true
+    },
     paymentCheckout() {
-      this.$store.dispatch('table/submitPayment', this.totalWishToPay)
+      this.$store.dispatch('table/submitPayment', this.ordersToPayforServer)
       // this.$router.push('/paymentResult')
     },
     showOptionsModal() {
@@ -221,10 +315,10 @@ export default {
     //       }, 1000);
     //     }
     //   }
-      
+
     // },
     PaymentProgress: {
-    immediate: true,
+      immediate: true,
       handler(val, old) {
         //   function paymentDOMCheck(params) {
         //     let progressBar = document.getElementById(
@@ -241,7 +335,7 @@ export default {
       }
     },
 
-    totalWishToPay: {
+    totalWishToPayOrder: {
       immediate: true,
       handler(val, old) {
         if (document.getElementById('pay-checkout') != null) {

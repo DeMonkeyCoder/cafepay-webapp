@@ -7,6 +7,7 @@ export const state = () => ({
   pk: null,
   name: null,
   avatar: null,
+  cafepay_fee: 0,
   productChangeArray: [],
   info: {},
   posts: {},
@@ -34,6 +35,8 @@ export const mutations = {
     state.pk = cafe.pk
     state.name = cafe.name
     state.avatar = cafe.avatar
+    state.cafepay_fee = cafe.cafepay_fee
+
 
   },
   clear(state) {

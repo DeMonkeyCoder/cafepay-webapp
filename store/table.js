@@ -261,22 +261,11 @@ export const actions = {
 
   },
 
-  async submitPayment(context, payload) {
+  async submitPayment(context, payments) {
     // for now that we dont have backend actual payment
 
     // first get the orders that you wish to pay
-    let payments = []
-    for (const person of context.state.persons) {
-      for (const order of person.orders) {
-        if (order.wish_to_pay > 0) {
-          payments.push({
-            pbr: order.pk,
-            amount: order.wish_to_pay
-          })
-        }
-      }
-    }
-    context.commit('setPayment', payload)
+
     // context.commit('clearWishToPay')
     try {
       let data = await this.$api.$post(`/api/v1/pbr/session/create/`, {

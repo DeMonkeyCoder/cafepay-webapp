@@ -103,7 +103,7 @@
           ></b-input>
         </b-field> -->
 
-        <div class="birthday-field">
+        <!-- <div class="birthday-field">
           <b-field>
             <b-input
               id="date-picker-input"
@@ -124,7 +124,7 @@
             format="jYYYY/jMM/jDD"
             :max="today"
           />
-        </div>
+        </div> -->
 
         <b-button
           :loading="globalLoading"
@@ -147,13 +147,6 @@ export default {
   data() {
     return {
       userLocal: {},
-      user: {
-        first_name: 'علی',
-        last_name: 'علی بیگی',
-        shaba_number: null,
-        phone_number: '09170540081',
-        birthday: null
-      },
       isChangeNumberModalActive: false,
       newPhoneNumber: null
     }

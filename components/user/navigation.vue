@@ -63,7 +63,7 @@
 .navigation-container
   z-index: 105
   // border-radius: 1rem 1rem 0 0
-  // border-radius: 25px 25px 0 0
+  border-radius: 25px 25px 0 0
   position: fixed
   display: flex
   bottom: 0

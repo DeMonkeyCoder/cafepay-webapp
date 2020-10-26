@@ -27,13 +27,13 @@
         <div class="info">
           <img :src="(cafe.avatar == null) ? cafeDefaultImage : baseUrl + cafe.avatar " alt />
           <p class="cafe-name cp-tb-padding cp-side-padding">{{cafe.name}}</p>
-          <b-rate
+          <!-- <b-rate
             class="cafe-rate cp-tb-padding cp-side-padding"
             v-model="cafe.rate"
             dir="ltr"
             size="is-small"
             :disabled="true"
-          ></b-rate>
+          ></b-rate> -->
         </div>
         <div @click="isCancelTableModalActive = true" class="go-back cp-tb-padding">
           <b-icon class="close-icon" icon="close" size="is-medium" type="is-light"></b-icon>

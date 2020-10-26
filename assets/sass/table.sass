@@ -190,4 +190,41 @@
   transform: translateY(46px)!important
   opacity: 1!important
     
+.pre-invoice-modal
+  .toman
+    font-size: 12px
+  &__name
+    flex: 1
+    text-align: right
+  &__amount
+    flex: 1
+    text-align: left
+  .modal-dialog
+    padding-left: 2*$padding!important
+    padding-right: 2*$padding!important
+    li
+      display: flex
+  
 
+
+    .payment-summery
+      background-color: lighten($primary_hue2, 45%)
+      border-radius: 5px
+      margin-top: 2*$margin
+      padding: $padding
+      li
+        padding-top: 0.25* $padding
+        padding-bottom: 0.25* $padding
+
+    .order-summery
+      li
+        border-bottom: 1px dashed $grey
+        padding-top: 0.5* $padding
+        padding-bottom: 0.5* $padding
+
+  .modal-action
+    button
+      span
+        font-weight: 500!important
+        font-size: 18px!important
+  

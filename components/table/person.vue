@@ -72,10 +72,12 @@
               order.payment_info.total_amount && history == false
           "
           :value="order.wish_to_pay"
+          @dragging="changeWishToPay($event, index, person.name)"
           @change="changeWishToPay($event, index, person.name)"
           bigger-slider-focus
           type="is-info"
           size="is-large"
+          :lazy="false"
           rounded
           :min="0"
           :max="
