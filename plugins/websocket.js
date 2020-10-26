@@ -5,7 +5,7 @@ import baseUrl from '~/plugins/baseUrl.js'
 export default function ({
   store,
 }) {
-Vue.use(VueNativeSock, baseUrl.socketUrl, {
+Vue.use(VueNativeSock, `${baseUrl.socketUrl}ws/v1/`, {
   connectManually: true,
   store: store, // connect to store
   reconnection: true, // (Boolean) whether to reconnect automatically (false)
