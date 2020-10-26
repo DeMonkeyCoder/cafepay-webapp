@@ -283,7 +283,7 @@ export const actions = {
   async paymentMake(context, id) {
     try {
       let data = await this.$api.$get(`/api/v1/payment/make/${id}/`)
-      window.open(data.redirect_to, '_blank');
+      location.replace(data.redirect_to);
       // this.app.router.push('/paymentResult')
     } catch (err) {
        context.commit("errorMsg",

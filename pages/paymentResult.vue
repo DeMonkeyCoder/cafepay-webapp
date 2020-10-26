@@ -73,8 +73,7 @@ import errorAnimation from '~/assets/img/error.json'
 <style scoped lang="sass">
 @import '~/assets/sass/variables.sass'
 #trigger
-  width: 305px
-  height: 273px
+  width: 100%
 .payment-result-container
   .back-to-app
     margin-top: $margin

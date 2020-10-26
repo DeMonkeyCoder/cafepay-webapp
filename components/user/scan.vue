@@ -272,12 +272,12 @@ export default {
   },
   created() {
     // if navigator not supported (ios)
-    if (!navigator.permissions && this.fistTimeCameraActive) {
-      alert(
-        'جهت اسکن بارکد توسط دوربین درون برنامه، لطفا بعد از مشاهده پیام زیرگزینه Allow را انتخاب نمایید'
-      )
-      this.$store.commit('setFirstTimeCameraActive', false)
-    }
+    // if (!navigator.permissions && this.fistTimeCameraActive) {
+    //   alert(
+    //     'جهت اسکن بارکد توسط دوربین درون برنامه، لطفا بعد از مشاهده پیام زیرگزینه Allow را انتخاب نمایید'
+    //   )
+    //   this.$store.commit('setFirstTimeCameraActive', false)
+    // }
   },
   mounted() {
     let h = window.innerHeight
