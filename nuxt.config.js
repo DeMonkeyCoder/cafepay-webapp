@@ -1,4 +1,5 @@
 import webpack from 'webpack'
+import baseUrl from './plugins/baseUrl.js'
 export default {
   server: {
     // port: 3000, // default: 3000     
@@ -103,7 +104,7 @@ export default {
    ** See https://axios.nuxtjs.org/options
    */
   axios: {
-    baseURL: 'https://alpha.cafepay.app/',
+    baseURL: baseUrl.baseUrl,
     proxyHeaders: false,
     credentials: false
   },

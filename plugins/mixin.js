@@ -1,9 +1,9 @@
 import Vue from 'vue'
-
+import baseUrl from '~/plugins/baseUrl.js'
 Vue.mixin({
   data() {
     return {
-      baseUrl: 'https://alpha.cafepay.app/',
+      baseUrl: baseUrl.baseUrl,
       cloading: false,
       colors: {
         primary: '#009fe3',

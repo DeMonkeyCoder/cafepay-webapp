@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import  baseUrl from '~/plugins/baseUrl.js'
+
 
 Vue.use(Vuex)
 
@@ -7,7 +9,7 @@ export const state = () => ({
   errorMessage: null,
   globalLoading: false,
   errorThrow: false,
-  baseUrl: 'https://alpha.cafepay.app/',
+  baseUrl: baseUrl.baseUrl,
   activeCafe: {},
   firstTimeActive: false,
   activeTable: {},

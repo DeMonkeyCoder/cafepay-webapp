@@ -1,10 +1,11 @@
 import Vue from 'vue'
 import VueNativeSock from "vue-native-websocket";
+import baseUrl from '~/plugins/baseUrl.js'
 
 export default function ({
   store,
 }) {
-Vue.use(VueNativeSock, "wss://alpha.cafepay.app/ws/v1/", {
+Vue.use(VueNativeSock, baseUrl.socketUrl, {
   connectManually: true,
   store: store, // connect to store
   reconnection: true, // (Boolean) whether to reconnect automatically (false)
