@@ -6,6 +6,7 @@
         :active.sync="isTableOptionsModalActive"
         has-modal-card
         :can-cancel="true"
+        
       >
         <div class="modal-card" style="width: auto">
           <section class="modal-card-body">
@@ -31,6 +32,7 @@
         :active.sync="preInvoiceActive"
         has-modal-card
         :can-cancel="true"
+        
       >
         <div class="modal-card" style="width: auto">
           <section class="modal-dialog">

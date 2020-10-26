@@ -12,6 +12,7 @@ export const state = () => ({
   firstTimeActive: false,
   activeTable: {},
   hasActiveTable: false,
+  fistTimeCameraActive: false,
   token: null,
   socket: {
     isConnected: false,
@@ -97,6 +98,9 @@ export const mutations = {
   },
   setFirstTime(state , flag){
     state.firstTimeActive = flag
+  },
+  setFirstTimeCameraActive(state, flag) {
+    state.fistTimeCameraActive = flag
   }
 }
 

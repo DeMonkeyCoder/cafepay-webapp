@@ -1,6 +1,11 @@
 <template>
   <div class="container">
-    <login key="loginmodal-scan" id="loginmodal-scan" :loginActive="loginActive" @successful="dispatchSendCode" />
+    <login
+      key="loginmodal-scan"
+      id="loginmodal-scan"
+      :loginActive="loginActive"
+      @successful="dispatchSendCode"
+    />
     <b-modal
       class="simple-action-modal camera-guide-modal"
       :active.sync="accessCameraActive"
@@ -88,10 +93,10 @@
         >کد میز را وارد کنید</b-button
       >
       </div> -->
-    
+
       <!-- <div class="camera__border"></div> -->
     </div>
-<!-- 
+    <!-- 
     <div v-if="userIsloggedIn" class="landing white">
       <div id="user-img">
         <img :src="user.avatar" alt />
@@ -126,26 +131,24 @@
       </div>
     </div> -->
 
-    <div  class="landing white notLogged-landing" id="bm">
+    <div class="landing white notLogged-landing" id="bm">
       <div class="camera-scan-guide">
-      <img class="camera-scan-guide__icon" :src="qrIcon" alt="">
-     <p class="camera-scan-guide__text">
-        بارکد روی میز را با دوربین دورن برنامه اسکن کنید
-      </p>
+        <img class="camera-scan-guide__icon" :src="qrIcon" alt="" />
+        <p class="camera-scan-guide__text">
+          بارکد روی میز را با دوربین دورن برنامه اسکن کنید
+        </p>
       </div>
       <!-- <p class="camera__scan-text-or">یا</p> -->
       <div class="enter-code-guide">
-      <div><p>یا</p></div>
-          <b-button
-        @click="openCodeModal"
-        class="bcp-btn-large shadow-lg-b"
-        type="is-info"
-        >کد میز را وارد کنید</b-button
-      >
+        <div><p>یا</p></div>
+        <b-button
+          @click="openCodeModal"
+          class="bcp-btn-large shadow-lg-b"
+          type="is-info"
+          >کد میز را وارد کنید</b-button
+        >
       </div>
     </div>
-
-
   </div>
 </template>
 
@@ -156,8 +159,7 @@ import walletIcon from '~/assets/img/shape/icons/wallet.png'
 import myCafe from '~/assets/img/shape/icons/my-cafe-2.svg'
 import qrIcon from '~/assets/img/shape/icons/qr-code-scan.svg'
 
-
-import lottie from 'lottie-web';
+import lottie from 'lottie-web'
 import login from '~/components/user/login'
 import Vue from 'vue'
 import { QrcodeStream } from 'vue-qrcode-reader'
@@ -166,7 +168,7 @@ import { mapActions } from 'vuex'
 export default {
   components: {
     QrcodeStream,
-    login,
+    login
   },
   data() {
     return {
@@ -233,7 +235,7 @@ export default {
       this.enterCodeModalActive = true
       setTimeout(() => {
         this.$refs.tablecode.focus()
-      }, 200);
+      }, 200)
     },
     convertPersian(str) {
       let persianNumbers = [
@@ -269,32 +271,47 @@ export default {
       return str
     }
   },
+  created() {
+    // if navigator not supported (ios)
+    if (!navigator.permissions && this.fistTimeCameraActive) {
+      alert(
+        'جهت اسکن بارکد توسط دوربین درون برنامه، لطفا بعد از مشاهده پیام زیرگزینه Allow را انتخاب نمایید'
+      )
+      this.$store.commit('setFirstTimeCameraActive', false)
+    }
+  },
   mounted() {
-
     let h = window.innerHeight
-    $('.camera').css({'height': h})
+    $('.camera').css({ height: h })
 
-     let qrAnimeObj = lottie.loadAnimation({
+    let qrAnimeObj = lottie.loadAnimation({
       container: document.getElementById('qr-animation'), // the dom element that will contain the animation
       renderer: 'svg',
       loop: true,
       autoplay: true,
       animationData: this.animationJson // the path to the animation json
-    });
+    })
     qrAnimeObj.play()
 
-    if (this.$route.fullPath.split('?token=')[1]) this.tableCode = this.$route.fullPath.split('?token=')[1]
+    if (this.$route.fullPath.split('?token=')[1])
+      this.tableCode = this.$route.fullPath.split('?token=')[1]
 
-    navigator.permissions.query({ name: 'camera' }).then(permissionStatus => {
-      if (permissionStatus.state == 'prompt') this.accessCameraActive = true
-      else if (permissionStatus.state == 'granted')
-        this.qrcodeComponentLaunch = QrcodeStream
-   
-    })
+    // if navigator is supported
+    if (navigator.permissions) {
+      navigator.permissions.query({ name: 'camera' }).then(permissionStatus => {
+        if (permissionStatus.state == 'prompt') this.accessCameraActive = true
+        else if (permissionStatus.state == 'granted')
+          this.qrcodeComponentLaunch = QrcodeStream
+      })
+    }
+    else this.qrcodeComponentLaunch = QrcodeStream
   },
   computed: {
     user() {
       return this.$store.state.user.user
+    },
+    fistTimeCameraActive() {
+      return this.$store.state.fistTimeCameraActive
     },
     currentMainPage() {
       return this.$store.state.currentMainPage

@@ -277,6 +277,7 @@ export default {
             this.$store.dispatch('user/retrieve').then(res => {
               // for entering to table
               this.$store.commit('setFirstTime', true)
+              this.$store.commit('setFirstTimeCameraActive', true)
               this.$emit('successful')
               this.loginActiveLocal = false
             })

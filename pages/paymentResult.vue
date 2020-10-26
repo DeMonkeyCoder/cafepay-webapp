@@ -2,26 +2,39 @@
   <div class="payment-result-container">
 
       <img src="@/assets/img/shape/payment-logo.png" alt="">
-      <div class="cp-card cp-side-padding cp-tb-padding has-background-white short-shadow">
+      <div class="cp-card cp-side-padding cp-tb-padding has-background-white shadow-xl">
         <div id="trigger"></div>
-        <svg version="1.1" id="tick" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+        <!-- <svg version="1.1" id="tick" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
           viewBox="0 0 37 37" style="enable-background:new 0 0 37 37;" xml:space="preserve">
         <path class="circ path" style="fill:none;stroke:#20BC32;stroke-width:2;stroke-linejoin:round;stroke-miterlimit:10;" d="
           M30.5,6.5L30.5,6.5c6.6,6.6,6.6,17.4,0,24l0,0c-6.6,6.6-17.4,6.6-24,0l0,0c-6.6-6.6-6.6-17.4,0-24l0,0C13.1-0.2,23.9-0.2,30.5,6.5z"
           />
         <polyline class="tick path" style="fill:none;stroke:#20BC32;stroke-width:2.5;stroke-linejoin:round;stroke-miterlimit:10;" points="
           11.6,20 15.9,24.2 26.4,13.8 "/>
-        </svg>
-        <p>پرداخت با <span class="font-norm g-text">موفقیت</span> انجام شد</p>
-        <p class="">مبلغ پرداخت شده: <span class="total-price">{{payment | currency}}<span class="toman">تومان</span></span></p>
-        <b-button expanded @click="backtoapp" class="back-to-app" type="is-info">بازگشت به اپلیکیشن</b-button>
+        </svg> -->
+        <p v-if="info.status != 200">{{info.description}}</p>
+        <p class="font-18" v-if="info.status == 200">پرداخت با <span class="font-norm font-18 g-text">موفقیت</span> انجام شد</p>
+        <p class="font-18" v-if="info.status != 200">پرداخت با <span class="font-norm font-18 s-text">خطا</span> روبه رو شد</p>
+        <p v-if="info.status == 200" class="">مبلغ پرداخت شده: <span class="total-price">{{info.amount | currency}}<span class="toman">تومان</span></span></p>
+        <p dir="rtl" v-if="info.status != 200">شماره تراکنش:‌</p>
+        <p v-if="info.status != 200">{{info.uuid}}</p>
+        <b-button expanded @click="backtoapp" class="back-to-app bcp-btn-large" type="is-info">بازگشت به اپلیکیشن</b-button>
 
     </div>
   </div>
 </template>
 
 <script>
+import lottie from 'lottie-web';
+import successfullPayment1 from '~/assets/img/27572-success-animation.json'
+import errorAnimation from '~/assets/img/error.json'
   export default {
+    data() {
+      return {
+        successfullPayment1,
+        errorAnimation
+      }
+    },
     methods: {
       backtoapp() {
          this.$store.commit('table/clearWishToPay')
@@ -34,11 +47,24 @@
       payment() {
         return this.$store.state.table.payment
       },
+      info(){
+        return this.$route.query
+      }
     },
     mounted(){
+      console.log('route', this.$route);
       setTimeout(() => {
-        
-        document.getElementById('trigger').classList.add('drawn')
+    let animationData;
+    if (this.info.status == 200) animationData = successfullPayment1
+    else animationData = errorAnimation
+     let successAnime = lottie.loadAnimation({
+      container: document.getElementById('trigger'), // the dom element that will contain the animation
+      renderer: 'svg',
+      loop: false,
+      autoplay: true,
+      animationData, // the path to the animation json
+    });
+    successAnime.play()
       }, 500);
       // $(".trigger").toggleClass("drawn")
     }
@@ -47,6 +73,9 @@
 
 <style scoped lang="sass">
 @import '~/assets/sass/variables.sass'
+#trigger
+  width: 305px
+  height: 273px
 .payment-result-container
   .back-to-app
     margin-top: $margin
@@ -61,6 +90,7 @@
   .cp-card
     width: 80%
     text-align: center
+    border-radius: 10px
     .total-price
       font-size: 18px
       .toman
