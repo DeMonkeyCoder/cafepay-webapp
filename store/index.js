@@ -24,7 +24,6 @@ export const state = () => ({
 
 export const mutations = {
   SOCKET_ONOPEN(state, event) {
-    console.log('event', event);
     Vue.prototype.$socket = event.currentTarget
     state.socket.isConnected = true
     this.dispatch('table/tableConnection')
@@ -34,7 +33,6 @@ export const mutations = {
 
     state.socket.message = JSON.parse(rawMessage.data)
     let message = state.socket.message.message
-    console.log('message', message.data);
 
 
     // check if message is for table watch

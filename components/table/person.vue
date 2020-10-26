@@ -173,10 +173,7 @@ export default {
       })
     },
     sliderAnimate(currentStep) {
-      console.log(
-        '[Vue Tour] A custom nextStep callback has been called on step ' +
-          (currentStep + 1)
-      )
+
       // if it's slider tour start the animation
       if (currentStep === 0) {
         setTimeout(() => {

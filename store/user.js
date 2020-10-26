@@ -32,7 +32,6 @@ export const actions = {
       this.$api.$get('/api/v1/user-profile/', {
           params: {}
         }).then(res => {
-          console.log('user', res);
           context.commit('set', res)
           resolve(res)
         })

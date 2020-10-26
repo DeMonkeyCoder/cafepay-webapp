@@ -209,7 +209,6 @@ export default {
           })
           .then(res => {
             this.runTimer()
-            console.log('phone log', res)
             this.state = 'enter-code'
             setTimeout(() => {
               this.$refs.codeInput.focus()
@@ -243,7 +242,6 @@ export default {
           // we dont want to state the user as logged in before having his/her name
           this.tempToken = res.data.token
           // check if it's the first time that user logged in by full name
-          console.log('firstname', res.data.first_name)
           if (res.data.first_name == '') {
             this.state = 'signup'
           } else {
@@ -263,7 +261,6 @@ export default {
     },
     signup() {
       // actualy this is user update info
-      console.log('f l', this.first_name, this.last_name)
 
       if (this.first_name != '' && this.last_name != '') {
         // now we set token safely

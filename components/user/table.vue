@@ -240,7 +240,7 @@ export default {
       return this.$store.state.cafe
     },
     cafepayFee() {
-      return this.totalWishToPayOrder * (this.cafe.cafepay_fee / 100)
+      return this.totalWishToPayOrder * (this.cafe.cafepay_fee)
     },
     totaltoPay() {
       return this.totalWishToPayOrder + this.cafepayFee
@@ -256,7 +256,6 @@ export default {
       let percent =
         (this.table.payment.payed_amount / this.table.payment.total_amount) *
         100
-      console.log('percent', percent.toFixed(0))
 
       if (percent == NaN) return 0
       return percent.toFixed(0)
@@ -296,10 +295,7 @@ export default {
       }
       this.preInvoiceActive = true
       setTimeout(() => {
-        console.log(
-          'animation',
-          document.getElementById('pre-invoice-animation')
-        )
+   
         let preInvoiceAnime = lottie.loadAnimation({
           container: document.getElementById('pre-invoice-animation'), // the dom element that will contain the animation
           renderer: 'svg',

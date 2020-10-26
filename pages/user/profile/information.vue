@@ -164,7 +164,7 @@ export default {
       let today = moment(new Date())
         .subtract(1, 'years')
         .jYear()
-      console.log('tag', today + '/12/30')
+ 
       return today + '/12/30'
     }
   },

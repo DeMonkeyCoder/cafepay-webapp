@@ -133,7 +133,7 @@ export const mutations = {
       })
 
     }
-    console.log('rpoduct change array', state.productChangeArray);
+    // console.log('rpoduct change array', state.productChangeArray);
 
 
   },
@@ -150,7 +150,7 @@ export const actions = {
           'Authorization': 'Token ' + context.rootState.token,
         }
       })
-      console.log('cafe menu', data);
+      // console.log('cafe menu', data);
       context.commit('setMenu', data)
       // after retrieving the menu we need to establish a connection with socket to retrieve table data
       // why after menu data ? because we need menu data for build table data

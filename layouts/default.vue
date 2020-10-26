@@ -13,8 +13,6 @@ export default {
   mounted() {
 
     window.addEventListener('popstate', (e) => {
-      console.log('popstate', e)
-      console.log('state', e.state.state)
   
       // if (this.$route)this.$store.commit('changeNavigation', e.state.state)
       // alert(this.currentMainNav)
@@ -22,7 +20,6 @@ export default {
       // this.$store.commit('changeNavigation', 'currentCafe')
       // window.history.pushState({}, '')
     })
-    console.log('token', typeof this.token, this.token, this.tableActive)
   },
   computed: {
     currentMainNav() {
@@ -62,7 +59,6 @@ export default {
           })
         } else {
           // this.$router.push('/')
-          console.log('router', this.$route)
           // if (this.$route.path == '/') this.$router.push(this.$route.fullPath)
         }
       }

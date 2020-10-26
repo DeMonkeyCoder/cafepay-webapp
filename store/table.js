@@ -68,7 +68,6 @@ export const mutations = {
     // bind the user's orders count to menu data
     // first we need to find the user using the app from persons array
     let user = table.persons.find(p => p.id == this.state.user.user.id)
-    console.log('table !', table);
     if (user) this.commit('cafe/bindProductCount', user)
 
   },
@@ -140,13 +139,13 @@ export const mutations = {
       })
     let additionPayload = PayloadGeneral.filter(x => x.count > 0)
 
-    console.log('deletion', deletionPayload, 'additon', additionPayload);
+    // console.log('deletion', deletionPayload, 'additon', additionPayload);
     // define states of requests , maybe both deletation and addition or one of them alone
     let requestState;
     if (additionPayload.length && deletionPayload.length) requestState = 'both'
     if (additionPayload.length && !deletionPayload.length) requestState = 'addition'
     if (deletionPayload.length && !additionPayload.length) requestState = 'deletion'
-    console.log('request state', requestState);
+    // console.log('request state', requestState);
 
     this.dispatch('table/changeProductsOnTable', {
       add: additionPayload,
@@ -271,22 +270,25 @@ export const actions = {
       let data = await this.$api.$post(`/api/v1/pbr/session/create/`, {
         payments
       })
-      console.log('invoice data', data);
       context.commit('clearWishToPay')
       // context.commit('setPayment', 0)
       // if u wanna vefiry the payment
       context.dispatch('paymentMake', data.invoice_uuid)
     } catch (err) {
-
+        context.commit("errorMsg",
+          'خطایی رخ داده، مجددا امتحان کنید'
+        )
     }
   },
   async paymentMake(context, id) {
     try {
       let data = await this.$api.$get(`/api/v1/payment/make/${id}/`)
-      console.log('payment address', data);
+      window.open(data.redirect_to, '_blank');
       // this.app.router.push('/paymentResult')
     } catch (err) {
-
+       context.commit("errorMsg",
+         'خطایی رخ داده، مجددا امتحان کنید'
+       )
     }
   }
 }

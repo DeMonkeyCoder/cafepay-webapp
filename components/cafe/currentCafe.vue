@@ -87,7 +87,6 @@ export default {
   },
   mounted() {
     var w = window.innerWidth
-    console.log('w', w)
   }
 }
 </script>

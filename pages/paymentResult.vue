@@ -39,8 +39,8 @@ import errorAnimation from '~/assets/img/error.json'
       backtoapp() {
          this.$store.commit('table/clearWishToPay')
         this.$store.commit('changeNavigation', 'cp-table')
-        this.$router.push('user/home')
-        this.$store.commit('table/setPayment', 0)
+        this.$router.push('/user/home')
+
       },
     },
     computed: {
@@ -52,7 +52,6 @@ import errorAnimation from '~/assets/img/error.json'
       }
     },
     mounted(){
-      console.log('route', this.$route);
       setTimeout(() => {
     let animationData;
     if (this.info.status == 200) animationData = successfullPayment1
