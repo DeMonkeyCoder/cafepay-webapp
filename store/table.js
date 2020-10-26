@@ -273,17 +273,18 @@ export const actions = {
       })
       console.log('invoice data', data);
       context.commit('clearWishToPay')
-      context.commit('setPayment', 0)
+      // context.commit('setPayment', 0)
       // if u wanna vefiry the payment
-      context.dispatch('paymentVerify', data.invoice_uuid)
+      context.dispatch('paymentMake', data.invoice_uuid)
     } catch (err) {
 
     }
   },
-  async paymentVerify(context, id) {
+  async paymentMake(context, id) {
     try {
-      await this.$api.$get(`/api/v1/payment/verify/${id}/`)
-      this.app.router.push('/paymentResult')
+      let data = await this.$api.$get(`/api/v1/payment/make/${id}/`)
+      console.log('payment address', data);
+      // this.app.router.push('/paymentResult')
     } catch (err) {
 
     }

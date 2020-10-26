@@ -1,5 +1,4 @@
 
-
 .has-active-table
   padding-bottom: 100px
 .table-header
@@ -37,7 +36,7 @@
   display: flex
   justify-content: center
   align-items: center
-  
+
   #table-status-bar-progress-wrapper
     transition: 0.3s
     position: absolute
@@ -46,7 +45,7 @@
     bottom: 0
     border-radius: 0 10px 10px 0
     background-color: #c7f2ff
-    
+
     z-index: 2
   p
     // letter-spacing: -0.02rem
@@ -68,7 +67,6 @@
 
 .others
   margin-bottom: 3 * $margin
-
 
 .empty-table
   text-align: center
@@ -99,7 +97,7 @@
       bottom: -16px
       left: 0
       right: 0
-      .b-slider.is-large .b-slider-track 
+      .b-slider.is-large .b-slider-track
         height: 0.85rem
         border-radius: 0px 0px 5px 5px
       .b-slider-fill
@@ -113,7 +111,7 @@
       color: white
       border-radius: 0px 0px 5px 5px
       padding: 3px
-      
+
     .person-total-order-info
       span
         font-size: 15px
@@ -165,7 +163,6 @@
         position: relative
         right: 3px
 
-  
 .table-options-modal
   .modal-card-body
     .last-checkbox-field
@@ -180,8 +177,6 @@
           padding-left: 0
           font-size: 18px
 
-      
-
 .pay-checkout-is-shown
   box-shadow: 0px -1px 0px rgba(0,0 ,0 ,0.05)
   bottom: 105px!important
@@ -189,7 +184,7 @@
   transition-timing-function: ease-out!important
   transform: translateY(46px)!important
   opacity: 1!important
-    
+
 .pre-invoice-modal
   .toman
     font-size: 12px
@@ -204,8 +199,6 @@
     padding-right: 2*$padding!important
     li
       display: flex
-  
-
 
     .payment-summery
       background-color: lighten($primary_hue2, 45%)
@@ -217,14 +210,23 @@
         padding-bottom: 0.25* $padding
 
     .order-summery
+      max-height: 140px
+      overflow-y: auto
+      overflow-x: hidden
+ 
       li
         border-bottom: 1px dashed $grey
         padding-top: 0.5* $padding
         padding-bottom: 0.5* $padding
+        .value-fix-padding
+          padding-left: 5px
 
   .modal-action
     button
       span
         font-weight: 500!important
         font-size: 18px!important
-  
+
+#pre-invoice-animation
+  width: 320px
+  height: 230px

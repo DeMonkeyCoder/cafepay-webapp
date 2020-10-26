@@ -27,9 +27,10 @@ export default function ({
       const code = parseInt(error.response && error.response.status)
 
     } else {
-      store.commit("errorMsg", {
-        message: 'خطا در اتصال به اینترنت'
-      })
+      console.log('err', err)
+      store.commit("errorMsg", 
+        'خطا در اتصال به اینترنت'
+      )
     }
   })
 
@@ -47,9 +48,9 @@ export default function ({
       const code = parseInt(error.response && error.response.status)
 
     } else {
-      store.commit("errorMsg", {
-        message: 'خطا در اتصال به اینترنت'
-      })
+      store.commit("errorMsg", 
+        'خطا در اتصال به اینترنت'
+      )
     }
   })
   inject('api', api)

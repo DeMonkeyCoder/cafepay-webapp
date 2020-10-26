@@ -151,7 +151,7 @@
 
 <script>
 import animationJson from '~/assets/img/lf30_editor_3x8g47cn.json'
-import userImg from '~/assets/img/user.jpg'
+// import userImg from '~/assets/img/user.jpg'
 import walletIcon from '~/assets/img/shape/icons/wallet.png'
 import myCafe from '~/assets/img/shape/icons/my-cafe-2.svg'
 import qrIcon from '~/assets/img/shape/icons/qr-code-scan.svg'
@@ -171,7 +171,7 @@ export default {
   data() {
     return {
       animationJson,
-      userImg,
+      // userImg,
       walletIcon,
       myCafe,
       qrIcon,
@@ -274,14 +274,14 @@ export default {
     let h = window.innerHeight
     $('.camera').css({'height': h})
 
-     let animObj = lottie.loadAnimation({
+     let qrAnimeObj = lottie.loadAnimation({
       container: document.getElementById('qr-animation'), // the dom element that will contain the animation
       renderer: 'svg',
       loop: true,
       autoplay: true,
       animationData: this.animationJson // the path to the animation json
     });
-    animObj.play()
+    qrAnimeObj.play()
 
     if (this.$route.fullPath.split('?token=')[1]) this.tableCode = this.$route.fullPath.split('?token=')[1]
 

@@ -34,10 +34,11 @@
       >
         <div class="modal-card" style="width: auto">
           <section class="modal-dialog">
+            <div id="pre-invoice-animation"></div>
             <ol class="order-summery">
               <li v-for="order in ordersToPay" :key="order.pk">
                 <p class="pre-invoice-modal__name">{{ order.name }}</p>
-                <p class="pre-invoice-modal__amount">
+                <p class="pre-invoice-modal__amount value-fix-padding">
                   {{ order.amount | currency }} <span class="toman">تومان</span>
                 </p>
               </li>
@@ -86,7 +87,7 @@
           class="button shadow-lg-bb bcp-btn cp-btn-submit-order"
           size="is-medium"
           type="is-success"
-          >نمایش پیش فاکتور ({{totalWishToPayOrder | currency}})</b-button
+          >نمایش پیش فاکتور ({{ totalWishToPayOrder | currency }})</b-button
         >
       </div>
 
@@ -215,6 +216,8 @@
 
 <script>
 import person from '~/components/table/person.vue'
+import lottie from 'lottie-web'
+import preInvoiceAnimation from '~/assets/img/28970-download.json'
 import cafeDefaultImage from '@/assets/img/cafe-default.png'
 export default {
   components: { person },
@@ -224,6 +227,7 @@ export default {
       isTableOptionsModalActive: false,
       fullPayment: false,
       cafeDefaultImage,
+      preInvoiceAnimation,
       ordersToPay: [],
       ordersToPayforServer: [],
       preInvoiceActive: false
@@ -237,8 +241,7 @@ export default {
       return this.totalWishToPayOrder * (this.cafe.cafepay_fee / 100)
     },
     totaltoPay() {
-      return this.totalWishToPayOrder + this.cafepayFee 
-      
+      return this.totalWishToPayOrder + this.cafepayFee
     },
     table() {
       return this.$store.state.table
@@ -290,6 +293,20 @@ export default {
         }
       }
       this.preInvoiceActive = true
+      setTimeout(() => {
+        console.log(
+          'animation',
+          document.getElementById('pre-invoice-animation')
+        )
+        let preInvoiceAnime = lottie.loadAnimation({
+          container: document.getElementById('pre-invoice-animation'), // the dom element that will contain the animation
+          renderer: 'svg',
+          loop: true,
+          autoplay: true,
+          animationData: this.preInvoiceAnimation // the path to the animation json
+        })
+        preInvoiceAnime.play()
+      }, 200)
     },
     paymentCheckout() {
       this.$store.dispatch('table/submitPayment', this.ordersToPayforServer)
@@ -304,7 +321,8 @@ export default {
       this.isTableOptionsModalActive = false
     }
   },
-  mounted() {},
+  mounted() {
+  },
   watch: {
     // 'table.persons': {
     //   immediate: true,
