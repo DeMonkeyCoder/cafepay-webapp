@@ -77,7 +77,7 @@
           >
             <h3 class="font-bold">به کافه‌پِی خوش آمدید!</h3>
             <p class="state-explaination">
-              جهت تکمیل ثبت نام، نام و نام‌خانوادگی خود را وارد کنید
+              جهت تکمیل عضویت، نام خود را وارد کنید
             </p>
 
             <b-field>
@@ -85,12 +85,12 @@
                 dir="rtl"
                 v-model="first_name"
                 class="cp-input cp-input-primary cp-input-grey"
-                placeholder="نام"
+                placeholder="نام شما"
                 size="is-medium"
               ></b-input>
             </b-field>
 
-            <b-field>
+            <!-- <b-field>
               <b-input
                 dir="rtl"
                 v-model="last_name"
@@ -98,7 +98,7 @@
                 placeholder="نام خانوادگی"
                 size="is-medium"
               ></b-input>
-            </b-field>
+            </b-field> -->
           </section>
         </transition>
 
@@ -186,8 +186,8 @@ export default {
   },
   computed: {
     fullnameEntered() {
-      return this.first_name != '' && this.last_name != '' ? true : false
-    }
+      return (this.first_name != '') ? true : false
+    },
   },
   methods: {
     checkResendTime() {
@@ -262,13 +262,12 @@ export default {
     signup() {
       // actualy this is user update info
 
-      if (this.first_name != '' && this.last_name != '') {
+      if (this.fullnameEntered) {
         // now we set token safely
         this.$store.commit('setToken', this.tempToken)
         this.$api
           .put('/api/v1/user-profile/', {
             first_name: this.first_name,
-            last_name: this.last_name
           })
           .then(res => {
             this.$store.dispatch('user/retrieve').then(res => {
@@ -285,10 +284,8 @@ export default {
             }
           })
       }
-      if (this.first_name == '') {
+      else {
         this.toaster('لطفاْ نام خود را وارد کنید', 'is-danger')
-      } else if (this.last_name == '') {
-        this.toaster('نام خانوادگی خود را وارد کنید', 'is-danger')
       }
     }
   },

@@ -173,9 +173,10 @@ export default {
       })
     },
     sliderAnimate(currentStep) {
-
+        
       // if it's slider tour start the animation
       if (currentStep === 0) {
+        const wish_to_pay_initial = this.person.orders[0].wish_to_pay
         setTimeout(() => {
           $('.b-slider-fill').addClass('animated-slider')
           $('.b-slider-thumb-wrapper').addClass('animated-slider')
@@ -184,15 +185,15 @@ export default {
             0,
             this.person.name
           )
-        }, 1000)
+        }, 500)
         setTimeout(() => {
-          this.changeWishToPay(0, 0, this.person.name)
-        }, 2500)
+          this.changeWishToPay(wish_to_pay_initial, 0, this.person.name)
+        }, 2000)
 
         setTimeout(() => {
           $('.b-slider-fill').removeClass('animated-slider')
           $('.b-slider-thumb-wrapper').removeClass('animated-slider')
-        }, 3500)
+        }, 2500)
       }
     }
   },

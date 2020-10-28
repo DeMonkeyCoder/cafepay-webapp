@@ -36,8 +36,7 @@ export const mutations = {
   setToken(state, table) {
     state.token = null
     state.table_number = null
-    localStorage.setItem('tableToken', table.token)
-    localStorage.setItem('tableName', table.number)
+
     state.token = table.token
     state.table_number = table.number
   },
@@ -46,8 +45,10 @@ export const mutations = {
   },
 
   clearData(state) {
-    localStorage.removeItem('tableToken')
-    localStorage.removeItem('tableName')
+    this.commit('setActiveTable', false)
+    this.commit('changeNavigation', 'scan')
+    state.token = null
+    state.table_number= null
     state.persons = []
     state.tpayment = 0
     state.payment = {}
@@ -61,7 +62,8 @@ export const mutations = {
     // first compute an array of products from categories (flatten products then)
     let products = this.state.cafe.categories.map(c => c.products)
     products = [].concat.apply([], products)
-    let table = new socketTable(rawData, products)
+    // we pass the user id for slider to be full for user
+    let table = new socketTable(rawData, products, this.state.user.user.id)
     state.persons = table.persons
     state.payment = rawData.payment_info
 
@@ -283,7 +285,7 @@ export const actions = {
   async paymentMake(context, id) {
     try {
       let data = await this.$api.$get(`/api/v1/payment/make/${id}/`)
-      location.replace(data.redirect_to);
+      window.location = data.redirect_to
       // this.app.router.push('/paymentResult')
     } catch (err) {
        context.commit("errorMsg",

@@ -98,13 +98,27 @@ export default {
     setCurrentImg(imgUrl) {
       this.currentImg = imgUrl
       this.isImageModalActive = true
+    },
+    async getBasicInfo(){
+      this.data = await this.$axios({
+        method: 'get',
+        url: `api/v1/cafe/${this.cafe.pk}/basic/info/`,
+      })
+      console.log('cafe basic info', data);
     }
   },
   computed: {
     cafe() {
       return this.$store.state.cafe
     }
-  }
+  },
+  watch: {
+    isActive: {
+    handler(val, oldValue) {
+      if (val) this.getBasicInfo()
+    }
+    },
+  },
 }
 </script>
 

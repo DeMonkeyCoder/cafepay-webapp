@@ -27,7 +27,7 @@ export default function ({
       const code = parseInt(error.response && error.response.status)
 
     } else {
-      console.log('err', err)
+      console.log('error', error)
       store.commit("errorMsg", 
         'خطا در اتصال به اینترنت'
       )

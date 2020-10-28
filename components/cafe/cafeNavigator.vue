@@ -6,9 +6,9 @@
             <posts/>
           </b-tab-item>
 
-          <b-tab-item :disabled="false" label="نظرات" >
+          <!-- <b-tab-item :disabled="false" label="نظرات" >
             <comments/>
-          </b-tab-item>
+          </b-tab-item> -->
           
           <b-tab-item :disabled="false" label="اطلاعات" >
             <!-- passing prop to properly initial map component  -->

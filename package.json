@@ -1,8 +1,8 @@
 {
   "name": "Cafepay",
   "version": "1.0.0",
-  "description": "My posh Nuxt.js project",
-  "author": "ali alibeigi",
+  "description": "Payment platform",
+  "author": "Vira Arian Co",
   "private": true,
   "scripts": {
     "dev": "nuxt",

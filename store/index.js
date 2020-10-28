@@ -40,6 +40,7 @@ export const mutations = {
     // check if message is for table watch
     if (message.source ==
       `table.${state.table.token}.join.simple.by-token.` && message.status_code == 200) {
+        console.log('table socket message', message.data);
       this.commit('table/setData', message.data)
     } else if (message.data.pk == undefined) {
       this.commit('table/clearData')

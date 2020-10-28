@@ -10,7 +10,7 @@ export default {
    ** Headers of the page
    */
   head: {
-    title: 'کافه‌پِی | پرداخت آنلاین در کافه‌ها و رستوران‌ها',
+    title: 'کافه‌ پی | پرداخت آنلاین در کافه‌ها و رستوران‌ها',
     meta: [{
         charset: 'utf-8'
       },

@@ -21,7 +21,7 @@
             </p>
             <b-field class="center-align">
               <b-input
-                ref="phoneInput"
+                ref="phoneInputProfile"
                 dir="ltr"
                 inputmode="numeric"
                 class="cp-input cp-input-primary cp-input-grey"
@@ -48,7 +48,7 @@
             </p>
             <b-field class="field">
               <b-input
-                ref="codeInput"
+                ref="codeInputProfile"
                 inputmode="numeric"
                 class="cp-input cp-input-primary cp-input-grey"
                 maxlength="5"
@@ -77,7 +77,7 @@
           >
             <h3 class="font-bold">به کافه‌پِی خوش آمدید!</h3>
             <p class="state-explaination">
-              جهت تکمیل ثبت نام، نام و نام‌خانوادگی خود را وارد کنید
+              جهت تکمیل عضویت، نام خود را وارد کنید
             </p>
 
             <b-field>
@@ -85,11 +85,11 @@
                 dir="rtl"
                 v-model="first_name"
                 class="cp-input cp-input-primary cp-input-grey"
-                placeholder="نام"
+                placeholder="نام شما"
                 size="is-medium"
               ></b-input>
             </b-field>
-
+<!-- 
             <b-field>
               <b-input
                 dir="rtl"
@@ -98,7 +98,8 @@
                 placeholder="نام خانوادگی"
                 size="is-medium"
               ></b-input>
-            </b-field>
+            </b-field> -->
+
           </section>
         </transition>
 
@@ -178,16 +179,16 @@ export default {
         this.loginActiveLocal = JSON.parse(JSON.stringify(this.loginActive))
         if (val) {
           setTimeout(() => {
-            this.$refs.phoneInput.focus()
+            this.$refs.phoneInputProfile.focus()
           }, 200)
         }
       }
     }
   },
   computed: {
-    fullnameEntered() {
-      return this.first_name != '' && this.last_name != '' ? true : false
-    }
+  fullnameEntered() {
+      return (this.first_name != '') ? true : false
+    },
   },
   methods: {
     checkResendTime() {
@@ -211,7 +212,7 @@ export default {
             this.runTimer()
             this.state = 'enter-code'
             setTimeout(() => {
-              this.$refs.codeInput.focus()
+              this.$refs.codeInputProfile.focus()
             }, 200)
             this.user_code = res.data.code
           })
@@ -261,19 +262,18 @@ export default {
     signup() {
       // actualy this is user update info
 
-      if (this.first_name != '' && this.last_name != '') {
+      if (this.fullnameEntered) {
         // now we set token safely
         this.$store.commit('setToken', this.tempToken)
         this.$api
           .put('/api/v1/user-profile/', {
             first_name: this.first_name,
-            last_name: this.last_name
           })
           .then(res => {
             this.$store.dispatch('user/retrieve').then(res => {
               // for entering to table
-              this.$store.commit('setFirstTimeCameraActive', true)
               this.$store.commit('setFirstTime', true)
+              this.$store.commit('setFirstTimeCameraActive', true)
               this.$emit('successful')
               this.loginActiveLocal = false
             })
@@ -284,10 +284,8 @@ export default {
             }
           })
       }
-      if (this.first_name == '') {
+      else {
         this.toaster('لطفاْ نام خود را وارد کنید', 'is-danger')
-      } else if (this.last_name == '') {
-        this.toaster('نام خانوادگی خود را وارد کنید', 'is-danger')
       }
     }
   }
