@@ -202,11 +202,12 @@ export default {
       }, 1000)
     },
     sendCode() {
+      let phone_numberEn = this.convertPersian(this.phone_number)
       let validation = /^(\0|0)?9\d{9}$/g
-      if (this.phone_number.match(validation)) {
+      if (phone_numberEn.match(validation)) {
         this.$axios
           .post('api/v1/user-profile/send-code/', {
-            phone_number: this.phone_number
+            phone_number: phone_numberEn
           })
           .then(res => {
             this.runTimer()
@@ -227,7 +228,7 @@ export default {
               }
             }
           })
-      } else if (this.phone_number == '') {
+      } else if (phone_numberEn == '') {
         this.toaster('لطفا شماره تلفن خود را وارد نمایید', 'is-danger')
       } else {
         this.toaster('شماره تلفن وارد شده معتبر نیست', 'is-danger')

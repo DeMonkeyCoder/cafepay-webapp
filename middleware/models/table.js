@@ -6,13 +6,14 @@ export const socketTable = class socketTable {
   constructor(rawData = {}, products = {}, currentUserId = {}) {
 
 
-    let personsNoOrder = this.productsByPerson(rawData.bill_products, products, currentUserId)
-    let myProfileOnTable = personsNoOrder.find(p => p.id == currentUserId)
-    if (myProfileOnTable) {
-      this.persons = personsNoOrder.filter(p => p.id != currentUserId)
-      this.persons.unshift(myProfileOnTable)
+    let notSortedPersons = this.productsByPerson(rawData.bill_products, products, currentUserId)
+    let myProfileOnTable = notSortedPersons.find(p => p.id == currentUserId)
+    if (myProfileOnTable && notSortedPersons.length > 1) {
+      notSortedPersons = notSortedPersons.filter(p => p.id != currentUserId)
+      notSortedPersons.unshift(myProfileOnTable)
+      console.log('persons no order', notSortedPersons);
     }
-    else this.persons = personsNoOrder
+    this.persons = notSortedPersons
     
 
   }

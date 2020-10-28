@@ -48,7 +48,7 @@ export const mutations = {
     this.commit('setActiveTable', false)
     this.commit('changeNavigation', 'scan')
     state.token = null
-    state.table_number= null
+    state.table_number = null
     state.persons = []
     state.tpayment = 0
     state.payment = {}
@@ -277,9 +277,10 @@ export const actions = {
       // if u wanna vefiry the payment
       context.dispatch('paymentMake', data.invoice_uuid)
     } catch (err) {
-        context.commit("errorMsg",
-          'خطایی رخ داده، مجددا امتحان کنید'
-        )
+      context.commit('errorMsg', 'خطایی رخ داده، مجددا امتحان کنید', {
+        root: true
+      })
+
     }
   },
   async paymentMake(context, id) {
@@ -288,9 +289,9 @@ export const actions = {
       window.location = data.redirect_to
       // this.app.router.push('/paymentResult')
     } catch (err) {
-       context.commit("errorMsg",
-         'خطایی رخ داده، مجددا امتحان کنید'
-       )
+      context.commit('errorMsg', 'خطایی رخ داده، مجددا امتحان کنید', {
+        root: true
+      })
     }
   }
 }

@@ -1,5 +1,11 @@
 <template>
   <div class="container">
+    <div v-if="CustomLoader" id="custom-loader" class="custom-loading"></div>
+    <div
+      v-if="CustomLoader"
+      id="custom-loader-bg"
+      class="custom-loading-bg"
+    ></div>
     <login
       key="loginmodal-scan"
       id="loginmodal-scan"
@@ -38,7 +44,6 @@
       class="simple-action-modal"
     >
       <div class="modal-card" style="width: auto">
-        <b-loading :is-full-page="true" v-model="globalLoading"></b-loading>
         <!-- <header class="modal-card-head">
                   <p class="modal-card-title">وارد کردن کد میز</p>
         </header>-->
@@ -154,6 +159,7 @@
 
 <script>
 import animationJson from '~/assets/img/lf30_editor_3x8g47cn.json'
+import loaderJson from '~/assets/img/51-preloader.json'
 // import userImg from '~/assets/img/user.jpg'
 import walletIcon from '~/assets/img/shape/icons/wallet.png'
 import myCafe from '~/assets/img/shape/icons/my-cafe-2.svg'
@@ -172,11 +178,14 @@ export default {
   },
   data() {
     return {
+      xyz: true,
       animationJson,
+      loaderJson,
       // userImg,
       walletIcon,
       myCafe,
       qrIcon,
+      CustomLoader: false,
       qrcodeComponentLaunch: null,
       enterCodeModalActive: false,
       tableCode: '',
@@ -212,12 +221,27 @@ export default {
 
     dispatchSendCode() {
       // u need to set the table too, for api link
+      this.CustomLoader = true
+      // initial preloader
+      setTimeout(() => {
+        let preloader = lottie.loadAnimation({
+          container: document.getElementById('custom-loader'), // the dom element that will contain the animation
+          renderer: 'svg',
+          loop: true,
+          autoplay: true,
+          animationData: this.loaderJson // the path to the animation json
+        })
+        preloader.play()
+      }, 200)
+
       let tableToken = this.convertPersian(this.tableCode)
       this.sendCode(tableToken)
         .then(res => {
           this.enterCodeModalActive = false
+          this.CustomLoader = false
         })
         .catch(err => {
+          this.CustomLoader = false
           if (err.response) {
             this.$buefy.toast.open({
               duration: 3000,
@@ -235,39 +259,6 @@ export default {
       setTimeout(() => {
         this.$refs.tablecode.focus()
       }, 200)
-    },
-    convertPersian(str) {
-      let persianNumbers = [
-          /۰/g,
-          /۱/g,
-          /۲/g,
-          /۳/g,
-          /۴/g,
-          /۵/g,
-          /۶/g,
-          /۷/g,
-          /۸/g,
-          /۹/g
-        ],
-        arabicNumbers = [
-          /٠/g,
-          /١/g,
-          /٢/g,
-          /٣/g,
-          /٤/g,
-          /٥/g,
-          /٦/g,
-          /٧/g,
-          /٨/g,
-          /٩/g
-        ]
-
-      if (typeof str === 'string') {
-        for (let i = 0; i < 10; i++) {
-          str = str.replace(persianNumbers[i], i).replace(arabicNumbers[i], i)
-        }
-      }
-      return str
     }
   },
   created() {
@@ -302,8 +293,7 @@ export default {
         else if (permissionStatus.state == 'granted')
           this.qrcodeComponentLaunch = QrcodeStream
       })
-    }
-    else this.qrcodeComponentLaunch = QrcodeStream
+    } else this.qrcodeComponentLaunch = QrcodeStream
   },
   computed: {
     user() {
@@ -328,7 +318,7 @@ export default {
 <style scoped lang="sass">
 @import '~/assets/sass/variables.sass'
 
-
+// .container
 
 
 </style>

@@ -2,21 +2,20 @@
   <div class="root cp-side-padding">
     <div class="cafe-navigator long-shadow cp-header-card has-background-white">
       <b-tabs v-model="ActiveTab" expanded dir="ltr" type="is-toggle">
-          <b-tab-item :disabled="false" label="پست‌ها" >
+          <b-tab-item :disabled="true" label="پست‌ها" >
             <posts/>
           </b-tab-item>
 
-          <!-- <b-tab-item :disabled="false" label="نظرات" >
+          <b-tab-item :disabled="true" label="نظرات" >
             <comments/>
-          </b-tab-item> -->
+          </b-tab-item>
           
-          <b-tab-item :disabled="false" label="اطلاعات" >
-            <!-- passing prop to properly initial map component  -->
-            <info :isActive="(ActiveTab == 2) ? true : false" />
+          <b-tab-item :disabled="true" label="اطلاعات" >
+            <info :isActive="(ActiveTab == 1) ? true : false" />
           </b-tab-item>
 
           <b-tab-item class="menu-tab" label="منو" >
-            <cp-menu :menu="menu" :active="(ActiveTab == 3) ? true : false" /> 
+            <cp-menu :menu="menu" :active="(ActiveTab == 2) ? true : false" /> 
           </b-tab-item>
 
       </b-tabs>

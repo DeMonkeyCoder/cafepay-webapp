@@ -62,19 +62,19 @@
           </li>
         </nuxt-link> -->
 
-        <nuxt-link to="/user/profile/orderlist">
+        <!-- <nuxt-link to="/user/profile/orderlist">
           <li class="cp-card has-background-white cp-side-padding cp-tb-padding">
             <img src="@/assets/img/shape/icons/shopping-cart.png" alt />
             لیست سفارشات
           </li>
-        </nuxt-link>
+        </nuxt-link> -->
 
-        <nuxt-link to="/user/profile/wallet">
+        <!-- <nuxt-link to="/user/profile/wallet">
           <li class="cp-card navigation has-background-white cp-side-padding cp-tb-padding">
             <img src="@/assets/img/shape/icons/wallet.png" alt />
             افزایش موجودی
           </li>
-        </nuxt-link>
+        </nuxt-link> -->
 
         <nuxt-link to="/user/profile/information">
           <li class="cp-card has-background-white cp-side-padding cp-tb-padding">
@@ -129,6 +129,7 @@ export default {
           this.loginActive = false
           this.$store.commit('user/clear')
           this.$store.commit('clearToken')
+          this.$store.commit('table/clearData')
           this.$store.commit('changeNavigation', 'profile')
         }, 500);
         // this.$router.push('/')

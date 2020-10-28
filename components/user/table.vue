@@ -82,14 +82,14 @@
         </div>
       </b-modal>
 
-      <div id="pay-checkout">
-        <b-button
+      <div id="pay-checkout" class="pay-checkout-is-shown">
+        <b-button :disabled="(totalWishToPayOrder == 0)"
           @click="showPreInvoice"
           :loading="globalLoading"
           class="button shadow-lg-bb bcp-btn cp-btn-submit-order"
           size="is-medium"
           type="is-success"
-          >نمایش پیش فاکتور ({{ totalWishToPayOrder | currency }})</b-button
+          >پرداخت سفارشات ({{ totalWishToPayOrder | currency }})</b-button
         >
       </div>
 
@@ -178,6 +178,7 @@
       </div>
 
       <div class="persons-on-table cp-side-margin-2x">
+    
         <!-- <div class="you">
           <person :person="table.you" title="شما" />
         </div>-->
@@ -351,22 +352,23 @@ export default {
       }
     },
 
-    totalWishToPayOrder: {
-      immediate: true,
-      handler(val, old) {
-        if (document.getElementById('pay-checkout') != null) {
-          if (val > 0) {
-            document
-              .getElementById('pay-checkout')
-              .classList.add('pay-checkout-is-shown')
-          } else {
-            document
-              .getElementById('pay-checkout')
-              .classList.remove('pay-checkout-is-shown')
-          }
-        }
-      }
-    }
+    // totalWishToPayOrder: {
+    //   immediate: true,
+    //   handler(val, old) {
+    //     if (document.getElementById('pay-checkout') != null) {
+    //       if (val > 0) {
+    //         // document.getElementById('pay-checkout').classList.add('pay-checkout-is-shown')
+    //         setTimeout(() => {
+    //           $('#pay-checkout').addClass('pay-checkout-is-shown')
+    //         }, 100);
+    //       } else {
+    //               setTimeout(() => {
+    //           $('#pay-checkout').removeClass('pay-checkout-is-shown')
+    //         }, 100);
+    //       }
+    //     }
+    //   }
+    // }
   }
 }
 </script>
