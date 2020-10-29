@@ -10,7 +10,7 @@
             <comments/>
           </b-tab-item>
           
-          <b-tab-item :disabled="false" label="اطلاعات" >
+          <b-tab-item :disabled="true" label="اطلاعات" >
             <info :isActive="(ActiveTab == 2) ? true : false" />
           </b-tab-item>
 
