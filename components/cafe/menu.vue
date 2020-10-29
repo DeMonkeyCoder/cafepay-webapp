@@ -107,6 +107,7 @@ export default {
   },
   data() {
     return {
+      skeletunMenu: 3,
       key: 'value',
       activeCategory: 1,
       count: 0,

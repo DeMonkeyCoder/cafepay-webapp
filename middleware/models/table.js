@@ -40,7 +40,7 @@ export const socketTable = class socketTable {
         userId = order.user_profile.pk
 
         // if order is belong to user (not others) slider will be full
-        if (userId == currentUserId) wish_to_pay = order.payment_info.total_amount
+        if (userId == currentUserId) wish_to_pay = order.payment_info.total_amount - order.payment_info.payed_amount
         else wish_to_pay = 0
         // build new object with addition of wish to pay and name of product
         let prodObj = {

@@ -7,13 +7,16 @@
     </b-modal>
     <section class="gallery cp-tb-margin">
       <header class="right-align font-18 font-norm">گالری تصاویر</header>
-      <div class="gallery-container cp-side-padding cp-tb-padding">
+      <div v-if="globalLoading" class="gallery-container cp-side-padding cp-tb-padding">
+        <b-skeleton size="is-large" width="100%" height="80px" :animated="true"></b-skeleton>
+      </div>
+      <div v-else class="gallery-container cp-side-padding cp-tb-padding">
         <img
-          @click="setCurrentImg(img)"
+          @click="setCurrentImg(img.image)"
           class="short-shadow"
-          v-for="img in gallery"
-          :key="img"
-          :src="img"
+          v-for="img in info.shop_images"
+          :key="img.pk"
+          :src="img.image"
           alt
         />
       </div>
@@ -23,17 +26,20 @@
       <div class="cp-side-padding cp-tb-padding cp-card has-background-white">
         <div class="iconed-text">
           <b-icon class="icon" size="is-default" icon="map-marker"></b-icon>
-          <span class="font-14">{{addressInfo.address}}</span>
+          <b-skeleton :active="globalLoading" width="100%" :animated="true"></b-skeleton>
+          <span v-if="!globalLoading"  class="font-14">{{info.address}}</span>
         </div>
 
         <div class="iconed-text">
           <b-icon class="phone-icon" size="is-default" icon="phone"></b-icon>
-          <span dir="rtl">{{addressInfo.phone_number}}</span>
+          <b-skeleton :active="globalLoading" width="100%" :animated="true"></b-skeleton>
+          <span v-if="!globalLoading" dir="rtl">{{addressInfo.phone_number}}</span>
         </div>
 
         <div class="iconed-text">
-          <b-icon class size="is-default" icon="clock-outline"></b-icon>
-          <span>
+          <b-icon  class size="is-default" icon="clock-outline"></b-icon>
+          <b-skeleton :active="globalLoading" width="100%" :animated="true"></b-skeleton>
+          <span v-if="!globalLoading">
             ساعات کاری از
             <b class="font-norm">۱۲ صبح</b> تا
             <b class="font-norm">۱۰ شب</b>
@@ -63,14 +69,10 @@ export default {
   components: { 'cafepay-map': map },
   data() {
     return {
+      apiCall: true,
+      gallerySkel: 3,
       isImageModalActive: false,
-      gallery: [
-        'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80',
-        'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80',
-        'https://www.athenaspahotel.com/media/cache/jadro_resize/rc/tnxrezCu1579080551/jadroRoot/medias/_a1a8429.jpg',
-        'https://file.videopolis.com/D/9dc9f4ba-0b2d-4cbb-979f-fee7be8a4198/8485.11521.brussels.the-hotel-brussels.amenity.restaurant-AD3WAP2L-13000-853x480.jpeg',
-        'https://media.kempinski.com/34379169/the-apurva-kempinski-bali_pala-restaurant-01.jpg;anchor=middlecenter;autorotate=true;quality=75;scale=both;progressive=true;encoder=freeimage;format=jpg'
-      ],
+   
       currentImg: null,
 
       addressInfo: {
@@ -85,7 +87,8 @@ export default {
         owner: {},
         chef: {},
         staff: []
-      }
+      },
+      info: {}
     }
   },
   props: {
@@ -100,11 +103,18 @@ export default {
       this.isImageModalActive = true
     },
     async getBasicInfo(){
-      this.data = await this.$axios({
+      try {
+      let data = await this.$axios({
         method: 'get',
         url: `api/v1/cafe/${this.cafe.pk}/basic/info/`,
       })
-      console.log('cafe basic info', data);
+      this.info = data.data
+      console.log('cafe basic info', this.data);
+      this.apiCall = false
+      }
+      catch(err) {
+        this.apiCall = false
+      }
     }
   },
   computed: {
@@ -113,9 +123,11 @@ export default {
     }
   },
   watch: {
+    
     isActive: {
+      immediate: true,
     handler(val, oldValue) {
-      if (val) this.getBasicInfo()
+      if (val && this.apiCall) this.getBasicInfo()
     }
     },
   },
