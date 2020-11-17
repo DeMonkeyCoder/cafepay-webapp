@@ -16,6 +16,7 @@ export const state = () => ({
   hasActiveTable: false,
   fistTimeCameraActive: false,
   token: null,
+  backToScan: false,
   socket: {
     isConnected: false,
     message: '',
@@ -82,6 +83,9 @@ export const mutations = {
     localStorage.removeItem('token')
     state.token = null
   },
+  backToScan(state, flag){
+    state.baseUrl = flag
+  },
   changeNavigation(state, PageName) {
     state.currentMainPage = PageName
     history.pushState({
@@ -122,7 +126,7 @@ export const actions = {
         .then(res => {
           
           // sets pk, avatar, name and table id
-          commit('cafe/setBasic', res.data.cafe)
+          commit('cafe/setBasic', res.data)
           // execute the action for getting menu, detailed info, comments and posts
           dispatch('cafe/retrieveMenu')
 

@@ -24,7 +24,7 @@
             جهت اسکن بارکد توسط دوربین درون برنامه، لطفا بعد از مشاهده پیام زیر
             گزینه <span class="t-text font-norm">Allow</span> را انتخاب نمایید
           </p>
-          <img src="@/assets/img/camera-guide.png" alt="" />
+          <!-- <img src="@/assets/img/camera-guide.png" alt="" /> -->
         </section>
 
         <section class="modal-caption"></section>
@@ -241,6 +241,7 @@ export default {
           this.CustomLoader = false
         })
         .catch(err => {
+          delete this.$route.query.token
           this.CustomLoader = false
           if (err.response) {
             this.$buefy.toast.open({
@@ -283,8 +284,11 @@ export default {
     })
     qrAnimeObj.play()
 
-    if (this.$route.fullPath.split('?token=')[1])
-      this.tableCode = this.$route.fullPath.split('?token=')[1]
+    if (this.$route.query.token) {
+      console.log('route',  this.$route);
+      // this.tableCode = this.$route.fullPath.split('?token=')[1]
+      this.tokenProccessor(this.$route.fullPath)
+    }
 
     // if navigator is supported
     if (navigator.permissions) {

@@ -2,7 +2,7 @@ import Vue from 'vue'
 import axios from 'axios'
 
 import {
-  socketTable
+  Table
 } from '../middleware/models/table'
 export const state = () => ({
 
@@ -63,7 +63,7 @@ export const mutations = {
     let products = this.state.cafe.categories.map(c => c.products)
     products = [].concat.apply([], products)
     // we pass the user id for slider to be full for user
-    let table = new socketTable(rawData, products, this.state.user.user.id)
+    let table = new Table(rawData, this.state.user.user.id)
     state.persons = table.persons
     state.payment = rawData.payment_info
 
@@ -126,34 +126,7 @@ export const mutations = {
   },
   productsPayloadSeperator(state, productChangeArray) {
     // delete capital because we don't need it
-    let PayloadGeneral = productChangeArray.map(x => {
-      return {
-        product: x.product,
-        count: x.count
-      }
-    })
-    let deletionPayload = PayloadGeneral.filter(x => x.count < 0)
-      .map(y => {
-        return {
-          count: y.count * -1,
-          product: y.product
-        }
-      })
-    let additionPayload = PayloadGeneral.filter(x => x.count > 0)
 
-    // console.log('deletion', deletionPayload, 'additon', additionPayload);
-    // define states of requests , maybe both deletation and addition or one of them alone
-    let requestState;
-    if (additionPayload.length && deletionPayload.length) requestState = 'both'
-    if (additionPayload.length && !deletionPayload.length) requestState = 'addition'
-    if (deletionPayload.length && !additionPayload.length) requestState = 'deletion'
-    // console.log('request state', requestState);
-
-    this.dispatch('table/changeProductsOnTable', {
-      add: additionPayload,
-      del: deletionPayload,
-      state: requestState
-    })
 
   }
 
@@ -177,87 +150,114 @@ export const actions = {
 
   },
 
-  async changeProductsOnTable(context, req) {
+  changeProductsOnTable(context, req) {
 
-    if (req.state == 'both') {
-      context.commit("toggleLoading", true, {
-        root: true
-      })
-      axios.all([
-          axios.post(context.rootState.baseUrl + `api/v1/table/${context.state.token}/products/bulk/post/`, {
-            table_products: req.add
-          }, {
-            headers: {
-              'Authorization': 'Token ' + context.rootState.token,
-            }
-          }, ),
-          axios.post(context.rootState.baseUrl + `api/v1/table/${context.state.token}/products/bulk/delete/`, {
-            table_products: req.del
-          }, {
-            headers: {
-              'Authorization': 'Token ' + context.rootState.token,
-            }
-          }, ),
-
-        ])
-        .then(axios.spread((add, remove) => {
-          //... but this callback will be executed only when both requests are complete.\
-          context.commit("toggleLoading", false, {
-            root: true
-          })
-          context.commit('cafe/clearPCA', null, {
-            root: true
-          })
-          setTimeout(() => {
-            context.commit('changeNavigation', 'cp-table', {
-              root: true
-            })
-          }, 200);
-
-        }))
-        .catch(err => {
-          context.commit("toggleLoading", false, {
-            root: true
-          })
-          //... but this callback will be executed only when both requests are complete.
-          if (err.response) {
-            context.commit('errorMsg', err.response.data, {
-              root: true
-            })
-          }
-
-        })
-    } else {
-      let method = (req.state == 'addition') ? 'post' : 'delete'
-      let table_products = (method == 'post') ? req.add : req.del
-      try {
-        let data = await this.$api.$post(`api/v1/table/${context.state.token}/products/bulk/${method}/`, {
-          table_products
-        })
-        // clear the array of product changes
-        context.commit('cafe/clearPCA', null, {
+    return new Promise((resolve, reject) => {
+      if (req.state == 'both') {
+        context.commit("toggleLoading", true, {
           root: true
         })
-        setTimeout(() => {
-          context.commit('changeNavigation', 'cp-table', {
-            root: true
-          })
-        }, 200);
+        axios.all([
+            axios.post(context.rootState.baseUrl + `api/v1/table/${context.state.token}/products/bulk/post/`, {
+              table_products: req.add
+            }, {
+              headers: {
+                'Authorization': 'Token ' + context.rootState.token,
+              }
+            }, ),
+            axios.post(context.rootState.baseUrl + `api/v1/table/${context.state.token}/products/bulk/delete/`, {
+              table_products: req.del
+            }, {
+              headers: {
+                'Authorization': 'Token ' + context.rootState.token,
+              }
+            }, ),
 
-      } catch (err) {
-        if (err.response) {
-          if (err.response.status == 400 & err.response.data.details[0].product) {
-            let id = err.response.data.details[0].product
-            let remaining = err.response.data.details[0].remaining
-            let product = context.rootGetters["cafe/productById"](id)
-            let message = (remaining > 0) ? `از محصول ${product.name} فقط ${remaining} موجود است` : `${product.name} تمام شده است`
-            context.commit('errorMsg', message, {
+          ])
+          .then(axios.spread((add, remove) => {
+            resolve(true)
+            //... but this callback will be executed only when both requests are complete.\
+            context.commit("toggleLoading", false, {
               root: true
             })
-          }
-        }
+            // clear product change array
+            context.commit('cafe/clearPCA', null, {
+              root: true
+            })
+            setTimeout(() => {
+              context.commit('changeNavigation', 'cp-table', {
+                root: true
+              })
+              context.commit('cafe/changeActiveCategory', 0, {
+                root: true
+              })
+            }, 200);
+
+
+          }))
+          .catch(err => {
+            reject(err)
+            context.commit("toggleLoading", false, {
+              root: true
+            })
+            //... but this callback will be executed only when both requests are complete.
+            if (err.response) {
+              // context.commit('errorMsg', err.response.data, {
+              //   root: true
+              // })
+              if (err.response.status == 400 & err.response.data.details[0].product) {
+                let id = err.response.data.details[0].product
+                let remaining = err.response.data.details[0].remaining
+                let product = context.rootGetters["cafe/productById"](id)
+                let message = (remaining > 0) ? `از محصول ${product.name} فقط ${remaining} موجود است` : `${product.name} تمام شده است`
+                context.commit('errorMsg', message, {
+                  root: true
+                })
+              }
+            }
+
+          })
+      } else {
+        let method = (req.state == 'addition') ? 'post' : 'delete'
+        let table_products = (method == 'post') ? req.add : req.del
+
+        this.$api.$post(`api/v1/table/${context.state.token}/products/bulk/${method}/`, {
+            table_products
+          })
+          .then(res => {
+            resolve(res)
+            context.commit('cafe/clearPCA', null, {
+              root: true
+            })
+            setTimeout(() => {
+              context.commit('changeNavigation', 'cp-table', {
+                root: true
+              })
+              context.commit('cafe/changeActiveCategory', 0, {
+                root: true
+              })
+            }, 200);
+          })
+          // clear the array of product changes
+
+
+          .catch(err => {
+            reject(err)
+            if (err.response) {
+              if (err.response.status == 400 & err.response.data.details[0].product) {
+                let id = err.response.data.details[0].product
+                let remaining = err.response.data.details[0].remaining
+                let product = context.rootGetters["cafe/productById"](id)
+                let message = (remaining > 0) ? `از محصول ${product.name} فقط ${remaining} موجود است` : `${product.name} تمام شده است`
+                context.commit('errorMsg', message, {
+                  root: true
+                })
+              }
+            }
+          })
       }
-    }
+    })
+
 
 
   },

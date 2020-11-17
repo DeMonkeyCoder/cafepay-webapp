@@ -1,12 +1,18 @@
 <template>
   <div>
-    <div v-if="hasActiveTable" class="has-active-table">
+    <div v-if="hasActiveTable && menuOnly" class="no-active-table">
+      <div>
+        <img src="@/assets/img/ordering.png" alt="" />
+        <p class="no-ordering-text">سفارش ‌گیری فعال نیست</p>
+      </div>
+    </div>
+
+    <div v-if="hasActiveTable && !menuOnly" class="has-active-table">
       <b-modal
         class="table-options-modal simple-action-modal"
         :active.sync="isTableOptionsModalActive"
         has-modal-card
         :can-cancel="true"
-        
       >
         <div class="modal-card" style="width: auto">
           <section class="modal-card-body">
@@ -32,7 +38,6 @@
         :active.sync="preInvoiceActive"
         has-modal-card
         :can-cancel="true"
-        
       >
         <div class="modal-card" style="width: auto">
           <section class="modal-dialog">
@@ -83,7 +88,8 @@
       </b-modal>
 
       <div id="pay-checkout" class="pay-checkout-is-shown">
-        <b-button :disabled="(totalWishToPayOrder == 0)"
+        <b-button
+          :disabled="totalWishToPayOrder == 0"
           @click="showPreInvoice"
           :loading="globalLoading"
           class="button shadow-lg-bb bcp-btn cp-btn-submit-order"
@@ -178,7 +184,6 @@
       </div>
 
       <div class="persons-on-table cp-side-margin-2x">
-    
         <!-- <div class="you">
           <person :person="table.you" title="شما" />
         </div>-->
@@ -198,7 +203,7 @@
       </div>
     </div>
 
-    <div v-else class="no-active-table">
+    <div v-if="!hasActiveTable" class="no-active-table">
       <div>
         <img src="@/assets/img/shape/icons/burger.svg" alt />
         <p class="cp-side-margin-2x">
@@ -233,7 +238,7 @@ export default {
       preInvoiceAnimation,
       ordersToPay: [],
       ordersToPayforServer: [],
-      preInvoiceActive: false
+      preInvoiceActive: false,
     }
   },
   computed: {
@@ -241,7 +246,7 @@ export default {
       return this.$store.state.cafe
     },
     cafepayFee() {
-      return this.totalWishToPayOrder * (this.cafe.cafepay_fee)
+      return this.totalWishToPayOrder * this.cafe.cafepay_fee
     },
     totaltoPay() {
       return this.totalWishToPayOrder + this.cafepayFee
@@ -260,7 +265,7 @@ export default {
 
       if (percent == NaN) return 0
       return percent.toFixed(0)
-    }
+    },
     // ordersTotalCost(){
     //   let others = this.table.persons.reduce( (Sum, person) => person.totalPrice + Sum,  0)
     //   return others + this.table.yt
@@ -276,11 +281,11 @@ export default {
           if (order.wish_to_pay > 0) {
             this.ordersToPayforServer.push({
               pbr: order.pk,
-              amount: order.wish_to_pay
+              amount: order.wish_to_pay,
             })
 
             let productExist = this.ordersToPay.findIndex(
-              o => o.product == order.product
+              (o) => o.product == order.product
             )
             if (productExist != -1)
               this.ordersToPay[productExist].amount += order.wish_to_pay
@@ -289,20 +294,19 @@ export default {
                 pbr: order.pk,
                 amount: order.wish_to_pay,
                 name: order.name,
-                product: order.product
+                product: order.product,
               })
           }
         }
       }
       this.preInvoiceActive = true
       setTimeout(() => {
-   
         let preInvoiceAnime = lottie.loadAnimation({
           container: document.getElementById('pre-invoice-animation'), // the dom element that will contain the animation
           renderer: 'svg',
           loop: true,
           autoplay: true,
-          animationData: this.preInvoiceAnimation // the path to the animation json
+          animationData: this.preInvoiceAnimation, // the path to the animation json
         })
         preInvoiceAnime.play()
       }, 200)
@@ -318,10 +322,9 @@ export default {
       if (this.fullPayment) this.$store.commit('table/payWholeBill')
       else this.$store.commit('table/setDefaultPayment')
       this.isTableOptionsModalActive = false
-    }
+    },
   },
-  mounted() {
-  },
+  mounted() {},
   watch: {
     // 'table.persons': {
     //   immediate: true,
@@ -349,7 +352,7 @@ export default {
         //     }
         //   }
         //   paymentDOMCheck()
-      }
+      },
     },
 
     // totalWishToPayOrder: {
@@ -369,25 +372,9 @@ export default {
     //     }
     //   }
     // }
-  }
+  },
 }
 </script>
 
 <style scoped lang="sass">
-.no-active-table
-  position: absolute
-  top: 0
-  left: 0
-  right: 0
-  bottom: 65px
-  display: flex
-  justify-content: center
-  align-items: center
-  div
-    text-align: center
-    img
-      width: 40%
-      margin: auto
-
-
 </style>

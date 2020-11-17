@@ -70,6 +70,8 @@ export default {
     closeModal(changeCommand) {
       this.isCancelTableModalActive = false
       if (changeCommand) {
+        // for not inital fetiching token from url again
+        delete this.$route.query.token
         this.$store.commit('setActiveTable', false)
         this.$store.commit('changeNavigation', 'scan')
         this.$store.commit('cafe/clear')

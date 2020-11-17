@@ -1,12 +1,14 @@
 /** Model definition file for the Movie Class **/
 
-const identicon = require('identicon')
+// const identicon = require('identicon')
+import Avatars from '@dicebear/avatars';
+import sprites from '@dicebear/avatars-bottts-sprites';
 
-export const socketTable = class socketTable {
-  constructor(rawData = {}, products = {}, currentUserId = {}) {
+export const Table = class Table {
+  constructor(rawData = {}, currentUserId = {}) {
 
 
-    let notSortedPersons = this.productsByPerson(rawData.bill_products, products, currentUserId)
+    let notSortedPersons = this.productsByPerson(rawData.bill_products, currentUserId)
     let myProfileOnTable = notSortedPersons.find(p => p.id == currentUserId)
     if (myProfileOnTable && notSortedPersons.length > 1) {
       notSortedPersons = notSortedPersons.filter(p => p.id != currentUserId)
@@ -14,11 +16,11 @@ export const socketTable = class socketTable {
       console.log('persons no order', notSortedPersons);
     }
     this.persons = notSortedPersons
-    
+
 
   }
 
-  productsByPerson(arr, products, currentUserId) {
+  productsByPerson(arr, currentUserId) {
     let personRawProduct_noProperty = [...arr.reduce((acc, obj) =>
       acc.set(obj.user_profile.pk, (acc.get(obj.user_profile.pk) || []).concat(obj)), new Map).values()];
 
@@ -30,10 +32,9 @@ export const socketTable = class socketTable {
       let identiconId;
       let userId;
       let wish_to_pay;
-      
-      
+
+
       orders.forEach(order => {
-        let findProduct = products.find(x => x.pk == order.product)
 
         // user info is in each order so remove it from them and add to parent (person)
         user_name = (order.is_staff) ? 'صندوق دار' : order.user_profile.full_name
@@ -46,11 +47,11 @@ export const socketTable = class socketTable {
         let prodObj = {
           ...order,
           wish_to_pay,
-          name: findProduct.name,
+          name: order.product_data.name,
         }
 
         // generate id for identicon base on full_name + phone number
-        identiconId = order.user_profile.full_name
+        identiconId = order.user_profile.full_name + userId
         // user_name = order.user_profile.full_name
         delete prodObj.user_profile
 
@@ -62,15 +63,12 @@ export const socketTable = class socketTable {
 
       let totalPaid = newOrders.reduce(
         (total, order) => order.payment_info.payed_amount + total, 0)
-        let avatar;
-        
-        identicon.generate({
-            id: identiconId,
-            size: 75
-          }, (err, buffer) => {
-            if (err) throw err
-            avatar = buffer
-          }),
+      let avatar;
+
+      let avatars = new Avatars(sprites);
+      avatar = avatars.create(identiconId, {
+        base64: true
+      });
 
       // push new person along side his products
       personRawProduct.push({

@@ -5,24 +5,32 @@ import {
 
 export const state = () => ({
   pk: null,
+  activeCategory: 1,
   name: null,
   avatar: null,
   cafepay_fee: 0,
   productChangeArray: [],
-  info: {},
-  posts: {},
   categories: [],
   currentProduct: {},
   productsFork: [],
   productPageActive: false,
-  flowType: null
+  flowType: null,
+  totalCount: 0,
+  menuOnly: false
 })
 
 export const getters = {
   productsFlatten: state => {
-    let products = state.categories.map(c => c.products)
+    // remove MyOrder Category and prevent Duplication
+    // JSON trick for not touching the source array
+    let pureCategories = JSON.parse((JSON.stringify(state.categories)))
+    pureCategories.shift()
+    let products = pureCategories.map(c => c.products)
     return [].concat.apply([], products)
+
   },
+
+
 
   productById: (state, getters) => (id) => {
     return getters.productsFlatten.find(p => p.pk == id)
@@ -30,26 +38,39 @@ export const getters = {
 }
 
 export const mutations = {
-  setBasic(state, cafe) {
-    state.rate = (cafe.rate) ? cafe.rate : 4
-    state.pk = cafe.pk
-    state.name = cafe.name
-    state.avatar = cafe.avatar
-    state.cafepay_fee = cafe.cafepay_fee
+  setBasic(state, data) {
+    state.rate = (data.cafe.rate) ? data.cafe.rate : 4
+    state.pk = data.cafe.pk
+    state.name = data.cafe.name
+    state.menuOnly = data.menu_only
+    state.avatar = data.cafe.avatar
+    state.cafepay_fee = data.cafe.cafepay_fee
 
 
   },
   clear(state) {
-    state.summery = {}
-    state.info = {}
-    state.posts = {}
     state.categories = []
   },
   changeCount(state, setting) {
-    state.categories[setting.categoryIndex].products[setting.productIndex].count += setting.count
+    state.totalCount += setting.count
+    // if its not from filtered category indexes are legit so we need no find
+    if (!setting.filtered) state.categories[setting.categoryIndex].products[setting.productIndex].count += setting.count
+    else {
+      // we have product id and we need to find it in out main menu and update it
+      for (const category of state.categories) {
+        for (const product of category.products) {
+          if (setting.id == product.pk) {
+            product.count += setting.count
+            break;
+          }
+        }
+      }
+    }
   },
 
   setMenu(state, menu) {
+    // clear categories in-case user re-enter 
+    state.categories = []
     // push current basket of orders first for editing current orders
     state.categories.push({
       name: 'سفارشات فعلی شما',
@@ -73,8 +94,14 @@ export const mutations = {
     state.productChangeArray = []
   },
 
+  changeActiveCategory: (state, index) => {
+    state.activeCategory = index
+  },
+
+
   bindProductCount(state, user) {
     let firstCategory = true
+    state.totalCount = 0
 
     for (const category of state.categories) {
       // if user == false that means we dont have any order anymore so clear products of user current category and reset counts on other categories
@@ -89,8 +116,10 @@ export const mutations = {
               // check if order has payments for reduce order count
               product.reduceLimit = Math.ceil(matchedOrder.payment_info.payed_amount / matchedOrder.unit_amount)
               product.count = matchedOrder.count
+              // compute total Count here (initial)
+              state.totalCount += matchedOrder.count
 
-              // check if product exist or not
+              // check if product exist in my order category (firstCateogry) or not
               let matchedOrder_currentOrderCat = state.categories[0].products.find(p => p.pk == matchedOrder.product)
               if (matchedOrder_currentOrderCat) {
                 matchedOrder_currentOrderCat.reduceLimit = Math.ceil(matchedOrder.payment_info.payed_amount / matchedOrder.unit_amount)
@@ -152,6 +181,7 @@ export const actions = {
       })
       // console.log('cafe menu', data);
       context.commit('setMenu', data)
+      context.commit('changeActiveCategory', 1)
       // after retrieving the menu we need to establish a connection with socket to retrieve table data
       // why after menu data ? because we need menu data for build table data
       // if sina give me the name of product with table data then we don't need this sequence anymore

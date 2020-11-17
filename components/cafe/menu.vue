@@ -6,14 +6,14 @@
       :options="myOptions"
       :callbacks="myCallbacks"
     ></v-tour>
-    <div id="selected-products-preview">
+    <div id="selected-products-preview" v-if="!menuOnly">
       <b-button
-        @click="sumbitOnTable"
+        @click="productsPayloadSeperator"
         :loading="globalLoading"
         class="button shadow-md bcp-btn cp-btn-submit-order shadow-lg-bb"
         size="is-medium"
         type="is-info"
-        >ثبت سفارش</b-button
+        >ثبت سفارشات</b-button
       >
     </div>
 
@@ -45,7 +45,7 @@
           :key="prod.pk"
           class="normal-radius shadow-md has-background-white cp-tb-margin cp-side-margin-half product-item"
         >
-          <div v-if="prod.available" class="add-or-remove">
+          <div v-if="prod.available && !menuOnly" class="add-or-remove">
             <span class="product-add" @click="countChange(index, 1, prod)">
               <div class="aor-shape">+</div>
             </span>
@@ -55,7 +55,7 @@
             </span>
           </div>
 
-          <div v-else class="out-of-order">
+          <div v-if="!prod.available" class="out-of-order">
             <p>تمام شد</p>
           </div>
 
@@ -152,11 +152,49 @@ export default {
     }
   },
   methods: {
-    sumbitOnTable() {
-      this.$store.commit(
-        'table/productsPayloadSeperator',
-        this.productChangeArray
-      )
+    productsPayloadSeperator() {
+      // if there is no change just switch to table view
+      if (this.productChangeArray.length == 0) {
+        this.$store.commit('changeNavigation', 'cp-table')
+      }
+      // if otherwise we need to dispatch changes
+      else {
+      let PayloadGeneral = this.productChangeArray.map(x => {
+        return {
+          product: x.product,
+          count: x.count
+        }
+      })
+      let deletionPayload = PayloadGeneral.filter(x => x.count < 0).map(y => {
+        return {
+          count: y.count * -1,
+          product: y.product
+        }
+      })
+      let additionPayload = PayloadGeneral.filter(x => x.count > 0)
+
+      // console.log('deletion', deletionPayload, 'additon', additionPayload);
+      // define states of requests , maybe both deletation and addition or one of them alone
+      let requestState
+      if (additionPayload.length && deletionPayload.length)
+        requestState = 'both'
+      if (additionPayload.length && !deletionPayload.length)
+        requestState = 'addition'
+      if (deletionPayload.length && !additionPayload.length)
+        requestState = 'deletion'
+      // console.log('request state', requestState);
+
+      this.$store
+        .dispatch('table/changeProductsOnTable', {
+          add: additionPayload,
+          del: deletionPayload,
+          state: requestState
+        })
+        .then(res => {
+          if (this.searchExpandActive) this.toggleSearchBox()
+        })
+        .catch(res => {})
+      }
     },
 
     changeActiveCategory(index) {
