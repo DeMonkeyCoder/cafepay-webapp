@@ -1,7 +1,11 @@
 /** Model definition file for the Movie Class **/
 
 import store from '../../store/index'
-const identicon = require('identicon')
+// const identicon = require('identicon')
+import Avatars from '@dicebear/avatars';
+import sprites from '@dicebear/avatars-bottts-sprites';
+
+
 
 export default class User {
   constructor(userData = {}) {
@@ -11,13 +15,19 @@ export default class User {
     this.balance = userData.balance,
     this.id = userData.pk
     this.orders = []
-    identicon.generate({
-      id: this.full_name,
-      size: 75
-    }, (err, buffer) => {
-      if (err) throw err
-      this.avatar = buffer
-    })
+    let avatars = new Avatars(sprites);
+    this.avatar = avatars.create(this.full_name + this.id, {
+      base64: true
+    });
+    // console.log('svg', svg);
+    // identicon.generate({
+    //   id: this.full_name,
+    //   size: 75
+    // }, (err, buffer) => {
+    //   if (err) throw err
+    //   this.avatar = buffer
+    //   console.log('cur avatar', this.avatar);
+    // })
   }
 
   get full_name() {
