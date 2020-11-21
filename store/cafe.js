@@ -16,7 +16,8 @@ export const state = () => ({
   productPageActive: false,
   flowType: null,
   totalCount: 0,
-  menuOnly: false
+  menuOnly: false,
+  storeRedirect: false
 })
 
 export const getters = {
@@ -48,6 +49,11 @@ export const mutations = {
 
 
   },
+
+  changeStoreRedirect(state, flag)  {
+    state.storeRedirect = flag
+  },
+
   clear(state) {
     state.categories = []
   },

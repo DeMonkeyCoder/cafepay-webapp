@@ -290,7 +290,10 @@ export default {
       this.tokenProccessor(this.$route.fullPath)
     }
 
-    // if navigator is supported
+
+    // if user is redirected from link for menu-only there is no need for initial camera
+    if(!this.storeRedirect) {
+    // if navigator is supported for camera ask for permission if not just try to initial camera component
     if (navigator.permissions) {
       navigator.permissions.query({ name: 'camera' }).then(permissionStatus => {
         if (permissionStatus.state == 'prompt') this.accessCameraActive = true
@@ -298,10 +301,14 @@ export default {
           this.qrcodeComponentLaunch = QrcodeStream
       })
     } else this.qrcodeComponentLaunch = QrcodeStream
+    }
   },
   computed: {
     user() {
       return this.$store.state.user.user
+    },
+    storeRedirect(){
+      return this.$store.state.cafe.storeRedirect
     },
     fistTimeCameraActive() {
       return this.$store.state.fistTimeCameraActive

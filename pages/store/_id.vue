@@ -5,9 +5,11 @@
 
 <script>
   export default {
-    middleware({params, redirect}){
+    middleware({params, redirect, store}){
       console.log('prarams', params, redirect);
+      store.commit('cafe/changeStoreRedirect', true)
       redirect(`/user/home/?token=${params.id}`)
+
     }
   }
 </script>
