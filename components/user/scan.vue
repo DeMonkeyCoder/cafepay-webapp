@@ -174,7 +174,7 @@ import { mapActions } from 'vuex'
 export default {
   components: {
     QrcodeStream,
-    login
+    login,
   },
   data() {
     return {
@@ -190,7 +190,7 @@ export default {
       enterCodeModalActive: false,
       tableCode: '',
       accessCameraActive: false,
-      loginActive: false
+      loginActive: false,
     }
   },
   methods: {
@@ -229,18 +229,29 @@ export default {
           renderer: 'svg',
           loop: true,
           autoplay: true,
-          animationData: this.loaderJson // the path to the animation json
+          animationData: this.loaderJson, // the path to the animation json
         })
         preloader.play()
       }, 200)
 
       let tableToken = this.convertPersian(this.tableCode)
       this.sendCode(tableToken)
-        .then(res => {
+        .then((res) => {
           this.enterCodeModalActive = false
           this.CustomLoader = false
+
+          if (this.storeRedirect) {
+            this.$gtm.trackEvent({
+              event: 'Menu-Only--seenMenu', // Event type [default = 'interaction'] (Optional)
+              category: 'menu-only',
+              action: 'click',
+              label: this.$route.query.token,
+              value: 'no-value',
+              noninteraction: false, // Optional
+            })
+          }
         })
-        .catch(err => {
+        .catch((err) => {
           delete this.$route.query.token
           this.CustomLoader = false
           if (err.response) {
@@ -248,7 +259,7 @@ export default {
               duration: 3000,
               message: `کد وارد شده نادرست است`,
               position: 'is-top',
-              type: 'is-danger'
+              type: 'is-danger',
             })
           }
         })
@@ -260,7 +271,7 @@ export default {
       setTimeout(() => {
         this.$refs.tablecode.focus()
       }, 200)
-    }
+    },
   },
   created() {
     // if navigator not supported (ios)
@@ -280,34 +291,45 @@ export default {
       renderer: 'svg',
       loop: true,
       autoplay: true,
-      animationData: this.animationJson // the path to the animation json
+      animationData: this.animationJson, // the path to the animation json
     })
     qrAnimeObj.play()
 
     if (this.$route.query.token) {
-      console.log('route',  this.$route);
+      console.log('route', this.$route)
       // this.tableCode = this.$route.fullPath.split('?token=')[1]
       this.tokenProccessor(this.$route.fullPath)
     }
 
-
     // if user is redirected from link for menu-only there is no need for initial camera
-    if(!this.storeRedirect) {
-    // if navigator is supported for camera ask for permission if not just try to initial camera component
-    if (navigator.permissions) {
-      navigator.permissions.query({ name: 'camera' }).then(permissionStatus => {
-        if (permissionStatus.state == 'prompt') this.accessCameraActive = true
-        else if (permissionStatus.state == 'granted')
-          this.qrcodeComponentLaunch = QrcodeStream
+    if (this.storeRedirect) {
+      this.$gtm.trackEvent({
+        event: 'Menu-Only--hit', // Event type [default = 'interaction'] (Optional)
+        category: 'menu-only',
+        action: 'click',
+        label: this.$route.query.token,
+        value: 'no-value',
+        noninteraction: false, // Optional
       })
-    } else this.qrcodeComponentLaunch = QrcodeStream
+    } else {
+      // if navigator is supported for camera ask for permission if not just try to initial camera component
+      if (navigator.permissions) {
+        navigator.permissions
+          .query({ name: 'camera' })
+          .then((permissionStatus) => {
+            if (permissionStatus.state == 'prompt')
+              this.accessCameraActive = true
+            else if (permissionStatus.state == 'granted')
+              this.qrcodeComponentLaunch = QrcodeStream
+          })
+      } else this.qrcodeComponentLaunch = QrcodeStream
     }
   },
   computed: {
     user() {
       return this.$store.state.user.user
     },
-    storeRedirect(){
+    storeRedirect() {
       return this.$store.state.cafe.storeRedirect
     },
     fistTimeCameraActive() {
@@ -320,9 +342,9 @@ export default {
       // to do : we need to change this to /?token=code insted of ?code
       let token = this.$route.fullPath.split('?token=')[1]
       return token
-    }
+    },
   },
-  watch: {}
+  watch: {},
 }
 </script>
 
@@ -330,6 +352,4 @@ export default {
 @import '~/assets/sass/variables.sass'
 
 // .container
-
-
 </style>

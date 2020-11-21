@@ -25,6 +25,7 @@
     "nuxt": "^2.14.4",
     "nuxt-buefy": "^0.3.23",
     "sass-loader": "^8.0.2",
+    "vue-gtm": "3.0.0-vue2",
     "vue-currency-filter": "^4.0.3",
     "vue-loading-skeleton": "^1.1.8",
     "vue-moment-jalaali": "^2.0.0",
