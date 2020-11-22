@@ -5,12 +5,30 @@
         <img :src="currentImg" />
       </p>
     </b-modal>
+
+
+    <section class="about cp-tb-margin">
+      <header class="right-align cp-b-margin font-18 font-norm">درباره</header>
+      <b-skeleton  width="100%" height="40px" :active="globalLoading" :animated="true"></b-skeleton>
+      <b-skeleton  width="100%" height="40px" :active="globalLoading" :animated="true"></b-skeleton>
+      <div v-if="!globalLoading" class="cp-card about-content 
+      cp-side-padding cp-b-margin cp-tb-padding">
+        {{info.description}}
+      </div>
+      <a :href="`https://www.instagram.com/${info.instagram}`">
+      <div v-if="!globalLoading && info.instagram" dir="ltr" 
+      class="instagram cp-card cp-side-padding has-background-white">
+        @{{info.instagram}}
+      </div>
+      </a>
+    </section>
+
     <section class="gallery cp-tb-margin">
       <header class="right-align font-18 font-norm">گالری تصاویر</header>
-      <div v-if="globalLoading" class="gallery-container cp-side-padding cp-tb-padding">
-        <b-skeleton size="is-large" width="100%" height="80px" :animated="true"></b-skeleton>
+      <div v-if="globalLoading" class="gallery-container cp-tb-padding">
+        <b-skeleton  width="100%" height="80px" :animated="true"></b-skeleton>
       </div>
-      <div v-else class="gallery-container cp-side-padding cp-tb-padding">
+      <div v-else class="gallery-container cp-tb-padding">
         <img
           @click="setCurrentImg(img.image)"
           class="short-shadow"
@@ -33,25 +51,27 @@
         <div class="iconed-text">
           <b-icon class="phone-icon" size="is-default" icon="phone"></b-icon>
           <b-skeleton :active="globalLoading" width="100%" :animated="true"></b-skeleton>
-          <span v-if="!globalLoading" dir="rtl">{{addressInfo.phone_number}}</span>
+          <a :href="`tel:${(info.phone) ? info.phone : 'شماره تماس ثبت نشده'}`">
+            <span v-if="!globalLoading" dir="rtl">{{(info.phone) ? info.phone : 'شماره تماس ثبت نشده'}}</span>
+            </a>
+          	
         </div>
 
-        <div class="iconed-text">
+        <div v-if="info.working_times" class="iconed-text">
           <b-icon  class size="is-default" icon="clock-outline"></b-icon>
           <b-skeleton :active="globalLoading" width="100%" :animated="true"></b-skeleton>
           <span v-if="!globalLoading">
-            ساعات کاری از
-            <b class="font-norm">۱۲ صبح</b> تا
-            <b class="font-norm">۱۰ شب</b>
+            {{info.working_times}}
           </span>
         </div>
 
         <div class="cp-map short-shadow">
-          <cafepay-map
-            :isActive="isActive"
-            :cafeName="cafe.name"
-            :cordinateX="addressInfo.location_x"
-            :cordinateY="addressInfo.location_y"
+          <b-skeleton :active="globalLoading" width="100%" height="150px" :animated="true"></b-skeleton>
+          <cafepay-map v-if="!globalLoading"
+            :isActive="mapActive"
+            :cafeName="info.name"
+            :cordinateX="info.location.split(',')[0]"
+            :cordinateY="info.location.split(',')[1]"
             maxZoom="17"
           />
         </div>
@@ -72,7 +92,7 @@ export default {
       apiCall: true,
       gallerySkel: 3,
       isImageModalActive: false,
-   
+      mapActive: false,
       currentImg: null,
 
       addressInfo: {
@@ -88,7 +108,11 @@ export default {
         chef: {},
         staff: []
       },
-      info: {}
+      info: {
+        phones: [],
+        location: '',
+        working_times: null
+      }
     }
   },
   props: {
@@ -108,8 +132,10 @@ export default {
         method: 'get',
         url: `api/v1/cafe/${this.cafe.pk}/basic/info/`,
       })
+      // data.data.location = `${this.addressInfo.location_x},${this.addressInfo.location_y}`
       this.info = data.data
-      console.log('cafe basic info', this.data);
+      this.mapActive = true
+      console.log('cafe basic info', this.info);
       this.apiCall = false
       }
       catch(err) {
@@ -135,35 +161,5 @@ export default {
 </script>
 
 <style scoped lang="sass">
-@import '~/assets/sass/variables.sass'
-.gallery-container
-  padding-left: 0!important
-  direction: rtl
-  display: flex
-  overflow: auto
-  white-space: nowrap
-  img
-    width: 120px
-    height: 80px
-    margin-left: $margin
-    
-    object-fit: cover
-
-.cp-map
-  width: 100%
-  margin-top: $margin
-  margin-bottom: $margin
-  position: relative
-  height: 150px
-
-.cafe-info-container
-  padding-bottom: $padding * 6
-
-
-.address
-  header
-    margin-bottom: $margin
-
-  
 
 </style>
