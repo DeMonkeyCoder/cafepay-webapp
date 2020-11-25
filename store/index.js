@@ -115,11 +115,13 @@ export const actions = {
   sendCode({
     commit,
     dispatch
-  }, tableToken) {
+  }, data) {
     return new Promise((resolve, reject) => {
+      let api = (data.hasToken) ? '$api' : '$axios'
+      console.log('api type', api);
       // u need to set the table too, for api link
-      this.$api
-        .get('api/v1/table-token/' + tableToken + '/cafe-info/', {
+      this[api]
+        .get('api/v1/table-token/' + data.tableToken + '/cafe-info/', {
           params: {},
           // headers: { Authorization: 'Token ' + this.token }
         })

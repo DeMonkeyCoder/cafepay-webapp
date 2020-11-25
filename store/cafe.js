@@ -180,10 +180,10 @@ export const actions = {
   async retrieveMenu(context) {
     try {
       let data = await this.$axios.$get(`/api/v1/cafe/${context.state.pk}/category-based-menu/active/`, {
-        params: {},
-        headers: {
-          'Authorization': 'Token ' + context.rootState.token,
-        }
+        // params: {},
+        // headers: {
+        //   'Authorization': 'Token ' + context.rootState.token,
+        // }
       })
       // console.log('cafe menu', data);
       context.commit('setMenu', data)
@@ -192,7 +192,7 @@ export const actions = {
       // why after menu data ? because we need menu data for build table data
       // if sina give me the name of product with table data then we don't need this sequence anymore
       // connect to socket
-      Vue.prototype.$connect()
+      if (!context.state.cafe.menu_only) Vue.prototype.$connect()
     } catch (err) {
 
     }

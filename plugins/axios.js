@@ -6,7 +6,29 @@ export default function ({
 
 
   // if (process.client) {}
-  
+
+  $axios.onRequest(config => {
+    store.commit("toggleLoading", true)
+  })
+
+  $axios.onResponse(res => {
+    store.commit("toggleLoading", false)
+  })
+
+  $axios.onError(error => {
+    store.commit("toggleLoading", false)
+    if (error.response) {
+      const code = parseInt(error.response && error.response.status)
+
+    } else {
+      store.commit("errorMsg",
+        'خطا در اتصال به اینترنت'
+      )
+    }
+  })
+
+
+
 
   const api = $axios.create()
 
@@ -28,30 +50,12 @@ export default function ({
 
     } else {
       console.log('error', error)
-      store.commit("errorMsg", 
+      store.commit("errorMsg",
         'خطا در اتصال به اینترنت'
       )
     }
   })
 
-  $axios.onRequest(config => {
-    store.commit("toggleLoading", true)
-  })
 
-  $axios.onResponse(res => {
-    store.commit("toggleLoading", false)
-  })
-
-  $axios.onError(error => {
-    store.commit("toggleLoading", false)
-    if (error.response) {
-      const code = parseInt(error.response && error.response.status)
-
-    } else {
-      store.commit("errorMsg", 
-        'خطا در اتصال به اینترنت'
-      )
-    }
-  })
   inject('api', api)
 }

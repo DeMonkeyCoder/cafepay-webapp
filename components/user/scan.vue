@@ -212,11 +212,8 @@ export default {
       if (typeof token == 'string') {
         this.tableCode = token.split('?token=')[1]
       }
-      if (this.userIsloggedIn) this.dispatchSendCode()
-      else {
-        this.enterCodeModalActive = false
-        this.loginActive = true
-      }
+      this.dispatchSendCode()
+      
     },
 
     dispatchSendCode() {
@@ -233,9 +230,11 @@ export default {
         })
         preloader.play()
       }, 200)
+      
+       
 
       let tableToken = this.convertPersian(this.tableCode)
-      this.sendCode(tableToken)
+      this.sendCode({tableToken, hasToken :this.userIsloggedIn})
         .then((res) => {
           this.enterCodeModalActive = false
           this.CustomLoader = false
@@ -252,8 +251,16 @@ export default {
           }
         })
         .catch((err) => {
+          // for preventing reinitial menu 
           delete this.$route.query.token
-          this.CustomLoader = false
+          this.CustomLoader = false         
+          console.log('err', err);
+          console.log('err response', err.response);
+          // if (err.status == 403) {
+          //   this.enterCodeModalActive = false
+          //   this.loginActive = true
+          // }
+
           if (err.response) {
             this.$buefy.toast.open({
               duration: 3000,
@@ -303,14 +310,14 @@ export default {
 
     // if user is redirected from link for menu-only there is no need for initial camera
     if (this.storeRedirect) {
-      this.$gtm.trackEvent({
-        event: 'Menu-Only--hit', // Event type [default = 'interaction'] (Optional)
-        category: 'menu-only',
-        action: 'click',
-        label: this.$route.query.token,
-        value: 'no-value',
-        noninteraction: false, // Optional
-      })
+      // this.$gtm.trackEvent({
+      //   event: 'Menu-Only--hit', // Event type [default = 'interaction'] (Optional)
+      //   category: 'menu-only',
+      //   action: 'click',
+      //   label: this.$route.query.token,
+      //   value: 'no-value',
+      //   noninteraction: false, // Optional
+      // })
     } else {
       // if navigator is supported for camera ask for permission if not just try to initial camera component
       if (navigator.permissions) {
