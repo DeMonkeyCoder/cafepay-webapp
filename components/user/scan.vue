@@ -86,55 +86,9 @@
 
       <!-- <qrcode-stream  @decode="onDecode"></qrcode-stream> -->
       <div id="qr-animation"></div>
-      <!-- <p class="camera__scan-text">
-        بارکد روی میز را با دوربین این قسمت اسکن کنید
-      </p>
-  
-      <div class="camera__btn-container">
-      <div><p>یا</p></div>
-          <b-button
-        @click="openCodeModal"
-        class="shadow-lg bcp-btn-large "
-        >کد میز را وارد کنید</b-button
-      >
-      </div> -->
-
-      <!-- <div class="camera__border"></div> -->
+   
     </div>
-    <!-- 
-    <div v-if="userIsloggedIn" class="landing white">
-      <div id="user-img">
-        <img :src="user.avatar" alt />
-      </div>
 
-      <h1 class="t-large">{{ user.full_name }}</h1>
-      <h4>
-        موجودی:‌
-        <span>{{ user.balance | currency }} تومان</span>
-      </h4>
-      <div class="columns shortcut-btns is-mobile is-3-mobile">
-        <div class="column disable-profile-navigator--noafter">
-          <nuxt-link to="/user/profile/wallet">
-            <div id="charge-wallet-icon" class="has-background-white">
-              <img :src="walletIcon" alt class="icon" />
-              <p>افزایش موجودی</p>
-            </div>
-          </nuxt-link>
-        </div>
-        <div class="column column disable-profile-navigator--noafter">
-          <nuxt-link to="/user/profile/wallet">
-          <div
-            id="my-cafe-icon"
-            class="has-background-white ripple-effect"
-            anim="ripple"
-          >
-            <img :src="myCafe" alt class="icon" />
-            <p>علاقه‌مندی های من</p>
-          </div>
-          </nuxt-link>
-        </div>
-      </div>
-    </div> -->
 
     <div class="landing white notLogged-landing" id="bm">
       <div class="camera-scan-guide">
@@ -235,6 +189,7 @@ export default {
 
       let tableToken = this.convertPersian(this.tableCode)
       this.sendCode({tableToken, hasToken :this.userIsloggedIn})
+      
         .then((res) => {
           this.enterCodeModalActive = false
           this.CustomLoader = false
@@ -254,20 +209,21 @@ export default {
           // for preventing reinitial menu 
           delete this.$route.query.token
           this.CustomLoader = false         
-          console.log('err', err);
-          console.log('err response', err.response);
-          // if (err.status == 403) {
-          //   this.enterCodeModalActive = false
-          //   this.loginActive = true
-          // }
 
-          if (err.response) {
+          //  it means wrong table token
+          if (err.response.status == 400) {
             this.$buefy.toast.open({
               duration: 3000,
               message: `کد وارد شده نادرست است`,
               position: 'is-top',
               type: 'is-danger',
             })
+          }
+          
+          // it means user is not logged in and table requires it so we open login modal
+          else if (err.response.status == 401) {
+            this.enterCodeModalActive = false
+            this.loginActive = true
           }
         })
     },
