@@ -189,7 +189,7 @@ export default {
 
       let tableToken = this.convertPersian(this.tableCode)
       this.sendCode({tableToken, hasToken :this.userIsloggedIn})
-      
+
         .then((res) => {
           this.enterCodeModalActive = false
           this.CustomLoader = false
@@ -201,7 +201,7 @@ export default {
               action: 'click',
               label: this.$route.query.token,
               value: 'no-value',
-              noninteraction: false, // Optional
+              noninteraction: false, // Optional`
             })
           }
         })
