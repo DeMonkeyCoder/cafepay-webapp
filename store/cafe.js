@@ -192,7 +192,7 @@ export const actions = {
       // why after menu data ? because we need menu data for build table data
       // if sina give me the name of product with table data then we don't need this sequence anymore
       // connect to socket
-      if (!context.state.cafe.menu_only) Vue.prototype.$connect()
+      if (!context.state.menu_only) Vue.prototype.$connect()
     } catch (err) {
 
     }

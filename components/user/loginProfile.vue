@@ -180,7 +180,7 @@ export default {
         if (val) {
           setTimeout(() => {
             this.$refs.phoneInputProfile.focus()
-          }, 200)
+          }, 300)
         }
       }
     }
@@ -214,7 +214,7 @@ export default {
             this.state = 'enter-code'
             setTimeout(() => {
               this.$refs.codeInputProfile.focus()
-            }, 200)
+            }, 300)
             this.user_code = res.data.code
           })
           .catch(err => {
