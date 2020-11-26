@@ -248,6 +248,7 @@ export default {
           if (res.data.first_name == '') {
             this.state = 'signup'
           } else {
+            htis.$store.commit('setToken', this.tempToken)
             this.$store.dispatch('user/retrieve').then(res => {
               //for entering to table
               this.$emit('successful')
