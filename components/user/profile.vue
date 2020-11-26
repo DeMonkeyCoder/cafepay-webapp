@@ -83,22 +83,30 @@
           </li>
         </nuxt-link>
 
-        <!-- <li class="cp-card has-background-white disable-profile-navigator cp-side-padding cp-tb-padding">
+        <nuxt-link to="/terms">
+          <li class="cp-card has-background-white cp-side-padding cp-tb-padding">
+            <img src="@/assets/img/shape/icons/term.png" alt />
+            قوانین و شرایط استفاده
+          </li>
+        </nuxt-link>
+<!-- 
+        <li class="cp-card has-background-white disable-profile-navigator cp-side-padding cp-tb-padding">
           <img src="@/assets/img/shape/icons/remote-assistance.svg" alt />
           پشتیبانی
-        </li>
+        </li> -->
 
-        <li class="cp-card has-background-white disable-profile-navigator cp-side-padding cp-tb-padding">
+        <!-- <li class="cp-card has-background-white disable-profile-navigator cp-side-padding cp-tb-padding">
           <img src="@/assets/img/shape/icons/love.svg" alt />
           مورد علاقه‌ها
-        </li>
-        <li
+        </li> -->
+        <!-- <li
           id="cafepay-li-profile"
           class="cp-card has-background-white disable-profile-navigator cp-side-padding cp-tb-padding"
         >
           <img src="@/assets/img/shape/logo-icon-1.png" alt />
           کافه پی
         </li> -->
+
         <li @click="exitModalActive = true" class="cp-card has-background-white cp-side-padding cp-tb-padding">
           <img src="@/assets/img/shape/icons/logout.svg" alt />
           خروج از حساب کاربری
