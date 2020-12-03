@@ -150,17 +150,18 @@
         id="table-status-bar"
         class="table-status-bar long-shadow cp-side-margin cp-header-card has-background-white"
       >
-        <div id="table-status-bar-progress-wrapper" class></div>
+        <!-- <div id="table-status-bar-progress-wrapper" class></div> -->
         <p v-if="PaymentProgress != 100">
-          باقی‌مانده:
-          <span class="p-text font-norm total-payment">{{
-            (table.payment.total_amount - table.payment.payed_amount) | currency
-          }}</span>
-          از
+ 
+          <span class="font-12">مجموع سفارشات: </span>
           <span class="total-cost">{{
             table.payment.total_amount | currency
           }}</span>
-          تومان
+        -
+                   <span class="font-12"> پرداخت شده:</span>
+          <span class="p-text font-norm total-payment">{{
+            (table.payment.payed_amount) | currency
+          }}</span>
         </p>
 
         <p
