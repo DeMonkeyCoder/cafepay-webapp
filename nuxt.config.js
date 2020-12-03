@@ -80,9 +80,10 @@ export default {
     '~/plugins/moment',
     '~/plugins/productTour.js',
     // '~/plugins/lottie.js',
-    '~/plugins/websocket.js'
+    '~/plugins/websocket.js',
     // '~/plugins/jdenticon-2.2.0.js',
     // '~/plugins/ripple',
+    '~/plugins/i18n.js'
   ],
   /*
    ** Nuxt.js modules
@@ -92,6 +93,21 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
     'nuxt-buefy',
+    ['nuxt-i18n', {
+      locales: [
+        {
+          code: 'en',
+          file: 'en-US.js'
+        },
+        {
+          code: 'fa',
+          file: 'fa-IR.js'
+        },
+      ],
+      lazy: true,
+      langDir: 'lang/',
+      defaultLocale: 'en'
+    }]
   ],
 
   router: {

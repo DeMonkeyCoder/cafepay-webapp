@@ -1,5 +1,5 @@
 <template>
-  <div dir="rtl">
+  <div dir="$dir()">
     <keep-alive>
       <component v-if="currentMainPage != 'scan'" class="" @changeView="changeViewTrigger" :is="currentMainPage"></component>
     </keep-alive>

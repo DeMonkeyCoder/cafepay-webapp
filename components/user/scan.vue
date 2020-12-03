@@ -94,17 +94,17 @@
       <div class="camera-scan-guide">
         <img class="camera-scan-guide__icon" :src="qrIcon" alt="" />
         <p class="camera-scan-guide__text">
-          بارکد روی میز را با دوربین دورن برنامه اسکن کنید
+          {{ $t('scan_the_barcode') }}
         </p>
       </div>
       <!-- <p class="camera__scan-text-or">یا</p> -->
       <div class="enter-code-guide">
-        <div><p>یا</p></div>
+        <div><p>{{ $t('or') }}</p></div>
         <b-button
           @click="openCodeModal"
           class="bcp-btn-large shadow-lg-b"
           type="is-info"
-          >کد میز را وارد کنید</b-button
+          >{{ $t('enter_table_code') }}</b-button
         >
       </div>
     </div>

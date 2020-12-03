@@ -127,7 +127,7 @@
 
           <b-field>
             <b-input
-              dir="rtl"
+              dir="$dir()"
               v-model="first_name"
               class="cp-input cp-input-primary cp-input-grey"
               placeholder="نام"
@@ -137,7 +137,7 @@
 
           <b-field>
             <b-input
-              dir="rtl"
+              dir="$dir()"
               v-model="last_name"
               class="cp-input cp-input-primary cp-input-grey"
               placeholder="نام خانوادگی"
@@ -167,7 +167,7 @@
     </section>
 
     <section
-      dir="rtl"
+      dir="$dir()"
       id="about-us"
       class="about-us has-background-white cp-tb-padding-4x cp-side-padding-4x"
     >
@@ -189,7 +189,7 @@
     </section>
 
     <section
-      dir="rtl"
+      dir="$dir()"
       id="how-to-use"
       class="cp-tb-padding-4x cp-side-padding-4x"
     >
@@ -248,7 +248,7 @@
     </section>
 
     <section
-      dir="rtl"
+      dir="$dir()"
       class="rules cp-tb-padding-4x cp-side-padding-4x has-background-white"
     >
       <h2 class="header">قوانین استفاده از کافه‌پِی</h2>
@@ -332,7 +332,7 @@
     </section>
 
     <section
-      dir="rtl"
+      dir="$dir()"
       class="contact-us has-background-white cp-tb-padding-4x cp-side-padding-4x"
     >
       <h6 class="header font-20">
@@ -359,7 +359,7 @@
       <b-field>
         <b-input
           class="cp-input cp-input-primary cp-input-grey cp-input-shadow-inner"
-          dir="rtl"
+          dir="$dir()"
           v-model="form.comment"
           maxlength="200"
           type="textarea"
@@ -393,7 +393,7 @@
         آدرس: شیراز میدان پارسه یقطین جنوبی کوچه ۲۱ ساختمان اپادانا واحد ۸ -
         تلفن تماس: ۰۷۱۳۸۳۲۵۴۷۴
       </P>
-      <p dir="rtl" class="font-14 font-norm">
+      <p dir="$dir()" class="font-14 font-norm">
         کلیه حقوق این سایت (کافه‌پِی) متعلق به هوشمندسازان ویرا آرین می‌باشد.
       </p>
     </section>

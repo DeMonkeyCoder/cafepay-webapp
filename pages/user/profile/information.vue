@@ -1,5 +1,5 @@
 <template>
-  <div dir="rtl">
+  <div dir="$dir()">
     <b-modal
       class="change-number-modal simple-action-modal"
       :active.sync="isChangeNumberModalActive"
@@ -43,7 +43,7 @@
           alt
         />
         <h4 class="header cp-tb-padding cp-side-padding">اطلاعات کاربری</h4>
-        <p dir="rtl" class="detail cp-tb-padding cp-side-padding">
+        <p dir="$dir()" class="detail cp-tb-padding cp-side-padding">
           عضویت در:
           <span class="p-text font-18">{{ '2020-09-27' | moment('LL') }}</span>
         </p>

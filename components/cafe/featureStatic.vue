@@ -6,7 +6,7 @@
         </div>
       <p class="feature-title">{{feature.title}}</p>
       <p class="feature-rate">{{feature.rate}}</p>
-      <p dir="rtl" class="feature-rate-count">{{feature.count | currency}}<span class="font-12">رای</span></p>
+      <p dir="$dir()" class="feature-rate-count">{{feature.count | currency}}<span class="font-12">رای</span></p>
       </div>
 
     </div>
