@@ -38,7 +38,7 @@
         <div class="go-back current-cafe-top-actions cp-tb-padding">
           <b-icon @click.native="isCancelTableModalActive = true"
                 class="close-icon" icon="close" size="is-medium" type="is-light"></b-icon>
-          <nuxt-link :to="switchLocalePath(this.$i18n.locale == 'en' ? 'fa' : 'en')">
+          <nuxt-link :to="switchLocalePath(this.$i18n.locale == 'en' ? 'fa' : 'en')" replace>
             <b-icon class="translate-icon" icon="translate" size="is-medium" type="is-light"></b-icon>
           </nuxt-link>
         </div>
