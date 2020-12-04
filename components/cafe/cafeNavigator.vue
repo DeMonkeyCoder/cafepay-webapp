@@ -1,23 +1,23 @@
 <template>
   <div class="root cp-side-padding">
     <div class="cafe-navigator long-shadow cp-header-card has-background-white">
-      <b-tabs v-model="ActiveTab" expanded :dir="$dir()" type="is-toggle">
-          <b-tab-item class="menu-tab" label="منو" >
-            <cp-menu :menu="menu" :active="(ActiveTab == 3) ? true : false" /> 
+      <b-tabs v-model="ActiveTab" expanded dir="ltr" type="is-toggle">
+          <b-tab-item :disabled="true" :label="$t('cafe_navigator.posts')" >
+            <posts :isActive="(ActiveTab == 0) ? true : false"/>
           </b-tab-item>
 
-          <b-tab-item :disabled="false" label="اطلاعات" >
+          <b-tab-item :disabled="true" :label="$t('cafe_navigator.comments')" >
+            <comments/>
+          </b-tab-item>
+          
+          <b-tab-item :disabled="false" :label="$t('cafe_navigator.information')" >
             <info :isActive="(ActiveTab == 2) ? true : false" />
           </b-tab-item>
 
-          <b-tab-item :disabled="true" label="نظرات" >
-            <comments/>
+          <b-tab-item :label="$t('cafe_navigator.menu')" >
+            <cp-menu :menu="menu" :active="(ActiveTab == 3) ? true : false" /> 
           </b-tab-item>
 
-          <b-tab-item :disabled="true" label="پست‌ها" >
-            <posts :isActive="(ActiveTab == 0) ? true : false"/>
-          </b-tab-item>
-          
       </b-tabs>
     </div>
   </div>

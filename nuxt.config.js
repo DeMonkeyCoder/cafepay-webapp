@@ -141,7 +141,7 @@ export default {
        theme_color: '#009fe3',
     },
      workbox: {
-       dev: true // or use a global variable to track the current NODE_ENV, etc to determine dev mode
+       dev: false // or use a global variable to track the current NODE_ENV, etc to determine dev mode
      }
   },
   /*

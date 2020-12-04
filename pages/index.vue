@@ -564,8 +564,8 @@ export default {
 <style lang="sass" scoped>
 @import '~/assets/sass/variables.sass'
 .field.is-grouped > .control:not(:last-child)
-  margin-right: 0!important
-  margin-left: 0.75rem!important
+  margin-inline-start: 0!important
+  margin-inline-end: 0.75rem!important
 
 .go-to-user
   margin-top: 1rem
@@ -583,7 +583,7 @@ export default {
     width: 0.75em
     position: relative
     top: 0.15em
-    margin-right: -0.75em
+    margin-inline-start: -0.75em
   
 .contact-us
   .bcp-btn
@@ -604,7 +604,7 @@ export default {
 .input-container
   position: relative
   input
-    padding-left: 30px
+    padding-inline-end: 30px
     background: none
     border: none
     height: 50px
@@ -687,17 +687,17 @@ export default {
   // .button 
   //   .icon
   //     &:last-child
-  //       margin-left: 0!important
-  //       margin-right: 0!important
+  //       margin-inline-end: 0!important
+  //       margin-inline-start: 0!important
   button    
     margin: 0 10px
     &.forward
       flex: 9 
     &.back
       flex: 1
-      margin-right: 0
-      padding-right: 0.5rem!important
-      padding-left: 0.5rem!important
+      margin-inline-start: 0
+      padding-inline-start: 0.5rem!important
+      padding-inline-end: 0.5rem!important
       .mdi
         font-size: 28px!important
 

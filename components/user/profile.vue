@@ -169,7 +169,7 @@ export default {
       align-items: center
       font-size: 16px
       img
-        margin-left: 10px
+        margin-inline-end: 10px
         width: 25px
         height: 25px
 
