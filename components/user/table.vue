@@ -109,11 +109,11 @@
           >پرداخت آنلاین</b-button
         > -->
 
-      <!-- <div @click="paymentCheckout" dir="$dir()" class="pc-child pay-checkout-btn green">
+      <!-- <div @click="paymentCheckout" :dir="$dir()" class="pc-child pay-checkout-btn green">
           <b-icon class="credit-card-icon" icon="credit-card" type="is-light"></b-icon>پرداخت آنلاین
         </div>-->
       <!-- <div class="pc-child pay-checkout-info cp-side-padding">
-          <div dir="$dir()" class="total-price cp-side-margin font-norm">
+          <div :dir="$dir()" class="total-price cp-side-margin font-norm">
             {{ totalWishToPay | currency }}
             <span class="toman">تومان</span>
           </div>

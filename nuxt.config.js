@@ -1,5 +1,5 @@
 import webpack from 'webpack'
-import baseUrl from './plugins/baseUrl.js'
+import config from './plugins/config.js'
 export default {
   server: {
     // port: 3000, // default: 3000     
@@ -97,16 +97,18 @@ export default {
       locales: [
         {
           code: 'en',
-          file: 'en-US.js'
+          file: 'en-US.js',
+          dir:'ltr'
         },
         {
           code: 'fa',
-          file: 'fa-IR.js'
+          file: 'fa-IR.js',
+          dir:'rtl'
         },
       ],
       lazy: true,
       langDir: 'lang/',
-      defaultLocale: 'en'
+      defaultLocale: config.defaultLocale
     }]
   ],
 
@@ -122,7 +124,7 @@ export default {
    ** See https://axios.nuxtjs.org/options
    */
   axios: {
-    baseURL: baseUrl.baseUrl,
+    baseURL: config.baseUrl,
     proxyHeaders: false,
     credentials: false
   },

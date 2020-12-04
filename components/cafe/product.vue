@@ -50,7 +50,7 @@
         >
           <div class="name-and-rate">
             <p class="font-16 font-norm">{{cm.user.full_name}}</p>
-            <p dir="$dir()" class="font-14 grey-text">
+            <p :dir="$dir()" class="font-14 grey-text">
               {{cm.created_at}}
               <span class="postfix-margin font-12">روز قبل</span>
             </p>
@@ -66,7 +66,7 @@
           <div class="comment-and-reply">
             <p class="font-14">{{cm.comment.content}}</p>
             <div v-if="cm.comment.reply != null" class="cm-reply cp-card">
-              <p dir="$dir()" class="reply-user font-14 font-norm">پاسخ {{cm.comment.reply.user}}:</p>
+              <p :dir="$dir()" class="reply-user font-14 font-norm">پاسخ {{cm.comment.reply.user}}:</p>
               <p class="reply-content font-12">{{cm.comment.reply.content}}</p>
             </div>
           </div>

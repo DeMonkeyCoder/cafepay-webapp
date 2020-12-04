@@ -1,5 +1,5 @@
 <template>
-  <div dir="$dir()" class="cafe-info-container">
+  <div :dir="$dir()" class="cafe-info-container">
     <b-modal :active.sync="isImageModalActive">
       <p class="image is-4by3">
         <img :src="currentImg" />
@@ -52,7 +52,7 @@
           <b-icon class="phone-icon" size="is-default" icon="phone"></b-icon>
           <b-skeleton :active="globalLoading" width="100%" :animated="true"></b-skeleton>
           <a :href="`tel:${(info.phone) ? info.phone : 'شماره تماس ثبت نشده'}`">
-            <span v-if="!globalLoading" dir="$dir()">{{(info.phone) ? info.phone : 'شماره تماس ثبت نشده'}}</span>
+            <span v-if="!globalLoading" :dir="$dir()">{{(info.phone) ? info.phone : 'شماره تماس ثبت نشده'}}</span>
             </a>
           	
         </div>

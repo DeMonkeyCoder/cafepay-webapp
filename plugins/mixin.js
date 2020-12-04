@@ -1,9 +1,9 @@
 import Vue from 'vue'
-import baseUrl from '~/plugins/baseUrl.js'
+import config from '~/plugins/config.js'
 Vue.mixin({
   data() {
     return {
-      baseUrl: baseUrl.baseUrl,
+      baseUrl: config.baseUrl,
       cloading: false,
       colors: {
         primary: '#009fe3',

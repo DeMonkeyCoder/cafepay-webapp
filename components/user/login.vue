@@ -83,7 +83,7 @@
 
             <b-field>
               <b-input
-                dir="$dir()"
+                :dir="$dir()"
                 v-model="first_name"
                 class="cp-input cp-input-primary cp-input-grey"
                 placeholder="نام شما"
@@ -93,7 +93,7 @@
 
             <!-- <b-field>
               <b-input
-                dir="$dir()"
+                :dir="$dir()"
                 v-model="last_name"
                 class="cp-input cp-input-primary cp-input-grey"
                 placeholder="نام خانوادگی"

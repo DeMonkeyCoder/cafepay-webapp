@@ -1,5 +1,5 @@
 <template>
-  <div dir="$dir()">
+  <div :dir="$dir()">
 
     <div v-if="productPageActive" class="product-component">
       <product />

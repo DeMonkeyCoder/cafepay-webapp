@@ -1,6 +1,6 @@
 @import 'variables.sass'
 .category-list
-  direction: rtl
+  // direction: rtl
   // margin-top: 1.5 * $margin!important
   margin-left: (-$margin)
   padding-top: $padding
@@ -91,19 +91,19 @@
           // : 100%/30px 30px 5px 5px
       .content-section
         position: relative
-        text-align: right
+        text-align: start
         flex: 11
         .product-title
           font-size: 15px
 
         .product-description
-          direction: rtl
+          // direction: rtl
           font-size: 11px
           line-height: 13px
 
         .product-price
           position: absolute
-          right: $padding
+          start: $padding
           bottom: $padding
           font-size: 18px
           font-weight: 500!important
@@ -120,7 +120,7 @@
               padding: 0.1rem 0.3rem
               border-radius: 0.25rem
               font-weight: 500
-              direction: ltr
+              // direction: ltr
               background-color: $secondary
 
       .out-of-order

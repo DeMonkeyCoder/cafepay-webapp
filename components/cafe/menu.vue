@@ -62,7 +62,7 @@
           <div class="content-section cp-side-padding cp-tb-padding">
             <div class="product-title font-norm">{{ prod.name }}</div>
             <div class="product-description">{{ prod.description }}</div>
-            <div class="product-price" dir="$dir()">
+            <div class="product-price" :dir="$dir()">
               <div v-if="prod.discount > 0" class="product-discount">
                 <span>{{ prod.discount }}%</span>
                 <p>
