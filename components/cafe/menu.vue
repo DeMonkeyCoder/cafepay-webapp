@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div :dir="$dir()">
         <v-tour
       name="menuTour"
       :steps="steps"
@@ -33,7 +33,7 @@
           }"
           @click="changeActiveCategory(index)"
         >
-          {{ cat.name }}
+          {{ index == 0 ? $t("menu_page.your_current_order") : cat.name }}
         </div>
       </div>
     </div>
@@ -45,18 +45,16 @@
           :key="prod.pk"
           class="normal-radius shadow-md has-background-white cp-tb-margin cp-side-margin-half product-item"
         >
-          <div v-if="prod.available && !menuOnly" class="add-or-remove">
-            <span class="product-add" @click="countChange(index, 1, prod)">
-              <div class="aor-shape">+</div>
-            </span>
-            <span class="product-count">{{ prod.count }}</span>
-            <span class="product-remove" @click="countChange(index, -1, prod)">
-              <div class="aor-shape">-</div>
-            </span>
-          </div>
-
-          <div v-if="!prod.available" class="out-of-order">
-            <p>تمام شد</p>
+          <!-- on div below we need to add @click="$store.commit('cafe/setCurrentProduct', prod)" later for product page navigation -->
+          <div class="img-section">
+            <img
+              :src="
+                prod.avatar == null
+                  ? productDefaultImage
+                  : baseUrl + prod.avatar
+              "
+              alt
+            />
           </div>
 
           <div class="content-section cp-side-padding cp-tb-padding">
@@ -74,16 +72,19 @@
               <span class="toman">تومان</span>
             </div>
           </div>
-          <!-- on div below we need to add @click="$store.commit('cafe/setCurrentProduct', prod)" later for product page navigation -->
-          <div class="img-section">
-            <img
-              :src="
-                prod.avatar == null
-                  ? productDefaultImage
-                  : baseUrl + prod.avatar
-              "
-              alt
-            />
+
+          <div v-if="prod.available && !menuOnly" class="add-or-remove">
+            <span class="product-add" @click="countChange(index, 1, prod)">
+              <div class="aor-shape">+</div>
+            </span>
+            <span class="product-count">{{ prod.count }}</span>
+            <span class="product-remove" @click="countChange(index, -1, prod)">
+              <div class="aor-shape">-</div>
+            </span>
+          </div>
+
+          <div v-if="!prod.available" class="out-of-order">
+            <p>تمام شد</p>
           </div>
         </div>
       </div>

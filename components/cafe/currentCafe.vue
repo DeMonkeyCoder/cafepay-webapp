@@ -35,6 +35,11 @@
             :disabled="true"
           ></b-rate> -->
         </div>
+        <nuxt-link :to="switchLocalePath(this.$i18n.locale == 'en' ? 'fa' : 'en')">
+          <div class="go-back cp-side-padding cp-tb-padding">
+            <b-icon class="close-icon" icon="translate" size="is-medium" type="is-light"></b-icon>
+          </div>
+        </nuxt-link>
         <div @click="isCancelTableModalActive = true" class="go-back cp-tb-padding">
           <b-icon class="close-icon" icon="close" size="is-medium" type="is-light"></b-icon>
         </div>

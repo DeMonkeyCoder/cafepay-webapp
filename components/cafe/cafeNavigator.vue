@@ -2,8 +2,9 @@
   <div class="root cp-side-padding">
     <div class="cafe-navigator long-shadow cp-header-card has-background-white">
       <b-tabs v-model="ActiveTab" expanded dir="ltr" type="is-toggle">
+        <template v-if="$dir() == 'rtl'">
           <b-tab-item :disabled="true" :label="$t('cafe_navigator.posts')" >
-            <posts :isActive="(ActiveTab == 0) ? true : false"/>
+            <posts :isActive="ActiveTab == 0"/>
           </b-tab-item>
 
           <b-tab-item :disabled="true" :label="$t('cafe_navigator.comments')" >
@@ -11,12 +12,30 @@
           </b-tab-item>
           
           <b-tab-item :disabled="false" :label="$t('cafe_navigator.information')" >
-            <info :isActive="(ActiveTab == 2) ? true : false" />
+            <info :isActive="ActiveTab == 2" />
           </b-tab-item>
 
           <b-tab-item :label="$t('cafe_navigator.menu')" >
-            <cp-menu :menu="menu" :active="(ActiveTab == 3) ? true : false" /> 
+            <cp-menu :menu="menu" :active="ActiveTab == 3" /> 
           </b-tab-item>
+        </template>
+        <template v-else>
+          <b-tab-item :label="$t('cafe_navigator.menu')" >
+            <cp-menu :menu="menu" :active="ActiveTab == 0" /> 
+          </b-tab-item>
+
+          <b-tab-item :disabled="false" :label="$t('cafe_navigator.information')" >
+            <info :isActive="ActiveTab == 1" />
+          </b-tab-item>
+
+          <b-tab-item :disabled="true" :label="$t('cafe_navigator.comments')" >
+            <comments/>
+          </b-tab-item>
+
+          <b-tab-item :disabled="true" :label="$t('cafe_navigator.posts')" >
+            <posts :isActive="ActiveTab == 2"/>
+          </b-tab-item>
+        </template>
 
       </b-tabs>
     </div>
@@ -38,8 +57,23 @@
     },
     data() {
       return {
-        ActiveTab: 3,
+        ActiveTab: this.$dir() == 'rtl' ? 3: 0,
         // menu: []
+      }
+    },
+    computed: {
+      direction(){
+        return this.$dir();
+      },
+      menu() {
+        return this.$store.state.cafe.categories 
+      }
+    },
+    watch: {
+      direction(oldValue, newValue) {
+        if(newValue != oldValue){
+          this.ActiveTab = 3 - this.ActiveTab;
+        }
       }
     },
     methods: {
@@ -58,15 +92,9 @@
       //   })
       // }
     },
-    computed: {
-      menu() {
-        return this.$store.state.cafe.categories 
-      },
-    },
-    mounted(){
-      // this.getMenu()
-      
-
+    updated(){
+      console.log("Hooooooo!")
+      console.log(this.direction)
     }
   }
 </script>

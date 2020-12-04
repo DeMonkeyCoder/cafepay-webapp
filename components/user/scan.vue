@@ -94,17 +94,17 @@
       <div class="camera-scan-guide">
         <img class="camera-scan-guide__icon" :src="qrIcon" alt="" />
         <p class="camera-scan-guide__text">
-          {{ $t('scan_the_barcode') }}
+          {{ $t('scan_page.scan_the_barcode') }}
         </p>
       </div>
       <!-- <p class="camera__scan-text-or">یا</p> -->
       <div class="enter-code-guide">
-        <div><p>{{ $t('or') }}</p></div>
+        <div><p>{{ $t('scan_page.or') }}</p></div>
         <b-button
           @click="openCodeModal"
           class="bcp-btn-large shadow-lg-b"
           type="is-info"
-          >{{ $t('enter_table_code') }}</b-button
+          >{{ $t('scan_page.enter_table_code') }}</b-button
         >
       </div>
     </div>

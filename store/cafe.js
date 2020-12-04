@@ -79,7 +79,7 @@ export const mutations = {
     state.categories = []
     // push current basket of orders first for editing current orders
     state.categories.push({
-      name: 'سفارشات فعلی شما',
+      name: this.app.i18n.t('menu_page.your_current_order'),
       products: []
     })
     for (const category of menu.categories) {

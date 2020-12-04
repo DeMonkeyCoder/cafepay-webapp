@@ -94,15 +94,18 @@ export default {
     '@nuxtjs/pwa',
     'nuxt-buefy',
     ['nuxt-i18n', {
+      seo: true,
       locales: [
         {
           code: 'en',
           file: 'en-US.js',
+          iso: 'en-US',
           dir:'ltr'
         },
         {
           code: 'fa',
           file: 'fa-IR.js',
+          iso: 'fa-IR',
           dir:'rtl'
         },
       ],
