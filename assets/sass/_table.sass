@@ -195,8 +195,8 @@
     flex: 1
     text-align: left
   .modal-dialog
-    padding-left: 2*$padding!important
-    padding-right: 2*$padding!important
+    // padding-left: $padding!important
+    // padding-right: $padding!important
     li
       display: flex
 
@@ -204,7 +204,7 @@
       background-color: lighten($primary_hue2, 45%)
       border-radius: 5px
       margin-top: 2*$margin
-      padding: $padding
+      padding: $padding / 2 $padding
       li
         padding-top: 0.25* $padding
         padding-bottom: 0.25* $padding
@@ -213,6 +213,12 @@
       max-height: 25vh
       overflow-y: auto
       overflow-x: hidden
+      &__name
+        flex: 2!important
+        text-align: right
+      &__amount
+        flex: 1
+        text-align: left
  
       li
         border-bottom: 1px dashed $grey
@@ -220,6 +226,30 @@
         padding-bottom: 0.5* $padding
         .value-fix-padding
           padding-left: 5px
+        
+
+          
+
+    .preorder-warning
+      display: flex
+      // justify-content: center
+      // align-content: center
+      background-color: lighten(#ffdd57, 10%)
+      border-radius: 5px
+      margin-bottom: 0!important
+      margin-top: $margin
+      padding: $padding / 2 $padding
+      p
+        flex: 10
+        padding-right: $padding / 2
+        text-align: right
+        font-size: 14px!important
+        letter-spacing: -0.025rem
+      div
+        display: flex
+        justify-content: center
+        align-items: center
+        flex: 1
 
   .modal-action
     button
@@ -228,7 +258,7 @@
         font-size: 18px!important
 
 #pre-invoice-animation
-  width: 75%
+  width: 60%
   // width: 320px * 0.75
   margin: auto
   // height: 230px * 0.75

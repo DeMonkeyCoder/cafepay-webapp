@@ -94,8 +94,8 @@ Vue.mixin({
     user() {
       return this.$store.state.user.user
     },
-    menuOnly() {
-      return this.$store.state.cafe.menuOnly
+    tokenType() {
+      return this.$store.state.cafe.type
     },
     errorMsg() {
       return this.$store.state.errorMessage

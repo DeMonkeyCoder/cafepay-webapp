@@ -37,9 +37,18 @@ import errorAnimation from '~/assets/img/error.json'
     },
     methods: {
       backtoapp() {
-         this.$store.commit('table/clearWishToPay')
-        this.$store.commit('changeNavigation', 'cp-table')
-        this.$router.push('/user/home')
+        this.$store.commit('table/clearWishToPay')
+        // #preorder
+        if (1 === 1) {
+          // we dont want user to go back to table so we clear table
+          this.$store.commit('table/clearData')
+          this.$store.commit('cafe/bindProductCount', false)
+          this.$router.push('/user/liveorder/12')
+        }
+        else {
+          this.$store.commit('changeNavigation', 'cp-table')
+          this.$router.push('/user/home')
+        }
 
       },
     },
@@ -56,7 +65,8 @@ import errorAnimation from '~/assets/img/error.json'
     let animationData;
     if (this.info.status == 200) animationData = successfullPayment1
     else animationData = errorAnimation
-     let successAnime = lottie.loadAnimation({
+
+    let successAnime = lottie.loadAnimation({
       container: document.getElementById('trigger'), // the dom element that will contain the animation
       renderer: 'svg',
       loop: false,

@@ -6,14 +6,17 @@
       :options="myOptions"
       :callbacks="myCallbacks"
     ></v-tour>
-    <div id="selected-products-preview" v-if="!menuOnly">
+    <div id="selected-products-preview" v-if="tokenType !== 'menu-only'">
       <b-button
         @click="productsPayloadSeperator"
         :loading="globalLoading"
         class="button shadow-md bcp-btn cp-btn-submit-order shadow-lg-bb"
         size="is-medium"
         type="is-info"
-        >ثبت سفارشات</b-button
+        >
+        <span v-if="tokenType == 'pre-order'" dir="rtl" class="font-bold font-14">(تحویل در مجموعه)</span>
+        ثبت سفارشات
+        </b-button
       >
     </div>
 
@@ -45,7 +48,7 @@
           :key="prod.pk"
           class="normal-radius shadow-md has-background-white cp-tb-margin cp-side-margin-half product-item"
         >
-          <div v-if="prod.available && !menuOnly" class="add-or-remove">
+          <div v-if="prod.available && tokenType !== 'menu-only'" class="add-or-remove">
             <span class="product-add" @click="countChange(index, 1, prod)">
               <div class="aor-shape">+</div>
             </span>

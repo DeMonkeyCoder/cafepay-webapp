@@ -1,13 +1,13 @@
 <template>
   <div>
-    <div v-if="hasActiveTable && menuOnly" class="no-active-table">
+    <div v-if="hasActiveTable && tokenType == 'menu-only'" class="no-active-table">
       <div>
         <img src="@/assets/img/ordering.png" alt="" />
         <p class="no-ordering-text">سفارش ‌گیری فعال نیست</p>
       </div>
     </div>
 
-    <div v-if="hasActiveTable && !menuOnly" class="has-active-table">
+    <div v-if="hasActiveTable && tokenType !== 'menu-only'" class="has-active-table">
       <b-modal
         class="table-options-modal simple-action-modal"
         :active.sync="isTableOptionsModalActive"
@@ -40,13 +40,13 @@
         :can-cancel="true"
       >
         <div class="modal-card" style="width: auto">
-          <section class="modal-dialog">
+          <section class="modal-dialog cp-padding">
             <div id="pre-invoice-animation"></div>
             <ol class="order-summery">
               <li v-for="order in ordersToPay" :key="order.pk">
-                <p class="pre-invoice-modal__name">{{ order.name }}</p>
-                <p class="pre-invoice-modal__amount value-fix-padding">
-                  {{ order.amount | currency }} <span class="toman">تومان</span>
+                <p class="order-summery__name">{{ order.name }}</p>
+                <p class="order-summery__amount value-fix-padding">
+                  {{ order.amount | currency }}<span class="toman">تومان</span>
                 </p>
               </li>
             </ol>
@@ -74,6 +74,12 @@
                 </p>
               </li>
             </ul>
+
+          <div v-if="tokenType == 'pre-order'" class="preorder-warning">
+            <div><b-icon size="is-medium" icon="alert-circle-outline"></b-icon></div>
+           <p>توجه داشته باشید سفارش در محل مجموعه به شما تحویل داده خواهد شد.</p>
+          </div>
+
           </section>
           <section class="modal-action">
             <b-button
