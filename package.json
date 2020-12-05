@@ -35,6 +35,7 @@
     "vue-qrcode-reader": "^2.3.13",
     "vue-tour": "^1.5.0",
     "vue2-leaflet": "^2.5.2",
+    "vue2-swiper": "0.0.13",
     "vue2-touch-events": "^3.0.0"
   },
   "devDependencies": {

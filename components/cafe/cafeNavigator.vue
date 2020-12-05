@@ -70,7 +70,7 @@
       }
     },
     watch: {
-      direction(oldValue, newValue) {
+      direction(newValue, oldValue) {
         if(newValue != oldValue){
           this.ActiveTab = 3 - this.ActiveTab;
         }

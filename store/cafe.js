@@ -80,6 +80,7 @@ export const mutations = {
     // push current basket of orders first for editing current orders
     // TODO: move this line out of store
     state.categories.push({
+      pk: 0,
       name: this.app.i18n.t('menu_page.your_current_order'),
       products: []
     })

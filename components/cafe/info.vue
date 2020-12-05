@@ -70,8 +70,8 @@
           <cafepay-map v-if="!globalLoading"
             :isActive="mapActive"
             :cafeName="info.name"
-            :cordinateX="info.location.split(',')[0]"
-            :cordinateY="info.location.split(',')[1]"
+            :cordinateX="info.location ? info.location.split(',')[0] : 0.00000"
+            :cordinateY="info.location ? info.location.split(',')[1] : 0.00000"
             maxZoom="17"
           />
         </div>
