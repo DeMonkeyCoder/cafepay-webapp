@@ -38,57 +38,59 @@
       </div>
     </div>
     <!-- <transition-group :name="slideTransition" tag="div" class=""> -->
-    <div v-for="(cat, i) in menu" :key="cat.name" class="product-list-wrapper">
-      <div v-if="activeCategory == i" :key="cat.pk" class="product-list">
-        <div
-          v-for="(prod, index) in cat.products"
-          :key="prod.pk"
-          class="normal-radius shadow-md has-background-white cp-tb-margin cp-side-margin-half product-item"
-        >
-          <!-- on div below we need to add @click="$store.commit('cafe/setCurrentProduct', prod)" later for product page navigation -->
-          <div class="img-section">
-            <img
-              :src="
-                prod.avatar == null
-                  ? productDefaultImage
-                  : baseUrl + prod.avatar
-              "
-              alt
-            />
-          </div>
+    <b-tabs :value="activeTab" expanded dir="ltr" type="is-toggle" class="menu-category-tabs">
+      <b-tab-item v-for="(cat, i) in menuTabItemCategories" :key="cat.name" class="product-list-wrapper" v-touch:swipe="handleSwipe">
+        <div :key="cat.pk" class="product-list">
+          <div
+            v-for="(prod, index) in cat.products"
+            :key="prod.pk"
+            class="normal-radius shadow-md has-background-white cp-tb-margin cp-side-margin-half product-item"
+          >
+            <!-- on div below we need to add @click="$store.commit('cafe/setCurrentProduct', prod)" later for product page navigation -->
+            <div class="img-section">
+              <img
+                :src="
+                  prod.avatar == null
+                    ? productDefaultImage
+                    : baseUrl + prod.avatar
+                "
+                alt
+              />
+            </div>
 
-          <div class="content-section cp-side-padding cp-tb-padding">
-            <div class="product-title font-norm">{{ prod.name }}</div>
-            <div class="product-description">{{ prod.description }}</div>
-            <div class="product-price" :dir="$dir()">
-              <div v-if="prod.discount > 0" class="product-discount">
-                <span>{{ prod.discount }}%</span>
-                <p>
-                  {{ prod.original_price | currency }}
-                </p>
+            <div class="content-section cp-side-padding cp-tb-padding">
+              <div class="product-title font-norm">{{ prod.name }}</div>
+              <div class="product-description">{{ prod.description }}</div>
+              <div class="product-price" :dir="$dir()">
+                <div v-if="prod.discount > 0" class="product-discount">
+                  <span>{{ prod.discount }}%</span>
+                  <p>
+                    {{ prod.original_price | currency }}
+                  </p>
+                </div>
+
+                {{ prod.price | currency }}
+                <span class="toman">تومان</span>
               </div>
+            </div>
 
-              {{ prod.price | currency }}
-              <span class="toman">تومان</span>
+            <div v-if="prod.available && !menuOnly" class="add-or-remove">
+              <span class="product-add" @click="countChange(index, 1, prod)">
+                <div class="aor-shape">+</div>
+              </span>
+              <span class="product-count">{{ prod.count }}</span>
+              <span class="product-remove" @click="countChange(index, -1, prod)">
+                <div class="aor-shape">-</div>
+              </span>
+            </div>
+
+            <div v-if="!prod.available" class="out-of-order">
+              <p>تمام شد</p>
             </div>
           </div>
-
-          <div v-if="prod.available && !menuOnly" class="add-or-remove">
-            <span class="product-add" @click="countChange(index, 1, prod)">
-              <div class="aor-shape">+</div>
-            </span>
-            <span class="product-count">{{ prod.count }}</span>
-            <span class="product-remove" @click="countChange(index, -1, prod)">
-              <div class="aor-shape">-</div>
-            </span>
-          </div>
-
-          <div v-if="!prod.available" class="out-of-order">
-            <p>تمام شد</p>
-          </div>
         </div>
-      </div>
-    </div>
+      </b-tab-item>
+    </b-tabs>
     <!-- </transition-group> -->
   </div>
 </template>
@@ -153,6 +155,31 @@ export default {
     }
   },
   methods: {
+    handleSwipe(direction){
+      let newIndex = this.activeCategory;
+      if(
+        (direction==='left' && this.$dir() == 'ltr') ||
+        (direction==='right' && this.$dir() == 'rtl')
+      ){
+        newIndex++;
+        while(newIndex < this.menu.length && this.menu[newIndex].products.length == 0){
+          newIndex++;
+        }
+      }
+      else 
+      if(
+        (direction==='right' && this.$dir() == 'ltr') ||
+        (direction==='left' && this.$dir() == 'rtl')
+      ){
+        newIndex--;
+        while(newIndex >= 0 && this.menu[newIndex].products.length == 0){
+          newIndex--;
+        }
+      }
+      if(0 <= newIndex && newIndex < this.menu.length){
+        this.changeActiveCategory(newIndex)
+      }
+    },
     productsPayloadSeperator() {
       // if there is no change just switch to table view
       if (this.productChangeArray.length == 0) {
@@ -247,7 +274,14 @@ export default {
   },
  
   computed: {
-     isMenuPage() {
+    activeTab(){
+      return this.$dir() == 'rtl' ? this.menu.length - 1 - this.activeCategory : this.activeCategory
+    },
+    menuTabItemCategories(){
+      let menuFiltered = Object.assign([], this.menu)
+      return this.$dir() == 'rtl' ? menuFiltered.reverse() : menuFiltered
+    },
+    isMenuPage() {
       return (this.$store.state.currentMainPage == 'currentCafe')
     },
     firstTimeActive() {

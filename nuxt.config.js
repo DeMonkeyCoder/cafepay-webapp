@@ -83,7 +83,8 @@ export default {
     '~/plugins/websocket.js',
     // '~/plugins/jdenticon-2.2.0.js',
     // '~/plugins/ripple',
-    '~/plugins/i18n.js'
+    '~/plugins/i18n.js',
+    '~/plugins/Vue2TouchEvents.js'
   ],
   /*
    ** Nuxt.js modules
