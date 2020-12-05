@@ -42,9 +42,9 @@
           src="@/assets/img/shape/icons/user-info-1.svg"
           alt
         />
-        <h4 class="header cp-tb-padding cp-side-padding">اطلاعات کاربری</h4>
+        <h4 class="header cp-tb-padding cp-side-padding">{{ $t('profile_page.profile_information') }}</h4>
         <p :dir="$dir()" class="detail cp-tb-padding cp-side-padding">
-          عضویت در:
+          {{ $t('profile_page.signup_date') }}:
           <span class="p-text font-18">{{ '2020-09-27' | moment('LL') }}</span>
         </p>
       </div>
@@ -67,7 +67,7 @@
           <b-input
             v-model="userLocal.first_name"
             class="cp-input cp-input-primary "
-            placeholder="نام"
+            :placeholder="$t('profile_page.first_name')"
             icon="account"
           ></b-input>
         </b-field>
@@ -76,7 +76,7 @@
           <b-input
             v-model="userLocal.last_name"
             class="cp-input cp-input-primary "
-            placeholder="نام خانوادگی"
+            :placeholder="$t('profile_page.last_name')"
             icon="account"
           ></b-input>
         </b-field>
@@ -89,7 +89,7 @@
             readonly="readonly"
             v-model="userLocal.phone_number"
             class="cp-input cp-input-primary "
-            placeholder="شماره تلفن"
+            :placeholder="$t('profile_page.phone_number')"
             icon="cellphone"
           ></b-input>
         </b-field>
@@ -132,7 +132,7 @@
           type="is-info"
           expanded
           @click="updateInformation"
-          >تغییر مشخصات</b-button
+          >{{ $t('profile_page.update_information') }}</b-button
         >
       </div>
     </section>

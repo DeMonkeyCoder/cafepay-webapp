@@ -1,6 +1,29 @@
 export default {
+  balance: 'Balance',
+
+  table: {
+    ordering_unavailable: 'سفارش ‌گیری فعال نیست'
+  },
+
   menu_page: {
     your_current_order: 'سفارشات فعلی شما',
+  },
+
+  cafe_info: {
+    about: 'درباره',
+    gallery: 'گالری تصاویر',
+    contact_info: 'اطلاعات تماس'
+  },
+  
+  profile_page: {
+    signup_date: 'عضویت در',
+    profile_information: 'اطلاعات کاربری',
+    terms: 'قوانین و شرایط استفاده',
+    logout: 'خروج از حساب کاربری',
+    first_name: 'نام',
+    last_name: 'نام خانوادگی',
+    phone_number: 'شماره تلفن',
+    update_information: 'تغییر مشخصات'
   },
 
   cafe_navigator: {

@@ -27,7 +27,7 @@
         <img id="profile-img" :src="user.avatar" :alt='user.first_name' />
         <h4 class="header cp-tb-padding cp-side-padding">{{user.full_name}}</h4>
         <p dir="ltr" class="detail cp-tb-padding cp-side-padding">
-          موجودی:
+          {{ $t('balance') }}:
           <span class="p-text font-18">{{user.balance | currency}}</span>
           <span class="toman">تومان</span>
         </p>
@@ -79,14 +79,15 @@
         <nuxt-link to="/user/profile/information">
           <li class="cp-card has-background-white cp-side-padding cp-tb-padding">
             <img src="@/assets/img/shape/icons/user-info-1.svg" alt />
-            اطلاعات کاربری
+            {{ $t('profile_page.profile_information') }}
           </li>
         </nuxt-link>
 
-        <nuxt-link to="/terms">
+        <!-- TODO: Add English terms of use -->
+        <nuxt-link to="/terms" v-if="$i18n.locale == 'fa'">
           <li class="cp-card has-background-white cp-side-padding cp-tb-padding">
             <img src="@/assets/img/shape/icons/term.png" alt />
-            قوانین و شرایط استفاده
+            {{ $t('profile_page.terms') }}
           </li>
         </nuxt-link>
 <!-- 
@@ -109,7 +110,7 @@
 
         <li @click="exitModalActive = true" class="cp-card has-background-white cp-side-padding cp-tb-padding">
           <img src="@/assets/img/shape/icons/logout.svg" alt />
-          خروج از حساب کاربری
+          {{ $t('profile_page.logout') }}
         </li>
       </ul>
     </div>

@@ -3,7 +3,7 @@
     <div v-if="hasActiveTable && menuOnly" class="no-active-table">
       <div>
         <img src="@/assets/img/ordering.png" alt="" />
-        <p class="no-ordering-text">سفارش ‌گیری فعال نیست</p>
+        <p class="no-ordering-text">{{ $t('table.ordering_unavailable') }}</p>
       </div>
     </div>
 
