@@ -17,11 +17,12 @@
       >
     </div>
 
-    <div class="category-list">
+    <div class="category-list" id="menu-category-list" ref="menuCategoryList">
       <div
         class="category-item-wrapper"
         v-for="(cat, index) in menu"
         :key="cat.pk"
+        :id="'menu-category-item-' + index"
       >
         <div
           v-if="cat.products.length > 0"
@@ -45,59 +46,59 @@
       <swiper dir="ltr" ref="menuCategoriesSwipe"
       @slide-change-end="handleSlideChange"
       @slider-move="handleSlideMove">
-      <div :dir="$dir()" v-for="(cat, i) in menuTabItemCategories"
-        :key="cat.name" class="product-list-wrapper">
-        <div :key="cat.pk" class="product-list">
-          <div
-            v-for="(prod, index) in cat.products"
-            :key="prod.pk"
-            class="normal-radius shadow-md has-background-white cp-tb-margin cp-side-margin-half product-item"
-          >
-            <!-- on div below we need to add @click="$store.commit('cafe/setCurrentProduct', prod)" later for product page navigation -->
-           <div class="img-section">
-              <img
-                :src="
-                  prod.avatar == null
-                    ? productDefaultImage
-                    : baseUrl + prod.avatar
-                "
-                alt
-              />
-            </div>
-
-            <div class="content-section cp-side-padding cp-tb-padding">
-              <div class="product-title font-norm">{{ prod.name }}</div>
-              <div class="product-description">{{ prod.description }}</div>
-              <div class="product-price" :dir="$dir()">
-                <div v-if="prod.discount > 0" class="product-discount">
-                  <span>{{ prod.discount }}%</span>
-                  <p>
-                    {{ prod.original_price | currency }}
-                  </p>
-                </div>
-
-                {{ prod.price | currency }}
-                <span class="toman">تومان</span>
+        <div :dir="$dir()" v-for="(cat, i) in menuTabItemCategories"
+          :key="cat.name" class="product-list-wrapper">
+          <div :key="cat.pk" class="product-list">
+            <div
+              v-for="(prod, index) in cat.products"
+              :key="prod.pk"
+              class="normal-radius shadow-md has-background-white cp-tb-margin cp-side-margin-half product-item"
+            >
+              <!-- on div below we need to add @click="$store.commit('cafe/setCurrentProduct', prod)" later for product page navigation -->
+            <div class="img-section">
+                <img
+                  :src="
+                    prod.avatar == null
+                      ? productDefaultImage
+                      : baseUrl + prod.avatar
+                  "
+                  alt
+                />
               </div>
-            </div>
 
-            <div v-if="prod.available && !menuOnly" class="add-or-remove">
-              <span class="product-add" @click="countChange(index, 1, prod)">
-                <div class="aor-shape">+</div>
-              </span>
-              <span class="product-count">{{ prod.count }}</span>
-              <span class="product-remove" @click="countChange(index, -1, prod)">
-                <div class="aor-shape">-</div>
-              </span>
-            </div>
+              <div class="content-section cp-side-padding cp-tb-padding">
+                <div class="product-title font-norm">{{ prod.name }}</div>
+                <div class="product-description">{{ prod.description }}</div>
+                <div class="product-price" :dir="$dir()">
+                  <div v-if="prod.discount > 0" class="product-discount">
+                    <span>{{ prod.discount }}%</span>
+                    <p>
+                      {{ prod.original_price | currency }}
+                    </p>
+                  </div>
 
-            <div v-if="!prod.available" class="out-of-order">
-              <p>تمام شد</p>
+                  {{ prod.price | currency }}
+                  <span class="toman">تومان</span>
+                </div>
+              </div>
+
+              <div v-if="prod.available && !menuOnly" class="add-or-remove">
+                <span class="product-add" @click="countChange(index, 1, prod)">
+                  <div class="aor-shape">+</div>
+                </span>
+                <span class="product-count">{{ prod.count }}</span>
+                <span class="product-remove" @click="countChange(index, -1, prod)">
+                  <div class="aor-shape">-</div>
+                </span>
+              </div>
+
+              <div v-if="!prod.available" class="out-of-order">
+                <p>تمام شد</p>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-</swiper>
+      </swiper>
     </div>
     <!-- </transition-group> -->
   </div>
@@ -167,6 +168,9 @@ export default {
       ]
     }
   },
+  mounted(){
+    this.setActiveTab(true);
+  },
   methods: {
     handleSlideMove(offset) {
       if(!this.lastSwipeOffset){
@@ -174,10 +178,10 @@ export default {
         return
       }
       let width = document.getElementById('menu-swiper-container').offsetWidth;
-      console.log(offset);
-      console.log(width);
-      console.log(offset / width);
-      console.log('dir');
+      // console.log(offset);
+      // console.log(width);
+      // console.log(offset / width);
+      // console.log('dir');
       let goingRight = offset - this.lastSwipeOffset < 0
       let pageIndex = (goingRight ? Math.ceil((-offset) / width) : Math.floor((-offset) / width))
       if(pageIndex >= this.menuTabItemCategories.length) {
@@ -190,7 +194,7 @@ export default {
       let pk = this.menuTabItemCategories[pageIndex].pk
       let newActiveCategory = this.menu.findIndex(cat => cat.pk == pk)
       if(this.activeCategory != newActiveCategory){
-        this.activeCategory = newActiveCategory
+        this.activeCategory = newActiveCategory;
       }
       this.lastSwipeOffset = offset
     },
@@ -304,6 +308,44 @@ export default {
 
       // total Price of anything user wants to add to table (show in add to table btn)
       // end of else
+    },
+
+    /**
+     * https://codepen.io/Jayesh_v/pen/oMgwRO
+     * scrollTo - Horizontal Scrolling
+     * @param {(HTMLElement ref)} element - Scroll Container
+     * @param {number} scrollPixels - pixel to scroll
+     * @param {number} duration -  Duration of scrolling animation in millisec
+     */
+    scrollTo(element, scrollPixels, duration) {
+      const scrollPos = element.scrollLeft;
+      // Condition to check if scrolling is required
+      // if ( !( (scrollPos === 0 || scrollPixels > 0) && (element.clientWidth + scrollPos === element.scrollWidth || scrollPixels < 0))) 
+      // {
+        // Get the start timestamp
+        const startTime =
+          "now" in window.performance
+            ? performance.now()
+            : new Date().getTime();
+        
+        function scroll(timestamp) {
+          //Calculate the timeelapsed
+          const timeElapsed = timestamp - startTime;
+          //Calculate progress 
+          const progress = Math.min(timeElapsed / duration, 1);
+          //Set the scrolleft
+          element.scrollLeft = scrollPos + scrollPixels * progress;
+          //Check if elapsed time is less then duration then call the requestAnimation, otherwise exit
+          if (timeElapsed < duration) {
+            //Request for animation
+            window.requestAnimationFrame(scroll);
+          } else {
+            return;
+          }
+        }
+        //Call requestAnimationFrame on scroll function first time
+        window.requestAnimationFrame(scroll);
+      // }
     }
   },
  
@@ -344,6 +386,19 @@ export default {
     }
   },
   watch: {
+    activeCategory(newValue, _oldValue){
+      const element = this.$refs.menuCategoryList;
+      let startOfScroll = this.$dir() == 'rtl'
+                        ? element.firstChild.getBoundingClientRect().right
+                        : element.firstChild.getBoundingClientRect().left
+      let whereWeWant = this.$dir() == 'rtl'
+                        ? document.getElementById('menu-category-item-' + newValue)
+                                  .getBoundingClientRect().right + 20
+                        : document.getElementById('menu-category-item-' + newValue)
+                                  .getBoundingClientRect().left - 20
+      const amount = (whereWeWant - startOfScroll) - document.getElementById('menu-category-list').scrollLeft
+      this.scrollTo(element, amount, 300)
+    },
     menuTabItemCategories(_newValue, _oldValue){
       this.setActiveTab(true);
     },
@@ -394,248 +449,4 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import url("https://fonts.googleapis.com/css?family=Nanum+Gothic&subset=korean");
-body,
-em,
-i {
-  font-family: "Helvetica Neue", sans-serif;
-  font-weight: 300;
-  font-style: normal;
-}
-.hljs {
-  margin: 30px auto;
-  max-width: 800px;
-  padding: 10px;
-  border-radius: 5px;
-}
-.container {
-  max-width: 800px;
-  width: 100%;
-  margin: 30px auto;
-}
-h1 a {
-  position: relative;
-  color: #333;
-}
-pre {
-  max-width: 800px;
-  margin: 30px auto;
-}
-ul.extra {
-  max-width: 800px;
-  margin: 10px auto;
-  font-size: 16px;
-  padding: 10px 10px 10px 40px;
-  border-radius: 10px;
-  background: #f5f5f5;
-  box-sizing: border-box;
-  list-style: initial;
-}
-ul.extra li {
-  font-size: 16px;
-  margin: 10px 0px;
-  list-style: initial;
-  height: auto;
-  overflow: visible;
-}
-
-.flicking {
-  width: 100%;
-  margin: 0px auto;
-  background: #eee;
-  background: rgba(55, 55, 55, 0.1);
-  border-radius: 5px;
-}
-.flicking .panel,
-.flicking .infinite {
-  position: relative;
-  display: block;
-  border-radius: 5px;
-  width: 100%;
-  margin-top: 5px;
-  background: #f55;
-  height: 100%;
-  text-align: center;
-  line-height: 120px;
-}
-.flicking .panel:nth-child(5n + 1) {
-  background: #f47071;
-}
-.flicking .panel:nth-child(5n + 2) {
-  background: #f69462;
-}
-.flicking .panel:nth-child(5n + 3) {
-  background: #ede484;
-}
-.flicking .panel:nth-child(5n + 4) {
-  background: #90f290;
-}
-.flicking .panel:nth-child(5n + 5) {
-  background: #78caff;
-}
-.flicking .infinite0 {
-  background: #f47071;
-}
-.flicking .infinite1 {
-  background: #f69462;
-}
-.flicking .infinite2 {
-  background: #ede484;
-}
-.flicking .infinite3 {
-  background: #90f290;
-}
-.flicking .infinite4 {
-  background: #78caff;
-}
-/*
-Atom One Dark by Daniel Gamage
-Original One Dark Syntax theme from https://github.com/atom/one-dark-syntax
-
-base:    #282c34
-mono-1:  #abb2bf
-mono-2:  #818896
-mono-3:  #5c6370
-hue-1:   #56b6c2
-hue-2:   #61aeee
-hue-3:   #c678dd
-hue-4:   #98c379
-hue-5:   #e06c75
-hue-5-2: #be5046
-hue-6:   #d19a66
-hue-6-2: #e6c07b
-*/
-.hljs {
-  display: block;
-  overflow-x: auto;
-  padding: 0.5em;
-  color: #abb2bf;
-  background: #282c34;
-}
-.hljs-comment,
-.hljs-quote {
-  color: #5c6370;
-  font-style: italic;
-}
-.hljs-doctag,
-.hljs-keyword,
-.hljs-formula {
-  color: #c678dd;
-}
-.hljs-section,
-.hljs-name,
-.hljs-selector-tag,
-.hljs-deletion,
-.hljs-subst {
-  color: #e06c75;
-}
-.hljs-literal {
-  color: #56b6c2;
-}
-.hljs-string,
-.hljs-regexp,
-.hljs-addition,
-.hljs-attribute,
-.hljs-meta-string {
-  color: #98c379;
-}
-.hljs-built_in,
-.hljs-class .hljs-title {
-  color: #e6c07b;
-}
-.hljs-attr,
-.hljs-variable,
-.hljs-template-variable,
-.hljs-type,
-.hljs-selector-class,
-.hljs-selector-attr,
-.hljs-selector-pseudo,
-.hljs-number {
-  color: #d19a66;
-}
-.hljs-symbol,
-.hljs-bullet,
-.hljs-link,
-.hljs-meta,
-.hljs-selector-id,
-.hljs-title {
-  color: #61aeee;
-}
-.hljs-emphasis {
-  font-style: italic;
-}
-.hljs-strong {
-  font-weight: bold;
-}
-.hljs-link {
-  text-decoration: underline;
-}
-.plugins h1 {
-  line-height: 1;
-}
-.plugins h1 a {
-  font-size: 20px;
-  vertical-align: bottom;
-  margin-left: 10px;
-  /* color: #55e; */
-}
-.plugins .flicking {
-  width: 500px;
-  height: 200px;
-  margin: 0px auto;
-  background: #eee;
-  background: rgba(55, 55, 55, 0.1);
-  border-radius: 5px;
-}
-.plugins .flicking .panel {
-  position: relative;
-  display: block;
-  border-radius: 5px;
-  width: 400px;
-  margin-top: 5px;
-  background: #f55;
-  height: 200px;
-  text-align: center;
-  line-height: 200px;
-  overflow: hidden;
-}
-.plugins .panel:after {
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  background: rgba(0, 0, 0, 0.1);
-}
-.plugins .panel img {
-  top: -100%;
-  bottom: -100%;
-  margin: auto;
-  position: absolute;
-  left: 50%;
-  transform: translate(-50%);
-}
-
-a {
-  margin: 10px;
-}
-.component-fade-enter-active,
-.component-fade-leave-active {
-  transition: opacity 0.3s ease;
-}
-.component-fade-enter, .component-fade-leave-to
-/* .component-fade-leave-active below version 2.1.8 */ {
-  opacity: 0;
-}
-
-.eg-flick-viewport {
-  display: flex;
-}
-.eg-flick-camera {
-  display: flex;
-  flex-direction: row;
-}
-
-
 </style>
