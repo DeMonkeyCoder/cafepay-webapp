@@ -21,7 +21,7 @@
     </div>
 
     <div
-      v-if="hasActiveTable && tokenType == 'menu-only'"
+      v-if="hasActiveTable && tokenType == 'menu-only' && !user.table_uuid"
       class="no-active-table"
     >
       <div>
@@ -30,7 +30,7 @@
       </div>
     </div>
 
-    <div v-if="user.table_uuid && tokenType == 'pre-order'" class="cp-padding">
+    <div v-if="user.table_uuid" class="cp-padding">
       <header class="font-18 font-bold cp-b-margin">سفارشات فعلی</header>
       <nuxt-link :to="'/user/liveorder/'+ user.table_uuid"><div class="preorders-in-table cp-card has-background-white cp-padding">
         <div class="preorders-in-table__info">
