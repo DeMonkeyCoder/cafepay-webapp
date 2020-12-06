@@ -25,6 +25,7 @@
 </template>
 
 <script>
+import Vue from 'vue'
 import lottie from 'lottie-web';
 import successfullPayment1 from '~/assets/img/27572-success-animation.json'
 import errorAnimation from '~/assets/img/error.json'
@@ -43,6 +44,7 @@ import errorAnimation from '~/assets/img/error.json'
           // we dont want user to go back to table so we clear table
           this.$store.commit('table/clearData')
           this.$store.commit('cafe/bindProductCount', false)
+          Vue.prototype.$disconnect()
           this.$router.push('/user/liveorder/12')
         }
         else {

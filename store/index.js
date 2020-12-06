@@ -29,7 +29,10 @@ export const mutations = {
   SOCKET_ONOPEN(state, event) {
     Vue.prototype.$socket = event.currentTarget
     state.socket.isConnected = true
+    let preorderToken;
     this.dispatch('table/tableConnection')
+    // if (state.cafe.tokenType == 'normal') 
+    // else if (state.cafe.tokenType == 'preorder') this.dispatch('table/preorderConnection')
 
   },
   SOCKET_ONMESSAGE(state, rawMessage) {

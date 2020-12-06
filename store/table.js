@@ -150,6 +150,22 @@ export const actions = {
 
   },
 
+  preorderConnection(context, token) {
+    let joinRequest = {
+      request: {
+        endpoint: `table/${token}/join/simple/by-token/`,
+        data: {},
+        headers: {
+          Authorization: "Token " + context.rootState.token
+        },
+        method: "WATCH"
+      }
+    };
+    let joinRequest_str = JSON.stringify(joinRequest);
+    Vue.prototype.$socket.send(joinRequest_str);
+
+  },
+
   changeProductsOnTable(context, req) {
 
     return new Promise((resolve, reject) => {

@@ -210,20 +210,22 @@ export default {
           delete this.$route.query.token
           this.CustomLoader = false         
 
+          if (err.response) {
           //  it means wrong table token
-          if (err.response.status == 400) {
-            this.$buefy.toast.open({
-              duration: 3000,
-              message: `کد وارد شده نادرست است`,
-              position: 'is-top',
-              type: 'is-danger',
-            })
-          }
-          
-          // it means user is not logged in and table requires it so we open login modal
-          else if (err.response.status == 401) {
-            this.enterCodeModalActive = false
-            this.loginActive = true
+            if (err.response.status == 400) {
+              this.$buefy.toast.open({
+                duration: 3000,
+                message: `کد وارد شده نادرست است`,
+                position: 'is-top',
+                type: 'is-danger',
+              })
+            }
+            
+            // it means user is not logged in and table requires it so we open login modal
+            else if (err.response.status == 401) {
+              this.enterCodeModalActive = false
+              this.loginActive = true
+            }
           }
         })
     },

@@ -132,6 +132,7 @@
       <!-- <v-tour name="myTour" :steps="steps" :options="{ highlight: true }"></v-tour> -->
 
       <div class="table-header cp-header cp-tb-padding cp-side-padding">
+        
         <div class="info">
           <img
             :src="
