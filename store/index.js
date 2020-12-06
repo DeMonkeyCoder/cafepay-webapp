@@ -132,13 +132,20 @@ export const actions = {
           
           // sets pk, avatar, name and table id
           commit('cafe/setBasic', res.data)
+          commit('setActiveTable', true)
+          // if TYPE == 2 it's preorder and token would be table uuid
+          if (res.data.type == 2){
+            commit('table/setToken', {token: res.data.table.uuid, number: 'پیش سفارش'})
+          }
+          else {
+            res.data.table['token'] = res.data.token
+            // save active table state in localstorage for refresh (no longer valid)
+            commit('table/setToken', res.data.table)
+          }
           // execute the action for getting menu, detailed info, comments and posts
           dispatch('cafe/retrieveMenu')
 
-          commit('setActiveTable', true)
-          res.data.table['token'] = res.data.token
-          // save active table state in localstorage for refresh
-          commit('table/setToken', res.data.table)
+
 
           // attach token to table
           commit('changeNavigation', 'currentCafe')

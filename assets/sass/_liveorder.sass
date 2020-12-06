@@ -4,6 +4,8 @@
     display: flex
     justify-content: center
     align-items: center
+    position: relative
+    z-index: 1000
     &__info
       width: 100%
       // flex: 2
@@ -22,7 +24,7 @@
           padding-right: $padding / 2
     &__btn
       flex: 1
-      a
+      button
         border: none!important
         background-color: white!important
         i
@@ -30,6 +32,7 @@
   &__content
     position: relative
     &__status
+      min-height: 100px
       #animation-order-status
         width: 50%
         margin: auto

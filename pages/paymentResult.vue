@@ -40,12 +40,12 @@ import errorAnimation from '~/assets/img/error.json'
       backtoapp() {
         this.$store.commit('table/clearWishToPay')
         // #preorder
-        if (1 === 1) {
+        if (this.info.table_type == 2) {
           // we dont want user to go back to table so we clear table
+          Vue.prototype.$disconnect()
           this.$store.commit('table/clearData')
           this.$store.commit('cafe/bindProductCount', false)
-          Vue.prototype.$disconnect()
-          this.$router.push('/user/liveorder/12')
+          this.$router.push(`/user/liveorder/${this.info.table_uuid}`)
         }
         else {
           this.$store.commit('changeNavigation', 'cp-table')

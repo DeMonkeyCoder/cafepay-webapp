@@ -1,0 +1,41 @@
+.preorders-in-table
+  display: flex
+  &__info
+    flex: 7
+    color: $black
+    text-align: right
+  &__status
+    flex: 1
+    display: flex
+    justify-content: center
+    align-items: center
+    span
+      animation-name: blink
+      animation-duration: 2s
+      animation-timing-function: ease
+      animation-iteration-count: infinite
+      width: 20px
+      height: 20px
+      border-radius: 10px
+      display: block
+    &--waiting
+      span
+        background-color: grey
+    &--preparing
+      span
+        background-color: #ffdb58
+    &--ready
+      span
+        background-color: $green
+    &--rejected
+      span
+        background-color: red
+
+@keyframes blink 
+  0%   
+    opacity: 0
+  50%
+    opacity: 1
+  100%
+    opacity: 0
+

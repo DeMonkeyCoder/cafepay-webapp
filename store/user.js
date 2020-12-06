@@ -33,6 +33,16 @@ export const actions = {
           params: {}
         }).then(res => {
           context.commit('set', res)
+          if (res.active_table_uuid) {
+            context.commit('cafe/setType', 'pre-order', {
+              root: true
+            })
+            context.commit('table/setToken', {
+              token: res.active_table_uuid,
+              number: 'پیش سفارش'
+            }, {root: true})
+            Vue.prototype.$connect()
+          }
           resolve(res)
         })
 

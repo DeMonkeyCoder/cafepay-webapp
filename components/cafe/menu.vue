@@ -6,7 +6,7 @@
       :options="myOptions"
       :callbacks="myCallbacks"
     ></v-tour>
-    <div id="selected-products-preview" v-if="tokenType !== 'menu-only'">
+    <div id="selected-products-preview" v-if="tokenType !== 'menu-only' && !user.table_uuid">
       <b-button
         @click="productsPayloadSeperator"
         :loading="globalLoading"
@@ -48,7 +48,7 @@
           :key="prod.pk"
           class="normal-radius shadow-md has-background-white cp-tb-margin cp-side-margin-half product-item"
         >
-          <div v-if="prod.available && tokenType !== 'menu-only'" class="add-or-remove">
+          <div v-if="prod.available && tokenType !== 'menu-only' && !user.table_uuid" class="add-or-remove">
             <span class="product-add" @click="countChange(index, 1, prod)">
               <div class="aor-shape">+</div>
             </span>

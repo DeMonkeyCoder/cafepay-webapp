@@ -72,6 +72,11 @@ export const mutations = {
     state.storeRedirect = flag
   },
 
+  setType(state, type) {
+    state.tokenType = type
+    
+  },
+
   clear(state) {
     state.categories = []
   },

@@ -1,13 +1,63 @@
 <template>
   <div>
-    <div v-if="hasActiveTable && tokenType == 'menu-only'" class="no-active-table">
+    <div
+      v-if="!hasActiveTable && tokenType != 'pre-order'"
+      class="no-active-table"
+    >
+      <div>
+        <img src="@/assets/img/shape/icons/burger.svg" alt />
+        <p class="cp-side-margin-2x">
+          ابتدا به بخش
+          <span
+            @click="$store.commit('changeNavigation', 'scan')"
+            class="p-text"
+            >اسکن</span
+          >
+          بروید
+        </p>
+        <p>و بارکد مربوط به میز را اسکن کنید</p>
+        <p>یا کد میز را وارد نمایید</p>
+      </div>
+    </div>
+
+    <div
+      v-if="hasActiveTable && tokenType == 'menu-only'"
+      class="no-active-table"
+    >
       <div>
         <img src="@/assets/img/ordering.png" alt="" />
         <p class="no-ordering-text">سفارش ‌گیری فعال نیست</p>
       </div>
     </div>
 
-    <div v-if="hasActiveTable && tokenType !== 'menu-only'" class="has-active-table">
+    <div v-if="user.table_uuid && tokenType == 'pre-order'" class="cp-padding">
+      <header class="font-18 font-bold cp-b-margin">سفارشات فعلی</header>
+      <nuxt-link :to="'/user/liveorder/'+ user.table_uuid"><div class="preorders-in-table cp-card has-background-white cp-padding">
+        <div class="preorders-in-table__info">
+          <p class="font-18">
+            سفارش از:
+            <span class="font-norm p-text font-18">{{ table.cafe_name }}</span>
+          </p>
+          <p dir="ltr" class="font-16 font-bold" :class="{'p-text': table.status == 'ready'}">{{ statusText }}</p>
+        </div>
+
+        <div class="preorders-in-table__status"
+            :class="{
+              'preorders-in-table__status--waiting': table.status == 'waiting',
+              'preorders-in-table__status--preparing': table.status == 'preparing',
+              'preorders-in-table__status--ready': table.status == 'ready',
+              'preorders-in-table__status--rejected': table.status == 'rejected',
+            }">
+          <span></span>
+        </div>
+      </div>
+      </nuxt-link>
+    </div>
+
+    <div
+      v-if="hasActiveTable && !user.table_uuid && tokenType !== 'menu-only'"
+      class="has-active-table"
+    >
       <b-modal
         class="table-options-modal simple-action-modal"
         :active.sync="isTableOptionsModalActive"
@@ -75,11 +125,14 @@
               </li>
             </ul>
 
-          <div v-if="tokenType == 'pre-order'" class="preorder-warning">
-            <div><b-icon size="is-medium" icon="alert-circle-outline"></b-icon></div>
-           <p>توجه داشته باشید سفارش در محل مجموعه به شما تحویل داده خواهد شد.</p>
-          </div>
-
+            <div v-if="tokenType == 'pre-order'" class="preorder-warning">
+              <div>
+                <b-icon size="is-medium" icon="alert-circle-outline"></b-icon>
+              </div>
+              <p>
+                توجه داشته باشید سفارش در محل مجموعه به شما تحویل داده خواهد شد.
+              </p>
+            </div>
           </section>
           <section class="modal-action">
             <b-button
@@ -132,7 +185,6 @@
       <!-- <v-tour name="myTour" :steps="steps" :options="{ highlight: true }"></v-tour> -->
 
       <div class="table-header cp-header cp-tb-padding cp-side-padding">
-        
         <div class="info">
           <img
             :src="
@@ -159,15 +211,14 @@
       >
         <!-- <div id="table-status-bar-progress-wrapper" class></div> -->
         <p v-if="PaymentProgress != 100">
- 
           <span class="font-12">مجموع سفارشات: </span>
           <span class="total-cost">{{
             table.payment.total_amount | currency
           }}</span>
-        -
-                   <span class="font-12"> پرداخت شده:</span>
+          -
+          <span class="font-12"> پرداخت شده:</span>
           <span class="p-text font-norm total-payment">{{
-            (table.payment.payed_amount) | currency
+            table.payment.payed_amount | currency
           }}</span>
         </p>
 
@@ -210,23 +261,6 @@
         </div>
       </div>
     </div>
-
-    <div v-if="!hasActiveTable" class="no-active-table">
-      <div>
-        <img src="@/assets/img/shape/icons/burger.svg" alt />
-        <p class="cp-side-margin-2x">
-          ابتدا به بخش
-          <span
-            @click="$store.commit('changeNavigation', 'scan')"
-            class="p-text"
-            >اسکن</span
-          >
-          بروید
-        </p>
-        <p>و بارکد مربوط به میز را اسکن کنید</p>
-        <p>یا کد میز را وارد نمایید</p>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -247,6 +281,8 @@ export default {
       ordersToPay: [],
       ordersToPayforServer: [],
       preInvoiceActive: false,
+      hasPreOrder: true,
+      preorders: [{}],
     }
   },
   computed: {
@@ -264,6 +300,28 @@ export default {
     },
     totalWishToPayOrder() {
       return this.$store.getters['table/totalWishToPay']
+    },
+
+    statusText() {
+      let text
+      switch (this.table.status) {
+        case 'waiting':
+          text = 'در انتظار تایید توسط پذیرنده'
+          break
+        case 'preparing':
+          text = 'در حال آماده‌سازی سفارش شما'
+          break
+        case 'ready':
+          text = '!سفارش شما آماده است'
+          break
+        case 'rejected':
+          text = 'سفارش شما توسط پذیرنده رد شد'
+          break
+
+        default:
+          break
+      }
+      return text
     },
 
     PaymentProgress() {
@@ -334,52 +392,10 @@ export default {
   },
   mounted() {},
   watch: {
-    // 'table.persons': {
-    //   immediate: true,
-    //   handler(newVal){
-    //     if (newVal.length > 0) {
-    //       setTimeout(() => {
-    //         this.$tours['myTour'].start()
-    //       }, 1000);
-    //     }
-    //   }
-
-    // },
     PaymentProgress: {
       immediate: true,
-      handler(val, old) {
-        //   function paymentDOMCheck(params) {
-        //     let progressBar = document.getElementById(
-        //       'table-status-bar-progress-wrapper'
-        //     )
-        //     if (progressBar == null) paymentDOMCheck()
-        //     else {
-        //         progressBar.style.width = `${val}%`
-        //         if (val == 100)
-        //           progressBar.style.borderRadius = '10px 10px 10px 10px'
-        //     }
-        //   }
-        //   paymentDOMCheck()
-      },
+      handler(val, old) {},
     },
-
-    // totalWishToPayOrder: {
-    //   immediate: true,
-    //   handler(val, old) {
-    //     if (document.getElementById('pay-checkout') != null) {
-    //       if (val > 0) {
-    //         // document.getElementById('pay-checkout').classList.add('pay-checkout-is-shown')
-    //         setTimeout(() => {
-    //           $('#pay-checkout').addClass('pay-checkout-is-shown')
-    //         }, 100);
-    //       } else {
-    //               setTimeout(() => {
-    //           $('#pay-checkout').removeClass('pay-checkout-is-shown')
-    //         }, 100);
-    //       }
-    //     }
-    //   }
-    // }
   },
 }
 </script>
