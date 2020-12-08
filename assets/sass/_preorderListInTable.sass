@@ -1,15 +1,20 @@
 .preorders-in-table
   display: flex
   &__info
-    flex: 7
     color: $black
     text-align: right
+    &__cafe-name
+      font-size: 18px!important
+      span
+        font-size: 18px!important
+    &__status
+      font-size: 14px!important
   &__status
     flex: 1
     display: flex
-    justify-content: center
+    justify-content: flex-end
     align-items: center
-    span
+    span.preorder-status-span
       animation-name: blink
       animation-duration: 2s
       animation-timing-function: ease
@@ -18,17 +23,21 @@
       height: 20px
       border-radius: 10px
       display: block
+
+    &--payment
+      span.preorder-status-span
+        background-color: grey
     &--waiting
-      span
+      span.preorder-status-span
         background-color: grey
     &--preparing
-      span
+      span.preorder-status-span
         background-color: #ffdb58
     &--ready
-      span
+      span.preorder-status-span
         background-color: $green
     &--rejected
-      span
+      span.preorder-status-span
         background-color: red
 
 @keyframes blink 

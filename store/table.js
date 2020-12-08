@@ -9,7 +9,7 @@ export const state = () => ({
   table_number: null,
   token: null,
   status: null,
-  cafe_name: '',
+  cafe: '',
   tpayment: 0,
   persons: [],
   payment: {},
@@ -69,7 +69,9 @@ export const mutations = {
     state.persons = table.persons
     state.payment = rawData.payment_info
     state.status = table.status
-    state.cafe_name = rawData.cafe.name
+    // we use this data to handle payment status in preorder
+    state.cafe = rawData.cafe
+
 
     // bind the user's orders count to menu data
     // first we need to find the user using the app from persons array
@@ -150,29 +152,11 @@ export const actions = {
         method: "WATCH"
       }
     };
-    if (preOrderToken) {
-      Vue.prototype.$connect()
-    }
     let joinRequest_str = JSON.stringify(joinRequest);
     Vue.prototype.$socket.send(joinRequest_str);
 
   },
 
-  preorderConnection(context, token) {
-    let joinRequest = {
-      request: {
-        endpoint: `table/${token}/join/simple/by-token/`,
-        data: {},
-        headers: {
-          Authorization: "Token " + context.rootState.token
-        },
-        method: "WATCH"
-      }
-    };
-    let joinRequest_str = JSON.stringify(joinRequest);
-    Vue.prototype.$socket.send(joinRequest_str);
-
-  },
 
   changeProductsOnTable(context, req) {
 

@@ -12,7 +12,7 @@
       </nuxt-link>
       <div class="live-preorder__header__info normal-radius">
         <p class="font-norm normal-radius" dir="rtl">
-          سفارش فعلی: <span class="p-text font-16 font-bold">{{table.cafe_name}}</span>
+          سفارش فعلی: <span class="p-text font-16 font-bold">{{table.cafe.name}}</span>
         </p>
       </div>
     </header>
@@ -79,6 +79,7 @@ export default {
       immediate: false,
       handler(val, oldValue) {
         let animationData = null
+        document.getElementById('animation-order-status').innerHTML = ''
         console.log('table generated in liveorder', val);
         switch (val.status) {
           case 'waiting':
@@ -102,7 +103,7 @@ export default {
             break
         }
         if (animationData) {
-          document.getElementById('animation-order-status').innerHTML = ''
+          
           setTimeout(() => {
             let preloader = lottie.loadAnimation({
               container: document.getElementById('animation-order-status'), // the dom element that will contain the animation
@@ -120,7 +121,7 @@ export default {
   beforeMount() {
      this.$store.commit('cafe/setType', 'pre-order')
      this.$store.commit('table/setToken', {token: this.$route.params.id, number: 'پیش سفارش'})
-     Vue.prototype.$connect()
+      if (!this.$store.state.socket.isConnected)Vue.prototype.$connect()
 
   },
   mounted() {

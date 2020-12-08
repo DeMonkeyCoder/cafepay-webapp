@@ -94,6 +94,12 @@ Vue.mixin({
     user() {
       return this.$store.state.user.user
     },
+    table() {
+      return this.$store.state.table
+    },
+    ordersPaid() {
+      return ((this.table.payment.total_amount - this.table.payment.payed_amount == 0) && this.table.payment.total_amount > 0)
+    },
     tokenType() {
       return this.$store.state.cafe.tokenType
     },

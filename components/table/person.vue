@@ -1,12 +1,12 @@
 <template>
   <div class="table-person">
-    <v-tour
+    <!-- <v-tour
       v-if="first"
       name="sliderTour"
       :steps="steps"
       :options="myOptions"
       :callbacks="myCallbacks"
-    ></v-tour>
+    ></v-tour> -->
 
     <div class="person-title has-background-white cp-tb-margin">
       <img :src="person.avatar" :alt="person.name" />

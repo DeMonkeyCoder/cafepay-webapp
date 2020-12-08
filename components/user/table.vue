@@ -1,7 +1,7 @@
 <template>
   <div>
     <div
-      v-if="!hasActiveTable && tokenType != 'pre-order'"
+      v-if="showInitialTableView"
       class="no-active-table"
     >
       <div>
@@ -21,7 +21,7 @@
     </div>
 
     <div
-      v-if="hasActiveTable && tokenType == 'menu-only' && !user.table_uuid"
+      v-if="showOrderingIsDisabled"
       class="no-active-table"
     >
       <div>
@@ -30,32 +30,34 @@
       </div>
     </div>
 
-    <div v-if="user.table_uuid" class="cp-padding">
+    <div v-if="showPreOrder" class="cp-padding">
       <header class="font-18 font-bold cp-b-margin">سفارشات فعلی</header>
       <nuxt-link :to="'/user/liveorder/'+ user.table_uuid"><div class="preorders-in-table cp-card has-background-white cp-padding">
         <div class="preorders-in-table__info">
-          <p class="font-18">
+          <p class="preorders-in-table__info__cafe-name">
             سفارش از:
-            <span class="font-norm p-text font-18">{{ table.cafe_name }}</span>
+            <span class="font-norm p-text">{{ table.cafe.name }}</span>
           </p>
-          <p dir="ltr" class="font-16 font-bold" :class="{'p-text': table.status == 'ready'}">{{ statusText }}</p>
+          <p dir="ltr" class=" font-bold preorders-in-table__info__status" :class="{'p-text': table.status == 'ready' && ordersPaid}">{{ statusText }}</p>
         </div>
 
         <div class="preorders-in-table__status"
             :class="{
+              'preorders-in-table__status--payment': table.status == 'payment',
               'preorders-in-table__status--waiting': table.status == 'waiting',
               'preorders-in-table__status--preparing': table.status == 'preparing',
               'preorders-in-table__status--ready': table.status == 'ready',
               'preorders-in-table__status--rejected': table.status == 'rejected',
             }">
-          <span></span>
+          <span class="preorder-status-span" v-if="ordersPaid"></span>
+          <b-button @click="goToTokenAndPay" type="is-info">پرداخت</b-button>
         </div>
       </div>
       </nuxt-link>
     </div>
 
     <div
-      v-if="hasActiveTable && !user.table_uuid && tokenType !== 'menu-only'"
+      v-if="showTableOrders"
       class="has-active-table"
     >
       <b-modal
@@ -295,15 +297,15 @@ export default {
     totaltoPay() {
       return this.totalWishToPayOrder + this.cafepayFee
     },
-    table() {
-      return this.$store.state.table
-    },
+
     totalWishToPayOrder() {
       return this.$store.getters['table/totalWishToPay']
     },
 
     statusText() {
       let text
+      if (!this.ordersPaid && this.table.status) text = 'سفارش خود را پرداخت کنید'
+      else {
       switch (this.table.status) {
         case 'waiting':
           text = 'در انتظار تایید توسط پذیرنده'
@@ -321,7 +323,25 @@ export default {
         default:
           break
       }
+      }
       return text
+    },
+
+
+    showPreOrder(){
+      return (this.user.table_uuid && (this.ordersPaid && this.hasActiveTable || !this.ordersPaid && !this.hasActiveTable)  )
+    },
+
+    showTableOrders(){
+      return (this.hasActiveTable && this.tokenType !== 'menu-only' && ( !this.ordersPaid  || !this.user.table_uuid ) )
+    },
+
+    showInitialTableView(){
+      return (!this.hasActiveTable && this.tokenType != 'pre-order')
+    },
+
+    showOrderingIsDisabled(){
+      return (this.hasActiveTable && this.tokenType == 'menu-only' && !this.user.table_uuid)
     },
 
     PaymentProgress() {
@@ -338,6 +358,15 @@ export default {
     // }
   },
   methods: {
+    goToTokenAndPay(e) {
+      e.preventDefault();
+      // get cafe info from table socket massage
+      let cafe =  {
+        cafe: this.table.cafe,
+        type: 'pre-order'
+      }
+      this.$store.dispatch('sendCode', { tableToken: this.user.table_uuid, hasToken :this.userIsloggedIn, cafe } )
+    },
     showPreInvoice() {
       // first generate it
       this.ordersToPay = []

@@ -239,6 +239,11 @@ export default {
     },
   },
   created() {
+    this.$nuxt.$on('tigger-token', () => {
+      alert(this.user.table_uuid)
+     this.tableCode = this.user.table_uuid
+     this.dispatchSendCode()
+   })
     // if navigator not supported (ios)
     // if (!navigator.permissions && this.fistTimeCameraActive) {
     //   alert(
