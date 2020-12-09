@@ -16,6 +16,7 @@ export default class User {
     this.id = userData.pk
     this.orders = []
     this.table_uuid = userData.active_table_uuid
+    this.date_joined = userData.date_joined
     let avatars = new Avatars(sprites);
     this.avatar = avatars.create(this.full_name + this.id, {
       base64: true

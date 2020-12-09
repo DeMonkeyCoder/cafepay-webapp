@@ -1,7 +1,7 @@
 <template>
   <div class="live-preorder">
     <header class="live-preorder__header">
-      <nuxt-link to="/user/home"><div class="live-preorder__header__btn">
+      <nuxt-link :to="localePath('/user/home')"><div class="live-preorder__header__btn">
         <b-button
           class="float-btn shadow-lg"
           type="is-dark"

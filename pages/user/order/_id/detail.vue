@@ -25,7 +25,7 @@
 
 
       <div class="order-fix-button">
-        <nuxt-link :to="'/user/order/' +$route.params.id + '/poll'" class="go-to-poll-btn">امتیازدهی به {{order.cafeName}}</nuxt-link>
+        <nuxt-link :to="localePath('/user/order/' +$route.params.id + '/poll')" class="go-to-poll-btn">امتیازدهی به {{order.cafeName}}</nuxt-link>
       </div>
 
  

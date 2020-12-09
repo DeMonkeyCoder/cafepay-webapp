@@ -1,5 +1,5 @@
 export default {
-  balance: 'Balance',
+  balance: 'موجودی',
 
   table: {
     ordering_unavailable: 'سفارش ‌گیری فعال نیست'

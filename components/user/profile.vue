@@ -76,7 +76,7 @@
           </li>
         </nuxt-link> -->
 
-        <nuxt-link to="/user/profile/information">
+        <nuxt-link :to="localePath('/user/profile/information')">
           <li class="cp-card has-background-white cp-side-padding cp-tb-padding">
             <img src="@/assets/img/shape/icons/user-info-1.svg" alt />
             {{ $t('profile_page.profile_information') }}
@@ -84,7 +84,7 @@
         </nuxt-link>
 
         <!-- TODO: Add English terms of use -->
-        <nuxt-link to="/terms" v-if="$i18n.locale == 'fa'">
+        <nuxt-link :to="localePath('/terms')" v-if="$i18n.locale == 'fa'">
           <li class="cp-card has-background-white cp-side-padding cp-tb-padding">
             <img src="@/assets/img/shape/icons/term.png" alt />
             {{ $t('profile_page.terms') }}

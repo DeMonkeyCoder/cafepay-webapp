@@ -1,11 +1,8 @@
-import Vue from 'vue';
-import moment from 'moment-jalaali'
-moment.loadPersian({
-  // usePersianDigits: true,
-  dialect: 'persian-modern'
-})
+import Vue from 'vue'
+import config from './config'
+const moment = require('jalali-moment')
+moment.locale(config.defaultLocale)
 Vue.filter('cmoment', (value, arg) => {
-  return moment(value, "YYYY-M-D HH:mm:ss ").format(arg)
+  return moment(value, "YYYY-M-D HH:mm:ss").format(arg)
 });
-
-Vue.use(require('vue-moment-jalaali'))
+Vue.prototype.moment = moment

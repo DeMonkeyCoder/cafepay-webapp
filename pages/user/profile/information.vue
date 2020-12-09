@@ -45,7 +45,7 @@
         <h4 class="header cp-tb-padding cp-side-padding">{{ $t('profile_page.profile_information') }}</h4>
         <p :dir="$dir()" class="detail cp-tb-padding cp-side-padding">
           {{ $t('profile_page.signup_date') }}:
-          <span class="p-text font-18">{{ '2020-09-27' | moment('LL') }}</span>
+          <span class="p-text font-18">{{ formatUserDateJoined(userLocal.date_joined) }}</span>
         </p>
       </div>
     </div>
@@ -155,7 +155,7 @@ export default {
     user: {
       immediate: true,
       handler(newValue, oldValue) {
-        this.userLocal = JSON.parse(JSON.stringify(this.$store.state.user.user))
+        this.userLocal = Object.assign({}, this.$store.state.user.user)
       }
     }
   },
@@ -169,6 +169,15 @@ export default {
     }
   },
   methods: {
+    formatUserDateJoined(rawDate){
+      if(rawDate){
+        return this.moment.from(rawDate, 'en', 'YYYY-MM-DD HH:mm:ss')
+            .locale(this.$i18n.locale)
+            .format("D MMMM YYYY")
+      } else {
+        return null
+      }
+    },
     datePickerOnOpen(picker) {
       document.getElementById('date-picker-input').focus()
     },

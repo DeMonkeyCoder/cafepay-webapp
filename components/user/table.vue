@@ -32,7 +32,7 @@
 
     <div v-if="showPreOrder" class="cp-padding">
       <header class="font-18 font-bold cp-b-margin">سفارشات فعلی</header>
-      <nuxt-link :to="'/user/liveorder/'+ user.table_uuid"><div class="preorders-in-table cp-card has-background-white cp-padding">
+      <nuxt-link :to="localePath('/user/liveorder/'+ user.table_uuid)"><div class="preorders-in-table cp-card has-background-white cp-padding">
         <div class="preorders-in-table__info">
           <p class="preorders-in-table__info__cafe-name">
             سفارش از:
