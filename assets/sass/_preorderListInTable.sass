@@ -3,18 +3,29 @@
   &__info
     color: $black
     text-align: right
+    display: flex
+    flex-direction: column
     &__cafe-name
-      font-size: 18px!important
+      font-size: 16px!important
+      margin-bottom: $margin
+      flex: 1
       span
-        font-size: 18px!important
+        font-size: 16px!important
     &__status
-      font-size: 14px!important
+      padding-left: $padding
+      font-size: 16px!important
+    &__not-paid
+      margin-top: $margin / 2
+
   &__status
     flex: 1
     display: flex
-    justify-content: flex-end
-    align-items: center
+    flex-direction: column
+    justify-content: center
+    align-items: flex-end
+
     span.preorder-status-span
+      margin-bottom: $margin
       animation-name: blink
       animation-duration: 2s
       animation-timing-function: ease
@@ -23,6 +34,18 @@
       height: 20px
       border-radius: 10px
       display: block
+    div
+      flex: 1
+      .preorder-status-detail-btn
+        padding-right: 2px
+        padding-left: 2px
+        height: 30px
+        span
+          font-size: 14px!important
+          margin-left: 0!important
+          margin-right: $margin / 2 !important
+          .mdi
+            font-size: 24px!important
 
     &--payment
       span.preorder-status-span
@@ -47,4 +70,12 @@
     opacity: 1
   100%
     opacity: 0
+
+@media screen and ( max-width: 380px )
+  .preorders-in-table
+    &__info
+      &__status
+        padding-left: $padding
+        font-size: 14px!important
+  
 

@@ -218,7 +218,7 @@ export const actions = {
       // if sina give me the name of product with table data then we don't need this sequence anymore
       // connect to socket
       console.log('state', context.state.tokenType);
-      if (!context.state.tokenType != 'menu-only') Vue.prototype.$connect()
+      if (context.state.tokenType != 'menu-only') Vue.prototype.$connect()
     } catch (err) {
 
     }

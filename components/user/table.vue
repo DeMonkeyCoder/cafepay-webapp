@@ -39,6 +39,7 @@
             <span class="font-norm p-text">{{ table.cafe.name }}</span>
           </p>
           <p dir="ltr" class=" font-bold preorders-in-table__info__status" :class="{'p-text': table.status == 'ready' && ordersPaid}">{{ statusText }}</p>
+          <p class="preorders-in-table__info__not-paid" v-if="!ordersPaid">پرداخت سفارش انجام نشده</p>
         </div>
 
         <div class="preorders-in-table__status"
@@ -49,8 +50,9 @@
               'preorders-in-table__status--ready': table.status == 'ready',
               'preorders-in-table__status--rejected': table.status == 'rejected',
             }">
-          <span class="preorder-status-span" v-if="ordersPaid"></span>
-          <b-button @click="goToTokenAndPay" type="is-info">پرداخت</b-button>
+          <span class="preorder-status-span"></span>
+          <div v-if="ordersPaid"><b-button class="preorder-status-detail-btn" type="is-light" icon-right="chevron-left">جزئیات</b-button></div>
+          <b-button v-else @click="goToTokenAndPay" type="is-info">پرداخت سفارش</b-button>
         </div>
       </div>
       </nuxt-link>
@@ -304,8 +306,7 @@ export default {
 
     statusText() {
       let text
-      if (!this.ordersPaid && this.table.status) text = 'سفارش خود را پرداخت کنید'
-      else {
+      
       switch (this.table.status) {
         case 'waiting':
           text = 'در انتظار تایید توسط پذیرنده'
@@ -323,13 +324,13 @@ export default {
         default:
           break
       }
-      }
+      
       return text
     },
 
 
     showPreOrder(){
-      return (this.user.table_uuid && (this.ordersPaid && this.hasActiveTable || !this.ordersPaid && !this.hasActiveTable)  )
+      return (this.user.table_uuid && (this.ordersPaid && this.hasActiveTable || !this.hasActiveTable)  )
     },
 
     showTableOrders(){
