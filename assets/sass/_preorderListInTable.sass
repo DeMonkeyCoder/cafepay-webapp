@@ -1,0 +1,50 @@
+.preorders-in-table
+  display: flex
+  &__info
+    color: $black
+    text-align: right
+    &__cafe-name
+      font-size: 18px!important
+      span
+        font-size: 18px!important
+    &__status
+      font-size: 14px!important
+  &__status
+    flex: 1
+    display: flex
+    justify-content: flex-end
+    align-items: center
+    span.preorder-status-span
+      animation-name: blink
+      animation-duration: 2s
+      animation-timing-function: ease
+      animation-iteration-count: infinite
+      width: 20px
+      height: 20px
+      border-radius: 10px
+      display: block
+
+    &--payment
+      span.preorder-status-span
+        background-color: grey
+    &--waiting
+      span.preorder-status-span
+        background-color: grey
+    &--preparing
+      span.preorder-status-span
+        background-color: #ffdb58
+    &--ready
+      span.preorder-status-span
+        background-color: $green
+    &--rejected
+      span.preorder-status-span
+        background-color: red
+
+@keyframes blink 
+  0%   
+    opacity: 0
+  50%
+    opacity: 1
+  100%
+    opacity: 0
+

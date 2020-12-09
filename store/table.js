@@ -8,6 +8,8 @@ export const state = () => ({
 
   table_number: null,
   token: null,
+  status: null,
+  cafe: '',
   tpayment: 0,
   persons: [],
   payment: {},
@@ -66,6 +68,10 @@ export const mutations = {
     let table = new Table(rawData, this.state.user.user.id)
     state.persons = table.persons
     state.payment = rawData.payment_info
+    state.status = table.status
+    // we use this data to handle payment status in preorder
+    state.cafe = rawData.cafe
+
 
     // bind the user's orders count to menu data
     // first we need to find the user using the app from persons array
@@ -134,10 +140,11 @@ export const mutations = {
 }
 
 export const actions = {
-  tableConnection(context) {
+  tableConnection(context , preOrderToken) {
+    let token = (preOrderToken) ? preOrderToken : context.state.token
     let joinRequest = {
       request: {
-        endpoint: `table/${context.state.token}/join/simple/by-token/`,
+        endpoint: `table/${token}/join/simple/by-token/`,
         data: {},
         headers: {
           Authorization: "Token " + context.rootState.token
@@ -149,6 +156,7 @@ export const actions = {
     Vue.prototype.$socket.send(joinRequest_str);
 
   },
+
 
   changeProductsOnTable(context, req) {
 

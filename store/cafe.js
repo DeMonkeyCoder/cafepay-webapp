@@ -15,8 +15,8 @@ export const state = () => ({
   productsFork: [],
   productPageActive: false,
   flowType: null,
+  tokenType: 'normal',
   totalCount: 0,
-  menuOnly: false,
   storeRedirect: false
 })
 
@@ -43,15 +43,38 @@ export const mutations = {
     state.rate = (data.cafe.rate) ? data.cafe.rate : 4
     state.pk = data.cafe.pk
     state.name = data.cafe.name
-    state.menuOnly = data.menu_only
+    // must add #preorder data
+    // for now we fake it till we make it
     state.avatar = data.cafe.avatar
     state.cafepay_fee = data.cafe.cafepay_fee
+
+    // define type of token ----- 0: menuonly   1: normal    2: preorder
+    switch (data.type) {
+      case '0':
+        state.tokenType = 'menu-only'
+        break;
+      case '1':
+        state.tokenType = 'normal'
+        break;
+
+      case '2':
+        state.tokenType = 'pre-order'
+        break;
+    
+      default:
+        break;
+    }
 
 
   },
 
   changeStoreRedirect(state, flag)  {
     state.storeRedirect = flag
+  },
+
+  setType(state, type) {
+    state.tokenType = type
+    
   },
 
   clear(state) {
@@ -194,8 +217,8 @@ export const actions = {
       // why after menu data ? because we need menu data for build table data
       // if sina give me the name of product with table data then we don't need this sequence anymore
       // connect to socket
-      console.log('state', context.state.menuOnly);
-      if (!context.state.menuOnly) Vue.prototype.$connect()
+      console.log('state', context.state.tokenType);
+      if (!context.state.tokenType != 'menu-only') Vue.prototype.$connect()
     } catch (err) {
 
     }

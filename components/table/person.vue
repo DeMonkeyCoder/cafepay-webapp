@@ -1,12 +1,12 @@
 <template>
   <div class="table-person">
-    <v-tour
+    <!-- <v-tour
       v-if="first"
       name="sliderTour"
       :steps="steps"
       :options="myOptions"
       :callbacks="myCallbacks"
-    ></v-tour>
+    ></v-tour> -->
 
     <div class="person-title has-background-white cp-tb-margin">
       <img :src="person.avatar" :alt="person.name" />
@@ -34,7 +34,7 @@
         >
       </div>
 
-      <div class="person-payment">
+      <!-- <div class="person-payment">
         <span
           >پرداخت شده:‌
           <span class="g-text"
@@ -49,9 +49,9 @@
             }}<span class="toman">تومان</span></span
           ></span
         >
-      </div>
+      </div> -->
 
-      <div
+      <!-- <div
         v-if="
           order.payment_info.payed_amount != order.payment_info.total_amount &&
             history == false
@@ -62,8 +62,8 @@
         <span>{{ order.wish_to_pay | currency }}</span
         ><span class="toman">تومان</span>
         <span id="wish-to-pay-text">از این محصول را میخواهید پرداخت کنید</span>
-      </div>
-
+      </div> -->
+<!-- 
       <div class="person-slider">
         <b-slider
           :id="`order-${index}-slider`"
@@ -90,7 +90,7 @@
               : 100
           "
         ></b-slider>
-      </div>
+      </div> -->
 
       <div
         v-if="

@@ -1,0 +1,99 @@
+.live-preorder
+  padding: $padding
+  &__header
+    display: flex
+    justify-content: center
+    align-items: center
+    position: relative
+    z-index: 1000
+    &__info
+      width: 100%
+      // flex: 2
+      padding-left: $padding
+      height: 50px
+      
+      p
+        display: flex
+        justify-content: flex-start
+        align-items: center
+        height: 100%
+        background-color: white
+        text-align: right
+        padding: $padding / 2 $padding
+        span
+          padding-right: $padding / 2
+    &__btn
+      flex: 1
+      button
+        border: none!important
+        background-color: white!important
+        i
+          font-size: 28px!important
+  &__content
+    position: relative
+    &__status
+      min-height: 100px
+      #animation-order-status
+        width: 50%
+        margin: auto
+      p
+        text-align: center
+        font-size: 18px
+        font-weight: 800!important
+        position: relative
+    .fix-animation-gap
+      position: relative 
+
+    &--status-0
+      bottom: 0px
+      .status
+        margin-top: $margin
+        p
+          color: grey
+
+    &--status-1
+      bottom: 30px
+      .status
+        margin-top: $margin
+        p
+          bottom: 50px
+
+      .fix-animation-gap
+        bottom: 50px
+
+    &--status-2
+      bottom: 50px
+      .status
+        margin-top: $margin
+        #animation-order-status
+          width: 40%
+
+        p
+          color: $primary
+          bottom: 10px
+      .fix-animation-gap
+        bottom: 10px
+
+    &--status-3
+      bottom: 30px
+      .status
+        margin-top: $margin
+        #animation-order-status
+          width: 50%
+
+        p
+          color: $secondary
+          bottom: 40px
+      .fix-animation-gap
+        bottom: 40px
+
+    &__orders
+      margin-top: $margin * 2
+      ul
+        li
+          margin-bottom: $margin
+      &__totalAmount
+        border-top: 2px dashed grey
+        padding-top: $padding
+    
+          

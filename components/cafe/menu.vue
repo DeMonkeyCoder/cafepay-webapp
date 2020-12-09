@@ -1,19 +1,22 @@
 <template>
   <div :dir="$dir()">
-        <v-tour
+        <!-- <v-tour
       name="menuTour"
       :steps="steps"
       :options="myOptions"
       :callbacks="myCallbacks"
-    ></v-tour>
-    <div id="selected-products-preview" v-if="!menuOnly">
+    ></v-tour> -->
+    <div id="selected-products-preview" v-if="tokenType !== 'menu-only' && (!user.table_uuid || (user.table_uuid && !ordersPaid))">
       <b-button
         @click="productsPayloadSeperator"
         :loading="globalLoading"
         class="button shadow-md bcp-btn cp-btn-submit-order shadow-lg-bb"
         size="is-medium"
         type="is-info"
-        >ثبت سفارشات</b-button
+        >
+        <span v-if="tokenType == 'pre-order'" dir="rtl" class="font-bold font-14">(تحویل در مجموعه)</span>
+        ثبت سفارشات
+        </b-button
       >
     </div>
 
@@ -39,8 +42,7 @@
       </div>
     </div>
     <!-- <transition-group :name="slideTransition" tag="div" class=""> -->
-      
-    <div dir="ltr" id="menu-swiper-container"
+      <div dir="ltr" id="menu-swiper-container"
     v-if="this.menuTabItemCategories && this.menuTabItemCategories.length > 0"
     >
       <swiper dir="ltr" ref="menuCategoriesSwipe"
@@ -54,8 +56,9 @@
               :key="prod.pk"
               class="normal-radius shadow-md has-background-white cp-tb-margin cp-side-margin-half product-item"
             >
+            
               <!-- on div below we need to add @click="$store.commit('cafe/setCurrentProduct', prod)" later for product page navigation -->
-            <div class="img-section">
+              <div class="img-section">
                 <img
                   :src="
                     prod.avatar == null
@@ -65,24 +68,21 @@
                   alt
                 />
               </div>
-
               <div class="content-section cp-side-padding cp-tb-padding">
                 <div class="product-title font-norm">{{ prod.name }}</div>
                 <div class="product-description">{{ prod.description }}</div>
-                <div class="product-price" :dir="$dir()">
+                <div class="product-price" dir="rtl">
                   <div v-if="prod.discount > 0" class="product-discount">
                     <span>{{ prod.discount }}%</span>
                     <p>
                       {{ prod.original_price | currency }}
                     </p>
                   </div>
-
                   {{ prod.price | currency }}
                   <span class="toman">تومان</span>
                 </div>
               </div>
-
-              <div v-if="prod.available && !menuOnly" class="add-or-remove">
+              <div v-if="prod.available && tokenType !== 'menu-only' && (!user.table_uuid || (user.table_uuid && !ordersPaid))" class="add-or-remove">
                 <span class="product-add" @click="countChange(index, 1, prod)">
                   <div class="aor-shape">+</div>
                 </span>
@@ -91,7 +91,6 @@
                   <div class="aor-shape">-</div>
                 </span>
               </div>
-
               <div v-if="!prod.available" class="out-of-order">
                 <p>تمام شد</p>
               </div>

@@ -16,6 +16,7 @@
     <div @click="triggerChangeTab('cp-table')" class="nav-tab chair center-align" :class="{'is-active': currentMainPage == 'cp-table'}">
       <img v-if="currentMainPage == 'cp-table'" src='@/assets/img/shape/icons/chair-color.png' alt="">
       <img v-else src='@/assets/img/shape/icons/chair.png' alt="">
+      <span v-if="user.table_uuid" class="notif-num has-background-danger"></span>
       <!-- <p>میز</p> -->
     </div>
 
@@ -80,7 +81,19 @@
       height: 23px
       position: absolute
       left: calc(50% - 30px)
-      top: calc(50% - 15px)
+      top: calc(50% - 5px)
+  .nav-tab.chair
+    position: relative
+    .notif-num
+      animation-name: blink
+      animation-duration: 2s
+      animation-timing-function: ease
+      animation-iteration-count: infinite
+      width: 20px
+      height: 20px
+      position: absolute
+      left: calc(50% - 40px)
+      top: calc(50% - 5px)
 
   .nav-tab
     padding-top: 15px

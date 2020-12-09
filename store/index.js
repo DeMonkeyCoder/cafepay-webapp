@@ -30,6 +30,8 @@ export const mutations = {
     Vue.prototype.$socket = event.currentTarget
     state.socket.isConnected = true
     this.dispatch('table/tableConnection')
+    // if (state.cafe.tokenType == 'normal') 
+    // else if (state.cafe.tokenType == 'preorder') this.dispatch('table/preorderConnection')
 
   },
   SOCKET_ONMESSAGE(state, rawMessage) {
@@ -44,6 +46,7 @@ export const mutations = {
         console.log('table socket message', message.data);
       this.commit('table/setData', message.data)
     } else if (message.data.pk == undefined) {
+      Vue.prototype.$disconnect()
       this.commit('table/clearData')
       this.commit('cafe/bindProductCount', false)
     }
@@ -116,35 +119,54 @@ export const actions = {
     commit,
     dispatch
   }, data) {
-    return new Promise((resolve, reject) => {
-      let api = (data.hasToken) ? '$api' : '$axios'
-      console.log('api type', api);
-      // u need to set the table too, for api link
-      this[api]
-        .get('api/v1/table-token/' + data.tableToken + '/cafe-info/', {
-          params: {},
-          // headers: { Authorization: 'Token ' + this.token }
-        })
-        .then(res => {
-          
-          // sets pk, avatar, name and table id
-          commit('cafe/setBasic', res.data)
-          // execute the action for getting menu, detailed info, comments and posts
-          dispatch('cafe/retrieveMenu')
-
+      if (data.cafe) {
+          commit('cafe/setBasic', data.cafe)
           commit('setActiveTable', true)
-          res.data.table['token'] = res.data.token
-          // save active table state in localstorage for refresh
-          commit('table/setToken', res.data.table)
-
-          // attach token to table
+          commit('table/setToken', {
+            token: data.tableToken,
+            number: 'پیش سفارش'
+          })
+          dispatch('cafe/retrieveMenu')
           commit('changeNavigation', 'currentCafe')
-          resolve(res)
-        })
-        .catch(err => {
-          reject(err)
-        })
-    })
+      }
+      else {
+      return new Promise((resolve, reject) => {
+        let api = (data.hasToken) ? '$api' : '$axios'
+        console.log('api type', api);
+        // u need to set the table too, for api link
+        this[api]
+          .get('api/v1/table-token/' + data.tableToken + '/cafe-info/', {
+            params: {},
+            // headers: { Authorization: 'Token ' + this.token }
+          })
+          .then(res => {
+            
+            // sets pk, avatar, name and table id
+            commit('cafe/setBasic', res.data)
+            commit('setActiveTable', true)
+            // if TYPE == 2 it's preorder and token would be table uuid
+            if (res.data.type == 2){
+              commit('table/setToken', {token: res.data.table.uuid, number: 'پیش سفارش'})
+            }
+            else {
+              res.data.table['token'] = res.data.token
+              // save active table state in localstorage for refresh (no longer valid)
+              commit('table/setToken', res.data.table)
+            }
+            // execute the action for getting menu, detailed info, comments and posts
+            dispatch('cafe/retrieveMenu')
+
+
+
+            // attach token to table
+            commit('changeNavigation', 'currentCafe')
+            resolve(res)
+          })
+          .catch(err => {
+            reject(err)
+          })
+      })
+    }
 
   },
 }

@@ -8,14 +8,16 @@ export const Table = class Table {
   constructor(rawData = {}, currentUserId = {}) {
 
 
-    let notSortedPersons = this.productsByPerson(rawData.bill_products, currentUserId)
-    let myProfileOnTable = notSortedPersons.find(p => p.id == currentUserId)
-    if (myProfileOnTable && notSortedPersons.length > 1) {
-      notSortedPersons = notSortedPersons.filter(p => p.id != currentUserId)
-      notSortedPersons.unshift(myProfileOnTable)
-      console.log('persons no order', notSortedPersons);
+    let data = this.productsByPerson(rawData.bill_products, currentUserId)
+    let myProfileOnTable = data.personRawProduct.find(p => p.id == currentUserId)
+    if (myProfileOnTable && data.personRawProduct.length > 1) {
+      data.personRawProduct = data.personRawProduct.filter(p => p.id != currentUserId)
+      data.personRawProduct.unshift(myProfileOnTable)
+      console.log('persons no order', data.personRawProduct);
     }
-    this.persons = notSortedPersons
+    this.persons = data.personRawProduct
+    this.status = data.status
+    
 
 
   }
@@ -25,6 +27,7 @@ export const Table = class Table {
       acc.set(obj.user_profile.pk, (acc.get(obj.user_profile.pk) || []).concat(obj)), new Map).values()];
 
     let personRawProduct = []
+    let status = 'ready'
     personRawProduct_noProperty.forEach(orders => {
       // make orders from product class
       let newOrders = []
@@ -33,9 +36,10 @@ export const Table = class Table {
       let userId;
       let wish_to_pay;
 
-
       orders.forEach(order => {
-
+        if (!order.is_ready) status = 'preparing'
+        if (!order.sent_to_kitchen) status = 'confirmed'
+        if (!order.is_accepted) status = 'waiting'
         // user info is in each order so remove it from them and add to parent (person)
         user_name = (order.is_staff) ? 'صندوق دار' : order.user_profile.full_name
         userId = order.user_profile.pk
@@ -80,7 +84,7 @@ export const Table = class Table {
         id: userId
       })
     });
-    return personRawProduct
+    return {personRawProduct, status}
   }
 
 
