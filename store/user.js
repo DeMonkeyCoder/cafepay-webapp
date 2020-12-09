@@ -20,7 +20,11 @@ export const mutations = {
   },
   clear(state) {
     state.user = {}
+  },
+  clearTable_uuid(state) {
+    state.user.table_uuid = null
   }
+  
 
 }
 
