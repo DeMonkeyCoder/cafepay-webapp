@@ -322,7 +322,8 @@ export default {
 
 
     showPreOrder(){
-      return (this.user.table_uuid && (this.ordersPaid && this.hasActiveTable || !this.hasActiveTable)  )
+      let check = (this.user.table_uuid && (this.ordersPaid && this.hasActiveTable || !this.hasActiveTable)  )
+      return check
     },
 
     showTableOrders(){
@@ -330,7 +331,7 @@ export default {
     },
 
     showInitialTableView(){
-      return (!this.hasActiveTable && this.tokenType != 'pre-order')
+      return (!this.hasActiveTable && this.tokenType != 'pre-order' && !this.user.table_uuid)
     },
 
     showOrderingIsDisabled(){

@@ -53,6 +53,7 @@
 </template>
 
 <script>
+import Vue from 'vue'
 import cafeNavigator from '~/components/cafe/cafeNavigator.vue'
 import product from '@/components/cafe/product.vue'
 import cafeDefaultImage from '@/assets/img/cafe-default.png'
@@ -77,6 +78,8 @@ export default {
       this.isCancelTableModalActive = false
       if (changeCommand) {
         // for not inital fetiching token from url again
+        if (this.$store.state.table.keepAlive) this.$store.commit('user/setTable_uuid', this.$store.state.table.token) 
+        else Vue.prototype.$disconnect()
         delete this.$route.query.token
         this.$store.commit('setActiveTable', false)
         this.$store.commit('changeNavigation', 'scan')

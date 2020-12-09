@@ -41,17 +41,23 @@ export const mutations = {
 
 
     // check if message is for table watch
+    let token = message.source.split('table.')[1].split('.join')[0]
+    let source = message.source.split('')
     if (message.source ==
-      `table.${state.table.token}.join.simple.by-token.` && message.status_code == 200) {
-        console.log('table socket message', message.data);
-      this.commit('table/setData', message.data)
-    } else if (message.status_code == 404) {
-      Vue.prototype.$disconnect()
-      this.commit('table/clearData')
-      this.commit('user/clearTable_uuid')
-      this.commit('cafe/setType', null)
-      this.commit('cafe/bindProductCount', false)
-    }
+      `table.${state.table.token}.join.simple.by-token.`) {
+        if ( message.status_code == 200) {
+           console.log('table socket message', message.data);
+            this.commit('table/setData', message.data)
+        }
+        else if (message.status_code == 404) {
+          Vue.prototype.$disconnect()
+          this.commit('table/clearData')
+          this.commit('user/clearTable_uuid')
+          this.commit('cafe/setType', null)
+          this.commit('cafe/bindProductCount', false)
+        }
+       
+    } 
 
   },
   SOCKET_ONCLOSE(state, event) {
