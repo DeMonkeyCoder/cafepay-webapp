@@ -127,7 +127,6 @@ export const actions = {
             number: 'پیش سفارش'
           })
           dispatch('cafe/retrieveMenu')
-          commit('changeNavigation', 'currentCafe')
       }
       else {
       return new Promise((resolve, reject) => {
