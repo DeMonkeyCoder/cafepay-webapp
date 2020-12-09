@@ -50,7 +50,7 @@
               'preorders-in-table__status--ready': table.status == 'ready',
               'preorders-in-table__status--rejected': table.status == 'rejected',
             }">
-          <span class="preorder-status-span" v-if="!ordersPaid"></span>
+          <span class="preorder-status-span"></span>
           <div v-if="ordersPaid"><b-button class="preorder-status-detail-btn" type="is-light" icon-right="chevron-left">جزئیات</b-button></div>
           <b-button v-else @click="goToTokenAndPay" type="is-info">پرداخت سفارش</b-button>
         </div>
