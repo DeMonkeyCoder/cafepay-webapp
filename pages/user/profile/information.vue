@@ -1,5 +1,5 @@
 <template>
-  <div dir="rtl">
+  <div :dir="$dir()">
     <b-modal
       class="change-number-modal simple-action-modal"
       :active.sync="isChangeNumberModalActive"
@@ -42,10 +42,10 @@
           src="@/assets/img/shape/icons/user-info-1.svg"
           alt
         />
-        <h4 class="header cp-tb-padding cp-side-padding">اطلاعات کاربری</h4>
-        <p dir="rtl" class="detail cp-tb-padding cp-side-padding">
-          عضویت در:
-          <span class="p-text font-18">{{ '2020-09-27' | moment('LL') }}</span>
+        <h4 class="header cp-tb-padding cp-side-padding">{{ $t('profile_page.profile_information') }}</h4>
+        <p :dir="$dir()" class="detail cp-tb-padding cp-side-padding">
+          {{ $t('profile_page.signup_date') }}:
+          <span class="p-text font-18">{{ formatUserDateJoined(userLocal.date_joined) }}</span>
         </p>
       </div>
     </div>
@@ -67,7 +67,7 @@
           <b-input
             v-model="userLocal.first_name"
             class="cp-input cp-input-primary "
-            placeholder="نام"
+            :placeholder="$t('profile_page.first_name')"
             icon="account"
           ></b-input>
         </b-field>
@@ -76,7 +76,7 @@
           <b-input
             v-model="userLocal.last_name"
             class="cp-input cp-input-primary "
-            placeholder="نام خانوادگی"
+            :placeholder="$t('profile_page.last_name')"
             icon="account"
           ></b-input>
         </b-field>
@@ -89,7 +89,7 @@
             readonly="readonly"
             v-model="userLocal.phone_number"
             class="cp-input cp-input-primary "
-            placeholder="شماره تلفن"
+            :placeholder="$t('profile_page.phone_number')"
             icon="cellphone"
           ></b-input>
         </b-field>
@@ -132,7 +132,7 @@
           type="is-info"
           expanded
           @click="updateInformation"
-          >تغییر مشخصات</b-button
+          >{{ $t('profile_page.update_information') }}</b-button
         >
       </div>
     </section>
@@ -155,7 +155,7 @@ export default {
     user: {
       immediate: true,
       handler(newValue, oldValue) {
-        this.userLocal = JSON.parse(JSON.stringify(this.$store.state.user.user))
+        this.userLocal = Object.assign({}, this.$store.state.user.user)
       }
     }
   },
@@ -169,6 +169,15 @@ export default {
     }
   },
   methods: {
+    formatUserDateJoined(rawDate){
+      if(rawDate){
+        return this.moment.from(rawDate, 'en', 'YYYY-MM-DD HH:mm:ss')
+            .locale(this.$i18n.locale)
+            .format("D MMMM YYYY")
+      } else {
+        return null
+      }
+    },
     datePickerOnOpen(picker) {
       document.getElementById('date-picker-input').focus()
     },

@@ -27,8 +27,8 @@
 }
 
 .Triangle--one {
-  border-left: 105px solid transparent;
-  border-right: 105px solid transparent;
+  border-inline-end: 105px solid transparent;
+  border-inline-start: 105px solid transparent;
   border-bottom: 180px solid #41b883;
 }
 
@@ -36,8 +36,8 @@
   top: 30px;
   left: 35px;
   animation: goright 0.5s linear forwards 3.5s;
-  border-left: 87.5px solid transparent;
-  border-right: 87.5px solid transparent;
+  border-inline-end: 87.5px solid transparent;
+  border-inline-start: 87.5px solid transparent;
   border-bottom: 150px solid #3b8070;
 }
 
@@ -45,8 +45,8 @@
   top: 60px;
   left: 35px;
   animation: goright 0.5s linear forwards 3.5s;
-  border-left: 70px solid transparent;
-  border-right: 70px solid transparent;
+  border-inline-end: 70px solid transparent;
+  border-inline-start: 70px solid transparent;
   border-bottom: 120px solid #35495e;
 }
 
@@ -54,8 +54,8 @@
   top: 120px;
   left: 70px;
   animation: godown 0.5s linear forwards 3s;
-  border-left: 35px solid transparent;
-  border-right: 35px solid transparent;
+  border-inline-end: 35px solid transparent;
+  border-inline-start: 35px solid transparent;
   border-bottom: 60px solid #fff;
 }
 

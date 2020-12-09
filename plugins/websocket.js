@@ -1,11 +1,11 @@
 import Vue from 'vue'
 import VueNativeSock from "vue-native-websocket";
-import baseUrl from '~/plugins/baseUrl.js'
+import config from '~/plugins/config.js'
 
 export default function ({
   store,
 }) {
-Vue.use(VueNativeSock, `${baseUrl.socketUrl}ws/v1/`, {
+Vue.use(VueNativeSock, `${config.socketUrl}ws/v1/`, {
   connectManually: true,
   store: store, // connect to store
   reconnection: true, // (Boolean) whether to reconnect automatically (false)

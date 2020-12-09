@@ -1,5 +1,5 @@
 <template>
-  <div dir="rtl">
+  <div :dir="$dir()">
 
     <div v-if="productPageActive" class="product-component">
       <product />
@@ -35,8 +35,14 @@
             :disabled="true"
           ></b-rate> -->
         </div>
-        <div @click="isCancelTableModalActive = true" class="go-back cp-tb-padding">
-          <b-icon class="close-icon" icon="close" size="is-medium" type="is-light"></b-icon>
+        <div class="go-back current-cafe-top-actions cp-tb-padding">
+          <b-icon @click.native="isCancelTableModalActive = true"
+                class="close-icon" icon="close" size="is-medium" type="is-light"></b-icon>
+          <!-- TODO: set language on cookie to set locale even if user navigates back
+                https://i18n.nuxtjs.org/lang-switcher -->
+          <nuxt-link :to="switchLocalePath(this.$i18n.locale == 'en' ? 'fa' : 'en')" replace>
+            <b-icon class="translate-icon" icon="translate" size="is-medium" type="is-light"></b-icon>
+          </nuxt-link>
         </div>
       </div>
 

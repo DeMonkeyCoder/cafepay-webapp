@@ -1,5 +1,5 @@
 <template>
-  <div dir="rtl" class="cafe-info-container">
+  <div :dir="$dir()" class="cafe-info-container">
     <b-modal :active.sync="isImageModalActive">
       <p class="image is-4by3">
         <img :src="currentImg" />
@@ -8,7 +8,7 @@
 
 
     <section class="about cp-tb-margin">
-      <header class="right-align cp-b-margin font-18 font-norm">درباره</header>
+      <header class="cp-b-margin font-18 font-norm">{{ $t('cafe_info.about') }}</header>
       <b-skeleton  width="100%" height="40px" :active="globalLoading" :animated="true"></b-skeleton>
       <b-skeleton  width="100%" height="40px" :active="globalLoading" :animated="true"></b-skeleton>
       <div v-if="!globalLoading" class="cp-card about-content 
@@ -24,7 +24,7 @@
     </section>
 
     <section class="gallery cp-tb-margin">
-      <header class="right-align font-18 font-norm">گالری تصاویر</header>
+      <header class="font-18 font-norm">{{ $t('cafe_info.gallery') }}</header>
       <div v-if="globalLoading" class="gallery-container cp-tb-padding">
         <b-skeleton  width="100%" height="80px" :animated="true"></b-skeleton>
       </div>
@@ -40,7 +40,7 @@
       </div>
     </section>
     <section class="address cp-tb-margin">
-      <header class="right-align font-18 font-norm">اطلاعات تماس</header>
+      <header class="font-18 font-norm">{{ $t('cafe_info.contact_info') }}</header>
       <div class="cp-side-padding cp-tb-padding cp-card has-background-white">
         <div class="iconed-text">
           <b-icon class="icon" size="is-default" icon="map-marker"></b-icon>
@@ -52,7 +52,7 @@
           <b-icon class="phone-icon" size="is-default" icon="phone"></b-icon>
           <b-skeleton :active="globalLoading" width="100%" :animated="true"></b-skeleton>
           <a :href="`tel:${(info.phone) ? info.phone : 'شماره تماس ثبت نشده'}`">
-            <span v-if="!globalLoading" dir="rtl">{{(info.phone) ? info.phone : 'شماره تماس ثبت نشده'}}</span>
+            <span v-if="!globalLoading" :dir="$dir()">{{(info.phone) ? info.phone : 'شماره تماس ثبت نشده'}}</span>
             </a>
           	
         </div>
@@ -70,15 +70,15 @@
           <cafepay-map v-if="!globalLoading"
             :isActive="mapActive"
             :cafeName="info.name"
-            :cordinateX="info.location.split(',')[0]"
-            :cordinateY="info.location.split(',')[1]"
+            :cordinateX="info.location ? info.location.split(',')[0] : 0.00000"
+            :cordinateY="info.location ? info.location.split(',')[1] : 0.00000"
             maxZoom="17"
           />
         </div>
       </div>
     </section>
     <!-- <section class="staff cp-tb-margin">
-      <header class="right-align font-18 font-norm">تیم کافه هدایت</header>
+      <header class="font-18 font-norm">تیم کافه هدایت</header>
     </section>-->
   </div>
 </template>

@@ -101,8 +101,10 @@ export const mutations = {
     // clear categories in-case user re-enter 
     state.categories = []
     // push current basket of orders first for editing current orders
+    // TODO: move this line out of store
     state.categories.push({
-      name: 'سفارشات فعلی شما',
+      pk: 0,
+      name: this.app.i18n.t('menu_page.your_current_order'),
       products: []
     })
     for (const category of menu.categories) {

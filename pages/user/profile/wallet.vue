@@ -1,5 +1,5 @@
 <template>
-  <div dir="rtl">
+  <div :dir="$dir()">
     <div class="cp-header cp-tb-padding cp-side-padding">
       <div @click="$router.go(-1)" class="go-back cp-tb-padding">
         <b-icon size="is-medium" icon="chevron-left" type="is-light"></b-icon>
@@ -12,7 +12,7 @@
       <div class="info">
         <img class="no-pic" src="@/assets/img/shape/icons/wallet.png" alt />
         <h4 class="header cp-tb-padding cp-side-padding">موجودی و تراکنش‌ها</h4>
-        <p dir="rtl" class="detail cp-tb-padding cp-side-padding">
+        <p :dir="$dir()" class="detail cp-tb-padding cp-side-padding">
           موجودی:
           <span class="p-text font-18">{{user.balance | currency}}</span>
           <span class="toman">تومان</span>

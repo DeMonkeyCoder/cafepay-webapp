@@ -27,7 +27,7 @@
     top: $margin * 3
     font-size: 18px
     color: white
-    direction: ltr
+    // direction: ltr
 
 .table-status-bar
   height: 39px
@@ -50,7 +50,7 @@
   p
     // letter-spacing: -0.02rem
     width: 100%
-    margin-left: 0.5rem
+    margin-inline-end: 0.5rem
     position: relative
     z-index: 3
     text-align: center
@@ -86,7 +86,7 @@
     position: relative
     .toman
       font-size: 10px!important
-      margin-right: 2px
+      margin-inline-start: 2px
     .person-title-and-selection
       display: flex
     .wish-to-pay, .person-payment, .person-total-order-info
@@ -144,7 +144,7 @@
       font-size: 16px
       font-weight: 500!important
     .credit-card-icon
-      margin-left: 3px
+      margin-inline-end: 3px
   .pc-child
     flex: 2
     display: flex
@@ -173,8 +173,8 @@
           width: 1.4rem!important
           height: 1.4rem!important
         .control-label
-          padding-right: 0.5rem
-          padding-left: 0
+          padding-inline-start: 0.5rem
+          padding-inline-end: 0
           font-size: 18px
 
 .pay-checkout-is-shown
@@ -190,13 +190,13 @@
     font-size: 12px
   &__name
     flex: 1
-    text-align: right
+    text-align: start
   &__amount
     flex: 1
     text-align: left
   .modal-dialog
-    // padding-left: $padding!important
-    // padding-right: $padding!important
+    // padding-inline-end: $padding!important
+    // padding-inline-start: $padding!important
     li
       display: flex
 
@@ -225,7 +225,7 @@
         padding-top: 0.5* $padding
         padding-bottom: 0.5* $padding
         .value-fix-padding
-          padding-left: 5px
+          padding-inline-end: 5px
         
 
           
@@ -241,8 +241,8 @@
       padding: $padding / 2 $padding
       p
         flex: 10
-        padding-right: $padding / 2
-        text-align: right
+        padding-inline-start: $padding / 2
+        text-align: start
         font-size: 14px!important
         letter-spacing: -0.025rem
       div

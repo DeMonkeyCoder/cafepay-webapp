@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div :dir="$dir()">
         <!-- <v-tour
       name="menuTour"
       :steps="steps"
@@ -20,11 +20,12 @@
       >
     </div>
 
-    <div class="category-list">
+    <div class="category-list" id="menu-category-list" ref="menuCategoryList">
       <div
         class="category-item-wrapper"
         v-for="(cat, index) in menu"
         :key="cat.pk"
+        :id="'menu-category-item-' + index"
       >
         <div
           v-if="cat.products.length > 0"
@@ -36,60 +37,67 @@
           }"
           @click="changeActiveCategory(index)"
         >
-          {{ cat.name }}
+          {{ index == 0 ? $t("menu_page.your_current_order") : cat.name }}
         </div>
       </div>
     </div>
     <!-- <transition-group :name="slideTransition" tag="div" class=""> -->
-    <div v-for="(cat, i) in menu" :key="cat.name" class="product-list-wrapper">
-      <div v-if="activeCategory == i" :key="cat.pk" class="product-list">
-        <div
-          v-for="(prod, index) in cat.products"
-          :key="prod.pk"
-          class="normal-radius shadow-md has-background-white cp-tb-margin cp-side-margin-half product-item"
-        >
-          <div v-if="prod.available && tokenType !== 'menu-only' && (!user.table_uuid || (user.table_uuid && !ordersPaid))" class="add-or-remove">
-            <span class="product-add" @click="countChange(index, 1, prod)">
-              <div class="aor-shape">+</div>
-            </span>
-            <span class="product-count">{{ prod.count }}</span>
-            <span class="product-remove" @click="countChange(index, -1, prod)">
-              <div class="aor-shape">-</div>
-            </span>
-          </div>
-
-          <div v-if="!prod.available" class="out-of-order">
-            <p>تمام شد</p>
-          </div>
-
-          <div class="content-section cp-side-padding cp-tb-padding">
-            <div class="product-title font-norm">{{ prod.name }}</div>
-            <div class="product-description">{{ prod.description }}</div>
-            <div class="product-price" dir="rtl">
-              <div v-if="prod.discount > 0" class="product-discount">
-                <span>{{ prod.discount }}%</span>
-                <p>
-                  {{ prod.original_price | currency }}
-                </p>
+      <div dir="ltr" id="menu-swiper-container"
+    v-if="this.menuTabItemCategories && this.menuTabItemCategories.length > 0"
+    >
+      <swiper dir="ltr" ref="menuCategoriesSwipe"
+      @slide-change-end="handleSlideChange"
+      @slider-move="handleSlideMove">
+        <div :dir="$dir()" v-for="(cat, i) in menuTabItemCategories"
+          :key="cat.name" class="product-list-wrapper">
+          <div :key="cat.pk" class="product-list">
+            <div
+              v-for="(prod, index) in cat.products"
+              :key="prod.pk"
+              class="normal-radius shadow-md has-background-white cp-tb-margin cp-side-margin-half product-item"
+            >
+            
+              <!-- on div below we need to add @click="$store.commit('cafe/setCurrentProduct', prod)" later for product page navigation -->
+              <div class="img-section">
+                <img
+                  :src="
+                    prod.avatar == null
+                      ? productDefaultImage
+                      : baseUrl + prod.avatar
+                  "
+                  alt
+                />
               </div>
-
-              {{ prod.price | currency }}
-              <span class="toman">تومان</span>
+              <div class="content-section cp-side-padding cp-tb-padding">
+                <div class="product-title font-norm">{{ prod.name }}</div>
+                <div class="product-description">{{ prod.description }}</div>
+                <div class="product-price" dir="rtl">
+                  <div v-if="prod.discount > 0" class="product-discount">
+                    <span>{{ prod.discount }}%</span>
+                    <p>
+                      {{ prod.original_price | currency }}
+                    </p>
+                  </div>
+                  {{ prod.price | currency }}
+                  <span class="toman">تومان</span>
+                </div>
+              </div>
+              <div v-if="prod.available && tokenType !== 'menu-only' && (!user.table_uuid || (user.table_uuid && !ordersPaid))" class="add-or-remove">
+                <span class="product-add" @click="countChange(index, 1, prod)">
+                  <div class="aor-shape">+</div>
+                </span>
+                <span class="product-count">{{ prod.count }}</span>
+                <span class="product-remove" @click="countChange(index, -1, prod)">
+                  <div class="aor-shape">-</div>
+                </span>
+              </div>
+              <div v-if="!prod.available" class="out-of-order">
+                <p>تمام شد</p>
+              </div>
             </div>
           </div>
-          <!-- on div below we need to add @click="$store.commit('cafe/setCurrentProduct', prod)" later for product page navigation -->
-          <div class="img-section">
-            <img
-              :src="
-                prod.avatar == null
-                  ? productDefaultImage
-                  : baseUrl + prod.avatar
-              "
-              alt
-            />
-          </div>
         </div>
-      </div>
+      </swiper>
     </div>
     <!-- </transition-group> -->
   </div>
@@ -97,9 +105,13 @@
 
 <script>
 import { Order } from '~/middleware/models/cafe.js'
-import { swipable } from '@/plugins/makeTabSwipe.js'
 import productDefaultImage from '@/assets/img/product-default.png'
+import Vue from 'vue'
+import {Swiper} from 'vue2-swiper'
 export default {
+  components: {
+    Swiper
+  },
   props: {
     menu: {
       default: 3
@@ -110,6 +122,7 @@ export default {
   },
   data() {
     return {
+      lastSwipeOffset: null,
       skeletunMenu: 3,
       key: 'value',
       activeCategory: 1,
@@ -154,7 +167,56 @@ export default {
       ]
     }
   },
+  mounted(){
+    this.setActiveTab(true);
+  },
   methods: {
+    handleSlideMove(offset) {
+      if(!this.lastSwipeOffset){
+        this.lastSwipeOffset = offset
+        return
+      }
+      let width = document.getElementById('menu-swiper-container').offsetWidth;
+      // console.log(offset);
+      // console.log(width);
+      // console.log(offset / width);
+      // console.log('dir');
+      let goingRight = offset - this.lastSwipeOffset < 0
+      let pageIndex = (goingRight ? Math.ceil((-offset) / width) : Math.floor((-offset) / width))
+      if(pageIndex >= this.menuTabItemCategories.length) {
+        pageIndex = this.menuTabItemCategories.length - 1
+      }
+      if(pageIndex < 0) {
+        pageIndex = 0
+      }
+      // Carefull! pageIndex is different from page
+      let pk = this.menuTabItemCategories[pageIndex].pk
+      let newActiveCategory = this.menu.findIndex(cat => cat.pk == pk)
+      if(this.activeCategory != newActiveCategory){
+        this.activeCategory = newActiveCategory;
+      }
+      this.lastSwipeOffset = offset
+    },
+    handleSlideChange(page){
+      this.lastSwipeOffset = null;
+
+      let pageIndex = page - 1;
+      let pk = this.menuTabItemCategories[pageIndex].pk
+      this.activeCategory = this.menu.findIndex(cat => cat.pk == pk)
+    },
+    setActiveTab(noAnimation) {
+      const vinst = this;
+      if(this.$refs.menuCategoriesSwipe && this.menu[this.activeCategory]){
+        setTimeout(function(){
+          let pk = vinst.menu[vinst.activeCategory].pk
+          let index = vinst.menuTabItemCategories.findIndex(cat => cat.pk == pk)
+          vinst.$refs.menuCategoriesSwipe.setPage(index + 1, noAnimation);
+        }, 100)
+        
+      } else {
+        setTimeout(() => vinst.setActiveTab(noAnimation), 100)
+      }
+    },
     productsPayloadSeperator() {
       // if there is no change just switch to table view
       if (this.productChangeArray.length == 0) {
@@ -201,11 +263,11 @@ export default {
     },
 
     changeActiveCategory(index) {
-
       if (this.activeCategory > index)
         this.slideTransition = 'slide-category-prev'
       else this.slideTransition = 'slide-category-next'
       this.activeCategory = index
+      this.setActiveTab()
     },
 
     countChange(index, count, product) {
@@ -245,11 +307,53 @@ export default {
 
       // total Price of anything user wants to add to table (show in add to table btn)
       // end of else
+    },
+
+    /**
+     * https://codepen.io/Jayesh_v/pen/oMgwRO
+     * scrollTo - Horizontal Scrolling
+     * @param {(HTMLElement ref)} element - Scroll Container
+     * @param {number} scrollPixels - pixel to scroll
+     * @param {number} duration -  Duration of scrolling animation in millisec
+     */
+    scrollTo(element, scrollPixels, duration) {
+      const scrollPos = element.scrollLeft;
+      // Condition to check if scrolling is required
+      // if ( !( (scrollPos === 0 || scrollPixels > 0) && (element.clientWidth + scrollPos === element.scrollWidth || scrollPixels < 0))) 
+      // {
+        // Get the start timestamp
+        const startTime =
+          "now" in window.performance
+            ? performance.now()
+            : new Date().getTime();
+        
+        function scroll(timestamp) {
+          //Calculate the timeelapsed
+          const timeElapsed = timestamp - startTime;
+          //Calculate progress 
+          const progress = Math.min(timeElapsed / duration, 1);
+          //Set the scrolleft
+          element.scrollLeft = scrollPos + scrollPixels * progress;
+          //Check if elapsed time is less then duration then call the requestAnimation, otherwise exit
+          if (timeElapsed < duration) {
+            //Request for animation
+            window.requestAnimationFrame(scroll);
+          } else {
+            return;
+          }
+        }
+        //Call requestAnimationFrame on scroll function first time
+        window.requestAnimationFrame(scroll);
+      // }
     }
   },
  
   computed: {
-     isMenuPage() {
+    menuTabItemCategories(){
+      let menuFiltered = Object.assign([], this.menu).filter(cat => cat.products.length > 0)
+      return this.$dir() == 'rtl' ? menuFiltered.reverse() : menuFiltered
+    },
+    isMenuPage() {
       return (this.$store.state.currentMainPage == 'currentCafe')
     },
     firstTimeActive() {
@@ -280,9 +384,24 @@ export default {
       return this.$store.state.cafe.productChangeArray.length
     }
   },
-  mounted() {},
   watch: {
-        initialTour: {
+    activeCategory(newValue, _oldValue){
+      const element = this.$refs.menuCategoryList;
+      let startOfScroll = this.$dir() == 'rtl'
+                        ? element.firstChild.getBoundingClientRect().right
+                        : element.firstChild.getBoundingClientRect().left
+      let whereWeWant = this.$dir() == 'rtl'
+                        ? document.getElementById('menu-category-item-' + newValue)
+                                  .getBoundingClientRect().right + 20
+                        : document.getElementById('menu-category-item-' + newValue)
+                                  .getBoundingClientRect().left - 20
+      const amount = (whereWeWant - startOfScroll) - document.getElementById('menu-category-list').scrollLeft
+      this.scrollTo(element, amount, 300)
+    },
+    menuTabItemCategories(_newValue, _oldValue){
+      this.setActiveTab(true);
+    },
+    initialTour: {
       immediate: true,
       handler(val, old) {
         if (val) {
@@ -328,7 +447,5 @@ export default {
 }
 </script>
 
-<style scoped lang="sass">
-
-
+<style scoped lang="scss">
 </style>

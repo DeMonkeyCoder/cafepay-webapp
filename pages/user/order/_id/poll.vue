@@ -1,5 +1,5 @@
 <template>
-  <div dir="rtl">
+  <div :dir="$dir()">
 
       <b-modal class="write-comment-modal simple-action-modal" :active.sync="isWriteCommentModalActive"
         has-modal-card :can-cancel="true">
@@ -29,7 +29,7 @@
          <div class="info">
            <rate-icon :isSecondary="ActiveTab == 1" class="no-pic" />
           <h4 class="header cp-tb-padding cp-side-padding">امتیازدهی</h4>
-          <p dir="rtl" class="detail cp-tb-padding cp-side-padding">
+          <p :dir="$dir()" class="detail cp-tb-padding cp-side-padding">
             به <span class="p-text" :class="{'is-secondary-text': ActiveTab == 1}">کافه هدایت</span></p>
         </div>
       </div>
@@ -91,7 +91,7 @@
                 </div>
               </div>
               <b-field>
-                <b-input class="is-nochange-input" dir="rtl" v-model="cafeComment" maxlength="200" type="textarea" placeholder="در صورت تمایل نظر خود را بنویسید ..."></b-input>
+                <b-input class="is-nochange-input" :dir="$dir()" v-model="cafeComment" maxlength="200" type="textarea" placeholder="در صورت تمایل نظر خود را بنویسید ..."></b-input>
               </b-field>
             </b-tab-item>
         </b-tabs>
@@ -243,7 +243,7 @@ import {swipable} from '@/plugins/makeTabSwipe.js'
   display: flex
   align-items: center
   p
-    text-align: right
+    text-align: start
     flex: 1
   .b-rate
     flex: 1

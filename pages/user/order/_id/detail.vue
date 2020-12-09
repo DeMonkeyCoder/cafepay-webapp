@@ -1,5 +1,5 @@
 <template>
-  <div dir="rtl">
+  <div :dir="$dir()">
       <div class="cp-header cp-tb-padding cp-side-padding">
         <div @click="$router.go(-1)" class="go-back cp-tb-padding">
           <b-icon size="is-medium" icon="chevron-left" type="is-light">
@@ -11,7 +11,7 @@
          <div class="info">
           <img class="no-pic" src="@/assets/img/shape/icons/order-detail.png" alt="">
           <h4 class="header cp-tb-padding cp-side-padding">جزییات سفارش</h4>
-          <p dir="rtl" class="detail cp-tb-padding cp-side-padding">
+          <p :dir="$dir()" class="detail cp-tb-padding cp-side-padding">
             در <span class="p-text">{{order.cafeName}}</span></p>
         </div>
       </div>
@@ -25,7 +25,7 @@
 
 
       <div class="order-fix-button">
-        <nuxt-link :to="'/user/order/' +$route.params.id + '/poll'" class="go-to-poll-btn">امتیازدهی به {{order.cafeName}}</nuxt-link>
+        <nuxt-link :to="localePath('/user/order/' +$route.params.id + '/poll')" class="go-to-poll-btn">امتیازدهی به {{order.cafeName}}</nuxt-link>
       </div>
 
  
@@ -65,7 +65,7 @@
     flex-direction: column
 
   .detail
-    direction: rtl!important
+    // direction: rtl!important
 
 .order-fix-button
   background-color: $primary

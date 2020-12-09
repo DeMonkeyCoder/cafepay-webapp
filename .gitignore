@@ -89,3 +89,4 @@ sw.*
 package-lock.json
 
 baseUrl.js
+config.js

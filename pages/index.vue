@@ -127,7 +127,7 @@
 
           <b-field>
             <b-input
-              dir="rtl"
+              :dir="$dir()"
               v-model="first_name"
               class="cp-input cp-input-primary cp-input-grey"
               placeholder="نام"
@@ -137,7 +137,7 @@
 
           <b-field>
             <b-input
-              dir="rtl"
+              :dir="$dir()"
               v-model="last_name"
               class="cp-input cp-input-primary cp-input-grey"
               placeholder="نام خانوادگی"
@@ -167,7 +167,7 @@
     </section>
 
     <section
-      dir="rtl"
+      :dir="$dir()"
       id="about-us"
       class="about-us has-background-white cp-tb-padding-4x cp-side-padding-4x"
     >
@@ -189,7 +189,7 @@
     </section>
 
     <section
-      dir="rtl"
+      :dir="$dir()"
       id="how-to-use"
       class="cp-tb-padding-4x cp-side-padding-4x"
     >
@@ -248,7 +248,7 @@
     </section>
 
     <section
-      dir="rtl"
+      :dir="$dir()"
       class="rules cp-tb-padding-4x cp-side-padding-4x has-background-white"
     >
       <h2 class="header">قوانین استفاده از کافه‌پِی</h2>
@@ -332,7 +332,7 @@
     </section>
 
     <section
-      dir="rtl"
+      :dir="$dir()"
       class="contact-us has-background-white cp-tb-padding-4x cp-side-padding-4x"
     >
       <h6 class="header font-20">
@@ -359,7 +359,7 @@
       <b-field>
         <b-input
           class="cp-input cp-input-primary cp-input-grey cp-input-shadow-inner"
-          dir="rtl"
+          :dir="$dir()"
           v-model="form.comment"
           maxlength="200"
           type="textarea"
@@ -393,7 +393,7 @@
         آدرس: شیراز میدان پارسه یقطین جنوبی کوچه ۲۱ ساختمان اپادانا واحد ۸ -
         تلفن تماس: ۰۷۱۳۸۳۲۵۴۷۴
       </P>
-      <p dir="rtl" class="font-14 font-norm">
+      <p :dir="$dir()" class="font-14 font-norm">
         کلیه حقوق این سایت (کافه‌پِی) متعلق به هوشمندسازان ویرا آرین می‌باشد.
       </p>
     </section>
@@ -564,8 +564,8 @@ export default {
 <style lang="sass" scoped>
 @import '~/assets/sass/variables.sass'
 .field.is-grouped > .control:not(:last-child)
-  margin-right: 0!important
-  margin-left: 0.75rem!important
+  margin-inline-start: 0!important
+  margin-inline-end: 0.75rem!important
 
 .go-to-user
   margin-top: 1rem
@@ -583,7 +583,7 @@ export default {
     width: 0.75em
     position: relative
     top: 0.15em
-    margin-right: -0.75em
+    margin-inline-start: -0.75em
   
 .contact-us
   .bcp-btn
@@ -604,7 +604,7 @@ export default {
 .input-container
   position: relative
   input
-    padding-left: 30px
+    padding-inline-end: 30px
     background: none
     border: none
     height: 50px
@@ -666,7 +666,7 @@ export default {
   color: #29abe2!important
   margin-bottom: .5rem
   margin-top: .5rem
-  text-align: right
+  text-align: start
 
 
 .intro
@@ -687,17 +687,17 @@ export default {
   // .button 
   //   .icon
   //     &:last-child
-  //       margin-left: 0!important
-  //       margin-right: 0!important
+  //       margin-inline-end: 0!important
+  //       margin-inline-start: 0!important
   button    
     margin: 0 10px
     &.forward
       flex: 9 
     &.back
       flex: 1
-      margin-right: 0
-      padding-right: 0.5rem!important
-      padding-left: 0.5rem!important
+      margin-inline-start: 0
+      padding-inline-start: 0.5rem!important
+      padding-inline-end: 0.5rem!important
       .mdi
         font-size: 28px!important
 

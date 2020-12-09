@@ -26,13 +26,13 @@
     >
       <div>
         <img src="@/assets/img/ordering.png" alt="" />
-        <p class="no-ordering-text">سفارش ‌گیری فعال نیست</p>
+        <p class="no-ordering-text">{{ $t('table.ordering_unavailable') }}</p>
       </div>
     </div>
 
     <div v-if="showPreOrder" class="cp-padding">
       <header class="font-18 font-bold cp-b-margin">سفارشات فعلی</header>
-      <nuxt-link :to="'/user/liveorder/'+ user.table_uuid"><div class="preorders-in-table cp-card has-background-white cp-padding">
+      <nuxt-link :to="localePath('/user/liveorder/'+ user.table_uuid)"><div class="preorders-in-table cp-card has-background-white cp-padding">
         <div class="preorders-in-table__info">
           <p class="preorders-in-table__info__cafe-name">
             سفارش از:
@@ -172,11 +172,11 @@
           >پرداخت آنلاین</b-button
         > -->
 
-      <!-- <div @click="paymentCheckout" dir="rtl" class="pc-child pay-checkout-btn green">
+      <!-- <div @click="paymentCheckout" :dir="$dir()" class="pc-child pay-checkout-btn green">
           <b-icon class="credit-card-icon" icon="credit-card" type="is-light"></b-icon>پرداخت آنلاین
         </div>-->
       <!-- <div class="pc-child pay-checkout-info cp-side-padding">
-          <div dir="rtl" class="total-price cp-side-margin font-norm">
+          <div :dir="$dir()" class="total-price cp-side-margin font-norm">
             {{ totalWishToPay | currency }}
             <span class="toman">تومان</span>
           </div>

@@ -5,6 +5,7 @@
 export const Category = class Category {
   constructor(rawData = {}) {
     this.name = rawData.title
+    this.pk = rawData.pk
     this.products = []
     for (const product of rawData.products) {
       this.products.push(new Product(product))

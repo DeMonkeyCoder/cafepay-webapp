@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import  baseUrl from '~/plugins/baseUrl.js'
+import  config from '~/plugins/config.js'
 
 
 Vue.use(Vuex)
@@ -9,7 +9,7 @@ export const state = () => ({
   errorMessage: null,
   globalLoading: false,
   errorThrow: false,
-  baseUrl: baseUrl.baseUrl,
+  baseUrl: config.baseUrl,
   activeCafe: {},
   firstTimeActive: false,
   activeTable: {},

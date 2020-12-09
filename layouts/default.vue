@@ -5,6 +5,16 @@
 </template>
 <script>
 export default {
+  head() {
+    return {
+      link: [
+        {
+          rel: "stylesheet",
+          href: `/css/locales/${this.$i18n.locale}.css`
+        }
+      ]
+    };
+  },
   data() {
     return {
       name: ''

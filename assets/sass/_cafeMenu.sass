@@ -1,10 +1,15 @@
 @import 'variables.sass'
+
+.menu-category-tabs
+  .tabs
+    display: none!important
+
 .category-list
-  direction: rtl
+  // direction: rtl
   // margin-top: 1.5 * $margin!important
-  margin-left: (-$margin)
+  margin-inline-end: (-$margin)
   padding-top: $padding
-  // margin-right: (-$margin)
+  // margin-inline-start: (-$margin)
   overflow: scroll !important
   white-space: nowrap
   .category-item-wrapper
@@ -91,19 +96,19 @@
           // : 100%/30px 30px 5px 5px
       .content-section
         position: relative
-        text-align: right
+        text-align: start
         flex: 11
         .product-title
           font-size: 15px
 
         .product-description
-          direction: rtl
+          // direction: rtl
           font-size: 11px
           line-height: 13px
 
         .product-price
           position: absolute
-          right: $padding
+          start: $padding
           bottom: $padding
           font-size: 18px
           font-weight: 500!important
@@ -120,7 +125,7 @@
               padding: 0.1rem 0.3rem
               border-radius: 0.25rem
               font-weight: 500
-              direction: ltr
+              // direction: ltr
               background-color: $secondary
 
       .out-of-order
@@ -137,7 +142,7 @@
 
       .add-or-remove
         text-align: center
-        padding-left: $padding
+        padding-inline-end: $padding
         flex: 1
         display: flex
         flex-direction: column
@@ -161,6 +166,7 @@
             color: #e94560
             border: 1px solid #e94560
             box-shadow: 0px 1px 4px rgba(0, 0 , 0, 0.2)
+            margin: auto
         .product-remove
           .aor-shape
             font-size: 26px

@@ -1,5 +1,5 @@
 import webpack from 'webpack'
-import baseUrl from './plugins/baseUrl.js'
+import config from './plugins/config.js'
 export default {
   server: {
     // port: 3000, // default: 3000     
@@ -80,9 +80,11 @@ export default {
     '~/plugins/moment',
     '~/plugins/productTour.js',
     // '~/plugins/lottie.js',
-    '~/plugins/websocket.js'
+    '~/plugins/websocket.js',
     // '~/plugins/jdenticon-2.2.0.js',
     // '~/plugins/ripple',
+    '~/plugins/i18n.js',
+    '~/plugins/Vue2TouchEvents.js'
   ],
   /*
    ** Nuxt.js modules
@@ -92,6 +94,26 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
     'nuxt-buefy',
+    ['nuxt-i18n', {
+      seo: true,
+      locales: [
+        {
+          code: 'en',
+          file: 'en-US.js',
+          iso: 'en-US',
+          dir:'ltr'
+        },
+        {
+          code: 'fa',
+          file: 'fa-IR.js',
+          iso: 'fa-IR',
+          dir:'rtl'
+        },
+      ],
+      lazy: true,
+      langDir: 'lang/',
+      defaultLocale: config.defaultLocale
+    }]
   ],
 
   router: {
@@ -106,7 +128,7 @@ export default {
    ** See https://axios.nuxtjs.org/options
    */
   axios: {
-    baseURL: baseUrl.baseUrl,
+    baseURL: config.baseUrl,
     proxyHeaders: false,
     credentials: false
   },
@@ -123,7 +145,7 @@ export default {
        theme_color: '#009fe3',
     },
      workbox: {
-       dev: true // or use a global variable to track the current NODE_ENV, etc to determine dev mode
+       dev: false // or use a global variable to track the current NODE_ENV, etc to determine dev mode
      }
   },
   /*
