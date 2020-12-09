@@ -14,10 +14,10 @@
             v-if="state === 'login'"
             :key="1"
           >
-            <p class="login-title">ورود به کافه‌پِی</p>
-            <h3 class="font-bold">شماره تلفن همراه خود را وارد نمایید</h3>
+            <p class="login-title">{{ $t('login_component.signin_to_cafepay') }}</p>
+            <h3 class="font-bold">{{ $t('login_component.enter_your_phone_number') }}</h3>
             <p class="state-explaination">
-              یک کد جهت تایید شماره برای شما ارسال خواهد شد.
+              {{ $t('login_component.verification_code_will_be_sent_meesage') }}
             </p>
             <b-field class="center-align">
               <b-input
@@ -33,7 +33,7 @@
                 size="is-medium"
               ></b-input>
             </b-field>
-              <p class="font-14">عضویت به معنای قبول <nuxt-link class="font-norm p-text font-14" to="/terms">قوانین و مقررات</nuxt-link> کافه‌پِی است</p>
+              <p v-if="$i18n.locale == 'fa'" class="font-14">عضویت به معنای قبول <nuxt-link class="font-norm p-text font-14" to="/terms">قوانین و مقررات</nuxt-link> کافه‌پِی است</p>
           </section>
 
           <section

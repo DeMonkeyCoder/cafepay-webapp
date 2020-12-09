@@ -4,11 +4,11 @@
     <login-profile key="loginmodal-profile" id="loginmodal-profile" :loginActive="loginActive" @close="loginActive = false" />
        <b-button
        @click="loginActive = true"
-        icon-left="account-arrow-left"
+        :icon-left="$dir() == 'rtl' ? 'account-arrow-left' : 'account-arrow-right'"
         type="is-info"
         size="large"
         class="login-btn shadow-lg bcp-btn-large "
-        >ورود به حساب کاربری</b-button
+        >{{ $t('profile_page.signin_to_profile') }}</b-button
       >
 
   </div>

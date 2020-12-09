@@ -20,9 +20,8 @@
     >
       <div class="modal-card" style="width: auto">
         <section class="modal-dialog">
-          <p>
-            جهت اسکن بارکد توسط دوربین درون برنامه، لطفا بعد از مشاهده پیام زیر
-            گزینه <span class="t-text font-norm">Allow</span> را انتخاب نمایید
+          <p v-html="$t('scan_page.camera_permission_message')">
+            
           </p>
           <!-- <img src="@/assets/img/camera-guide.png" alt="" /> -->
         </section>
@@ -32,7 +31,7 @@
         <section class="modal-action">
           <!-- <button class="button ma-child is-light" type="button" @click="closeModal(false)">خیر</button> -->
           <b-button class="ma-child" type="is-info" @click="openCamera"
-            >باز کردن دوربین</b-button
+            >{{ $t('scan_page.open_camera') }}</b-button
           >
         </section>
       </div>
@@ -57,7 +56,7 @@
               v-model="tableCode"
               icon="numeric"
               inputmode="numeric"
-              placeholder="کد میز را وارد کنید"
+              :placeholder="$t('scan_page.enter_table_code')"
             ></b-input>
           </b-field>
 
@@ -68,7 +67,7 @@
             expanded
             :disabled="tableCode == '' ? true : false"
             type="is-info"
-            >ورود به میز</b-button
+            >{{ $t('scan_page.submit_table_code') }}</b-button
           >
         </section>
         <!-- <footer class="modal-card-foot">

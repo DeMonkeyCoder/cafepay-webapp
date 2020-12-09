@@ -6,17 +6,9 @@
     >
       <div>
         <img src="@/assets/img/shape/icons/burger.svg" alt />
-        <p class="cp-side-margin-2x">
-          ابتدا به بخش
-          <span
-            @click="$store.commit('changeNavigation', 'scan')"
-            class="p-text"
-            >اسکن</span
-          >
-          بروید
-        </p>
-        <p>و بارکد مربوط به میز را اسکن کنید</p>
-        <p>یا کد میز را وارد نمایید</p>
+        <div @click="$store.commit('changeNavigation', 'scan')" v-html="$t('table_page.scan_first_message')">
+
+        </div>
       </div>
     </div>
 
@@ -26,7 +18,7 @@
     >
       <div>
         <img src="@/assets/img/ordering.png" alt="" />
-        <p class="no-ordering-text">{{ $t('table.ordering_unavailable') }}</p>
+        <p class="no-ordering-text">{{ $t('table_page.ordering_unavailable') }}</p>
       </div>
     </div>
 
