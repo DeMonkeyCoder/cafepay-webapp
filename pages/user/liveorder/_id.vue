@@ -80,7 +80,6 @@ export default {
       handler(val, oldValue) {
         if (val.token == null) this.$router.push('/user/home')
         let animationData = null
-        lottie.destroy()
         document.getElementById('animation-order-status').innerHTML = ''
         console.log('table generated in liveorder', val);
         switch (val.status) {
@@ -115,7 +114,7 @@ export default {
               animationData, // the path to the animation json
             })
             preloader.play()
-          }, 200)
+          }, 500)
         }
       }
     },
