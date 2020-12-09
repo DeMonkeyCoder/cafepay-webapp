@@ -212,7 +212,7 @@ export default {
 
           if (err.response) {
           //  it means wrong table token
-            if (err.response.status == 400) {
+            if (err.response.status == 404) {
               this.$buefy.toast.open({
                 duration: 3000,
                 message: `کد وارد شده نادرست است`,

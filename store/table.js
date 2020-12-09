@@ -15,6 +15,7 @@ export const state = () => ({
   payment: {},
   yourOrdersCost: 0,
   yourOrdersPaid: 0,
+  keepAlive: false,
   you: {
     orders: []
   },
@@ -44,6 +45,10 @@ export const mutations = {
   },
   newPerson(state, person) {
     state.you = person
+  },
+  
+  setKeepAlive(state) {
+    state.keepAlive = true
   },
 
   clearData(state) {
@@ -184,6 +189,8 @@ export const actions = {
           ])
           .then(axios.spread((add, remove) => {
             resolve(true)
+            // in-case user leaves the menu keep alive the socket (dont disconnect it)
+            if (context.rootState.cafe.tokenType == 'pre-order') context.commit('setKeepAlive')
             //... but this callback will be executed only when both requests are complete.\
             context.commit("toggleLoading", false, {
               root: true
@@ -233,6 +240,7 @@ export const actions = {
             table_products
           })
           .then(res => {
+            if (context.rootState.cafe.tokenType == 'pre-order') context.commit('setKeepAlive')
             resolve(res)
             context.commit('cafe/clearPCA', null, {
               root: true

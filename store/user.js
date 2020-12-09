@@ -23,6 +23,9 @@ export const mutations = {
   },
   clearTable_uuid(state) {
     state.user.table_uuid = null
+  },
+  setTable_uuid(state, data) {
+    state.user.table_uuid = data
   }
   
 
