@@ -83,6 +83,10 @@ export const mutations = {
   setActiveTable(state, flag) {
     state.hasActiveTable = flag
   },
+
+  unsetIsConnectedFlag(state) {
+    state.socket.isConnected = false
+  },
   // setActiveTable(state, table){
   //   state.activeTable = table
   // },

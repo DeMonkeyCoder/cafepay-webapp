@@ -41,6 +41,8 @@ import errorAnimation from '~/assets/img/error.json'
         this.$store.commit('table/clearWishToPay')
         // #preorder
         if (this.info.table_type == 2) {
+          // unset isConnected flag manually because disconnect is async
+          this.$store.commit('unsetIsConnectedFlag')
           // we dont want user to go back to table so we clear table
           Vue.prototype.$disconnect()
           this.$store.commit('table/clearData')
