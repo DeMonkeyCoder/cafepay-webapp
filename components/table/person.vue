@@ -10,8 +10,8 @@
 
     <div class="person-title has-background-white cp-tb-margin">
       <img :src="person.avatar" :alt="person.name" />
-      <p class="cp-side-padding cp-tb-padding">
-        سفارشات <span class="font-norm p-text">{{ title }}</span>
+      <p class="cp-side-padding cp-tb-padding" v-html="$t('table_page.person_orders', {title})">
+        
       </p>
     </div>
     <div
@@ -28,7 +28,7 @@
 
       <div class="person-total-order-info">
         <span
-          >مجموع:‌ {{ order.count }} عدد |
+          >{{ $t('table_page.person_order_count', {order_count: order.count}) }} |
           {{ order.payment_info.total_amount | currency
           }}<span class="toman">تومان</span></span
         >

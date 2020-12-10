@@ -10,10 +10,21 @@ export default {
       </p>
       <p>and scan the barcode</p>
       <p>or enter the table\'s code</p>`,
+      person_orders: '<span class="font-norm p-text">{title}</span>\'s Orders',
+      person_order_count: 'Total:‌ {order_count} items',
+  },
+
+  current_cafe: {
+    return_to_scan_confirmation: 'Do you want to return to scan page?',
+    return_to_scan: 'Retrun to scan page',
+    no: 'No'
   },
 
   menu_page: {
     your_current_order: 'Your Current Order',
+    submit_order: 'Submit Order',
+    submit_order_self_pickup: 'Self Pickup',
+    sold_out: 'Sold out',
   },
 
   cafe_info: {
@@ -55,5 +66,20 @@ export default {
     signin_to_cafepay: 'Sign in to Cafepay',
     enter_your_phone_number: 'Enter your phone number',
     verification_code_will_be_sent_meesage: 'A code will be sent to verify your phone number',
+    next: 'Next',
+    change_phone_number: 'Wrong phone number?',
+    verify_phone_message: `<h3 class="font-bold">
+        Enter code
+      </h3>
+      <p class="state-explaination">
+        Enter the 4-digit code sent to <span>{phone_number}</span>
+      </p>`,
+    submit_code: 'Next',
+    resend_code: 'Resend code',
+    resend_time_message: 'in {resendTime} seconds',
+    welcome_to_cafepay: 'Welcome to Cafepay!',
+    complete_your_registration_message: 'To complete registration, please enter your name',
+    your_name: 'Your name',
+    sumbit_information: 'Sumbit',
   }
 }

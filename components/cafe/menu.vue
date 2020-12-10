@@ -14,8 +14,8 @@
         size="is-medium"
         type="is-info"
         >
-        <span v-if="tokenType == 'pre-order'" dir="rtl" class="font-bold font-14">(تحویل در مجموعه)</span>
-        ثبت سفارشات
+        <span v-if="tokenType == 'pre-order'" dir="rtl" class="font-bold font-14">({{ $t('menu_page.submit_order_self_pickup') }})</span>
+        {{ $t('menu_page.submit_order') }}
         </b-button
       >
     </div>
@@ -92,7 +92,7 @@
                 </span>
               </div>
               <div v-if="!prod.available" class="out-of-order">
-                <p>تمام شد</p>
+                <p>{{ $t('menu_page.sold_out') }}</p>
               </div>
             </div>
           </div>
