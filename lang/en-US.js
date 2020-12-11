@@ -10,8 +10,22 @@ export default {
       </p>
       <p>and scan the barcode</p>
       <p>or enter the table\'s code</p>`,
+      preorder: {
+        current_orders: 'Current Order',
+        order_from: 'Order from',
+        peymant_is_not_done: 'Payment is not done',
+        details: 'Details',
+        checkout: 'Checkout'
+      },
+      total_amount: 'Total amount',
+      payed_amount: 'Payed amount',
+      table_payment_done: 'Table bill is payed',
+      no_orders_on_your_table: 'No orders found on your table',
+      checkout_all_items: 'Checkout all items',
+      checkout: 'Checkout',
       person_orders: '<span class="font-norm p-text">{title}</span>\'s Orders',
       person_order_count: 'Total:‌ {order_count} items',
+      person_payed: 'Payed',
   },
 
   current_cafe: {
@@ -43,6 +57,8 @@ export default {
     last_name: 'Last Name',
     phone_number: 'Phone Number',
     update_information: 'Save',
+    logout_confirmation_message: 'Are you sure you want to logout?',
+    no: 'No'
   },
 
   cafe_navigator: {

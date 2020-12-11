@@ -10,8 +10,22 @@ export default {
       </p>
       <p>و بارکد مربوط به میز را اسکن کنید</p>
       <p>یا کد میز را وارد نمایید</p>`,
+    preorder: {
+      current_orders: 'سفارشات فعلی',
+      order_from: 'سفارش از',
+      peymant_is_not_done: 'پرداخت سفارش انجام نشده',
+      details: 'جزییات',
+      checkout: 'پرداخت سفارش'
+    },
+    total_amount: 'مجموع سفارشات',
+    payed_amount: 'پرداخت شده',
+    table_payment_done: 'پرداخت میز کامل شده است',
+    no_orders_on_your_table: 'سفارشی برروی میز شما وجود ندارد',
+    checkout_all_items: 'پرداخت کل فاکتور',
+    checkout: 'پرداخت سفارشات',
     person_orders: 'سفارشات <span class="font-norm p-text">{title}</span>',
     person_order_count: 'مجموع:‌ {order_count} عدد',
+    person_payed: 'پرداخت شده',
   },
 
   current_cafe: {
@@ -42,7 +56,9 @@ export default {
     first_name: 'نام',
     last_name: 'نام خانوادگی',
     phone_number: 'شماره تلفن',
-    update_information: 'تغییر مشخصات'
+    update_information: 'تغییر مشخصات',
+    logout_confirmation_message: 'آیا میخواهید از حساب کاربری خود خارج شوید؟',
+    no: 'خیر'
   },
 
   cafe_navigator: {
