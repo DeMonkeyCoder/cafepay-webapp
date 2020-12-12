@@ -38,14 +38,14 @@
         <span
           >پرداخت شده:‌
           <span class="g-text"
-            >{{ order.payment_info.payed_amount | currency
+            >{{ order.payment_info.net_payed_amount | currency
             }}<span class="toman">تومان</span></span
           ></span
         >
         <span
           >پرداخت شما:‌
           <span class="p-text"
-            >{{ order.my_payments.payed_amount | currency
+            >{{ order.my_payments.net_payed_amount | currency
             }}<span class="toman">تومان</span></span
           ></span
         >
@@ -53,7 +53,7 @@
 
       <!-- <div
         v-if="
-          order.payment_info.payed_amount != order.payment_info.total_amount &&
+          order.payment_info.net_payed_amount != order.payment_info.total_amount &&
             history == false
         "
         :value="order.wish_to_pay"
@@ -68,7 +68,7 @@
         <b-slider
           :id="`order-${index}-slider`"
           v-if="
-            order.payment_info.payed_amount !=
+            order.payment_info.net_payed_amount !=
               order.payment_info.total_amount && history == false
           "
           :value="order.wish_to_pay"
@@ -81,10 +81,10 @@
           rounded
           :min="0"
           :max="
-            order.payment_info.total_amount - order.payment_info.payed_amount
+            order.payment_info.total_amount - order.payment_info.net_payed_amount
           "
           :step="
-            order.payment_info.total_amount - order.payment_info.payed_amount >=
+            order.payment_info.total_amount - order.payment_info.net_payed_amount >=
               500 && order.payment_info.total_amount - order.wish_to_pay > 1000
               ? 500
               : 100

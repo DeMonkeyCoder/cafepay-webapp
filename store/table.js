@@ -94,7 +94,7 @@ export const mutations = {
   },
   payWholeBill(state) {
     // for (const order of state.you.orders) {
-    //   order.wish_to_pay =order.payment_info.total_amount - order.payment_info.payed_amount
+    //   order.wish_to_pay =order.payment_info.total_amount - order.payment_info.net_payed_amount
     // }
     for (const person of state.persons) {
       for (const order of person.orders) {
@@ -121,8 +121,6 @@ export const mutations = {
   },
 
   setPayment: (state, value) => state.tpayment = value,
-
-
 
   clearWishToPay(state) {
     // wish to pay to 0 because we dont have redirection to the bank yet
