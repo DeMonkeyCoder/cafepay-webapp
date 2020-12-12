@@ -15,7 +15,13 @@ export default {
         order_from: 'Order from',
         peymant_is_not_done: 'Payment is not done',
         details: 'Details',
-        checkout: 'Checkout'
+        checkout: 'Checkout',
+        states: {
+          waiting: 'Waiting for kitchen confirmation',
+          preparing: 'Prepearing your order',
+          ready: 'Your order is ready!',
+          rejected: 'Your order is rejected by the kitchen'
+        }
       },
       total_amount: 'Total amount',
       payed_amount: 'Payed amount',
@@ -23,6 +29,13 @@ export default {
       no_orders_on_your_table: 'No orders found on your table',
       checkout_all_items: 'Checkout all items',
       checkout: 'Checkout',
+      person: {
+        tour: {
+          previous: 'Previous',
+          how_can_i_pay: 'How can I pay?',
+          got_it: 'Got it!',
+        }
+      },
       person_orders: '<span class="font-norm p-text">{title}</span>\'s Orders',
       person_order_count: 'Total:‌ {order_count} items',
       person_payed: 'Payed',
@@ -39,6 +52,15 @@ export default {
     submit_order: 'Submit Order',
     submit_order_self_pickup: 'Self Pickup',
     sold_out: 'Sold out',
+    tour: {
+      previous: 'Previous',
+      how_can_i_pay: 'How can I pay?',
+      got_it: 'Got it!',
+      submit_order_guide: 'Submit your order by clicking this button',
+    },
+    toasts: {
+      you_payed_on_this_product: 'You already payed on {num} products of this kind',
+    }
   },
 
   cafe_info: {

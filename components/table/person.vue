@@ -132,9 +132,9 @@ export default {
         useKeyboardNavigation: false,
         labels: {
           buttonSkip: false,
-          buttonPrevious: 'قبلی',
-          buttonNext: 'چگونه پرداخت کنم؟',
-          buttonStop: 'فهمیدم!'
+          buttonPrevious: this.$t('table_page.person.tour.previous'),
+          buttonNext: this.$t('table_page.person.tour.how_can_i_pay'),
+          buttonStop: this.$t('table_page.person.tour.got_it')
         }
       },
       myCallbacks: {
@@ -143,11 +143,11 @@ export default {
       steps: [
         {
           target: '#order-0', // We're using document.querySelector() under the hood
-          content: `سفارشات هر فرد با اطلاعات پرداختی آن در این قسمت قابل مشاهده است`
+          content: this.$t('table_page.person.tour.person_orders_guide')
         },
         {
           target: '#order-0-slider', // We're using document.querySelector() under the hood
-          content: `با کشیدن این اسلاید به سمت چپ و یا راست مبلغی که میخواهید پرداخت کنید را مشخص کنید`
+          content: this.$t('table_page.person.tour.person_payment_guide')
         }
         // {
         //   target: '.v-step-1',

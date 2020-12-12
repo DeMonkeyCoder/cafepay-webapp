@@ -15,7 +15,13 @@ export default {
       order_from: 'سفارش از',
       peymant_is_not_done: 'پرداخت سفارش انجام نشده',
       details: 'جزییات',
-      checkout: 'پرداخت سفارش'
+      checkout: 'پرداخت سفارش',
+      states: {
+        waiting: 'در انتظار تایید توسط پذیرنده',
+        preparing: 'در حال آماده‌سازی سفارش شما',
+        ready: '!سفارش شما آماده است',
+        rejected: 'سفارش شما توسط پذیرنده رد شد'
+      }
     },
     total_amount: 'مجموع سفارشات',
     payed_amount: 'پرداخت شده',
@@ -23,6 +29,13 @@ export default {
     no_orders_on_your_table: 'سفارشی برروی میز شما وجود ندارد',
     checkout_all_items: 'پرداخت کل فاکتور',
     checkout: 'پرداخت سفارشات',
+    person: {
+      tour: {
+        previous: 'قبلی',
+        how_can_i_pay: 'چگونه پرداخت کنم؟',
+        got_it: 'فهمیدم!',
+      }
+    },
     person_orders: 'سفارشات <span class="font-norm p-text">{title}</span>',
     person_order_count: 'مجموع:‌ {order_count} عدد',
     person_payed: 'پرداخت شده',
@@ -39,6 +52,15 @@ export default {
     submit_order: 'ثبت سفارشات',
     submit_order_self_pickup: 'تحویل در مجموعه',
     sold_out: 'تمام شد',
+    tour: {
+      previous: 'قبلی',
+      how_can_i_pay: 'چگونه پرداخت کنم؟',
+      got_it: 'فهمیدم!',
+      submit_order_guide: 'با انتخاب این گزینه سفارش خود را ثبت کنید',
+    },
+    toasts: {
+      you_payed_on_this_product: `روی {num} عدد ازین محصول پرداخت انجام داده اید`
+    }
   },
 
   cafe_info: {

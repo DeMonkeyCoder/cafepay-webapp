@@ -301,16 +301,16 @@ export default {
       
       switch (this.table.status) {
         case 'waiting':
-          text = 'در انتظار تایید توسط پذیرنده'
+          text = this.$t('table_page.preorder.state.waiting')
           break
         case 'preparing':
-          text = 'در حال آماده‌سازی سفارش شما'
+          text = this.$t('table_page.preorder.state.preparing')
           break
         case 'ready':
-          text = '!سفارش شما آماده است'
+          text = this.$t('table_page.preorder.state.ready')
           break
         case 'rejected':
-          text = 'سفارش شما توسط پذیرنده رد شد'
+          text = this.$t('table_page.preorder.state.rejected')
           break
 
         default:

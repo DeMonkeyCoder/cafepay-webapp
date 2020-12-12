@@ -136,9 +136,9 @@ export default {
         useKeyboardNavigation: false,
         labels: {
           buttonSkip: false,
-          buttonPrevious: 'قبلی',
-          buttonNext: 'چگونه پرداخت کنم؟',
-          buttonStop: 'فهمیدم!'
+          buttonPrevious: this.$t('menu_page.tour.previous'),
+          buttonNext: this.$t('menu_page.tour.how_can_i_pay'),
+          buttonStop: this.$t('menu_page.tour.got_it')
         }
       },
       myCallbacks: {
@@ -147,7 +147,7 @@ export default {
       steps: [
         {
           target: '#selected-products-preview', // We're using document.querySelector() under the hood
-          content: `با انتخاب این گزینه سفارش خود را ثبت کنید`,
+          content: this.$t('menu_page.tour.submit_order_guide'),
             params: {
             placement: 'top' // Any valid Popper.js placement. See https://popper.js.org/popper-documentation.html#Popper.placements
           }
@@ -278,7 +278,7 @@ export default {
         product.reduceLimit
       ) {
         this.toaster(
-          `روی ${product.reduceLimit} عدد ازین محصول پرداخت انجام داده اید`,
+          this.$t('menu_page.toasts.you_payed_on_this_product', {num: product.reduceLimit}),
           'is-danger',
           'is-bottom'
         )
