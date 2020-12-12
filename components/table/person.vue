@@ -94,7 +94,7 @@
 
       <div
         v-if="
-          order.payment_info.payed_amount == order.payment_info.total_amount &&
+          order.payment_info.net_payed_amount == order.payment_info.total_amount &&
             history == false
         "
         class="order-payment-done green"

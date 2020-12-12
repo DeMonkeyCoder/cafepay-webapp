@@ -66,7 +66,7 @@ export const Table = class Table {
         (total, order) => order.payment_info.total_amount + total, 0)
 
       let totalPaid = newOrders.reduce(
-        (total, order) => order.payment_info.payed_amount + total, 0)
+        (total, order) => order.payment_info.net_payed_amount + total, 0)
       let avatar;
 
       let avatars = new Avatars(sprites);

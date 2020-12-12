@@ -98,7 +98,7 @@ export const mutations = {
     // }
     for (const person of state.persons) {
       for (const order of person.orders) {
-        order.wish_to_pay = order.payment_info.total_amount - order.payment_info.payed_amount
+        order.wish_to_pay = order.payment_info.total_amount - order.payment_info.net_payed_amount
       }
     }
   },

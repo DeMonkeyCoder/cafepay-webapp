@@ -222,7 +222,7 @@
           -
           <span class="font-12"> پرداخت شده:</span>
           <span class="p-text font-norm total-payment">{{
-            table.payment.payed_amount | currency
+            table.payment.net_payed_amount | currency
           }}</span>
         </p>
 
@@ -348,7 +348,7 @@ export default {
 
     PaymentProgress() {
       let percent =
-        (this.table.payment.payed_amount / this.table.payment.total_amount) *
+        (this.table.payment.net_payed_amount / this.table.payment.total_amount) *
         100
 
       if (percent == NaN) return 0

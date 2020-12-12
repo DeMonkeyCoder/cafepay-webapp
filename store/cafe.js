@@ -145,7 +145,7 @@ export const mutations = {
             let matchedOrder = user.orders.find(p => p.product == product.pk)
             if (matchedOrder) {
               // check if order has payments for reduce order count
-              product.reduceLimit = Math.ceil(matchedOrder.payment_info.payed_amount / matchedOrder.unit_amount)
+              product.reduceLimit = Math.ceil(matchedOrder.payment_info.net_payed_amount / matchedOrder.unit_amount)
               product.count = matchedOrder.count
               // compute total Count here (initial)
               state.totalCount += matchedOrder.count
@@ -153,7 +153,7 @@ export const mutations = {
               // check if product exist in my order category (firstCateogry) or not
               let matchedOrder_currentOrderCat = state.categories[0].products.find(p => p.pk == matchedOrder.product)
               if (matchedOrder_currentOrderCat) {
-                matchedOrder_currentOrderCat.reduceLimit = Math.ceil(matchedOrder.payment_info.payed_amount / matchedOrder.unit_amount)
+                matchedOrder_currentOrderCat.reduceLimit = Math.ceil(matchedOrder.payment_info.net_payed_amount / matchedOrder.unit_amount)
                 matchedOrder_currentOrderCat.count = matchedOrder.count
               } else state.categories[0].products.push(product)
             }
