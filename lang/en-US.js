@@ -34,6 +34,8 @@ export default {
           previous: 'Previous',
           how_can_i_pay: 'How can I pay?',
           got_it: 'Got it!',
+          person_orders_guide: 'Orders and payment details of people is available here',
+          person_payment_guide: 'Move the slider to right or left to set the amount you want to pay',
         }
       },
       person_orders: '<span class="font-norm p-text">{title}</span>\'s Orders',

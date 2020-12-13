@@ -34,6 +34,8 @@ export default {
         previous: 'قبلی',
         how_can_i_pay: 'چگونه پرداخت کنم؟',
         got_it: 'فهمیدم!',
+        person_orders_guide: 'سفارشات هر فرد با اطلاعات پرداختی آن در این قسمت قابل مشاهده است',
+        person_payment_guide: 'با کشیدن این اسلاید به سمت چپ و یا راست مبلغی که میخواهید پرداخت کنید را مشخص کنید',
       }
     },
     person_orders: 'سفارشات <span class="font-norm p-text">{title}</span>',
