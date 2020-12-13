@@ -78,7 +78,7 @@ export default {
       deep: true,
       immediate: false,
       handler(val, oldValue) {
-        if (val.token == null) this.$router.push('/user/home')
+        if (val.token == null) this.$router.push(this.localePath('/user/home'))
         let animationData = null
         document.getElementById('animation-order-status').innerHTML = ''
         console.log('table generated in liveorder', val);

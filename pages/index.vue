@@ -547,9 +547,9 @@ export default {
       }, 1500)
     }
   },
-  beforeCreate() {
+  created() {
     let w = window.innerWidth
-    if (w < 600) this.$router.push('/user/home')
+    if (w < 600) this.$router.push(this.localePath('/user/home'))
   },
   mounted() {
     let h = window.innerHeight

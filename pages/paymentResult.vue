@@ -47,11 +47,11 @@ import errorAnimation from '~/assets/img/error.json'
           Vue.prototype.$disconnect()
           this.$store.commit('table/clearData')
           this.$store.commit('cafe/bindProductCount', false)
-          this.$router.push(`/user/liveorder/${this.info.table_uuid}`)
+          this.$router.push(this.localePath(`/user/liveorder/${this.info.table_uuid}`))
         }
         else {
           this.$store.commit('changeNavigation', 'cp-table')
-          this.$router.push('/user/home')
+          this.$router.push(this.localePath('/user/home'))
         }
 
       },
