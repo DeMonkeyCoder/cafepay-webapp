@@ -1,9 +1,9 @@
 <template>
 <div>
   <div :key="1" v-if="!userIsloggedIn" class="profile-noLogin">
-    <login-profile key="loginmodal-profile" id="loginmodal-profile" :loginActive="loginActive" @close="loginActive = false" />
+    <login-profile key="loginmodal-profile" id="loginmodal-profile" :loginModalActive="loginModalActive" @close="loginModalActive = false" />
        <b-button
-       @click="loginActive = true"
+       @click="loginModalActive = true"
         :icon-left="$dir() == 'rtl' ? 'account-arrow-left' : 'account-arrow-right'"
         type="is-info"
         size="large"
@@ -127,7 +127,7 @@ export default {
   data() {
     return {
       exitModalActive: false,
-      loginActive: false
+      loginModalActive: false
     }
   },
   methods: {
@@ -135,7 +135,7 @@ export default {
       this.exitModalActive = false
       if (changeCommand) {
         setTimeout(() => {
-          this.loginActive = false
+          this.loginModalActive = false
           this.$store.commit('user/clear')
           this.$store.commit('clearToken')
           this.$store.commit('table/clearData')

@@ -3,7 +3,7 @@
     <b-modal
       @close="$emit('close')"
       class="simple-action-modal login-modal"
-      :active.sync="loginActiveLocal"
+      :active.sync="loginModalActiveLocal"
       has-modal-card
       :can-cancel="['x']"
     >
@@ -160,21 +160,21 @@ export default {
       mobile: false,
       loginMobileActive: false,
       resendTime: 120,
-      loginActiveLocal: false,
+      loginModalActiveLocal: false,
       tempToken: null
     }
   },
   props: {
-    loginActive: {
+    loginModalActive: {
       type: Boolean,
       default: false
     }
   },
   watch: {
-    loginActive: {
+    loginModalActive: {
       immediate: true,
       handler(val) {
-        this.loginActiveLocal = JSON.parse(JSON.stringify(this.loginActive))
+        this.loginModalActiveLocal = JSON.parse(JSON.stringify(this.loginModalActive))
         if (val) {
           setTimeout(() => {
             this.$refs.phoneInputProfile.focus()
@@ -249,7 +249,7 @@ export default {
             this.$store.dispatch('user/retrieve').then(res => {
               //for entering to table
               this.$emit('successful')
-              this.loginActiveLocal = false
+              this.loginModalActiveLocal = false
             })
           }
         })
@@ -275,7 +275,7 @@ export default {
               this.$store.commit('setFirstTime', true)
               this.$store.commit('setFirstTimeCameraActive', true)
               this.$emit('successful')
-              this.loginActiveLocal = false
+              this.loginModalActiveLocal = false
             })
           })
           .catch(err => {
