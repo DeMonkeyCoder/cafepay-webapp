@@ -9,7 +9,7 @@
     <login
       key="loginmodal-scan"
       id="loginmodal-scan"
-      :loginActive="loginActive"
+      :loginModalActive="loginModalActive"
       @successful="dispatchSendCode"
     />
     <b-modal
@@ -143,7 +143,7 @@ export default {
       enterCodeModalActive: false,
       tableCode: '',
       accessCameraActive: false,
-      loginActive: false,
+      loginModalActive: false,
     }
   },
   methods: {
@@ -162,6 +162,17 @@ export default {
     tokenProccessor(token) {
       // token proccessor called by camera or input if it is called by camera it returns string if not it's an input entery
       // by CAMERA
+      if(this.loginModalActive || this.enterCodeModalActive || this.CustomLoader) {
+        return;
+      }
+      let tokenValid = !!token &&
+                        (
+                          token.includes('cfpy.ir')
+                          || token.includes('cafepay.app')
+                        )
+      if(!tokenValid) {
+        return;
+      }
       if (typeof token == 'string') {
         this.tableCode = token.split('?token=')[1]
       }
@@ -223,14 +234,14 @@ export default {
             // it means user is not logged in and table requires it so we open login modal
             else if (err.response.status == 401) {
               this.enterCodeModalActive = false
-              this.loginActive = true
+              this.loginModalActive = true
             }
           }
         })
     },
 
     openCodeModal() {
-      this.loginActive = false
+      this.loginModalActive = false
       this.enterCodeModalActive = true
       setTimeout(() => {
         this.$refs.tablecode.focus()
