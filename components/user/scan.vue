@@ -79,7 +79,7 @@
     </b-modal>
     <div class="camera">
       <component
-        @decode="tokenProccessor"
+        @decode="onDecode"
         :is="qrcodeComponentLaunch"
       ></component>
 
@@ -156,15 +156,8 @@ export default {
       this.qrcodeComponentLaunch = QrcodeStream
     },
     onDecode(token) {
-      // to do : we need to change this to /?token=code insted of ?code
-    },
-
-    tokenProccessor(token) {
       // token proccessor called by camera or input if it is called by camera it returns string if not it's an input entery
       // by CAMERA
-      if(this.loginModalActive || this.CustomLoader) {
-        return;
-      }
       let tokenValid = !!token &&
                         (
                           token.includes('cfpy.ir')
@@ -173,6 +166,10 @@ export default {
       if(!tokenValid) {
         return;
       }
+      this.tokenProccessor(token)
+    },
+
+    tokenProccessor(token) {
       if (typeof token == 'string') {
         this.tableCode = token.split('?token=')[1]
       }
