@@ -158,6 +158,9 @@ export default {
     onDecode(token) {
       // token proccessor called by camera or input if it is called by camera it returns string if not it's an input entery
       // by CAMERA
+      if(this.loginModalActive || this.enterCodeModalActive || this.CustomLoader) {
+        return;
+      }
       let tokenValid = !!token &&
                         (
                           token.includes('cfpy.ir')
