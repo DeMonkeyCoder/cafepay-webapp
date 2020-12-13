@@ -14,8 +14,8 @@
         size="is-medium"
         type="is-info"
         >
-        <span v-if="tokenType == 'pre-order'" dir="rtl" class="font-bold font-14">(تحویل در مجموعه)</span>
-        ثبت سفارشات
+        <span v-if="tokenType == 'pre-order'" dir="rtl" class="font-bold font-14">({{ $t('menu_page.submit_order_self_pickup') }})</span>
+        {{ $t('menu_page.submit_order') }}
         </b-button
       >
     </div>
@@ -92,7 +92,7 @@
                 </span>
               </div>
               <div v-if="!prod.available" class="out-of-order">
-                <p>تمام شد</p>
+                <p>{{ $t('menu_page.sold_out') }}</p>
               </div>
             </div>
           </div>
@@ -136,9 +136,9 @@ export default {
         useKeyboardNavigation: false,
         labels: {
           buttonSkip: false,
-          buttonPrevious: 'قبلی',
-          buttonNext: 'چگونه پرداخت کنم؟',
-          buttonStop: 'فهمیدم!'
+          buttonPrevious: this.$t('menu_page.tour.previous'),
+          buttonNext: this.$t('menu_page.tour.how_can_i_pay'),
+          buttonStop: this.$t('menu_page.tour.got_it')
         }
       },
       myCallbacks: {
@@ -147,7 +147,7 @@ export default {
       steps: [
         {
           target: '#selected-products-preview', // We're using document.querySelector() under the hood
-          content: `با انتخاب این گزینه سفارش خود را ثبت کنید`,
+          content: this.$t('menu_page.tour.submit_order_guide'),
             params: {
             placement: 'top' // Any valid Popper.js placement. See https://popper.js.org/popper-documentation.html#Popper.placements
           }
@@ -278,7 +278,7 @@ export default {
         product.reduceLimit
       ) {
         this.toaster(
-          `روی ${product.reduceLimit} عدد ازین محصول پرداخت انجام داده اید`,
+          this.$t('menu_page.toasts.you_payed_on_this_product', {num: product.reduceLimit}),
           'is-danger',
           'is-bottom'
         )

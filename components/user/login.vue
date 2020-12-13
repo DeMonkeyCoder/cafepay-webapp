@@ -14,10 +14,10 @@
             v-if="state === 'login'"
             :key="1"
           >
-            <p class="login-title">ورود به کافه‌پِی</p>
-            <h3 class="font-bold">شماره تلفن همراه خود را وارد نمایید</h3>
+            <p class="login-title">{{ $t('login_component.signin_to_cafepay') }}</p>
+            <h3 class="font-bold">{{ $t('login_component.enter_your_phone_number') }}</h3>
             <p class="state-explaination">
-              یک کد جهت تایید شماره برای شما ارسال خواهد شد.
+              {{ $t('login_component.verification_code_will_be_sent_meesage') }}
             </p>
             <b-field class="center-align">
               <b-input
@@ -33,7 +33,7 @@
                 size="is-medium"
               ></b-input>
             </b-field>
-              <p class="font-14">عضویت به معنای قبول <nuxt-link class="font-norm p-text font-14" to="/terms">قوانین و مقررات</nuxt-link> کافه‌پِی است</p>
+              <p v-if="$i18n.locale == 'fa'" class="font-14">عضویت به معنای قبول <nuxt-link class="font-norm p-text font-14" to="/terms">قوانین و مقررات</nuxt-link> کافه‌پِی است</p>
           </section>
 
           <section
@@ -41,12 +41,9 @@
             v-if="state === 'enter-code'"
             :key="3"
           >
-            <h3 class="font-bold">
-              لطفا کد ارسال شده را وارد کنید
-            </h3>
-            <p class="state-explaination">
-              کد تایید برای شماره <span>{{ phone_number }}</span> پیامک شد
-            </p>
+            <div v-html="$t('login_component.verify_phone_message', { phone_number })">
+
+            </div>
             <b-field class="field">
               <b-input
                 ref="codeInput"
@@ -65,8 +62,8 @@
               @click="checkResendTime"
               :class="{ 'p-text': resendTime == 0 }"
             >
-              ارسال مجدد کد<span v-if="resendTime != 0">
-                تا {{ resendTime }} ثانیه دیگر</span
+              {{ $t('login_component.resend_code') }}<span v-if="resendTime != 0">
+                {{ $t('login_component.resend_time_message',{ resendTime }) }}</span
               >
             </p>
           </section>
@@ -76,9 +73,9 @@
             v-if="state === 'signup'"
             :key="4"
           >
-            <h3 class="font-bold">به کافه‌پِی خوش آمدید!</h3>
+            <h3 class="font-bold">{{ $t('login_component.welcome_to_cafepay') }}</h3>
             <p class="state-explaination">
-              جهت تکمیل عضویت، نام خود را وارد کنید
+              {{ $t('login_component.complete_your_registration_message') }}
             </p>
 
             <b-field>
@@ -86,7 +83,7 @@
                 :dir="$dir()"
                 v-model="first_name"
                 class="cp-input cp-input-primary cp-input-grey"
-                placeholder="نام شما"
+                :placeholder="$t('login_component.your_name')"
                 size="is-medium"
               ></b-input>
             </b-field>
@@ -111,7 +108,7 @@
             :loading="globalLoading"
             class="ma-child"
             type="is-info"
-            >ادامه</b-button
+            >{{ $t('login_component.next') }}</b-button
           >
         </section>
 
@@ -125,14 +122,14 @@
             type="button"
             @click="state = 'login'"
           >
-            تغییر شماره
+            {{ $t('login_component.change_phone_number') }}
           </button>
           <b-button
             @click="checkCode"
             :loading="globalLoading"
             class="ma-child"
             type="is-info"
-            >تایید</b-button
+            >{{ $t('login_component.submit_code') }}</b-button
           >
         </section>
 
@@ -142,7 +139,7 @@
             :loading="globalLoading"
             class="ma-child"
             type="is-info"
-            >ثبت اطلاعات
+            >{{ $t('login_component.sumbit_information') }}
           </b-button>
         </section>
       </div>

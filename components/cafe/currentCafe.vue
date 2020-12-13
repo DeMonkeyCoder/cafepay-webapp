@@ -10,14 +10,14 @@
         <div class="modal-card" style="width: auto">
 
           <section class="modal-dialog">
-            <p>آیا میخواهید به صفحه اسکن بازگردید؟</p>
+            <p>{{ $t('current_cafe.return_to_scan_confirmation') }}</p>
           </section>
 
           <section class="modal-caption"></section>
 
           <section class="modal-action">
-            <button class="button ma-child is-light" type="button" @click="closeModal(false)">خیر</button>
-            <b-button class="ma-child cp-btn-primary" @click="closeModal(true)">بازگشت به صفحه اسکن</b-button>
+            <button class="button ma-child is-light" type="button" @click="closeModal(false)">{{ $t('current_cafe.no') }}</button>
+            <b-button class="ma-child cp-btn-primary" @click="closeModal(true)">{{ $t('current_cafe.return_to_scan') }}</b-button>
           </section> 
        
         </div>

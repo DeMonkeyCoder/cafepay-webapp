@@ -4,11 +4,11 @@
     <login-profile key="loginmodal-profile" id="loginmodal-profile" :loginActive="loginActive" @close="loginActive = false" />
        <b-button
        @click="loginActive = true"
-        icon-left="account-arrow-left"
+        :icon-left="$dir() == 'rtl' ? 'account-arrow-left' : 'account-arrow-right'"
         type="is-info"
         size="large"
         class="login-btn shadow-lg bcp-btn-large "
-        >ورود به حساب کاربری</b-button
+        >{{ $t('profile_page.signin_to_profile') }}</b-button
       >
 
   </div>
@@ -38,14 +38,14 @@
         <div class="modal-card" style="width: auto">
 
           <section class="modal-dialog">
-            <p>آیا میخواهید از حساب کاربری خود خارج شوید؟</p>
+            <p>{{ $t('profile_page.logout_confirmation_message') }}</p>
           </section>
 
           <section class="modal-caption"></section>
 
           <section class="modal-action">
-            <button class="button ma-child is-light" type="button" @click="closeModal(false)">خیر</button>
-            <b-button class="ma-child" type="is-danger" @click="closeModal(true)">خروج از حساب کاربری</b-button>
+            <button class="button ma-child is-light" type="button" @click="closeModal(false)">{{ $t('profile_page.no') }}</button>
+            <b-button class="ma-child" type="is-danger" @click="closeModal(true)">{{ $t('profile_page.logout') }}</b-button>
           </section>
           
         </div>

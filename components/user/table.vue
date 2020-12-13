@@ -6,17 +6,9 @@
     >
       <div>
         <img src="@/assets/img/shape/icons/burger.svg" alt />
-        <p class="cp-side-margin-2x">
-          ابتدا به بخش
-          <span
-            @click="$store.commit('changeNavigation', 'scan')"
-            class="p-text"
-            >اسکن</span
-          >
-          بروید
-        </p>
-        <p>و بارکد مربوط به میز را اسکن کنید</p>
-        <p>یا کد میز را وارد نمایید</p>
+        <div @click="$store.commit('changeNavigation', 'scan')" v-html="$t('table_page.scan_first_message')">
+
+        </div>
       </div>
     </div>
 
@@ -26,20 +18,20 @@
     >
       <div>
         <img src="@/assets/img/ordering.png" alt="" />
-        <p class="no-ordering-text">{{ $t('table.ordering_unavailable') }}</p>
+        <p class="no-ordering-text">{{ $t('table_page.ordering_unavailable') }}</p>
       </div>
     </div>
 
     <div v-if="showPreOrder" class="cp-padding">
-      <header class="font-18 font-bold cp-b-margin">سفارشات فعلی</header>
+      <header class="font-18 font-bold cp-b-margin">{{ $t('table_page.preorder.current_orders') }}</header>
       <nuxt-link :to="localePath('/user/liveorder/'+ user.table_uuid)"><div class="preorders-in-table cp-card has-background-white cp-padding">
         <div class="preorders-in-table__info">
           <p class="preorders-in-table__info__cafe-name">
-            سفارش از:
+            {{ $t('table_page.preorder.order_from') }}:
             <span class="font-norm p-text">{{ table.cafe.name }}</span>
           </p>
           <p dir="ltr" class=" font-bold preorders-in-table__info__status" :class="{'p-text': table.status == 'ready' && ordersPaid}">{{ statusText }}</p>
-          <p class="preorders-in-table__info__not-paid" v-if="!ordersPaid">پرداخت سفارش انجام نشده</p>
+          <p class="preorders-in-table__info__not-paid" v-if="!ordersPaid">{{ $t('table_page.preorder.payment_is_not_done') }}</p>
         </div>
 
         <div class="preorders-in-table__status"
@@ -51,8 +43,8 @@
               'preorders-in-table__status--rejected': table.status == 'rejected',
             }">
           <span class="preorder-status-span"></span>
-          <div v-if="ordersPaid"><b-button class="preorder-status-detail-btn" type="is-light" icon-right="chevron-left">جزئیات</b-button></div>
-          <b-button v-else @click="goToTokenAndPay" type="is-info">پرداخت سفارش</b-button>
+          <div v-if="ordersPaid"><b-button class="preorder-status-detail-btn" type="is-light" icon-right="chevron-left">{{ $t('table_page.preorder.details') }}</b-button></div>
+          <b-button v-else @click="goToTokenAndPay" type="is-info">{{ $t('table_page.preorder.checkout') }}</b-button>
         </div>
       </div>
       </nuxt-link>
@@ -72,7 +64,7 @@
           <section class="modal-card-body">
             <div class="field last-checkbox-field">
               <b-checkbox v-model="fullPayment" size="is-large" type="is-info"
-                >پرداخت کل فاکتور</b-checkbox
+                >{{ $t('table_page.checkout_all_items') }}</b-checkbox
               >
             </div>
             <b-button
@@ -158,7 +150,7 @@
           class="button shadow-lg-bb bcp-btn cp-btn-submit-order"
           size="is-medium"
           type="is-success"
-          >پرداخت سفارشات ({{ totalWishToPayOrder | currency }})</b-button
+          >{{ $t('table_page.checkout') }} ({{ totalWishToPayOrder | currency }})</b-button
         >
       </div>
 
@@ -215,12 +207,12 @@
       >
         <!-- <div id="table-status-bar-progress-wrapper" class></div> -->
         <p v-if="PaymentProgress != 100">
-          <span class="font-12">مجموع سفارشات: </span>
+          <span class="font-12">{{ $t('table_page.total_amount') }}: </span>
           <span class="total-cost">{{
             table.payment.total_amount | currency
           }}</span>
           -
-          <span class="font-12"> پرداخت شده:</span>
+          <span class="font-12"> {{ $t('table_page.payed_amount') }}:</span>
           <span class="p-text font-norm total-payment">{{
             table.payment.net_payed_amount | currency
           }}</span>
@@ -231,7 +223,7 @@
           v-if="PaymentProgress == 100"
           class="font-norm total-payment"
         >
-          پرداخت میز کامل شده است
+          {{ $t('table_page.table_payment_done') }}
         </p>
         <b-icon
           v-if="PaymentProgress == 100"
@@ -243,7 +235,7 @@
       <!-- <div class="table--status"></div> -->
 
       <div v-if="table.persons.length == 0" class="empty-table">
-        سفارشی برروی میز شما وجود ندارد
+        {{ $t('table_page.no_orders_on_your_table') }}
       </div>
 
       <div class="persons-on-table cp-side-margin-2x">
@@ -309,16 +301,16 @@ export default {
       
       switch (this.table.status) {
         case 'waiting':
-          text = 'در انتظار تایید توسط پذیرنده'
+          text = this.$t('table_page.preorder.state.waiting')
           break
         case 'preparing':
-          text = 'در حال آماده‌سازی سفارش شما'
+          text = this.$t('table_page.preorder.state.preparing')
           break
         case 'ready':
-          text = '!سفارش شما آماده است'
+          text = this.$t('table_page.preorder.state.ready')
           break
         case 'rejected':
-          text = 'سفارش شما توسط پذیرنده رد شد'
+          text = this.$t('table_page.preorder.state.rejected')
           break
 
         default:

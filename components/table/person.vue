@@ -10,8 +10,8 @@
 
     <div class="person-title has-background-white cp-tb-margin">
       <img :src="person.avatar" :alt="person.name" />
-      <p class="cp-side-padding cp-tb-padding">
-        سفارشات <span class="font-norm p-text">{{ title }}</span>
+      <p class="cp-side-padding cp-tb-padding" v-html="$t('table_page.person_orders', { title: title.trim() })">
+        
       </p>
     </div>
     <div
@@ -28,7 +28,7 @@
 
       <div class="person-total-order-info">
         <span
-          >مجموع:‌ {{ order.count }} عدد |
+          >{{ $t('table_page.person_order_count', {order_count: order.count}) }} |
           {{ order.payment_info.total_amount | currency
           }}<span class="toman">تومان</span></span
         >
@@ -100,7 +100,7 @@
         class="order-payment-done green"
       >
         <b-icon size="is-default" icon="check" type="is-light"> </b-icon>
-        پرداخت شده
+        {{ $t('table_page.person_payed') }}
       </div>
     </div>
   </div>
@@ -132,9 +132,9 @@ export default {
         useKeyboardNavigation: false,
         labels: {
           buttonSkip: false,
-          buttonPrevious: 'قبلی',
-          buttonNext: 'چگونه پرداخت کنم؟',
-          buttonStop: 'فهمیدم!'
+          buttonPrevious: this.$t('table_page.person.tour.previous'),
+          buttonNext: this.$t('table_page.person.tour.how_can_i_pay'),
+          buttonStop: this.$t('table_page.person.tour.got_it')
         }
       },
       myCallbacks: {
@@ -143,11 +143,11 @@ export default {
       steps: [
         {
           target: '#order-0', // We're using document.querySelector() under the hood
-          content: `سفارشات هر فرد با اطلاعات پرداختی آن در این قسمت قابل مشاهده است`
+          content: this.$t('table_page.person.tour.person_orders_guide')
         },
         {
           target: '#order-0-slider', // We're using document.querySelector() under the hood
-          content: `با کشیدن این اسلاید به سمت چپ و یا راست مبلغی که میخواهید پرداخت کنید را مشخص کنید`
+          content: this.$t('table_page.person.tour.person_payment_guide')
         }
         // {
         //   target: '.v-step-1',
