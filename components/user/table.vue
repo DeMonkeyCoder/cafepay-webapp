@@ -301,16 +301,16 @@ export default {
       
       switch (this.table.status) {
         case 'waiting':
-          text = this.$t('table_page.preorder.state.waiting')
+          text = this.$t('table_page.preorder.states.waiting')
           break
         case 'preparing':
-          text = this.$t('table_page.preorder.state.preparing')
+          text = this.$t('table_page.preorder.states.preparing')
           break
         case 'ready':
-          text = this.$t('table_page.preorder.state.ready')
+          text = this.$t('table_page.preorder.states.ready')
           break
         case 'rejected':
-          text = this.$t('table_page.preorder.state.rejected')
+          text = this.$t('table_page.preorder.states.rejected')
           break
 
         default:
