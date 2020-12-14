@@ -96,7 +96,7 @@ export default {
     camera_permission_message: `جهت اسکن بارکد توسط دوربین درون برنامه، لطفا بعد از مشاهده پیام زیر
     گزینه <span class="t-text font-norm">Allow</span> را انتخاب نمایید`,
     open_camera: 'باز کردن دوربین',
-    scan_the_barcode: 'بارکد روی میز را با دوربین دورن برنامه اسکن کنید',
+    scan_the_barcode: 'بارکد روی میز را با دوربین درون برنامه اسکن کنید',
     or: 'یا',
     enter_table_code: 'کد میز را وارد کنید',
     submit_table_code: 'ورود به میز'
