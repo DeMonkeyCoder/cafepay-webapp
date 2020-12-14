@@ -84,6 +84,7 @@
     // margin-bottom: $margin * 1.5
     margin-top: $margin!important
     position: relative
+
     .toman
       font-size: 10px!important
       margin-inline-start: 2px
@@ -113,8 +114,17 @@
       padding: 3px
 
     .person-total-order-info
+      display: flex
+      
+      &__status
+        flex: 1
+        text-align: end
+        border-radius: 2px
+        span
+          border-radius: 2px
       span
         font-size: 15px
+        
 
     .person-payment
       display: flex

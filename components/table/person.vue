@@ -27,12 +27,12 @@
       </div>
 
       <div class="person-total-order-info">
-        <span
+        <span class="person-total-order-info__payment"
           >{{ $t('table_page.person_order_count', {order_count: order.count}) }} |
           {{ order.payment_info.total_amount | currency
           }}<span class="toman">تومان</span></span>
           
-          <span class="green font-10 white-text cp-side-padding-half">{{ $t('table_page.person_payed') }}</span>
+          <div class="person-total-order-info__status"><span class=" green font-10 white-text cp-side-padding-half">{{ $t('table_page.person_payed') }}</span></div>
       </div>
 
       <!-- <div class="person-payment">
