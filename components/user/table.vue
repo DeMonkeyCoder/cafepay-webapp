@@ -80,13 +80,14 @@
       </b-modal>
 
       <b-modal
-        class="pre-invoice-modal simple-action-modal"
+        class="pre-invoice-modal"
         :active.sync="preInvoiceActive"
+        full-screen 
         has-modal-card
         :can-cancel="true"
       >
         <div class="modal-card" style="width: auto">
-          <section class="modal-dialog cp-padding">
+          <section class="modal-dialog  cp-side-padding-2x cp-tb-padding">
             <div id="pre-invoice-animation"></div>
             <ol class="order-summery">
               <li v-for="order in ordersToPay" :key="order.pk">
@@ -129,8 +130,22 @@
                 توجه داشته باشید سفارش در محل مجموعه به شما تحویل داده خواهد شد.
               </p>
             </div>
+
+            <div class="pre-invoice-modal__payment-method cp-t-margin">
+              <header class="font-bold font-18">روش پرداخت</header>
+              <div class="pre-invoice-modal__payment-method__online">
+                <div class="pre-invoice-modal__payment-method__online__img">
+                  <img src="@/assets/img/pasargaad.png" alt="">
+                </div>
+                <div class="pre-invoice-modal__payment-method__online__text">
+                  <p>پرداخت آنلاین</p>
+                  <p>درگاه بانک پاسارگاد</p>
+                </div>
+              </div>
+              <div class="pre-invoice-modal__payment-method__cash"></div>
+            </div>
           </section>
-          <section class="modal-action">
+          <section class="modal-action cp-padding">
             <b-button
               @click="paymentCheckout"
               :loading="globalLoading"

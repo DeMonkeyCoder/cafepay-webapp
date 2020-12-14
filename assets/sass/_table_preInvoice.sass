@@ -1,0 +1,103 @@
+.pre-invoice-modal
+  .modal-card
+    background-color: white!important
+  .modal-close
+    border-radius: 16px
+    background-color: whitesmoke
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)!important
+    &::before, &::after
+      background-color: $black
+  .toman
+    font-size: 12px
+  &__name
+    flex: 1
+    text-align: start
+  &__amount
+    flex: 1
+    text-align: left
+  .modal-dialog
+    padding-bottom: 4rem
+    overflow-y: auto
+    // padding-inline-end: $padding!important
+    // padding-inline-start: $padding!important
+    li
+      display: flex
+
+    .payment-summery
+      background-color: lighten($primary_hue2, 45%)
+      border-radius: 5px
+      margin-top: 2*$margin
+      padding: $padding / 2 $padding
+      li
+        padding-top: 0.25* $padding
+        padding-bottom: 0.25* $padding
+
+    .order-summery
+      max-height: 25vh
+      overflow-y: auto
+      overflow-x: hidden
+      &__name
+        flex: 2!important
+        text-align: right
+      &__amount
+        flex: 1
+        text-align: left
+ 
+      li
+        border-bottom: 1px dashed $grey
+        padding-top: 0.5* $padding
+        padding-bottom: 0.5* $padding
+        .value-fix-padding
+          padding-inline-end: 5px
+        
+
+          
+
+    .preorder-warning
+      display: flex
+      // justify-content: center
+      // align-content: center
+      background-color: lighten(#ffdd57, 10%)
+      border-radius: 5px
+      margin-bottom: 0!important
+      margin-top: $margin
+      padding: $padding / 2 $padding
+      p
+        flex: 10
+        padding-inline-start: $padding / 2
+        text-align: start
+        font-size: 14px!important
+        letter-spacing: -0.025rem
+      div
+        display: flex
+        justify-content: center
+        align-items: center
+        flex: 1
+
+  .modal-action
+    position: absolute
+    bottom: 0
+    width: 100%
+    background-color: white
+    button
+      width: 100%
+      height: 45px
+      span
+        font-weight: 500!important
+        font-size: 18px!important
+
+#pre-invoice-animation
+  width: 60%
+  // width: 320px * 0.75
+  margin: auto
+  // height: 230px * 0.75
+
+  &__payment-method
+    &__online
+      display: flex
+      &__img
+        img
+          width: 50px
+          height: 5px
+      &__text
+        display: inline-block
