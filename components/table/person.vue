@@ -32,7 +32,8 @@
           {{ order.payment_info.total_amount | currency
           }}<span class="toman">تومان</span></span>
           
-          <div class="person-total-order-info__status"><span class=" green font-10 white-text cp-side-padding-half">{{ $t('table_page.person_payed') }}</span></div>
+          <div v-if="order.payment_info.net_payed_amount == order.payment_info.total_amount && history == false" 
+          class="person-total-order-info__status"><span class=" green font-10 white-text cp-side-padding-half">{{ $t('table_page.person_payed') }}</span></div>
       </div>
 
       <!-- <div class="person-payment">
