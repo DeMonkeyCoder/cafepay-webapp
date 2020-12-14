@@ -15,7 +15,7 @@
       </p>
     </div>
     <div
-      class="person-orders cp-side-padding cp-side-margin cp-tb-padding-half  has-background-white cp-card"
+      class="person-orders cp-side-padding cp-tb-padding-half  has-background-white cp-card"
       :class="{ 'long-shadow': shadow }"
       v-for="(order, index) in person.orders"
       :key="order.pk"
@@ -30,8 +30,9 @@
         <span
           >{{ $t('table_page.person_order_count', {order_count: order.count}) }} |
           {{ order.payment_info.total_amount | currency
-          }}<span class="toman">تومان</span></span
-        >
+          }}<span class="toman">تومان</span></span>
+          
+          <span class="green font-10 white-text cp-side-padding-half">{{ $t('table_page.person_payed') }}</span>
       </div>
 
       <!-- <div class="person-payment">
@@ -92,7 +93,7 @@
         ></b-slider>
       </div> -->
 
-      <div
+      <!-- <div
         v-if="
           order.payment_info.net_payed_amount == order.payment_info.total_amount &&
             history == false
@@ -101,7 +102,8 @@
       >
         <b-icon size="is-default" icon="check" type="is-light"> </b-icon>
         {{ $t('table_page.person_payed') }}
-      </div>
+      </div> -->
+
     </div>
   </div>
 </template>
