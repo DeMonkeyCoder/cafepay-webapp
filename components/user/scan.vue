@@ -135,7 +135,7 @@ export default {
       
       // TODO: handle wrong token from url in a better way to
       // let user scan code again when entered wrong token
-      letsUseCamera: !!this.$route.params.token,
+      letsUseCamera: !this.$route.params.token,
 
       xyz: true,
       animationJson,
