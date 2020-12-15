@@ -74,6 +74,7 @@ export default {
   profile_page: {
     signin_to_profile: 'Sign in to Cafepay',
     signup_date: 'Date signed up',
+    orders_list: 'Orders List',
     profile_information: 'Account',
     terms: 'Terms of use',
     logout: 'Logout',

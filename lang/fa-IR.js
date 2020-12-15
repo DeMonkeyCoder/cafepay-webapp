@@ -74,6 +74,7 @@ export default {
   profile_page: {
     signin_to_profile: 'ورود به حساب کاربری',
     signup_date: 'عضویت در',
+    orders_list: 'لیست سفارشات',
     profile_information: 'اطلاعات کاربری',
     terms: 'قوانین و شرایط استفاده',
     logout: 'خروج از حساب کاربری',

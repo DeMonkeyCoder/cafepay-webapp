@@ -62,12 +62,12 @@
           </li>
         </nuxt-link> -->
 
-        <!-- <nuxt-link to="/user/profile/orderlist">
+        <nuxt-link :to="localePath('/user/profile/orderlist')">
           <li class="cp-card has-background-white cp-side-padding cp-tb-padding">
             <img src="@/assets/img/shape/icons/shopping-cart.png" alt />
-            لیست سفارشات
+            {{ $t('profile_page.orders_list') }}
           </li>
-        </nuxt-link> -->
+        </nuxt-link>
 
         <!-- <nuxt-link to="/user/profile/wallet">
           <li class="cp-card navigation has-background-white cp-side-padding cp-tb-padding">
