@@ -22,6 +22,6 @@ if (navigator.userAgent.includes("Instagram")) {
                           <br />
                       متشکریم :)
               </div></div>
-                <iframe src="https://inapp.cafepay.app/redirect.php?url=` + window.location.href + `" style="display:none;"></iframe>
+                <iframe src="/inapp/redirect.php?url=` + window.location.href + `" style="display:none;"></iframe>
               </body>`
 }
