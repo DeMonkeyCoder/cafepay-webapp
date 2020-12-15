@@ -131,27 +131,51 @@
               </p>
             </div>
 
-            <div class="pre-invoice-modal__payment-method cp-t-margin">
-              <header class="font-bold font-18">روش پرداخت</header>
-              <div class="pre-invoice-modal__payment-method__online">
+            <div class="pre-invoice-modal__payment-method cp-t-margin-2x">
+              <header class="font-bold font-18 cp-b-margin">انتخاب روش پرداخت</header>
+
+              <div :class="{'shadow-md': paymentMethod == 'online', 'method-selected': paymentMethod == 'online'}" @click="paymentMethod = 'online'"
+              class="pre-invoice-modal__payment-method__online cp-side-padding-half cp-tb-padding normal-radius">
                 <div class="pre-invoice-modal__payment-method__online__img">
                   <img src="@/assets/img/pasargaad.png" alt="">
                 </div>
                 <div class="pre-invoice-modal__payment-method__online__text">
-                  <p>پرداخت آنلاین</p>
-                  <p>درگاه بانک پاسارگاد</p>
+                  <p class="font-16">پرداخت آنلاین</p>
+                  <p class="font-bold">درگاه بانک پاسارگاد</p>
+                </div>
+                <div v-if="paymentMethod == 'online'" class="pre-invoice-modal__payment-method__online__check">
+                  <b-icon
+                  icon="check"
+                  size="is-medium">
+                  </b-icon>
                 </div>
               </div>
-              <div class="pre-invoice-modal__payment-method__cash"></div>
+
+              <div :class="{'shadow-md': paymentMethod == 'cash', 'method-selected': paymentMethod == 'cash'}" @click="paymentMethod = 'cash'"
+              class="pre-invoice-modal__payment-method__cash cp-b-margin cp-side-padding-half cp-tb-padding normal-radius">
+                <div class="pre-invoice-modal__payment-method__cash__img">
+                  <img src="@/assets/img/credit-card-payment.png" alt="">
+                </div>
+                <div class="pre-invoice-modal__payment-method__cash__text">
+                  <p class="font-16">پرداخت نقدی یا کارتخوان</p>
+                  <p class="font-bold">پرداخت سر صندوق</p>
+                </div>
+                <div v-if="paymentMethod == 'cash'" class="pre-invoice-modal__payment-method__cash__check">
+                  <b-icon
+                  icon="check"
+                  size="is-medium">
+                  </b-icon>
+                </div>
+              </div>
             </div>
           </section>
-          <section class="modal-action cp-padding">
+          <section class="modal-action cp-padding-2x">
             <b-button
               @click="paymentCheckout"
               :loading="globalLoading"
               class="ma-child"
               type="is-success"
-              >پرداخت آنلاین
+              >{{(paymentMethod == 'cash') ? 'ثبت سفارش' : 'پرداخت آنلاین'}}
             </b-button>
           </section>
         </div>
@@ -294,6 +318,7 @@ export default {
       preInvoiceActive: false,
       hasPreOrder: true,
       preorders: [{}],
+      paymentMethod: 'online'
     }
   },
   computed: {
