@@ -112,7 +112,8 @@ export default {
       ],
       lazy: true,
       langDir: 'lang/',
-      defaultLocale: config.defaultLocale
+      defaultLocale: config.defaultLocale,
+      detectBrowserLanguage: false
     }]
   ],
 
