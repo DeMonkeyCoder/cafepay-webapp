@@ -81,6 +81,7 @@
       <component
         @decode="onDecode"
         :is="qrcodeComponentLaunch"
+        v-if="letsUseCamera"
       ></component>
 
       <!-- <qrcode-stream  @decode="onDecode"></qrcode-stream> -->
@@ -131,6 +132,11 @@ export default {
   },
   data() {
     return {
+      
+      // TODO: handle wrong token from url in a better way to
+      // let user scan code again when entered wrong token
+      letsUseCamera: !!this.$route.params.token,
+
       xyz: true,
       animationJson,
       loaderJson,
