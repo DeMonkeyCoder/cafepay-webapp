@@ -43,7 +43,7 @@
     </div>
     <!-- <transition-group :name="slideTransition" tag="div" class=""> -->
       <div dir="ltr" id="menu-swiper-container"
-    v-if="this.menuTabItemCategories && this.menuTabItemCategories.length > 0"
+    v-if="this.menuTabItemCategories && this.menuTabItemCategories.length > 0 && this.showSwipableMenu"
     >
       <swiper dir="ltr" ref="menuCategoriesSwipe"
       @slide-change-end="handleSlideChange"
@@ -122,6 +122,7 @@ export default {
   },
   data() {
     return {
+      showSwipableMenu: true,
       lastSwipeOffset: null,
       skeletunMenu: 3,
       key: 'value',
@@ -171,6 +172,11 @@ export default {
     this.setActiveTab(true);
   },
   methods: {
+    reRenderSwipable() {
+      this.showSwipableMenu = false;
+      setTimeout(() => this.showSwipableMenu = true,
+      1)
+    },
     handleSlideMove(offset) {
       if(!this.lastSwipeOffset){
         this.lastSwipeOffset = offset
@@ -399,6 +405,7 @@ export default {
       this.scrollTo(element, amount, 300)
     },
     menuTabItemCategories(_newValue, _oldValue){
+      this.reRenderSwipable();
       this.setActiveTab(true);
     },
     initialTour: {
