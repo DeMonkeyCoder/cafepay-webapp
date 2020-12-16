@@ -256,7 +256,6 @@ export default {
   },
   created() {
     this.$nuxt.$on('tigger-token', () => {
-      alert(this.user.table_uuid)
      this.tableCode = this.user.table_uuid
      this.dispatchSendCode()
    })

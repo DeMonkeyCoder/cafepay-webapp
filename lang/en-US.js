@@ -28,7 +28,7 @@ export default {
       preorder: {
         current_orders: 'Current Order',
         order_from: 'Order from',
-        peymant_is_not_done: 'Payment is not done',
+        payment_is_not_done: 'Payment is not done',
         details: 'Details',
         checkout: 'Checkout',
         checkout_CASH: 'Please Pay Your bill with Cash or Credit Card',

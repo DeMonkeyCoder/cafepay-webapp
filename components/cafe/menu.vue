@@ -352,6 +352,7 @@ export default {
         window.requestAnimationFrame(scroll);
       // }
     },
+    
     scrollToActiveCategory(){
       const element = this.$refs.menuCategoryList;
       if(!(element && element.firstChild && document.getElementById('menu-category-item-' + this.activeCategory))) {
@@ -368,6 +369,12 @@ export default {
       const amount = (whereWeWant - startOfScroll) - element.scrollLeft
       this.scrollTo(element, amount, 300)
     }
+  },
+
+  created(){
+    this.$nuxt.$on('changeActiveCategory', (data) => {
+      this.changeActiveCategory(data)
+   })
   },
  
   computed: {

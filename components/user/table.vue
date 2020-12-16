@@ -194,82 +194,84 @@
         <span v-else class="message-warning font-16 font-norm">{{$t('table_page.checkout_CASH')}}</span>
       </div>
 
-      <!-- <div dir="ltr" id="pay-checkout">
-        <b-button
-          :loading="globalLoading"
-          @click="paymentCheckout"
-          class="checkCode-btn pay-checkout-btn bcp-btn bcp-btn-large"
-          expanded
-          type="is-info"
-          >پرداخت آنلاین</b-button
-        > -->
-
-      <!-- <div @click="paymentCheckout" :dir="$dir()" class="pc-child pay-checkout-btn green">
-          <b-icon class="credit-card-icon" icon="credit-card" type="is-light"></b-icon>پرداخت آنلاین
-        </div>-->
-      <!-- <div class="pc-child pay-checkout-info cp-side-padding">
-          <div :dir="$dir()" class="total-price cp-side-margin font-norm">
-            {{ totalWishToPay | currency }}
-            <span class="toman">تومان</span>
-          </div>
-          <div @click="showOptionsModal" class>
-            <b-icon icon="dots-vertical" type></b-icon>
-          </div>
-        </div>
-      </div> -->
+ 
 
       <!-- <v-tour name="myTour" :steps="steps" :options="{ highlight: true }"></v-tour> -->
       
-      <div class="table-header cp-header cp-tb-padding cp-side-padding">
-        <div class="info">
-          <img
-            :src="
-              cafe.avatar == null ? cafeDefaultImage : baseUrl + cafe.avatar
-            "
-            alt
-          />
-          <p class="cafe-name cp-tb-padding cp-side-padding">{{ cafe.name }}</p>
-          <h5 class="table-number cp-tb-padding cp-side-padding">
-            {{ table.table_number }}
-          </h5>
-        </div>
+  <div class="table-header cp-header cp-tb-padding cp-side-padding">
+        <!-- <div class="table-top-section">
+          <div
+            class="table-top-section__name  cp-tb-padding-half cp-side-padding"
+          >
+            <h5 class="">
+              میز:  <span class="font-norm"> {{ table.table_number }} </span>
+            </h5>
+          </div>
+
+          <div class="table-top-section__edit-orders">
+            <b-button @click="goToMyOrderInMenu" type="is-danger" inverted>ویرایش سفارشات</b-button>
+          </div>
+        </div> -->
+
         <div
-          @click="$store.commit('changeNavigation', 'currentCafe')"
-          class="go-back cp-tb-padding"
+          id="table-status-bar"
+          class="table-status-bar long-shadow cp-padding cp-header-card has-background-white"
         >
-          <b-icon size="is-medium" icon="chevron-left" type="is-light"></b-icon>
+          <div class="table-top-section">
+          <div
+            class="table-top-section__name  cp-tb-padding-half cp-side-padding"
+          >
+            <h5 class="">
+              میز:  <span class="font-norm"> {{ table.table_number }} </span>
+            </h5>
+          </div>
+
+          <div class="table-top-section__edit-orders">
+            <b-button @click="goToMyOrderInMenu" class="shadow-b" type="is-light" inverted >ویرایش سفارش</b-button>
+          </div>
         </div>
-      </div>
 
-      <div
-        id="table-status-bar"
-        class="table-status-bar long-shadow cp-side-margin cp-header-card has-background-white"
-      >
-        <!-- <div id="table-status-bar-progress-wrapper" class></div> -->
-        <p v-if="PaymentProgress != 100">
-          <span class="font-12">{{ $t('table_page.total_amount') }}: </span>
-          <span class="total-cost">{{
-            table.payment.total_amount | currency
-          }}</span>
-          -
-          <span class="font-12"> {{ $t('table_page.payed_amount') }}:</span>
-          <span class="p-text font-norm total-payment">{{
-            table.payment.net_payed_amount | currency
-          }}</span>
-        </p>
+          <!-- <div class="table-status-bar__actions">
+            <div class="table-status-bar__actions__pay-whole-bill">
+              <b-button  type="is-light" inverted>پرداخت کل سفارش</b-button>
+            </div>
 
-        <p
-          :class="{ 'complete-payment-p': PaymentProgress }"
-          v-if="PaymentProgress == 100"
-          class="font-norm total-payment"
-        >
-          {{ $t('table_page.table_payment_done') }}
-        </p>
-        <b-icon
-          v-if="PaymentProgress == 100"
-          class="g-text payment-completed-icon"
-          icon="sticker-check"
-        ></b-icon>
+            <div class="table-status-bar__actions__order-description">
+              <b-button  type="is-light" inverted>ثبت توضیحات</b-button>
+            </div>
+          </div> -->
+
+          <div
+            id="table-status-bar-progress-wrapper"
+            class="table-status-bar__info cp-tb-padding-half"
+          >
+            <p v-if="PaymentProgress != 100">
+              باقی‌مانده:
+              <span class="p-text font-norm total-payment">{{
+                (table.payment.total_amount - table.payment.payed_amount)
+                  | currency
+              }}</span>
+              از
+              <span class="total-cost">{{
+                table.payment.total_amount | currency
+              }}</span>
+              تومان
+            </p>
+
+            <p
+              :class="{ 'complete-payment-p': PaymentProgress }"
+              v-if="PaymentProgress == 100"
+              class="font-norm total-payment"
+            >
+              پرداخت میز کامل شده است
+            </p>
+            <b-icon
+              v-if="PaymentProgress == 100"
+              class="g-text payment-completed-icon"
+              icon="sticker-check"
+            ></b-icon>
+          </div>
+        </div>
       </div>
 
       <!-- <div class="table--status"></div> -->
@@ -393,6 +395,15 @@ export default {
     // }
   },
   methods: {
+    goToMyOrderInMenu(){
+      setTimeout(() => {
+        this.$store.commit('cafe/changeActiveCategory', 0)
+        this.$nuxt.$emit('changeActiveCategory', 0)
+      }, 300);
+      this.$store.commit('changeNavigation', 'currentCafe')
+
+    },
+
     goToTokenAndPay(e) {
       e.preventDefault();
       // get cafe info from table socket massage

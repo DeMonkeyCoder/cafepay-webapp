@@ -28,7 +28,7 @@ export default {
     preorder: {
       current_orders: 'سفارشات فعلی',
       order_from: 'سفارش از',
-      peymant_is_not_done: 'پرداخت سفارش انجام نشده',
+      payment_is_not_done: 'پرداخت سفارش انجام نشده',
       details: 'جزییات',
       checkout: 'پرداخت سفارش',
       checkout_CASH: 'سفارش خود را سر صندوق پرداخت کنید',
