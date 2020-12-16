@@ -6,7 +6,9 @@
       :options="myOptions"
       :callbacks="myCallbacks"
     ></v-tour> -->
-    <div id="selected-products-preview" v-if="tokenType !== 'menu-only' && (!user.table_uuid || (user.table_uuid && !ordersPaid))">
+    <div id="selected-products-preview" 
+    class="selected-products-preview-is-shown"
+    v-if="tokenType !== 'menu-only' && (!user.table_uuid || (user.table_uuid && !ordersPaid))">
       <span>{{ordersTotalCount}}</span>
       <b-button
         @click="productsPayloadSeperator"
@@ -14,6 +16,7 @@
         class="button shadow-md bcp-btn cp-btn-submit-order shadow-lg-bb"
         size="is-medium"
         type="is-info"
+        :disabeld="showSubmitBtn == 0"
         >
         <span v-if="tokenType == 'pre-order'" dir="rtl" class="font-bold font-14">({{ $t('menu_page.submit_order_self_pickup') }})</span>
         {{ $t('menu_page.submit_order') }}
@@ -435,18 +438,18 @@ export default {
         }
       }
     },
-    showSubmitBtn(val, old) {
-      if (val > 0) {
-        document
-          .getElementById('selected-products-preview')
-          .classList.add('selected-products-preview-is-shown')
-      } else {
-        this.$store.commit('table/setOrder', { orders: [], totalPrice: 0 })
-        document
-          .getElementById('selected-products-preview')
-          .classList.remove('selected-products-preview-is-shown')
-      }
-    },
+    // showSubmitBtn(val, old) {
+    //   if (val > 0) {
+    //     document
+    //       .getElementById('selected-products-preview')
+    //       .classList.add('selected-products-preview-is-shown')
+    //   } else {
+    //     this.$store.commit('table/setOrder', { orders: [], totalPrice: 0 })
+    //     document
+    //       .getElementById('selected-products-preview')
+    //       .classList.remove('selected-products-preview-is-shown')
+    //   }
+    // },
     // ActiveTab(val) {
     //   if (!val) {
     //     document
