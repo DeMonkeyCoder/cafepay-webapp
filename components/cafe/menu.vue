@@ -27,6 +27,7 @@
         v-for="(cat, index) in menu"
         :key="cat.pk"
         :id="'menu-category-item-' + index"
+        
       >
         <div
           v-if="cat.products.length > 0"
@@ -44,7 +45,7 @@
     </div>
     <!-- <transition-group :name="slideTransition" tag="div" class=""> -->
       <div dir="ltr" id="menu-swiper-container"
-    v-if="this.menuTabItemCategories && this.menuTabItemCategories.length > 0"
+    v-if="this.menuTabItemCategories && this.menuTabItemCategories.length > 0 && this.showSwipableMenu"
     >
       <swiper dir="ltr" ref="menuCategoriesSwipe"
       @slide-change-end="handleSlideChange"
@@ -113,16 +114,13 @@ export default {
   components: {
     Swiper
   },
-  props: {
-    menu: {
-      default: 3
-    },
-    ActiveTab: {
-      default: true
-    }
-  },
+  props: [
+    'menu',
+    'active'
+  ],
   data() {
     return {
+      showSwipableMenu: true,
       lastSwipeOffset: null,
       skeletunMenu: 3,
       key: 'value',
@@ -169,9 +167,16 @@ export default {
     }
   },
   mounted(){
-    this.setActiveTab(true);
+    this.reRenderSwipable()
+    this.setActiveTab(true)
   },
   methods: {
+    reRenderSwipable() {
+      this.showSwipableMenu = false;
+      this.$nextTick(() => {
+        this.showSwipableMenu = true
+      });
+    },
     handleSlideMove(offset) {
       if(!this.lastSwipeOffset){
         this.lastSwipeOffset = offset
@@ -346,6 +351,22 @@ export default {
         //Call requestAnimationFrame on scroll function first time
         window.requestAnimationFrame(scroll);
       // }
+    },
+    scrollToActiveCategory(){
+      const element = this.$refs.menuCategoryList;
+      if(!(element && element.firstChild && document.getElementById('menu-category-item-' + this.activeCategory))) {
+        return
+      }
+      let startOfScroll = this.$dir() == 'rtl'
+                        ? element.firstChild.getBoundingClientRect().right
+                        : element.firstChild.getBoundingClientRect().left
+      let whereWeWant = this.$dir() == 'rtl'
+                        ? document.getElementById('menu-category-item-' + this.activeCategory)
+                                  .getBoundingClientRect().right + 20
+                        : document.getElementById('menu-category-item-' + this.activeCategory)
+                                  .getBoundingClientRect().left - 20
+      const amount = (whereWeWant - startOfScroll) - element.scrollLeft
+      this.scrollTo(element, amount, 300)
     }
   },
  
@@ -387,23 +408,14 @@ export default {
     },
     showSubmitBtn() {
       return this.$store.state.cafe.productChangeArray.length
-    }
+    },
   },
   watch: {
-    activeCategory(newValue, _oldValue){
-      const element = this.$refs.menuCategoryList;
-      let startOfScroll = this.$dir() == 'rtl'
-                        ? element.firstChild.getBoundingClientRect().right
-                        : element.firstChild.getBoundingClientRect().left
-      let whereWeWant = this.$dir() == 'rtl'
-                        ? document.getElementById('menu-category-item-' + newValue)
-                                  .getBoundingClientRect().right + 20
-                        : document.getElementById('menu-category-item-' + newValue)
-                                  .getBoundingClientRect().left - 20
-      const amount = (whereWeWant - startOfScroll) - document.getElementById('menu-category-list').scrollLeft
-      this.scrollTo(element, amount, 300)
+    activeCategory(_newValue, _oldValue){
+      this.scrollToActiveCategory();
     },
     menuTabItemCategories(_newValue, _oldValue){
+      this.reRenderSwipable();
       this.setActiveTab(true);
     },
     initialTour: {
@@ -428,17 +440,17 @@ export default {
           .classList.remove('selected-products-preview-is-shown')
       }
     },
-    ActiveTab(val) {
-      if (!val) {
-        document
-          .getElementById('selected-products-preview')
-          .classList.remove('selected-products-preview-is-shown')
-      } else {
-        document
-          .getElementById('selected-products-preview')
-          .classList.add('selected-products-preview-is-shown')
-      }
-    },
+    // ActiveTab(val) {
+    //   if (!val) {
+    //     document
+    //       .getElementById('selected-products-preview')
+    //       .classList.remove('selected-products-preview-is-shown')
+    //   } else {
+    //     document
+    //       .getElementById('selected-products-preview')
+    //       .classList.add('selected-products-preview-is-shown')
+    //   }
+    // },
     menu: {
       immediate: true,
       handler(newValue, oldValue) {

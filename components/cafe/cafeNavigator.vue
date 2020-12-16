@@ -16,12 +16,12 @@
           </b-tab-item>
 
           <b-tab-item :label="$t('cafe_navigator.menu')">
-            <cp-menu :menu="menu" :active="ActiveTab == 3" /> 
+            <cp-menu v-if="(currentMainPage == 'currentCafe') && (ActiveTab == 3)" :menu="menu" :active="ActiveTab == 3" /> 
           </b-tab-item>
         </template>
         <template v-else>
           <b-tab-item :label="$t('cafe_navigator.menu')">
-            <cp-menu :menu="menu" :active="ActiveTab == 0" /> 
+            <cp-menu v-if="(currentMainPage == 'currentCafe') && (ActiveTab == 0)" :menu="menu" :active="ActiveTab == 0" /> 
           </b-tab-item>
 
           <b-tab-item :disabled="false" :label="$t('cafe_navigator.information')" v-touch:swipe="handleSwipe">
@@ -62,6 +62,9 @@
       }
     },
     computed: {
+      currentMainPage() {
+        return this.$store.state.currentMainPage
+      },
       direction(){
         return this.$dir();
       },
