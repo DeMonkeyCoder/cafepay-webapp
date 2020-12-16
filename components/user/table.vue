@@ -151,7 +151,7 @@
                 </div>
               </div>
 
-              <div :class="{'shadow-md': paymentMethod == 'cash', 'method-selected': paymentMethod == 'cash'}" @click="paymentMethod = 'cash'"
+              <div v-if="tokenType != 'pre-order'" :class="{'shadow-md': paymentMethod == 'cash', 'method-selected': paymentMethod == 'cash'}" @click="paymentMethod = 'cash'"
               class="pre-invoice-modal__payment-method__cash cp-b-margin cp-side-padding-half cp-tb-padding normal-radius">
                 <div class="pre-invoice-modal__payment-method__cash__img">
                   <img src="@/assets/img/credit-card-payment.png" alt="">
