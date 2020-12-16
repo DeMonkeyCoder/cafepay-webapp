@@ -18,8 +18,8 @@
         type="is-info"
         :disabeld="showSubmitBtn == 0"
         >
-        <span v-if="tokenType == 'pre-order'" dir="rtl" class="font-bold font-14">({{ $t('menu_page.submit_order_self_pickup') }})</span>
         {{ $t('menu_page.submit_order') }}
+        <span v-if="tokenType == 'pre-order'" dir="rtl" class="font-bold font-14">({{ $t('menu_page.submit_order_self_pickup') }})</span>
         </b-button
       >
     </div>
