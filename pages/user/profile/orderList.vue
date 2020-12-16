@@ -52,6 +52,10 @@
               {{ item.count }} عدد
               {{ (item.unit_amount * item.count) | currency }}<span class="toman font-12">تومان</span>
             </div>
+            <div class="oh-content cp-side-padding">
+              {{ $t('order_list_page.status') }}: {{ $t('order_list_page.states.' + oh.status) }}
+              <br />{{ oh.payment_info.net_amount == 0 ? $t('order_list_page.payment_done') : $t('order_list_page.payment_not_done') }}
+            </div>
           </div>
           <div class="oh-actions">
             <!-- <nuxt-link id="go-to-order-detail" :to="'/user/order/' + oh.id + '/detail'">جزییات</nuxt-link> -->

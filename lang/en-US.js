@@ -1,6 +1,21 @@
 export default {
   balance: 'Balance',
 
+  order_list_page: {
+    status: 'Status',
+    payment_done: 'Payed',
+    payment_not_done: 'Payment not done',
+    states: {
+      Canceled: 'Canceled',
+      Pending: 'Waiting for confirmation',
+      Accepted: 'Confirmed',
+      Kitchen: 'Prepearing',
+      Ready: 'Ready',
+      Delivered: 'Delivered',
+      Unknown: 'Unknown'
+    }
+  },
+
   table_page: {
     ordering_unavailable: 'Ordering is not available',
     scan_first_message: `<p class="cp-side-margin-2x">

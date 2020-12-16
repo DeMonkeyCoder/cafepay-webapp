@@ -40,16 +40,34 @@ export const mutations = {
           state.history.count = payload.res.count
           state.history.next = payload.res.next
           for (let i = 0; i < payload.res.results.length; i++) {
-            let rawOrders = payload.res.results[i]
-            let table = new Table(rawOrders, this.state.user.id)
-            table.payment = rawOrders.payment_info.total_amount
-            table.cafe = rawOrders.cafe.name
-            table.date = rawOrders.datetime
-            table.id = rawOrders.pk
+            let rawOrder = payload.res.results[i]
+            let table = new Table(rawOrder, this.state.user.id)
+            table.payment = rawOrder.payment_info.total_amount
+            table.cafe = rawOrder.cafe.name
+            table.date = rawOrder.datetime
+            table.id = rawOrder.pk
 
             //TODO: this was added to show bill products in order list. not sure if
             // it should be here
-            table.bill_products = rawOrders.bill_products
+            table.payment_info = rawOrder.payment_info
+            table.bill_products = rawOrder.bill_products
+            table.is_closed = rawOrder.is_closed
+            table.is_preorder = true
+            if(rawOrder.bill_products.filter(order => order.get_status_display == 'Canceled').length > 0) {
+              table.status = 'Canceled'
+            } else if(rawOrder.bill_products.filter(order => order.get_status_display == 'Pending').length > 0) {
+              table.status = 'Pending'
+            } else if(rawOrder.bill_products.filter(order => order.get_status_display == 'Accepted').length > 0) {
+              table.status = 'Accepted'
+            } else if(rawOrder.bill_products.filter(order => order.get_status_display == 'Kitchen').length > 0) {
+              table.status = 'Kitchen'
+            } else if(rawOrder.bill_products.filter(order => order.get_status_display == 'Ready').length > 0) {
+              table.status = 'Ready'
+            } else if(rawOrder.bill_products.filter(order => order.get_status_display != 'Delivered').length == 0) {
+              table.status = 'Delivered'
+            } else {
+              table.status = 'Unknown'
+            }
 
             state.history.data.push(table)
 

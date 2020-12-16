@@ -1,6 +1,21 @@
 export default {
   balance: 'موجودی',
 
+  order_list_page: {
+    status: 'وضعیت',
+    payment_done: 'پرداخت شده',
+    payment_not_done: 'پرداخت نشده',
+    states: {
+      Canceled: 'لغو شده',
+      Pending: 'در انتظار تایید',
+      Accepted: 'تایید شده',
+      Kitchen: 'در حال آماده سازی',
+      Ready: 'آماده تحویل',
+      Delivered: 'تحویل داده شده',
+      Unknown: 'نامشخص'
+    }
+  },
+
   table_page: {
     ordering_unavailable: 'سفارش ‌گیری فعال نیست',
     scan_first_message: `<p class="cp-side-margin-2x">
@@ -20,7 +35,8 @@ export default {
         waiting: 'در انتظار تایید توسط پذیرنده',
         preparing: 'در حال آماده‌سازی سفارش شما',
         ready: '!سفارش شما آماده است',
-        rejected: 'سفارش شما توسط پذیرنده رد شد'
+        is_delivered: '!سفارش شما آماده است',
+        rejected: 'سفارش شما توسط پذیرنده رد شد',
       }
     },
     total_amount: 'مجموع سفارشات',
