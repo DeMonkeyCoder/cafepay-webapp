@@ -41,20 +41,31 @@
           <div class="oh-info">
             <!-- <img :src="oh.avatar" alt=""> -->
             <div class="oh-content cp-side-padding">
-              <p class="oh-header font-16 font-norm ">{{ oh.cafe }}</p>
-              <p class="oh-detail font-14">
-                {{ toLocalOrderDateTime(oh.date) }} - {{ oh.payment | currency
-                }}<span class="toman font-12">تومان</span>
+              <p class="oh-header font-16 font-norm ">فروشگاه: {{ oh.cafe }}</p>
+              <p class="oh-detail font-14 datetime">
+                تاریخ و ساعت: {{ toLocalOrderDateTime(oh.date) }}
               </p>
             </div>
-            <div class="oh-content cp-side-padding" v-for="item in oh.bill_products" :key="item.pk">
-              {{ item.product_data.name }}
-              {{ item.count }} عدد
-              {{ (item.unit_amount * item.count) | currency }}<span class="toman font-12">تومان</span>
+            <div class="oh-content cp-side-padding">
+              <p class="oh-detail font-16 ">
+                محصولات:
+              </p>
+            </div>
+            <div class="oh-content cp-side-padding single-order">
+              <div v-for="item in oh.bill_products" :key="item.pk">
+                {{ item.count }} عدد
+                {{ item.product_data.name }}
+                {{ (item.unit_amount * item.count) | currency }}<span class="toman font-12">تومان</span>
+              </div>
+            </div>
+            <div>
+              <p class="oh-detail font-16 cp-side-padding full-price">
+                قیمت کل فاکتور: {{ oh.payment | currency }}<span class="toman font-12">تومان</span>
+              </p>
             </div>
             <div class="oh-content cp-side-padding">
-              {{ $t('order_list_page.status') }}: {{ $t('order_list_page.states.' + oh.status) }}
-              <br />{{ oh.payment_info.net_amount == 0 ? $t('order_list_page.payment_done') : $t('order_list_page.payment_not_done') }}
+              {{ $t('order_list_page.status') }} سفارش: {{ $t('order_list_page.states.' + oh.status) }}
+              <br />وضعیت پرداخت: {{ oh.payment_info.net_amount == 0 ? $t('order_list_page.payment_done') : $t('order_list_page.payment_not_done') }}
             </div>
           </div>
           <div class="oh-actions">
@@ -68,8 +79,7 @@
           :loading="localLoading"
           v-if="history.next"
           type="is-info"
-          icon-right="plus"
-          >موارد بیشتر</b-button
+          > موارد بیشتر</b-button
         >
       </div>
     </div>
@@ -120,5 +130,18 @@ export default {
 }
 </script>
 
-<style scoped lang="sass">
+<style scoped lang="scss">
+  .more-history-btn {
+    width: 100%;
+    border-radius: 0 0 5px 5px;
+  }
+  .order-history:not(:last-child) {
+    border-bottom: 2px dotted #0000006a;
+  }
+  .single-order:last-child,
+  .full-price,
+  .datetime {
+    margin-bottom: 0.5em;
+  }
+
 </style>
