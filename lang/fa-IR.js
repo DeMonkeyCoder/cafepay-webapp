@@ -44,7 +44,7 @@ export default {
     table_payment_done: 'پرداخت میز کامل شده است',
     no_orders_on_your_table: 'سفارشی برروی میز شما وجود ندارد',
     checkout_all_items: 'پرداخت کل فاکتور',
-    checkout: 'پرداخت سفارشات',
+    checkout: 'پرداخت سفارش',
     person: {
       tour: {
         previous: 'قبلی',
@@ -67,7 +67,7 @@ export default {
 
   menu_page: {
     your_current_order: 'سفارشات فعلی شما',
-    submit_order: 'ثبت سفارشات',
+    submit_order: 'تایید سفارش',
     submit_order_self_pickup: 'تحویل در مجموعه',
     sold_out: 'تمام شد',
     tour: {

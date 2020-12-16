@@ -7,6 +7,7 @@
       :callbacks="myCallbacks"
     ></v-tour> -->
     <div id="selected-products-preview" v-if="tokenType !== 'menu-only' && (!user.table_uuid || (user.table_uuid && !ordersPaid))">
+      <span>{{ordersTotalCount}}</span>
       <b-button
         @click="productsPayloadSeperator"
         :loading="globalLoading"
@@ -365,6 +366,10 @@ export default {
     },
     productChangeArray() {
       return this.$store.state.cafe.productChangeArray
+    },
+
+    ordersTotalCount() {
+      return this.$store.state.cafe.totalCount
     },
 
     totalCap() {
