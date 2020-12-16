@@ -92,7 +92,7 @@ export default {
   methods: {
     toLocalOrderDateTime(rawDate){
       if(rawDate){
-        return this.moment.from(rawDate, 'en', 'YYYY-MM-DD HH:mm:ss')
+        return this.moment.from(new Date(rawDate))
             .locale(this.$i18n.locale)
             .format("YYYY/MM/DD HH:mm")
       } else {

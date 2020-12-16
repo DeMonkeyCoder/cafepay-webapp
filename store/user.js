@@ -9,7 +9,7 @@ import {
 } from '../middleware/models/table'
 export const state = () => ({
   history: {
-    nuxt: null,
+    next: null,
     count: 0,
     data: []
   },
@@ -28,6 +28,13 @@ export const mutations = {
   },
   clear(state) {
     state.user = {}
+  },
+  clearHistory(state) {
+    state.history = {
+      next: null,
+      count: 0,
+      data: []
+    }
   },
   setHistory(state, payload) {
           state.history.count = payload.res.count
@@ -64,10 +71,13 @@ export const actions = {
   getOrderHistory(context , next) {
     return new Promise((resolve, reject) => {
       let url;
-      url = (next) ? context.state.history.next.split('http://xyz.cafepay.app/')[1] : '/api/v1/user-profile/orders/history/'
+      url = (next) ? context.state.history.next.split('cafepay.app')[1] : '/api/v1/user-profile/orders/history/'
       this.$api.$get(url, {
           params: {}
         }).then(res => {
+          if(!next) {
+            context.commit('clearHistory')
+          }
           context.commit('setHistory', {res , next})
           // context.commit('setHistoryOrder', res)
           resolve(res)
