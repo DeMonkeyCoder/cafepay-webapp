@@ -31,6 +31,7 @@ export default {
         peymant_is_not_done: 'Payment is not done',
         details: 'Details',
         checkout: 'Checkout',
+        checkout_CASH: 'Please Pay Your bill with Cash or Credit Card',
         states: {
           waiting: 'Waiting for kitchen confirmation',
           preparing: 'Prepearing your order',
@@ -44,6 +45,7 @@ export default {
       no_orders_on_your_table: 'No orders found on your table',
       checkout_all_items: 'Checkout all items',
       checkout: 'Checkout',
+      checkout_CASH: 'Please Pay Your bill with Cash or Credit Card',
       person: {
         tour: {
           previous: 'Previous',

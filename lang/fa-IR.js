@@ -31,6 +31,7 @@ export default {
       peymant_is_not_done: 'پرداخت سفارش انجام نشده',
       details: 'جزییات',
       checkout: 'پرداخت سفارش',
+      checkout_CASH: 'سفارش خود را سر صندوق پرداخت کنید',
       states: {
         waiting: 'در انتظار تایید توسط پذیرنده',
         preparing: 'در حال آماده‌سازی سفارش شما',
@@ -45,6 +46,7 @@ export default {
     no_orders_on_your_table: 'سفارشی برروی میز شما وجود ندارد',
     checkout_all_items: 'پرداخت کل فاکتور',
     checkout: 'پرداخت سفارش',
+    checkout_CASH: 'سفارش خود را سر صندوق پرداخت کنید',
     person: {
       tour: {
         previous: 'قبلی',

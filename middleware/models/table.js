@@ -17,6 +17,7 @@ export const Table = class Table {
     }
     this.persons = data.personRawProduct
     this.status = data.status
+    this.paymentMethod = data.paymentMethod
     
 
 
@@ -28,6 +29,7 @@ export const Table = class Table {
 
     let personRawProduct = []
     let status = 'ready'
+    let paymentMethod = 'online'
     personRawProduct_noProperty.forEach(orders => {
       // make orders from product class
       let newOrders = []
@@ -37,9 +39,12 @@ export const Table = class Table {
       let wish_to_pay;
 
       orders.forEach(order => {
+        // fall in chain
         if (!order.is_ready) status = 'preparing'
         if (!order.sent_to_kitchen) status = 'confirmed'
         if (!order.is_accepted) status = 'waiting'
+        // set method
+        if (order.preferred_payment_method != 0) paymentMethod = 'cash'
         // user info is in each order so remove it from them and add to parent (person)
         user_name = (order.is_staff) ? 'صندوق دار' : order.user_profile.full_name
         userId = order.user_profile.pk
@@ -84,7 +89,11 @@ export const Table = class Table {
         id: userId
       })
     });
-    return {personRawProduct, status}
+    return {
+      personRawProduct,
+      status,
+      paymentMethod
+    }
   }
 
 

@@ -182,15 +182,16 @@
       </b-modal>
 
       <div id="pay-checkout" class="pay-checkout-is-shown">
-        <b-button
-          :disabled="totalWishToPayOrder == 0"
+        <b-button v-if="table.paymentMethod == 'online'"
+          :disabled="totalWishToPayOrder == 0 "
           @click="showPreInvoice"
           :loading="globalLoading"
           class="button shadow-lg-bb bcp-btn cp-btn-submit-order"
           size="is-medium"
           type="is-success"
-          >{{ $t('table_page.checkout') }} ({{ totalWishToPayOrder | currency }})</b-button
+          >{{  $t('table_page.checkout') }} ({{ totalWishToPayOrder | currency }})</b-button
         >
+        <span v-else class="message-warning font-16 font-norm">{{$t('table_page.checkout_CASH')}}</span>
       </div>
 
       <!-- <div dir="ltr" id="pay-checkout">
@@ -218,7 +219,7 @@
       </div> -->
 
       <!-- <v-tour name="myTour" :steps="steps" :options="{ highlight: true }"></v-tour> -->
-
+      
       <div class="table-header cp-header cp-tb-padding cp-side-padding">
         <div class="info">
           <img
@@ -441,7 +442,16 @@ export default {
       }, 200)
     },
     paymentCheckout() {
-      this.$store.dispatch('table/submitPayment', this.ordersToPayforServer)
+      if (this.paymentMethod == 'cash') {
+        let pbrList = this.ordersToPayforServer.map(x => {return {pbr: x.pbr, preferred_payment_method: '1'}})
+        console.log('pbr list', pbrList);
+        this.$store.dispatch('table/setPaymentMethod', pbrList)
+        .then(res => {
+          this.preInvoiceActive = false
+          this.toaster('پرداخت سفارش به صورت نقدی ثبت شد', 'is-info', 'is-bottom')
+        })
+      }
+      else this.$store.dispatch('table/submitPayment', this.ordersToPayforServer)
       // this.$router.push('/paymentResult')
     },
     showOptionsModal() {

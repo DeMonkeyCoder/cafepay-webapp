@@ -9,6 +9,7 @@ export const state = () => ({
   table_number: null,
   token: null,
   status: null,
+  paymentMethod: 'online',
   cafe: '',
   tpayment: 0,
   persons: [],
@@ -74,6 +75,7 @@ export const mutations = {
     state.persons = table.persons
     state.payment = rawData.payment_info
     state.status = table.status
+    state.paymentMethod = table.paymentMethod
     // we use this data to handle payment status in preorder
     state.cafe = rawData.cafe
 
@@ -274,6 +276,24 @@ export const actions = {
 
 
 
+  },
+
+  setPaymentMethod(context, data){
+    return new Promise((resolve, reject) => {
+      this.$api.$post(`/api/v1/cafe/${context.state.cafe.pk}/pbr/payment/method/`, {
+          pbr_payment_methods: data
+        })
+        .then(res => {
+          resolve(res)
+        })
+        .catch(err => {
+          context.commit('errorMsg', 'خطایی رخ داده، مجددا امتحان کنید', {
+            root: true
+          })
+        })
+      
+    })
+ 
   },
 
   async submitPayment(context, payments) {
