@@ -81,6 +81,9 @@
     },
     methods: {
       handleSwipe(direction){
+        //TODO: enable swipe later
+        return
+        
         if(direction==='left' && this.ActiveTab<3){
           this.ActiveTab+=1
         }
