@@ -346,6 +346,9 @@ export default {
         case 'waiting':
           text = this.$t('table_page.preorder.states.waiting')
           break
+        case 'confirmed':
+          text = this.$t('table_page.preorder.states.confirmed')
+          break
         case 'preparing':
           text = this.$t('table_page.preorder.states.preparing')
           break

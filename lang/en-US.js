@@ -36,6 +36,7 @@ export default {
           waiting: 'Waiting for kitchen confirmation',
           preparing: 'Prepearing your order',
           ready: 'Your order is ready!',
+          confirmed: 'Your Order has been Accepted',
           rejected: 'Your order is rejected by the kitchen'
         }
       },

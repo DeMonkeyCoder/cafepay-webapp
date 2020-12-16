@@ -56,6 +56,7 @@ import foodReady from '~/assets/img/food-ready.json'
 import preparingFood from '~/assets/img/animations/preparing-food.json'
 import declined from '~/assets/img/animations/sad-empty-box.json'
 import waiting from '~/assets/img/animations/timer-1.json'
+import confirmed from '~/assets/img/animations/confirm-1.json'
 
 import lottie from 'lottie-web'
 export default {
@@ -65,6 +66,7 @@ export default {
       preparingFood,
       declined,
       waiting,
+      confirmed,
       statusText: '',
     }
   },
@@ -80,14 +82,20 @@ export default {
       handler(val, oldValue) {
         if (val.token == null) this.$router.push(this.localePath('/user/home'))
         let animationData = null
+        let loop = true
         document.getElementById('animation-order-status').innerHTML = ''
         console.log('table generated in liveorder', val);
         switch (val.status) {
           case 'waiting':
-            animationData = waiting
+            animationData = this.waiting
             this.statusText = 'در انتظار تایید توسط پذیرنده'
             break
-          case 'preparing':
+          case 'confirmed':
+            loop = false
+            animationData = this.confirmed
+            this.statusText = 'سفارش شما تایید شد'
+            break
+          case 'preparing': 
             animationData = this.preparingFood
             this.statusText = 'در حال آماده‌سازی سفارش شما'
             break
@@ -109,7 +117,7 @@ export default {
             let preloader = lottie.loadAnimation({
               container: document.getElementById('animation-order-status'), // the dom element that will contain the animation
               renderer: 'svg',
-              loop: true,
+              loop,
               autoplay: true,
               animationData, // the path to the animation json
             })
@@ -122,7 +130,7 @@ export default {
   beforeMount() {
      this.$store.commit('cafe/setType', 'pre-order')
      this.$store.commit('table/setToken', {token: this.$route.params.id, number: 'پیش سفارش'})
-      if (!this.$store.state.socket.isConnected) Vue.prototype.$connect()
+      // if (!this.$store.state.socket.isConnected) Vue.prototype.$connect()
 
   },
   mounted() {
