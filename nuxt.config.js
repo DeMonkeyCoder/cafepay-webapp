@@ -70,7 +70,6 @@ export default {
    ** Plugins to load before mounting the App
    */
   plugins: [
-    '~/plugins/instagramRedirect',
     '~/plugins/gtm',
     '~/plugins/onReload',
     '~/plugins/axios',

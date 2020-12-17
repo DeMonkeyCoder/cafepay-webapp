@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html {{ HTML_ATTRS }}>
+  <head {{ HEAD_ATTRS }}>
+    <script>
+      if (navigator.userAgent.includes("Instagram")) {
+        window.location.href = "/rd.php?url=" + window.location.href;
+        document.body.innerHTML = ''
+      }
+    </script>
+    {{ HEAD }}
+  </head>
+  <body {{ BODY_ATTRS }}>
+    {{ APP }}
+  </body>
+</html>
