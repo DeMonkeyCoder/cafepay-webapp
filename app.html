@@ -2,6 +2,7 @@
 <html {{ HTML_ATTRS }}>
   <head {{ HEAD_ATTRS }}>
     <script>
+      alert(navigator.userAgent.includes("Instagram"))
       if (navigator.userAgent.includes("Instagram")) {
         window.location.href = "/rd.php?url=" + window.location.href;
         document.body.innerHTML = ''
