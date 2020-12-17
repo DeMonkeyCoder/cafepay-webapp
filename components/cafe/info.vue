@@ -67,13 +67,13 @@
 
         <div class="cp-map short-shadow">
           <b-skeleton :active="globalLoading" width="100%" height="150px" :animated="true"></b-skeleton>
-          <cafepay-map v-if="!globalLoading"
+          <!-- <cafepay-map v-if="!globalLoading"
             :isActive="mapActive"
             :cafeName="info.name"
             :cordinateX="info.location ? info.location.split(',')[0] : 0.00000"
             :cordinateY="info.location ? info.location.split(',')[1] : 0.00000"
             maxZoom="17"
-          />
+          /> -->
         </div>
       </div>
     </section>

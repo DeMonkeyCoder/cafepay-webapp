@@ -7,7 +7,8 @@ export default {
     // port: 3000, // default: 3000     
     host: '0.0.0.0', // default: localhost   
   },
-  ssr: false,
+  ssr: true,
+  target: 'static',
   /*
    ** Headers of the page
    */
@@ -76,20 +77,21 @@ export default {
    ** Plugins to load before mounting the App
    */
   plugins: [
-    '~/plugins/gtm',
-    '~/plugins/onReload',
+    
+    {src: '~/plugins/gtm', mode: 'client'},
+    {src: '~/plugins/onReload', mode: 'client'},
     '~/plugins/axios',
     '~/plugins/mixin',
-    '~/plugins/vue-currency',
-    '~/plugins/vue-leaflet',
+    {src:'~/plugins/vue-currency', mode: 'client'},
+    // '~/plugins/vue-leaflet',
     '~/plugins/moment',
-    '~/plugins/productTour.js',
+    // '~/plugins/productTour.js',
     // '~/plugins/lottie.js',
     '~/plugins/websocket.js',
     // '~/plugins/jdenticon-2.2.0.js',
     // '~/plugins/ripple',
     '~/plugins/i18n.js',
-    '~/plugins/Vue2TouchEvents.js'
+    {src: '~/plugins/Vue2TouchEvents.js', mode: 'client'},
   ],
   /*
    ** Nuxt.js modules

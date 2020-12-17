@@ -122,12 +122,12 @@ import qrIcon from '~/assets/img/shape/icons/qr-code-scan.svg'
 import lottie from 'lottie-web'
 import login from '~/components/user/login'
 import Vue from 'vue'
-import { QrcodeStream } from 'vue-qrcode-reader'
+// import { QrcodeStream } from 'vue-qrcode-reader'
 import { mapActions } from 'vuex'
 
 export default {
   components: {
-    QrcodeStream,
+    QrcodeStream: () => import('vue-qrcode-reader'),
     login,
   },
   data() {
@@ -305,9 +305,9 @@ export default {
             if (permissionStatus.state == 'prompt')
               this.accessCameraActive = true
             else if (permissionStatus.state == 'granted')
-              this.qrcodeComponentLaunch = QrcodeStream
+              this.qrcodeComponentLaunch = null
           })
-      } else this.qrcodeComponentLaunch = QrcodeStream
+      } else this.qrcodeComponentLaunch = null
     }
   },
   computed: {

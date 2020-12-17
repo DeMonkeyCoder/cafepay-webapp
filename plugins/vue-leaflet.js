@@ -6,6 +6,8 @@ import {
   LTileLayer
 } from 'vue2-leaflet'
 
+if (process.client){
+
 const VueLeaflet = {
 
   install(Vue, options) {
@@ -17,5 +19,6 @@ const VueLeaflet = {
 };
 
 Vue.use(VueLeaflet);
+}
 
 export default VueLeaflet;

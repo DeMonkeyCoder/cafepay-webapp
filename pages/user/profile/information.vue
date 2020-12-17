@@ -140,10 +140,10 @@
 </template>
 
 <script>
-import VuePersianDatetimePicker from 'vue-persian-datetime-picker'
+// import VuePersianDatetimePicker from 'vue-persian-datetime-picker'
 import moment from 'moment-jalaali'
 export default {
-  components: { 'date-picker': VuePersianDatetimePicker },
+  components: { 'date-picker': () => import('vue-persian-datetime-picker') },
   data() {
     return {
       userLocal: {},
