@@ -1,5 +1,5 @@
 <template>
-  <div class="cp-side-padding cp-tb-padding-2x right-align">
+  <div class="cp-padding-2x right-align">
     <header class="cp-b-margin font-bold p-text font-22">قوانین و شرایط استفاده</header>
     <ul>
       <li :dir="$dir()" class="cp-b-margin" v-for="(term, index) in terms" :key="index"><span class="font-norm font-18 p-text">{{index+1}}. </span> {{term}}</li>
