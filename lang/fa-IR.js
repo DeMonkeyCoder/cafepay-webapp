@@ -1,4 +1,6 @@
 export default {
+  unknown_error: 'خطایی رخ داده، مجددا امتحان کنید',
+  network_error: 'خطا در اتصال به اینترنت',
   balance: 'موجودی',
 
   order_list_page: {
@@ -25,7 +27,12 @@ export default {
       </p>
       <p>و بارکد مربوط به میز را اسکن کنید</p>
       <p>یا کد میز را وارد نمایید</p>`,
+    table: 'میز',
+    edit_order: 'ویرایش سفارش',
+    payment_status_header_payed: 'پرداخت شده',
+    payment_status_header_of: 'از',
     preorder: {
+      self_pickup_warning: 'توجه داشته باشید سفارش در محل مجموعه به شما تحویل داده خواهد شد.',
       current_orders: 'سفارشات فعلی',
       order_from: 'سفارش از',
       payment_is_not_done: 'پرداخت سفارش انجام نشده',
@@ -43,11 +50,21 @@ export default {
     },
     total_amount: 'مجموع سفارشات',
     payed_amount: 'پرداخت شده',
+
+    service_fee: 'خدمات',
+    sub_total_amount: 'مجموع سفارشات',
+    final_total_amount: 'جمع کل',
+    checkout_cash_or_credit: 'پرداخت نقدی یا کارتخوان',
+    pay_to_cashier: 'پرداخت سر صندوق',
+    checkout_online_submit_button: 'پرداخت آنلاین',
+    checkout_cash_submit_button: 'ثبت سفارش',
+
     table_payment_done: 'پرداخت میز کامل شده است',
     no_orders_on_your_table: 'سفارشی برروی میز شما وجود ندارد',
     checkout_all_items: 'پرداخت کل فاکتور',
     checkout: 'پرداخت سفارش',
-    checkout_CASH: 'سفارش خود را سر صندوق پرداخت کنید',
+    checkout_CASH_message: 'سفارش خود را سر صندوق پرداخت کنید',
+    choose_payment_method: 'انتخاب روش پرداخت',
     person: {
       tour: {
         previous: 'قبلی',
@@ -60,6 +77,7 @@ export default {
     person_orders: 'سفارشات <span class="font-norm p-text">{title}</span>',
     person_order_count: 'مجموع:‌ {order_count} عدد',
     person_payed: 'پرداخت شده',
+    cash_checkout_type_submitted: 'پرداخت سفارش به صورت نقدی ثبت شد',
   },
 
   current_cafe: {
@@ -143,5 +161,8 @@ export default {
     complete_your_registration_message: 'جهت تکمیل عضویت، نام خود را وارد کنید',
     your_name: 'نام شما',
     sumbit_information: 'ثبت اطلاعات',
+    phone_number_empty_error: 'لطفا شماره تلفن خود را وارد نمایید',
+    phone_number_invalid: 'شماره تلفن وارد شده معتبر نیست',
+    name_empty_error: 'لطفا نام خود را وارد کنید',
   }
 }

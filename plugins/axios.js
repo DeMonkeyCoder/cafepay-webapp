@@ -22,7 +22,7 @@ export default function ({
 
     } else {
       store.commit("errorMsg",
-        'خطا در اتصال به اینترنت'
+        $nuxt.$i18n.$t('network_error')
       )
     }
   })
@@ -51,7 +51,7 @@ export default function ({
     } else {
       console.log('error', error)
       store.commit("errorMsg",
-        'خطا در اتصال به اینترنت'
+      $nuxt.$i18n.$t('network_error')
       )
     }
   })

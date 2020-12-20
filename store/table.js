@@ -287,7 +287,7 @@ export const actions = {
           resolve(res)
         })
         .catch(err => {
-          context.commit('errorMsg', 'خطایی رخ داده، مجددا امتحان کنید', {
+          context.commit('errorMsg', $nuxt.$i18n.t('unknown_error'), {
             root: true
           })
         })

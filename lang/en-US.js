@@ -1,4 +1,6 @@
 export default {
+  unknown_error: 'Error occurred. Please try again later',
+  network_error: 'Please check your network connection',
   balance: 'Balance',
 
   order_list_page: {
@@ -25,40 +27,56 @@ export default {
       </p>
       <p>and scan the barcode</p>
       <p>or enter the table\'s code</p>`,
-      preorder: {
-        current_orders: 'Current Order',
-        order_from: 'Order from',
-        payment_is_not_done: 'Payment is not done',
-        details: 'Details',
-        checkout: 'Checkout',
-        checkout_CASH: 'Please Pay Your bill with Cash or Credit Card',
-        states: {
-          waiting: 'Waiting for kitchen confirmation',
-          preparing: 'Prepearing your order',
-          ready: 'Your order is ready!',
-          confirmed: 'Your Order has been Accepted',
-          rejected: 'Your order is rejected by the kitchen'
-        }
-      },
-      total_amount: 'Total amount',
-      payed_amount: 'Payed amount',
-      table_payment_done: 'Table bill is payed',
-      no_orders_on_your_table: 'No orders found on your table',
-      checkout_all_items: 'Checkout all items',
+    edit_order: 'Edit Order',
+    payment_status_header_payed: 'Payed',
+    payment_status_header_of: 'of',
+    table: 'Table',
+    preorder: {
+      self_pickup_warning: 'Self pickup order with no delivery.',
+      current_orders: 'Current Order',
+      order_from: 'Order from',
+      payment_is_not_done: 'Payment is not done',
+      details: 'Details',
       checkout: 'Checkout',
       checkout_CASH: 'Please Pay Your bill with Cash or Credit Card',
-      person: {
-        tour: {
-          previous: 'Previous',
-          how_can_i_pay: 'How can I pay?',
-          got_it: 'Got it!',
-          person_orders_guide: 'Orders and payment details of people is available here',
-          person_payment_guide: 'Move the slider to right or left to set the amount you want to pay',
-        }
-      },
-      person_orders: '<span class="font-norm p-text">{title}</span>\'s Orders',
-      person_order_count: 'Total:‌ {order_count} items',
-      person_payed: 'Payed',
+      states: {
+        waiting: 'Waiting for kitchen confirmation',
+        preparing: 'Prepearing your order',
+        ready: 'Your order is ready!',
+        confirmed: 'Your Order has been Accepted',
+        rejected: 'Your order is rejected by the kitchen'
+      }
+    },
+    total_amount: 'Total amount',
+    payed_amount: 'Payed amount',
+    
+    service_fee: 'Service Fee',
+    sub_total_amount: 'Subtotal',
+    final_total_amount: 'Total',
+    checkout_cash_or_credit: 'Cash or Credit Card',
+    pay_to_cashier: 'Pay to cashier',
+    checkout_online_submit_button: 'Checkout online',
+    checkout_cash_submit_button: 'Submit Order',
+    
+    table_payment_done: 'Table bill is payed',
+    no_orders_on_your_table: 'No orders found on your table',
+    checkout_all_items: 'Checkout all items',
+    checkout: 'Checkout',
+    checkout_CASH_message: 'Please Pay Your bill with Cash or Credit Card',
+    choose_payment_method: 'Choose payment method',
+    person: {
+      tour: {
+        previous: 'Previous',
+        how_can_i_pay: 'How can I pay?',
+        got_it: 'Got it!',
+        person_orders_guide: 'Orders and payment details of people is available here',
+        person_payment_guide: 'Move the slider to right or left to set the amount you want to pay',
+      }
+    },
+    person_orders: '<span class="font-norm p-text">{title}</span>\'s Orders',
+    person_order_count: 'Total:‌ {order_count} items',
+    person_payed: 'Payed',
+    cash_checkout_type_submitted: 'Cash payment submitted',
   },
 
   current_cafe: {
@@ -142,5 +160,8 @@ export default {
     complete_your_registration_message: 'To complete registration, please enter your name',
     your_name: 'Your name',
     sumbit_information: 'Sumbit',
+    phone_number_empty_error: 'Please enter your phone number',
+    phone_number_invalid: 'Please enter a valid phone number',
+    name_empty_error: 'Please enter your name'
   }
 }

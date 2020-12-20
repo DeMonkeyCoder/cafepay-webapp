@@ -101,21 +101,21 @@
 
             <ul class="payment-summery">
               <li>
-                <p class="pre-invoice-modal__name">مجموع سفارشات</p>
+                <p class="pre-invoice-modal__name">{{ $t('table_page.sub_total_amount') }}</p>
                 <p class="pre-invoice-modal__amount">
                   {{ totalWishToPayOrder | currency }}
                   <!-- <span class="toman">تومان</span> -->
                 </p>
               </li>
               <li>
-                <p class="pre-invoice-modal__name font-l">خدمات</p>
+                <p class="pre-invoice-modal__name font-l">{{ $t('table_page.service_fee') }}</p>
                 <p class="pre-invoice-modal__amount font-l">
                   {{ cafepayFee | currency }}
                   <!-- <span class="toman">تومان</span> -->
                 </p>
               </li>
               <li>
-                <p class="pre-invoice-modal__name font-bold">جمع کل</p>
+                <p class="pre-invoice-modal__name font-bold">{{ $t('table_page.final_total_amount') }}</p>
                 <p class="pre-invoice-modal__amount font-bold">
                   {{ totaltoPay | currency }}
                   <!-- <span class="toman">تومان</span> -->
@@ -128,15 +128,17 @@
                 <b-icon size="is-medium" icon="alert-circle-outline"></b-icon>
               </div>
               <p>
-                توجه داشته باشید سفارش در محل مجموعه به شما تحویل داده خواهد شد.
+                {{ $t('table_page.self_pickup_warning') }}
               </p>
             </div>
 
             <div class="pre-invoice-modal__payment-method cp-t-margin-2x">
-              <header class="font-bold font-18 cp-b-margin">انتخاب روش پرداخت</header>
+              <header class="font-bold font-18 cp-b-margin">{{ $t('table_page.choose_payment_method') }}</header>
 
-              <div :class="{'shadow-md': paymentMethod == 'online', 'method-selected': paymentMethod == 'online'}" @click="paymentMethod = 'online'"
-              class="pre-invoice-modal__payment-method__online cp-side-padding-half cp-tb-padding normal-radius">
+              <div
+                v-if="$i18n.locale == 'fa'"
+                :class="{'shadow-md': paymentMethod == 'online', 'method-selected': paymentMethod == 'online'}" @click="paymentMethod = 'online'"
+                class="pre-invoice-modal__payment-method__online cp-side-padding-half cp-tb-padding normal-radius">
                 <div class="pre-invoice-modal__payment-method__online__img">
                   <img src="@/assets/img/pasargaad.png" alt="">
                 </div>
@@ -158,8 +160,8 @@
                   <img src="@/assets/img/credit-card-payment.png" alt="">
                 </div>
                 <div class="pre-invoice-modal__payment-method__cash__text">
-                  <p class="font-16">پرداخت نقدی یا کارتخوان</p>
-                  <p class="font-bold">پرداخت سر صندوق</p>
+                  <p class="font-16">{{ $t('table_page.checkout_cash_or_credit') }}</p>
+                  <p class="font-bold">{{ $t('table_page.pay_to_cashier') }}</p>
                 </div>
                 <div v-if="paymentMethod == 'cash'" class="pre-invoice-modal__payment-method__cash__check">
                   <b-icon
@@ -176,7 +178,7 @@
               :loading="globalLoading"
               class="ma-child"
               type="is-success"
-              >{{(paymentMethod == 'cash') ? 'ثبت سفارش' : 'پرداخت آنلاین'}}
+              >{{(paymentMethod == 'cash') ? $t('table_page.checkout_cash_submit_button') : $t('table_page.checkout_online_submit_button') }}
             </b-button>
           </section>
         </div>
@@ -192,7 +194,7 @@
           type="is-success"
           >{{  $t('table_page.checkout') }} ({{ totalWishToPayOrder | currency }})</b-button
         >
-        <span v-else class="message-warning font-16 font-norm">{{$t('table_page.checkout_CASH')}}</span>
+        <span v-else class="message-warning font-16 font-norm">{{$t('table_page.checkout_CASH_message')}}</span>
       </div>
 
  
@@ -223,12 +225,12 @@
             class="table-top-section__name  cp-tb-padding-half cp-side-padding"
           >
             <h5 class="">
-              میز:  <span class="font-norm"> {{ table.table_number }} </span>
+              {{ $t('table_page.table') }}: <span class="font-norm">{{ table.table_number }}</span>
             </h5>
           </div>
 
           <div class="table-top-section__edit-orders">
-            <b-button @click="goToMyOrderInMenu" class="shadow-b" type="is-light" inverted >ویرایش سفارش</b-button>
+            <b-button @click="goToMyOrderInMenu" class="shadow-b" type="is-light" inverted >{{ $t('table_page.edit_order') }}</b-button>
           </div>
         </div>
 
@@ -247,12 +249,11 @@
             class="table-status-bar__info cp-tb-padding-half"
           >
             <p v-if="PaymentProgress != 100">
-              باقی‌مانده:
+              {{ $t('table_page.payment_status_header_payed') }}:
               <span class="p-text font-norm total-payment">{{
-                (table.payment.total_amount - table.payment.payed_amount)
-                  | currency
+                table.payment.payed_amount | currency
               }}</span>
-              از
+              {{ $t('table_page.payment_status_header_of') }}
               <span class="total-cost">{{
                 table.payment.total_amount | currency
               }}</span>
@@ -322,7 +323,8 @@ export default {
       preInvoiceActive: false,
       hasPreOrder: true,
       preorders: [{}],
-      paymentMethod: 'online'
+      //TODO: get bill preferred payment method from server
+      paymentMethod: (this.$i18n.locale == 'fa') ? 'online' : 'cash'
     }
   },
   computed: {
@@ -463,7 +465,7 @@ export default {
         this.$store.dispatch('table/setPaymentMethod', pbrList)
         .then(res => {
           this.preInvoiceActive = false
-          this.toaster('پرداخت سفارش به صورت نقدی ثبت شد', 'is-info', 'is-bottom')
+          this.toaster(this.$t('table_page.cash_checkout_type_submitted'), 'is-info', 'is-bottom')
         })
       }
       else this.$store.dispatch('table/submitPayment', this.ordersToPayforServer)

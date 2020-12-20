@@ -26,10 +26,10 @@
                 inputmode="numeric"
                 class="cp-input cp-input-primary cp-input-grey"
                 message="You can have a message too"
-                maxlength="11"
+                :maxlength="$i18n.locale == 'fa' ? 11 : 14"
                 v-model="phone_number"
                 :disabled="globalLoading"
-                placeholder="09........."
+                :placeholder="$i18n.locale == 'fa' ? '09.........' : 'phone number'"
                 size="is-medium"
               ></b-input>
             </b-field>
@@ -201,7 +201,7 @@ export default {
     },
     sendCode() {
       let phone_numberEn = this.convertPersian(this.phone_number)
-      let validation = /^(\0|0)?9\d{9}$/g
+      let validation = this.$i18n.locale == 'fa' ? /^(\0|0)?9\d{9}$/g : /^(\+\d{1,2}\s?)?1?\-?\.?\s?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/g
       if (phone_numberEn.match(validation)) {
         this.$axios
           .post('api/v1/user-profile/send-code/', {
@@ -227,9 +227,9 @@ export default {
             }
           })
       } else if (phone_numberEn == '') {
-        this.toaster('لطفا شماره تلفن خود را وارد نمایید', 'is-danger')
+        this.toaster(this.$t('login_component.phone_number_empty_error'), 'is-danger')
       } else {
-        this.toaster('شماره تلفن وارد شده معتبر نیست', 'is-danger')
+        this.toaster(this.$t('login_component.phone_number_invalid'), 'is-danger')
       }
     },
     checkCode() {
@@ -285,7 +285,7 @@ export default {
           })
       }
       else {
-        this.toaster('لطفاْ نام خود را وارد کنید', 'is-danger')
+        this.toaster(this.$t('login_component.name_empty_error'), 'is-danger')
       }
     }
   }
