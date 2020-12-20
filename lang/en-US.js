@@ -101,7 +101,8 @@ export default {
     phone_number: 'Phone Number',
     update_information: 'Save',
     logout_confirmation_message: 'Are you sure you want to logout?',
-    no: 'No'
+    no: 'No',
+    update_information_success: 'Updated Successfully'
   },
 
   cafe_navigator: {
@@ -118,7 +119,8 @@ export default {
     scan_the_barcode: 'Scan the table\'s barcode with application\'s camera',
     or: 'or',
     enter_table_code: 'Enter the table\'s code',
-    submit_table_code: 'Submit'
+    submit_table_code: 'Submit',
+    code_incorrect: 'Code is incorrect'
   },
 
   login_component: {

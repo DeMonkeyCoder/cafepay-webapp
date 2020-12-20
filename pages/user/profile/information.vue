@@ -192,7 +192,7 @@ export default {
             
               this.$buefy.toast.open({
               duration: 3000,
-              message: `اطلاعات با موفقیت ویرایش شد`,
+              message: this.$t('profile_page.update_information_success'),
               position: 'is-bottom',
               type: 'is-success'
             })

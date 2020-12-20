@@ -231,7 +231,7 @@ export default {
             if (err.response.status == 404) {
               this.$buefy.toast.open({
                 duration: 3000,
-                message: `کد وارد شده نادرست است`,
+                message: this.$t('scan_page.code_incorrect'),
                 position: 'is-top',
                 type: 'is-danger',
               })
