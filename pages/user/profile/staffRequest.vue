@@ -25,7 +25,8 @@
               <div class="oh-content cp-side-padding">
                 <p class="oh-header font-16 font-norm ">{{oh.cafeName}}</p>
                 <p class="oh-detail font-14">
-                  {{oh.date}} - {{oh.bill | currency}}<span class="toman font-12">تومان</span>
+                  {{oh.date}} - {{oh.bill | currency}}
+                  <!-- <span class="toman font-12">تومان</span> -->
                 </p>
               </div>
             </div>

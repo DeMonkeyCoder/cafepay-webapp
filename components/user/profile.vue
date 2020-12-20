@@ -29,7 +29,7 @@
         <p dir="ltr" class="detail cp-tb-padding cp-side-padding">
           {{ $t('balance') }}:
           <span class="p-text font-18">{{user.balance | currency}}</span>
-          <span class="toman">تومان</span>
+          <!-- <span class="toman">تومان</span> -->
         </p>
       </div>
     </div>

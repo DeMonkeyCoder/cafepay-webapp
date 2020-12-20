@@ -84,7 +84,7 @@
                     </p>
                   </div>
                   {{ prod.price | currency }}
-                  <span class="toman">تومان</span>
+                  <!-- <span class="toman">تومان</span> -->
                 </div>
               </div>
               <div v-if="prod.available && tokenType !== 'menu-only' && (!user.table_uuid || (user.table_uuid && !ordersPaid))" class="add-or-remove">

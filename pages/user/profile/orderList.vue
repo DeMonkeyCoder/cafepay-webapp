@@ -55,12 +55,14 @@
               <div v-for="item in oh.bill_products" :key="item.pk">
                 {{ item.count }} عدد
                 {{ item.product_data.name }}
-                {{ (item.unit_amount * item.count) | currency }}<span class="toman font-12">تومان</span>
+                {{ (item.unit_amount * item.count) | currency }}
+                <!-- <span class="toman font-12">تومان</span> -->
               </div>
             </div>
             <div>
               <p class="oh-detail font-16 cp-side-padding full-price">
-                قیمت کل فاکتور: {{ oh.payment | currency }}<span class="toman font-12">تومان</span>
+                قیمت کل فاکتور: {{ oh.payment | currency }}
+                <!-- <span class="toman font-12">تومان</span> -->
               </p>
             </div>
             <div class="oh-content cp-side-padding">

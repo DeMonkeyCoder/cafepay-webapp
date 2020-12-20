@@ -15,7 +15,7 @@
         <p :dir="$dir()" class="detail cp-tb-padding cp-side-padding">
           موجودی:
           <span class="p-text font-18">{{user.balance | currency}}</span>
-          <span class="toman">تومان</span>
+          <!-- <span class="toman">تومان</span> -->
         </p>
       </div>
     </div>
@@ -25,7 +25,8 @@
         <div class="amout-options cp-b-margin">
           <div class="cp-side-padding-half" v-for="amount in amountOptions" :key="amount">
             <span @click="changePayAmount(amount)" class="font-16 cp-btn cp-btn-primary-inverted">
-              {{amount | currency}}<span class="toman">تومان</span>
+              {{amount | currency}}
+              <!-- <span class="toman">تومان</span> -->
             </span>
           </div>
         </div>
@@ -51,8 +52,9 @@
           &nbsp;-&nbsp;
           <span class="ta-amount font-16" 
           >
-          {{ta.amount | currency}}<span class="wallet-toman font-12">تومان</span></span>
-
+          {{ta.amount | currency}}
+          <!-- <span class="wallet-toman font-12">تومان</span> -->
+          </span>
           
         </div>
       </div>

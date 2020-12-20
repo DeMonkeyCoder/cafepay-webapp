@@ -39,10 +39,14 @@
       <ul v-for="(person, i) in table.persons" :key="i" dir="rtl" class="cp-padding">
         <li class="live-preorder__content_orders__order" v-for="(order, j) in person.orders" :key="j">
           <p class="font-norm font-16">{{order.name}}</p>
-          <p>{{order.count}} عدد | {{order.payment_info.total_amount | currency}}<span class="toman">تومان</span></p>
+          <p>{{order.count}} عدد | {{order.payment_info.total_amount | currency}}
+            <!-- <span class="toman">تومان</span> -->
+          </p>
         </li>
         <li class="live-preorder__content__orders__totalAmount">
-          <p class="font-18 font-bold">مجموع: {{table.payment.total_amount | currency}}<span class="toman">تومان</span></p>
+          <p class="font-18 font-bold">مجموع: {{table.payment.total_amount | currency}}
+            <!-- <span class="toman">تومان</span> -->
+          </p>
         </li>
       </ul>
       </div>

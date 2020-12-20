@@ -93,7 +93,8 @@
               <li v-for="order in ordersToPay" :key="order.pk">
                 <p class="order-summery__name">{{ order.name }}</p>
                 <p class="order-summery__amount value-fix-padding">
-                  {{ order.amount | currency }}<span class="toman">تومان</span>
+                  {{ order.amount | currency }}
+                  <!-- <span class="toman">تومان</span> -->
                 </p>
               </li>
             </ol>
@@ -103,21 +104,21 @@
                 <p class="pre-invoice-modal__name">مجموع سفارشات</p>
                 <p class="pre-invoice-modal__amount">
                   {{ totalWishToPayOrder | currency }}
-                  <span class="toman">تومان</span>
+                  <!-- <span class="toman">تومان</span> -->
                 </p>
               </li>
               <li>
                 <p class="pre-invoice-modal__name font-l">خدمات</p>
                 <p class="pre-invoice-modal__amount font-l">
                   {{ cafepayFee | currency }}
-                  <span class="toman">تومان</span>
+                  <!-- <span class="toman">تومان</span> -->
                 </p>
               </li>
               <li>
                 <p class="pre-invoice-modal__name font-bold">جمع کل</p>
                 <p class="pre-invoice-modal__amount font-bold">
                   {{ totaltoPay | currency }}
-                  <span class="toman">تومان</span>
+                  <!-- <span class="toman">تومان</span> -->
                 </p>
               </li>
             </ul>
@@ -255,7 +256,7 @@
               <span class="total-cost">{{
                 table.payment.total_amount | currency
               }}</span>
-              تومان
+              <!-- تومان -->
             </p>
 
             <p
