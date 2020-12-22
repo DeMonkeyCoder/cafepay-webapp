@@ -227,7 +227,7 @@
           </div>
 
           <div class="table-top-section__edit-orders">
-            <b-button @click="goToMyOrderInMenu" class="shadow-b" type="is-light" inverted >ویرایش سفارش</b-button>
+            <b-button @click="goToMyOrderInMenu" class="shadow-b" type="is-warning" inverted >ویرایش سفارش</b-button>
           </div>
         </div>
 
