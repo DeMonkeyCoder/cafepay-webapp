@@ -4,11 +4,11 @@ import config from './plugins/config.js'
 //TODO: dynamically handle title and description by language
 export default {
   server: {
-    // port: 3000, // default: 3000     
+    port: 9999, // default: 3000     
     host: '0.0.0.0', // default: localhost   
   },
   ssr: true,
-  target: 'static',
+  target: 'server',
   /*
    ** Headers of the page
    */
