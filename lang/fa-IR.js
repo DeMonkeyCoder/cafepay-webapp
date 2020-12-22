@@ -102,7 +102,8 @@ export default {
     phone_number: 'شماره تلفن',
     update_information: 'تغییر مشخصات',
     logout_confirmation_message: 'آیا میخواهید از حساب کاربری خود خارج شوید؟',
-    no: 'خیر'
+    no: 'خیر',
+    update_information_success: 'اطلاعات با موفقیت ویرایش شد'
   },
 
   cafe_navigator: {
@@ -119,7 +120,8 @@ export default {
     scan_the_barcode: 'بارکد روی میز را با دوربین درون برنامه اسکن کنید',
     or: 'یا',
     enter_table_code: 'کد میز را وارد کنید',
-    submit_table_code: 'ورود به میز'
+    submit_table_code: 'ورود به میز',
+    code_incorrect: 'کد وارد شده نادرست است'
   },
 
   login_component: {

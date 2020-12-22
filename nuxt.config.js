@@ -1,5 +1,7 @@
 import webpack from 'webpack'
 import config from './plugins/config.js'
+
+//TODO: dynamically handle title and description by language
 export default {
   server: {
     // port: 3000, // default: 3000     
@@ -10,7 +12,9 @@ export default {
    ** Headers of the page
    */
   head: {
-    title: 'کافه‌ پی | پرداخت آنلاین در کافه‌ها و رستوران‌ها',
+    title: (config.defaultLocale == 'fa' ? 
+      'کافه پی | پرداخت آنلاین در کافه‌ها و رستوران‌ها' :
+      'Cafepay | Online payment for cafe and restaurant'),
     meta: [{
         charset: 'utf-8'
       },
@@ -25,7 +29,9 @@ export default {
       {
         hid: 'description',
         name: 'description',
-        content: 'کافه پی | پرداخت آنلاین در کافه‌ها و رستوران‌ها'
+        content: (config.defaultLocale == 'fa' ? 
+            'کافه پی | پرداخت آنلاین در کافه‌ها و رستوران‌ها' :
+            'Cafepay | Online payment for cafe and restaurant')
       },
     ],
     link: [{
