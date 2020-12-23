@@ -245,7 +245,8 @@
             id="table-status-bar-progress-wrapper"
             class="table-status-bar__info cp-tb-padding-half"
           >
-            <p v-if="PaymentProgress != 100">
+          <p>{{statusText}}</p>
+            <!-- <p v-if="PaymentProgress != 100">
               باقی‌مانده:
               <span class="p-text font-norm total-payment">{{
                 (table.payment.total_amount - table.payment.payed_amount)
@@ -256,7 +257,7 @@
                 table.payment.total_amount | currency
               }}</span>
               تومان
-            </p>
+            </p> -->
 
             <p
               :class="{ 'complete-payment-p': PaymentProgress }"
