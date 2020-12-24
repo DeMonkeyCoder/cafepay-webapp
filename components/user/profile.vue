@@ -83,6 +83,13 @@
           </li>
         </nuxt-link>
 
+          <nuxt-link :to="localePath('/user/profile/contact')" v-if="$i18n.locale == 'fa'">
+          <li class="cp-card has-background-white cp-side-padding cp-tb-padding">
+            <img src="@/assets/img/shape/icons/contact.svg" alt />
+            تماس با ما
+          </li>
+        </nuxt-link>
+
         <!-- TODO: Add English terms of use -->
         <nuxt-link :to="localePath('/terms')" v-if="$i18n.locale == 'fa'">
           <li class="cp-card has-background-white cp-side-padding cp-tb-padding">
@@ -90,8 +97,8 @@
             {{ $t('profile_page.terms') }}
           </li>
         </nuxt-link>
-<!-- 
-        <li class="cp-card has-background-white disable-profile-navigator cp-side-padding cp-tb-padding">
+
+        <!-- <li class="cp-card has-background-white disable-profile-navigator cp-side-padding cp-tb-padding">
           <img src="@/assets/img/shape/icons/remote-assistance.svg" alt />
           پشتیبانی
         </li> -->

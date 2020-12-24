@@ -230,7 +230,7 @@
           </div>
 
           <div class="table-top-section__edit-orders">
-            <b-button @click="goToMyOrderInMenu" class="shadow-b" type="is-light" inverted >{{ $t('table_page.edit_order') }}</b-button>
+            <b-button @click="goToMyOrderInMenu" class="shadow-b" type="is-warning" inverted >{{ $t('table_page.edit_order') }}</b-button>
           </div>
         </div>
 
