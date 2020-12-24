@@ -345,7 +345,8 @@ export default {
       
       switch (this.table.status) {
         case 'waiting':
-          text = this.$t('table_page.preorder.states.waiting')
+          if (this.tokenType == 'pre-order') text = this.$t('table_page.preorder.states.waiting')
+          else text = this.$t('table_page.preorder.states.waiting_onsight')
           break
         case 'confirmed':
           text = this.$t('table_page.preorder.states.confirmed')
