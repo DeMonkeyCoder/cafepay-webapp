@@ -52,7 +52,8 @@ export default {
         preparing: 'Prepearing your order',
         ready: 'Your order is ready!',
         confirmed: 'Your Order has been Accepted',
-        rejected: 'Your order is rejected by the kitchen'
+        rejected: 'Your order is rejected by the kitchen',
+        waiting_onsight: 'Your Order has been Submitted'
       }
     },
     total_amount: 'Total amount',

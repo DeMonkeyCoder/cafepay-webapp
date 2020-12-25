@@ -54,6 +54,7 @@ export default {
         is_delivered: '!سفارش شما آماده است',
         confirmed: 'سفارش شما تایید شد',
         rejected: 'سفارش شما توسط پذیرنده رد شد',
+        waiting_onsight: 'سفارش با موفقیت ثبت شد'
       }
     },
     total_amount: 'مجموع سفارشات',

@@ -248,8 +248,9 @@
             id="table-status-bar-progress-wrapper"
             class="table-status-bar__info cp-tb-padding-half"
           >
-            <p v-if="PaymentProgress != 100">
-              {{ $t('table_page.payment_status_header_payed') }}:
+          <p>{{statusText}}</p>
+            <!-- <p v-if="PaymentProgress != 100">
+              باقی‌مانده:
               <span class="p-text font-norm total-payment">{{
                 table.payment.payed_amount | currency
               }}</span>
@@ -257,8 +258,8 @@
               <span class="total-cost">{{
                 table.payment.total_amount | currency
               }}</span>
-              <!-- تومان -->
-            </p>
+              تومان
+            </p> -->
 
             <p
               :class="{ 'complete-payment-p': PaymentProgress }"
@@ -347,7 +348,8 @@ export default {
       
       switch (this.table.status) {
         case 'waiting':
-          text = this.$t('table_page.preorder.states.waiting')
+          if (this.tokenType == 'pre-order') text = this.$t('table_page.preorder.states.waiting')
+          else text = this.$t('table_page.preorder.states.waiting_onsight')
           break
         case 'confirmed':
           text = this.$t('table_page.preorder.states.confirmed')
