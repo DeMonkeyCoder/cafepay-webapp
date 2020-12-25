@@ -13,7 +13,7 @@ export default {
 
   order_list_page: {
     status: 'Status',
-    payment_done: 'Payed',
+    payment_done: 'Paid',
     payment_not_done: 'Payment not done',
     states: {
       Canceled: 'Canceled',
@@ -36,7 +36,7 @@ export default {
       <p>and scan the barcode</p>
       <p>or enter the table\'s code</p>`,
     edit_order: 'Edit Order',
-    payment_status_header_payed: 'Payed',
+    payment_status_header_payed: 'Paid',
     payment_status_header_of: 'of',
     table: 'Table',
     preorder: {
@@ -56,7 +56,7 @@ export default {
       }
     },
     total_amount: 'Total amount',
-    payed_amount: 'Payed amount',
+    payed_amount: 'Paid amount',
     
     service_fee: 'Service Fee',
     sub_total_amount: 'Subtotal',
@@ -66,7 +66,7 @@ export default {
     checkout_online_submit_button: 'Checkout online',
     checkout_cash_submit_button: 'Submit Order',
     
-    table_payment_done: 'Table bill is payed',
+    table_payment_done: 'Table bill is paid',
     no_orders_on_your_table: 'No orders found on your table',
     checkout_all_items: 'Checkout all items',
     checkout: 'Checkout',
@@ -83,7 +83,7 @@ export default {
     },
     person_orders: '<span class="font-norm p-text">{title}</span>\'s Orders',
     person_order_count: 'Total:‌ {order_count} items',
-    person_payed: 'Payed',
+    person_payed: 'Paid',
     cash_checkout_type_submitted: 'Cash payment submitted',
   },
 
@@ -105,7 +105,7 @@ export default {
       submit_order_guide: 'Submit your order by clicking this button',
     },
     toasts: {
-      you_payed_on_this_product: 'You already payed on {num} products of this kind',
+      you_payed_on_this_product: 'You already paid on {num} products of this kind',
     }
   },
 
@@ -159,7 +159,7 @@ export default {
         Enter code
       </h3>
       <p class="state-explaination">
-        Enter the 4-digit code sent to <span>{phone_number}</span>
+        Enter the 5-digit code sent to <span>{phone_number}</span>
       </p>`,
     submit_code: 'Next',
     resend_code: 'Resend code',
