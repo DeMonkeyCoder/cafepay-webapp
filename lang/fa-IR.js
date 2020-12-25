@@ -2,6 +2,14 @@ export default {
   unknown_error: 'خطایی رخ داده، مجددا امتحان کنید',
   network_error: 'خطا در اتصال به اینترنت',
   balance: 'موجودی',
+  
+  payment_result : {
+    payment_result_success: 'پرداخت با <span class="font-norm font-18 g-text">موفقیت</span> انجام شد',
+    payment_result_error: 'پرداخت با <span class="font-norm font-18 s-text">خطا</span> روبه رو شد',
+    payed_amount: 'مبلغ پرداخت شده',
+    transaction_id: 'شماره تراکنش',
+    return_to_application: 'بازگشت به اپلیکیشن',
+  },
 
   order_list_page: {
     status: 'وضعیت',

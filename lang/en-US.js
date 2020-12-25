@@ -3,6 +3,14 @@ export default {
   network_error: 'Please check your network connection',
   balance: 'Balance',
 
+  payment_result : {
+    payment_result_success: 'Payment is <span class="font-norm font-18 g-text">successfully</span> done',
+    payment_result_error: 'There was an <span class="font-norm font-18 s-text">Error</span> in your payment',
+    payed_amount: 'Paid amount',
+    transaction_id: 'Transaction ID',
+    return_to_application: 'Return to Application',
+  },
+
   order_list_page: {
     status: 'Status',
     payment_done: 'Payed',

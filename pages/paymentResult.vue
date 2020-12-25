@@ -13,14 +13,14 @@
           11.6,20 15.9,24.2 26.4,13.8 "/>
         </svg> -->
         <p v-if="info.status != 200">{{info.description}}</p>
-        <p class="font-18" v-if="info.status == 200">پرداخت با <span class="font-norm font-18 g-text">موفقیت</span> انجام شد</p>
-        <p class="font-18" v-if="info.status != 200">پرداخت با <span class="font-norm font-18 s-text">خطا</span> روبه رو شد</p>
-        <p v-if="info.status == 200" class="">مبلغ پرداخت شده: <span class="total-price">{{info.amount | currency}}
+        <p class="font-18" v-if="info.status == 200">{{ $t('payment_result.payment_result_success') }}</p>
+        <p class="font-18" v-if="info.status != 200">{{ $t('payment_result.payment_result_error') }}</p>
+        <p v-if="info.status == 200" class="">{{ $t('payment_result.payed_amount') }}: <span class="total-price">{{info.amount | currency}}
           <!-- <span class="toman">تومان</span> -->
         </span></p>
-        <p :dir="$dir()" v-if="info.status != 200">شماره تراکنش:‌</p>
+        <p :dir="$dir()" v-if="info.status != 200">{{ $t('payment_result.transaction_id') }}:‌</p>
         <p v-if="info.status != 200">{{info.uuid}}</p>
-        <b-button expanded @click="backtoapp" class="back-to-app bcp-btn-large" type="is-info">بازگشت به اپلیکیشن</b-button>
+        <b-button expanded @click="backtoapp" class="back-to-app bcp-btn-large" type="is-info">{{ $t('payment_result.return_to_application') }}</b-button>
 
     </div>
   </div>
