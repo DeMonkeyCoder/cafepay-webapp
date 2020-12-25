@@ -344,31 +344,37 @@ export default {
     },
 
     statusText() {
-      let text
-      
-      switch (this.table.status) {
-        case 'waiting':
-          if (this.tokenType == 'pre-order') text = this.$t('table_page.preorder.states.waiting')
-          else text = this.$t('table_page.preorder.states.waiting_onsight')
-          break
-        case 'confirmed':
-          text = this.$t('table_page.preorder.states.confirmed')
-          break
-        case 'preparing':
-          text = this.$t('table_page.preorder.states.preparing')
-          break
-        case 'ready':
-          text = this.$t('table_page.preorder.states.ready')
-          break
-        case 'rejected':
-          text = this.$t('table_page.preorder.states.rejected')
-          break
+      return this.$t(
+        'table_page.' +
+        (this.tokenType == 'pre-order' ? 'preorder.' : '') +
+        'states.' +
+        this.table.status
+      )
 
-        default:
-          break
-      }
+      // let text
+      // switch (this.table.status) {
+      //   case 'waiting':
+      //     if (this.tokenType == 'pre-order') text = this.$t('table_page.preorder.states.waiting')
+      //     else text = this.$t('table_page.preorder.states.waiting_onsight')
+      //     break
+      //   case 'confirmed':
+      //     text = this.$t('table_page.preorder.states.confirmed')
+      //     break
+      //   case 'preparing':
+      //     text = this.$t('table_page.preorder.states.preparing')
+      //     break
+      //   case 'ready':
+      //     text = this.$t('table_page.preorder.states.ready')
+      //     break
+      //   case 'rejected':
+      //     text = this.$t('table_page.preorder.states.rejected')
+      //     break
+
+      //   default:
+      //     break
+      // }
       
-      return text
+      // return text
     },
 
 

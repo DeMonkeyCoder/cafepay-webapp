@@ -1,3 +1,12 @@
+const order_states_general = {
+  waiting: 'در انتظار تایید توسط پذیرنده',
+  preparing: 'در حال آماده‌سازی سفارش شما',
+  ready: '!سفارش شما آماده است',
+  is_delivered: '!سفارش شما آماده است',
+  confirmed: 'سفارش شما تایید شد',
+  rejected: 'سفارش شما توسط پذیرنده رد شد',
+}
+
 export default {
   unknown_error: 'خطایی رخ داده، مجددا امتحان کنید',
   network_error: 'خطا در اتصال به اینترنت',
@@ -47,16 +56,13 @@ export default {
       details: 'جزییات',
       checkout: 'پرداخت سفارش',
       checkout_CASH: 'سفارش خود را سر صندوق پرداخت کنید',
-      states: {
-        waiting: 'در انتظار تایید توسط پذیرنده',
-        preparing: 'در حال آماده‌سازی سفارش شما',
-        ready: '!سفارش شما آماده است',
-        is_delivered: '!سفارش شما آماده است',
-        confirmed: 'سفارش شما تایید شد',
-        rejected: 'سفارش شما توسط پذیرنده رد شد',
-        waiting_onsight: 'سفارش با موفقیت ثبت شد'
-      }
+      states: Object.assign({...order_states_general} , {
+        waiting: 'در انتظار تایید توسط پذیرنده'
+      })
     },
+    states: Object.assign({...order_states_general} , {
+      waiting: 'سفارش با موفقیت ثبت و به مجموعه اطلاع داده شد'
+    }),
     total_amount: 'مجموع سفارشات',
     payed_amount: 'پرداخت شده',
 
