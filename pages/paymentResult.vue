@@ -13,8 +13,8 @@
           11.6,20 15.9,24.2 26.4,13.8 "/>
         </svg> -->
         <p v-if="info.status != 200">{{info.description}}</p>
-        <p class="font-18" v-if="info.status == 200">{{ $t('payment_result.payment_result_success') }}</p>
-        <p class="font-18" v-if="info.status != 200">{{ $t('payment_result.payment_result_error') }}</p>
+        <p class="font-18" v-if="info.status == 200" v-html="$t('payment_result.payment_result_success')"></p>
+        <p class="font-18" v-if="info.status != 200" v-html="$t('payment_result.payment_result_error')"></p>
         <p v-if="info.status == 200" class="">{{ $t('payment_result.payed_amount') }}: <span class="total-price">{{info.amount | currency}}
           <!-- <span class="toman">تومان</span> -->
         </span></p>
