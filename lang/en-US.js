@@ -60,7 +60,7 @@ export default {
       })
     },
     states: Object.assign({...order_states_general} , {
-      waiting: 'Your Order has been submitted and sent to the restaurant'
+      waiting: 'Your Order is submitted'
     }),
     total_amount: 'Total amount',
     payed_amount: 'Paid amount',

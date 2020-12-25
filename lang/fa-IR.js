@@ -61,7 +61,7 @@ export default {
       })
     },
     states: Object.assign({...order_states_general} , {
-      waiting: 'سفارش با موفقیت ثبت و به مجموعه اطلاع داده شد'
+      waiting: 'سفارش شما با موفقیت ثبت شد'
     }),
     total_amount: 'مجموع سفارشات',
     payed_amount: 'پرداخت شده',
