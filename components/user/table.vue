@@ -265,7 +265,7 @@
               v-if="PaymentProgress == 100"
               class="font-norm total-payment"
             >
-              پرداخت میز کامل شده است
+              {{ $t('table_page.table_payment_done') }}
             </p>
             <b-icon
               v-if="PaymentProgress == 100"
