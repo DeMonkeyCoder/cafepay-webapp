@@ -311,7 +311,7 @@ export const actions = {
       // if u wanna vefiry the payment
       context.dispatch('paymentMake', data.invoice_uuid)
     } catch (err) {
-      context.commit('errorMsg', 'خطایی رخ داده، مجددا امتحان کنید', {
+      context.commit('errorMsg', $nuxt.$i18n.t('unknown_error'), {
         root: true
       })
 
@@ -323,7 +323,7 @@ export const actions = {
       window.location = data.redirect_to
       // this.app.router.push('/paymentResult')
     } catch (err) {
-      context.commit('errorMsg', 'خطایی رخ داده، مجددا امتحان کنید', {
+      context.commit('errorMsg', $nuxt.$i18n.t('unknown_error'), {
         root: true
       })
     }
