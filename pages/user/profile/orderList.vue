@@ -51,7 +51,7 @@
                 محصولات:
               </p>
             </div>
-            <div class="oh-content cp-side-padding single-order">
+            <div class="oh-content cp-side-padding single-order cp-side-margin cp-tb-margin cp-tb-padding">
               <div v-for="item in oh.bill_products" :key="item.pk">
                 {{ item.count }} عدد
                 {{ item.product_data.name }}
@@ -138,8 +138,9 @@ export default {
     border-radius: 0 0 5px 5px;
   }
   .order-history:not(:last-child) {
-    border-bottom: 2px dotted #0000006a;
+    margin-bottom: 0.75rem
   }
+ 
   .single-order:last-child,
   .full-price,
   .datetime {

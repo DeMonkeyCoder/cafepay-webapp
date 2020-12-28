@@ -20,7 +20,7 @@ export default {
       },
       {
         name: 'theme_color',
-        content: '#009fe3'
+        content: '#4a4a4a'
       },
       {
         name: 'viewport',
@@ -58,7 +58,7 @@ export default {
    ** Customize the progress-bar color
    */
   loading: {
-    color: '#006FB9',
+    color: '#0073a0',
     height: '0px',
     throttle: 0,
     duration: 5000,
@@ -148,7 +148,7 @@ export default {
       name: 'کافه‌پی',
       lang: 'fa',
       display: 'standalone',
-       theme_color: '#009fe3',
+       theme_color: '#0073a0',
     },
      workbox: {
        dev: false // or use a global variable to track the current NODE_ENV, etc to determine dev mode

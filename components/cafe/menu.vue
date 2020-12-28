@@ -24,7 +24,7 @@
       >
     </div>
 
-    <div class="category-list" id="menu-category-list" ref="menuCategoryList">
+    <div :class="{'cp-l-margin-inverted': ($dir() == 'rtl'), 'cp-r-margin-inverted': ($dir() == 'ltr')}" class="category-list" id="menu-category-list" ref="menuCategoryList">
       <div
         class="category-item-wrapper"
         v-for="(cat, index) in menu"
@@ -53,13 +53,14 @@
       <swiper dir="ltr" ref="menuCategoriesSwipe"
       @slide-change-end="handleSlideChange"
       @slider-move="handleSlideMove">
-        <div :dir="$dir()" v-for="(cat, i) in menuTabItemCategories"
+        <div :dir="$dir()" v-for="cat in menuTabItemCategories"
           :key="cat.name" class="product-list-wrapper">
           <div :key="cat.pk" class="product-list">
             <div
               v-for="(prod, index) in cat.products"
               :key="prod.pk"
-              class="normal-radius shadow-md has-background-white cp-tb-margin cp-side-margin-half product-item"
+              class="normal-radius shadow-md has-background-white cp-tb-margin  product-item" 
+              :class="{'cp-l-margin-half': ($dir() == 'rtl'), 'cp-r-margin-half': ($dir() == 'ltr')}"
             >
             
               <!-- on div below we need to add @click="$store.commit('cafe/setCurrentProduct', prod)" later for product page navigation -->
