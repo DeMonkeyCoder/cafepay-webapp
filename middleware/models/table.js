@@ -18,6 +18,7 @@ export const Table = class Table {
     this.persons = data.personRawProduct
     this.status = data.status
     this.paymentMethod = data.paymentMethod
+    this.hasOnlinePayment = data.hasOnlinePayment
     
 
 
@@ -28,8 +29,9 @@ export const Table = class Table {
       acc.set(obj.user_profile.pk, (acc.get(obj.user_profile.pk) || []).concat(obj)), new Map).values()];
 
     let personRawProduct = []
-    let status = 'ready'
+    let status = (personRawProduct_noProperty) ? 'ready' : 'no_order'
     let paymentMethod = 'online'
+    let hasOnlinePayment = false
     personRawProduct_noProperty.forEach(orders => {
       // make orders from product class
       let newOrders = []
@@ -44,7 +46,9 @@ export const Table = class Table {
         if (!order.sent_to_kitchen) status = 'confirmed'
         if (!order.is_accepted) status = 'waiting'
         // set method
-        if (order.preferred_payment_method != 0) paymentMethod = 'cash'
+        if (order.preferred_payment_method == 0) hasOnlinePayment = true
+        else paymentMethod = 'cash'
+         
         // user info is in each order so remove it from them and add to parent (person)
         user_name = (order.is_staff) ? 'صندوق دار' : order.user_profile.full_name
         userId = order.user_profile.pk
@@ -92,7 +96,8 @@ export const Table = class Table {
     return {
       personRawProduct,
       status,
-      paymentMethod
+      paymentMethod,
+      hasOnlinePayment
     }
   }
 

@@ -202,19 +202,7 @@
       <!-- <v-tour name="myTour" :steps="steps" :options="{ highlight: true }"></v-tour> -->
       
   <div class="table-header cp-header cp-tb-padding cp-side-padding">
-        <!-- <div class="table-top-section">
-          <div
-            class="table-top-section__name  cp-tb-padding-half cp-side-padding"
-          >
-            <h5 class="">
-              میز:  <span class="font-norm"> {{ table.table_number }} </span>
-            </h5>
-          </div>
-
-          <div class="table-top-section__edit-orders">
-            <b-button @click="goToMyOrderInMenu" type="is-danger" inverted>ویرایش سفارشات</b-button>
-          </div>
-        </div> -->
+  
 
         <div
           id="table-status-bar"
@@ -249,30 +237,7 @@
             class="table-status-bar__info cp-tb-padding-half"
           >
           <p>{{statusText}}</p>
-            <!-- <p v-if="PaymentProgress != 100">
-              باقی‌مانده:
-              <span class="p-text font-norm total-payment">{{
-                table.payment.payed_amount | currency
-              }}</span>
-              {{ $t('table_page.payment_status_header_of') }}
-              <span class="total-cost">{{
-                table.payment.total_amount | currency
-              }}</span>
-              تومان
-            </p> -->
-
-            <!-- <p
-              :class="{ 'complete-payment-p': PaymentProgress }"
-              v-if="PaymentProgress == 100"
-              class="font-norm total-payment"
-            >
-              {{ $t('table_page.table_payment_done') }}
-            </p>
-            <b-icon
-              v-if="PaymentProgress == 100"
-              class="g-text payment-completed-icon"
-              icon="sticker-check"
-            ></b-icon> -->
+    
           </div>
         </div>
       </div>
@@ -427,8 +392,7 @@ export default {
       }
       this.$store.dispatch('sendCode', { tableToken: this.user.table_uuid, hasToken :this.userIsloggedIn, cafe } )
     },
-    showPreInvoice() {
-      // first generate it
+    proccessOrderForPayment(){
       this.ordersToPay = []
       this.ordersToPayforServer = []
       for (const person of this.table.persons) {
@@ -437,6 +401,7 @@ export default {
             this.ordersToPayforServer.push({
               pbr: order.pk,
               amount: order.wish_to_pay,
+              preferred_payment_method: order.preferred_payment_method
             })
 
             let productExist = this.ordersToPay.findIndex(
@@ -454,6 +419,10 @@ export default {
           }
         }
       }
+    },
+    showPreInvoice() {
+      // first generate it
+      this.proccessOrderForPayment()
       this.preInvoiceActive = true
       setTimeout(() => {
         let preInvoiceAnime = lottie.loadAnimation({
@@ -467,17 +436,21 @@ export default {
       }, 200)
     },
     paymentCheckout() {
-      if (this.paymentMethod == 'cash') {
-        let pbrList = this.ordersToPayforServer.map(x => {return {pbr: x.pbr, preferred_payment_method: '1'}})
-        console.log('pbr list', pbrList);
-        this.$store.dispatch('table/setPaymentMethod', pbrList)
-        .then(res => {
-          this.preInvoiceActive = false
-          this.toaster(this.$t('table_page.cash_checkout_type_submitted'), 'is-info', 'is-bottom')
-        })
-      }
+      if (this.paymentMethod == 'cash') this.setCashPayment()
       else this.$store.dispatch('table/submitPayment', this.ordersToPayforServer)
       // this.$router.push('/paymentResult')
+    },
+    setCashPayment(){
+      let OrderTobeCash = this.ordersToPayforServer.filter(x => x.preferred_payment_method != '1')
+      console.log('order to be cash', OrderTobeCash);
+      let pbrList = OrderTobeCash.map(x => {return {pbr: x.pbr, preferred_payment_method: '1'}})
+      console.log('pbr list', pbrList);
+      this.$store.dispatch('table/setPaymentMethod', pbrList)
+      .then(res => {
+        this.preInvoiceActive = false
+        this.toaster(this.$t('table_page.cash_checkout_type_submitted'), 'is-info', 'is-bottom')
+      })
+      .catch(err=> this.toaster('خطایی رخ داده', 'is-danger', 'is-bottom'))
     },
     showOptionsModal() {
       this.isTableOptionsModalActive = true
@@ -493,6 +466,16 @@ export default {
     PaymentProgress: {
       immediate: true,
       handler(val, old) {},
+    },
+    table: {
+      deep: true,
+      immediate: true,
+      handler(val, oldValue) {
+        if (val.paymentMethod == 'cash' && val.hasOnlinePayment) {
+          this.proccessOrderForPayment()
+          this.setCashPayment()
+        }
+      }
     },
   },
 }
