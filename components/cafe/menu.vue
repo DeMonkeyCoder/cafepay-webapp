@@ -24,7 +24,7 @@
       >
     </div>
 
-    <div :dir="$dir()" class="category-list" id="menu-category-list" ref="menuCategoryList">
+    <div :class="{'cp-l-margin-inverted': ($dir() == 'rtl'), 'cp-r-margin-inverted': ($dir() == 'ltr')}" class="category-list" id="menu-category-list" ref="menuCategoryList">
       <div
         class="category-item-wrapper"
         v-for="(cat, index) in menu"
