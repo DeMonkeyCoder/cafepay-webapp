@@ -189,9 +189,9 @@
           :disabled="totalWishToPayOrder == 0 "
           @click="showPreInvoice"
           :loading="globalLoading"
-          class="button shadow-lg-bb bcp-btn cp-btn-submit-order"
+          class="button shadow-lg-b bcp-btn cp-btn-submit-order"
           size="is-medium"
-          type="is-success"
+          type="is-info"
           >{{  $t('table_page.checkout') }} ({{ totalWishToPayOrder | currency }})</b-button
         >
         <span v-else class="message-warning font-16 font-norm">{{$t('table_page.checkout_CASH_message')}}</span>
@@ -244,9 +244,9 @@
 
       <!-- <div class="table--status"></div> -->
 
-      <div v-if="table.persons.length == 0" class="empty-table">
-        {{ $t('table_page.no_orders_on_your_table') }}
-      </div>
+      <!-- <div v-if="table.persons.length == 0" class="empty-table">
+        <img src="@/assets/img/empty.svg" alt="">
+      </div> -->
 
       <div class="persons-on-table cp-side-margin-2x">
         <!-- <div class="you">

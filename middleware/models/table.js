@@ -29,7 +29,7 @@ export const Table = class Table {
       acc.set(obj.user_profile.pk, (acc.get(obj.user_profile.pk) || []).concat(obj)), new Map).values()];
 
     let personRawProduct = []
-    let status = (personRawProduct_noProperty) ? 'ready' : 'no_order'
+    let status = (personRawProduct_noProperty.length) ? 'ready' : 'no_order'
     let paymentMethod = 'online'
     let hasOnlinePayment = false
     personRawProduct_noProperty.forEach(orders => {
