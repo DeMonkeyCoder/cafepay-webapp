@@ -57,11 +57,13 @@ export default {
       checkout: 'پرداخت سفارش',
       checkout_CASH: 'سفارش خود را سر صندوق پرداخت کنید',
       states: Object.assign({...order_states_general} , {
-        waiting: 'در انتظار تایید توسط پذیرنده'
+        waiting: 'در انتظار تایید توسط پذیرنده',
+        no_order: 'سفارشی ثبت نشده است'
       })
     },
     states: Object.assign({...order_states_general} , {
-      waiting: 'سفارش شما با موفقیت ثبت شد'
+      waiting: 'سفارش شما با موفقیت ثبت شد',
+      no_order: 'سفارشی بر روی میز ثبت نشده است'
     }),
     total_amount: 'مجموع سفارشات',
     payed_amount: 'پرداخت شده',

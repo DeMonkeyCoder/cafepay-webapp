@@ -14,6 +14,7 @@ export const state = () => ({
   tpayment: 0,
   persons: [],
   payment: {},
+  hasOnlinePayment: false,
   yourOrdersCost: 0,
   yourOrdersPaid: 0,
   keepAlive: false,
@@ -60,6 +61,7 @@ export const mutations = {
     state.persons = []
     state.tpayment = 0
     state.payment = {}
+    
   },
 
   setData(state, rawData) {
@@ -76,6 +78,7 @@ export const mutations = {
     state.payment = rawData.payment_info
     state.status = table.status
     state.paymentMethod = table.paymentMethod
+    state.hasOnlinePayment = table.hasOnlinePayment
     // we use this data to handle payment status in preorder
     state.cafe = rawData.cafe
 
