@@ -19,6 +19,7 @@ export const state = () => ({
   totalCount: 0,
   storeRedirect: false,
   closed: false,
+  list: []
 })
 
 export const getters = {
@@ -131,6 +132,10 @@ export const mutations = {
     state.activeCategory = index
   },
 
+  setList:(state, data) => {
+    state.list = data
+  },
+
 
   bindProductCount(state, user) {
     let firstCategory = true
@@ -224,7 +229,18 @@ export const actions = {
     } catch (err) {
 
     }
-
-
   },
+    async retreiveList(context) {
+      try {
+        let data = await this.$axios.$get(`/api/v1/cafe/list/`, {
+        })
+        context.commit('setList', data)
+ 
+        // console.log('state', context.state.tokenType);
+        if (context.state.tokenType != 'menu-only') Vue.prototype.$connect()
+      } catch (err) {
+
+      }
+
+    },
 }

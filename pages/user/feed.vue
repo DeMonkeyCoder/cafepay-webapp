@@ -103,14 +103,20 @@ export default {
   methods: {},
 
   mounted() {
-    this.$bus.$on('shrink', flag => {
-      if (flag) {
-        $('.navigation-in-home').addClass('navigation-in-home-shrink')
-      } else {
-        $('.navigation-in-home').removeClass('navigation-in-home-shrink')
-      }
-    })
-  }
+    this.$store.dispatch('cafe/retreiveList')
+  //   this.$bus.$on('shrink', flag => {
+  //     if (flag) {
+  //       $('.navigation-in-home').addClass('navigation-in-home-shrink')
+  //     } else {
+  //       $('.navigation-in-home').removeClass('navigation-in-home-shrink')
+  //     }
+  //   })
+  },
+  computed: {
+    list() {
+      return this.$store.state.cafe.list 
+    },
+  },
 }
 </script>
 
