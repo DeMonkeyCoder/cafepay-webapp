@@ -1,0 +1,89 @@
+.feed
+  background: linear-gradient(to left, rgba(255,255,255,1) 0%, rgba(231,231,231,1) 100%)
+  background-size: cover
+  padding: $padding * 2 $padding * 2
+  padding-bottom: 6 * $padding
+  min-height: 100vh
+
+  &__section-header
+    font-weight: 500!important
+    font-size: 18px!important
+    margin-bottom: $margin
+  &__header
+    left: 0
+    top: 0
+    right: 0
+    position: absolute
+
+  &__search
+    margin-top: 50%
+    margin-bottom: 15%
+    input 
+      border-color: white!important
+  &__post
+    &__wrapper
+      white-space: nowrap
+      overflow-x: scroll
+      margin-left: -1.5rem
+    &__list
+      white-space: initial
+      width: 80%
+      margin-left: 5%
+      position: relative
+      display: inline-block
+      &__avatar
+        width: 64px
+        height: 64px
+        border: 2px solid white
+        position: absolute
+        right: $padding
+        top: $padding
+        border-radius: 32px
+        background-color: white
+      &__img
+        width: 100%
+        height: 200px
+        object-fit: cover
+        border-radius: 25px
+
+      &__content
+        overflow: hidden
+        height: 110px
+        width: 90%
+        margin: auto 5%
+        background-color: white
+        border-radius: 10px
+        padding: $padding
+        position: relative
+        bottom: $padding * 3
+        p
+          font-size: 13px!important
+          etter-spacing: -0.025rem
+
+  &__cafe-list
+    &__cafe
+      background-size: cover
+      display: flex
+      padding: $padding
+      background-color: white
+      border-radius: 10px
+      margin-bottom: $margin
+      img
+        width: 64px
+        height: 64px
+        border-radius: 32px
+        padding: 4px
+        background-color: $lightGrey
+      .cafe-content
+        p
+          padding-right: $padding
+        &__name 
+          font-size: 18px!important
+          font-weight: 500!important
+        &__short-desc
+          font-size: 12px!important
+          letter-spacing: -0.02rem!important
+          
+
+
+      
