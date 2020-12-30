@@ -39,7 +39,7 @@
       <div class="info">
         <img
           class="no-pic"
-          src="@/assets/img/shape/icons/user-info-1.svg"
+          src="@/assets/img/shape/icons/icon8/profile/user-info-due.png"
           alt
         />
         <h4 class="header cp-tb-padding cp-side-padding">{{ $t('profile_page.profile_information') }}</h4>

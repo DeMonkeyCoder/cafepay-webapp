@@ -64,28 +64,28 @@
 
         <nuxt-link :to="localePath('/user/profile/orderlist')">
           <li class="cp-card has-background-white cp-side-padding cp-tb-padding">
-            <img src="@/assets/img/shape/icons/shopping-cart.png" alt />
+            <img src="@/assets/img/shape/icons/icon8/profile/history-due.png" alt />
             {{ $t('profile_page.orders_list') }}
           </li>
         </nuxt-link>
 
         <!-- <nuxt-link to="/user/profile/wallet">
           <li class="cp-card navigation has-background-white cp-side-padding cp-tb-padding">
-            <img src="@/assets/img/shape/icons/wallet.png" alt />
+            <img src="@/assets/img/shape/icons/icon8/profile/wallet.png" alt />
             افزایش موجودی
           </li>
         </nuxt-link> -->
 
         <nuxt-link :to="localePath('/user/profile/information')">
           <li class="cp-card has-background-white cp-side-padding cp-tb-padding">
-            <img src="@/assets/img/shape/icons/user-info-1.svg" alt />
+            <img src="@/assets/img/shape/icons/icon8/profile/user-info.png" alt />
             {{ $t('profile_page.profile_information') }}
           </li>
         </nuxt-link>
 
           <nuxt-link :to="localePath('/user/profile/contact')" v-if="$i18n.locale == 'fa'">
           <li class="cp-card has-background-white cp-side-padding cp-tb-padding">
-            <img src="@/assets/img/shape/icons/contact.svg" alt />
+            <img src="@/assets/img/shape/icons/icon8/profile/contact-us-due.png" alt />
             تماس با ما
           </li>
         </nuxt-link>
@@ -93,18 +93,18 @@
         <!-- TODO: Add English terms of use -->
         <nuxt-link :to="localePath('/terms')" v-if="$i18n.locale == 'fa'">
           <li class="cp-card has-background-white cp-side-padding cp-tb-padding">
-            <img src="@/assets/img/shape/icons/term.png" alt />
+            <img src="@/assets/img/shape/icons/icon8/profile/terms.png" alt />
             {{ $t('profile_page.terms') }}
           </li>
         </nuxt-link>
 
         <!-- <li class="cp-card has-background-white disable-profile-navigator cp-side-padding cp-tb-padding">
-          <img src="@/assets/img/shape/icons/remote-assistance.svg" alt />
+          <img src="@/assets/img/shape/icons/icon8/profile/remote-assistance.svg" alt />
           پشتیبانی
         </li> -->
 
         <!-- <li class="cp-card has-background-white disable-profile-navigator cp-side-padding cp-tb-padding">
-          <img src="@/assets/img/shape/icons/love.svg" alt />
+          <img src="@/assets/img/shape/icons/icon8/profile/love.svg" alt />
           مورد علاقه‌ها
         </li> -->
         <!-- <li
@@ -116,7 +116,7 @@
         </li> -->
 
         <li @click="exitModalActive = true" class="cp-card has-background-white cp-side-padding cp-tb-padding">
-          <img src="@/assets/img/shape/icons/logout.svg" alt />
+          <img src="@/assets/img/shape/icons/icon8/profile/exit-due.png" alt />
           {{ $t('profile_page.logout') }}
         </li>
       </ul>
@@ -178,8 +178,8 @@ export default {
       font-size: 16px
       img
         margin-inline-end: 10px
-        width: 25px
-        height: 25px
+        width: 30px
+        height: 30px
 
     li#cafepay-li-profile
       padding-top: calc(0.75rem - 3px)!important

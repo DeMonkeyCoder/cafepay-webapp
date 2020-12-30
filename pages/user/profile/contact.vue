@@ -10,7 +10,7 @@
       class="profile-info-bar cp-side-padding cp-tb-padding long-shadow cp-side-margin cp-header-card has-background-white"
     >
       <div class="info">
-        <img class="no-pic" src="@/assets/img/shape/icons/contact.svg" alt />
+        <img class="no-pic" src="@/assets/img/shape/icons/icon8/profile/contact-us-due.png" alt />
         <h4 class="header cp-tb-padding cp-side-padding">تماس با ما</h4>
         <p :dir="$dir()" class="detail cp-tb-padding cp-side-padding">
           با کافه‌پی در ارتباط باشید!
@@ -26,7 +26,7 @@
 
       <a href="tel:0930-313-1503"  data-rel="external">
       <div class="profile-contact__card cp-side-padding cp-b-margin cp-tb-padding-2x">
-        <img src="@/assets/img/shape/icons/con-sale.svg" alt="" />
+        <img src="@/assets/img/shape/icons/icon8/profile/icons8-account-96.png" alt="" />
         <div class="profile-contact__card__text cp-side-padding">
           <p class="profile-contact__card__text__role font-16 font-bold">مشاوره و فروش</p>
           <p dir="ltr" class="profile-contact__card__text__number font-18">0930 313 1503</p>
@@ -39,9 +39,9 @@
 
       <a href="tel:0917-116-4374"  data-rel="external">
       <div class="profile-contact__card cp-side-padding cp-tb-padding-2x">
-        <img src="@/assets/img/shape/icons/con-support.svg" alt="" />
+        <img src="@/assets/img/shape/icons/icon8/profile/icons8-online-support-96.png" alt="" />
         <div class="profile-contact__card__text cp-side-padding">
-          <p class="profile-contact__card__text__role font-16 font-bold">پشتیبانی کافه‌پی</p>
+          <p class="profile-contact__card__text__role font-16 font-bold">پشتیبانی کاربران</p>
           <p dir="ltr" class="profile-contact__card__text__number font-18">0917 116 4374</p>
         </div>
         <div class="profile-contact__card__dialer">

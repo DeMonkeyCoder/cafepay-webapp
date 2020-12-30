@@ -12,7 +12,7 @@
       <div class="info">
         <img
           class="no-pic"
-          src="@/assets/img/shape/icons/shopping-cart.png"
+          src="@/assets/img/shape/icons/icon8/profile/history-due.png"
           alt=""
         />
         <h4 class="header cp-tb-padding cp-side-padding">سفارشات من</h4>
