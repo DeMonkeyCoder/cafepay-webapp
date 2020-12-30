@@ -16,6 +16,7 @@
     position: absolute
 
   &__search
+    // opacity: 0
     margin-top: 50%
     margin-bottom: 15%
     input 
@@ -61,6 +62,7 @@
           etter-spacing: -0.025rem
 
   &__cafe-list
+    position: relative
     &__cafe
       background-size: cover
       display: flex
@@ -75,6 +77,7 @@
         padding: 4px
         background-color: $lightGrey
       .cafe-content
+        width: 100%
         p
           padding-right: $padding
         &__name 
@@ -83,6 +86,16 @@
         &__short-desc
           font-size: 12px!important
           letter-spacing: -0.02rem!important
+
+        &__tags
+          padding-right: $padding
+          text-align: end
+          span
+            color: $primary_hue3
+            background-color: white
+            border-radius: 5px
+
+
           
 
 
