@@ -3,36 +3,36 @@
 
       
     <nuxt-link to="/user/feed" class="nav-tab home-icon center-align" :class="{'is-active': routeName == 'user-feed'}">
-      <img v-show="routeName == 'user-feed'" src='@/assets/img/shape/icons/home-5.png' alt="">
-      <img v-show="routeName != 'user-feed'" src='@/assets/img/shape/icons/home.png' alt="">
+      <img v-show="routeName == 'user-feed'" src='@/assets/img/shape/icons/icon8/home-due.png' alt="">
+      <img v-show="routeName != 'user-feed'" src='@/assets/img/shape/icons/icon8/home.png' alt="">
     </nuxt-link>
    
     <div @click="triggerChangeTab((hasActiveTable) ? 'currentCafe' : 'scan')" class="nav-tab qr-scan center-align" 
     :class="{'is-active': currentMainPage == 'scan' || currentMainPage == 'currentCafe'}">
 
-      <img v-show="routeName != 'user-feed' && currentMainPage == 'scan' && !tableToken" src='@/assets/img/shape/icons/qr-code-color.png' alt="">
-      <img v-show="(routeName == 'user-feed' && !hasActiveTable) || currentMainPage != 'scan' && !tableToken" src='@/assets/img/shape/icons/qr-code.png' alt="">
+      <img v-show="routeName != 'user-feed' && currentMainPage == 'scan' && !tableToken" src='@/assets/img/shape/icons/icon8/qr-code-due.png' alt="">
+      <img v-show="(routeName == 'user-feed' && !hasActiveTable) || currentMainPage != 'scan' && !tableToken" src='@/assets/img/shape/icons/icon8/qr-code.png' alt="">
 
-      <img v-show="routeName != 'user-feed' && currentMainPage == 'currentCafe' && tableToken" src='@/assets/img/shape/icons/menu-color-5.png' alt="">
-      <img  v-show="(routeName == 'user-feed' && hasActiveTable) || currentMainPage != 'currentCafe' && tableToken" src='@/assets/img/shape/icons/menu.png' alt="">
+      <img v-show="routeName != 'user-feed' && currentMainPage == 'currentCafe' && tableToken" src='@/assets/img/shape/icons/icon8/menu-due.png' alt="">
+      <img  v-show="(routeName == 'user-feed' && hasActiveTable) || currentMainPage != 'currentCafe' && tableToken" src='@/assets/img/shape/icons/icon8/menu.png' alt="">
       <!-- <p v-show="routeName != 'user-feed' && !tableToken">اسکن</p>
       <p v-show="routeName != 'user-feed' && tableToken">منو</p> -->
     </div>
 
     <!-- <div @click="triggerChangeTab('search')" class="nav-tab center-align" :class="{'is-active': currentMainPage == 'search'}">
-      <img src='@/assets/img/shape/icons/shop.png' alt="">
+      <img src='@/assets/img/shape/icons/icon8/shop.png' alt="">
       <p>جست‌وجو</p>
     </div> -->
 
     <div @click="triggerChangeTab('cp-table')" class="nav-tab chair center-align" :class="{'is-active': currentMainPage == 'cp-table'}">
-      <img v-show="routeName != 'user-feed' && currentMainPage == 'cp-table'" src='@/assets/img/shape/icons/chair-color.png' alt="">
-      <img v-show="routeName == 'user-feed' || currentMainPage != 'cp-table'" src='@/assets/img/shape/icons/chair-1.png' alt="">
+      <img v-show="routeName != 'user-feed' && currentMainPage == 'cp-table'" src='@/assets/img/shape/icons/icon8/table-due.png' alt="">
+      <img v-show="routeName == 'user-feed' || currentMainPage != 'cp-table'" src='@/assets/img/shape/icons/icon8/table.png' alt="">
       <!-- <p>میز</p> -->
     </div>
 
     <div @click="triggerChangeTab('profile')" class="nav-tab profile center-align" :class="{'is-active': currentMainPage == 'profile'}">
-      <img v-show="routeName != 'user-feed' && currentMainPage == 'profile'" src='@/assets/img/shape/icons/user-color.svg' alt="">
-      <img v-show="routeName == 'user-feed' || currentMainPage != 'profile'" src='@/assets/img/shape/icons/user.png' alt="">
+      <img v-show="routeName != 'user-feed' && currentMainPage == 'profile'" src='@/assets/img/shape/icons/icon8/user-due.png' alt="">
+      <img v-show="routeName == 'user-feed' || currentMainPage != 'profile'" src='@/assets/img/shape/icons/icon8/user.png' alt="">
       <!-- <span class="notif-num has-background-danger">1</span> -->
       <!-- <p>پروفایل</p> -->
     </div>
@@ -106,37 +106,37 @@
       position: relative
       bottom: 5px
     img
-      width: 31px
+      width: 35px
 
   .is-active
     p
       font-weight: 500!important
       color: $primary
 
-  .home-icon
-    img
-      width: 34px!important
-      height: 34px!important
+  // .home-icon
+  //   img
+  //     width: 34px!important
+  //     height: 34px!important
 
-  .qr-scan
-    img
-      width: 32px!important
-      position: relative
-      top: 1px
-  .table-icon
-    img
-      width: 35px!important
-      height: 35px!important
+  // .qr-scan
+  //   img
+  //     width: 32px!important
+  //     position: relative
+  //     top: 1px
+  // .table-icon
+  //   img
+  //     width: 35px!important
+  //     height: 35px!important
 
-  .chair
-    img 
-      // width: 40px !important
-      width: 48px!important
-      height: 52px
-      position: relative
-      bottom: 8px
-    p
-      bottom: 19px!important
+  // .chair
+  //   img 
+  //     // width: 40px !important
+  //     width: 48px!important
+  //     height: 52px
+  //     position: relative
+  //     bottom: 8px
+  //   p
+  //     bottom: 19px!important
 
   .profile
     img
