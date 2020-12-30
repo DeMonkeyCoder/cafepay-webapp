@@ -235,9 +235,6 @@ export const actions = {
         let data = await this.$axios.$get(`/api/v1/cafe/list/`, {
         })
         context.commit('setList', data)
- 
-        // console.log('state', context.state.tokenType);
-        if (context.state.tokenType != 'menu-only') Vue.prototype.$connect()
       } catch (err) {
 
       }
