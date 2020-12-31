@@ -10,11 +10,14 @@
     <div @click="triggerChangeTab((hasActiveTable) ? 'currentCafe' : 'scan')" class="nav-tab qr-scan center-align" 
     :class="{'is-active': currentMainPage == 'scan' || currentMainPage == 'currentCafe'}">
 
-      <img v-show="routeName != 'user-feed' && currentMainPage == 'scan' && !tableToken" src='@/assets/img/shape/icons/icon8/qr-code-due.png' alt="">
-      <img v-show="(routeName == 'user-feed' && !hasActiveTable) || currentMainPage != 'scan' && !tableToken" src='@/assets/img/shape/icons/icon8/qr-code.png' alt="">
+      <img v-show="routeName != 'user-feed' && currentMainPage == 'scan' && !activeMenu" 
+      src='@/assets/img/shape/icons/icon8/qr-code-due.png' alt="">
 
-      <img v-show="routeName != 'user-feed' && currentMainPage == 'currentCafe' && tableToken" src='@/assets/img/shape/icons/icon8/menu-due.png' alt="">
-      <img  v-show="(routeName == 'user-feed' && hasActiveTable) || currentMainPage != 'currentCafe' && tableToken" src='@/assets/img/shape/icons/icon8/menu.png' alt="">
+      <img v-show="(routeName == 'user-feed' && !hasActiveTable) || currentMainPage != 'scan' && !activeMenu" 
+      src='@/assets/img/shape/icons/icon8/qr-code.png' alt="">
+      <img v-show="routeName != 'user-feed' && currentMainPage == 'currentCafe' &&  activeMenu" src='@/assets/img/shape/icons/icon8/menu-due.png' alt="">
+      <img  v-show="(routeName == 'user-feed' && hasActiveTable) || currentMainPage != 'currentCafe' && activeMenu" 
+      src='@/assets/img/shape/icons/icon8/menu.png' alt="">
       <!-- <p v-show="routeName != 'user-feed' && !tableToken">اسکن</p>
       <p v-show="routeName != 'user-feed' && tableToken">منو</p> -->
     </div>
@@ -62,6 +65,9 @@
       },
       routeName(){
         return this.$route.name.split('__')[0]
+      },
+      activeMenu(){
+        return this.$store.state.cafe.active
       }
     },
     mounted(){

@@ -18,7 +18,11 @@ export const state = () => ({
   tokenType: 'normal',
   totalCount: 0,
   storeRedirect: false,
+<<<<<<< HEAD
   closed: false,
+=======
+  active: false,
+>>>>>>> fix navigation icons state
   list: []
 })
 
@@ -80,8 +84,12 @@ export const mutations = {
 
   clear(state) {
     state.categories = []
+<<<<<<< HEAD
     state.closed = false
     state.tokenType = 'normal'
+=======
+    state.active = false
+>>>>>>> fix navigation icons state
   },
   changeCount(state, setting) {
     state.totalCount += setting.count
@@ -101,6 +109,7 @@ export const mutations = {
   },
 
   setMenu(state, menu) {
+    state.active = true
     // clear categories in-case user re-enter 
     state.categories = []
     // push current basket of orders first for editing current orders
