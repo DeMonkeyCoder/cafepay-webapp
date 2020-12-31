@@ -104,6 +104,7 @@ export default {
   menu_page: {
     your_current_order: 'Your Current Order',
     submit_order: 'Submit Order',
+    cafe_is_closed: 'store is Closed',
     submit_order_self_pickup: 'Self Pickup',
     sold_out: 'Sold out',
     tour: {

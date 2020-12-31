@@ -9,16 +9,16 @@
     <div id="selected-products-preview" 
     class="selected-products-preview-is-shown"
     v-if="tokenType !== 'menu-only' && (!user.table_uuid || (user.table_uuid && !ordersPaid))">
-      <span>{{ordersTotalCount}}</span>
+      <span v-if="!isClosed">{{ordersTotalCount}}</span>
       <b-button
         @click="productsPayloadSeperator"
         :loading="globalLoading"
         class="button shadow-md bcp-btn cp-btn-submit-order shadow-lg-bb"
         size="is-medium"
-        type="is-info"
+        :type="(isClosed) ? 'is-dark' : 'is-info'"
         :disabeld="showSubmitBtn == 0"
         >
-        {{ $t('menu_page.submit_order') }}
+        {{ (!isClosed) ? $t('menu_page.submit_order') : $t('menu_page.cafe_is_closed') }}
         <span v-if="tokenType == 'pre-order'" dir="rtl" class="font-bold font-14">({{ $t('menu_page.submit_order_self_pickup') }})</span>
         </b-button
       >
@@ -88,7 +88,7 @@
                   <!-- <span class="toman">تومان</span> -->
                 </div>
               </div>
-              <div v-if="prod.available && tokenType !== 'menu-only' && (!user.table_uuid || (user.table_uuid && !ordersPaid))" class="add-or-remove">
+              <div v-if="prod.available && tokenType !== 'menu-only' && !isClosed && (!user.table_uuid || (user.table_uuid && !ordersPaid))" class="add-or-remove">
                 <span class="product-add" @click="countChange(index, 1, prod)">
                   <div class="aor-shape">+</div>
                 </span>
@@ -392,16 +392,20 @@ export default {
     firstTimeActive() {
       return this.$store.state.firstTimeActive
     },
-    initialTour() {
-      // it must be the first component and user must be new and page must be table
-      return this.showSubmitBtn > 0 && this.isMenuPage  && this.firstTimeActive
-    },
+    // initialTour() {
+    //   // it must be the first component and user must be new and page must be table
+    //   return this.showSubmitBtn > 0 && this.isMenuPage  && this.firstTimeActive
+    // },
     productChangeArray() {
       return this.$store.state.cafe.productChangeArray
     },
 
     ordersTotalCount() {
       return this.$store.state.cafe.totalCount
+    },
+
+    isClosed() {
+      return this.$store.state.cafe.closed
     },
 
     totalCap() {
@@ -429,16 +433,16 @@ export default {
       this.reRenderSwipable();
       this.setActiveTab(true);
     },
-    initialTour: {
-      immediate: true,
-      handler(val, old) {
-        if (val) {
-          setTimeout(() => {
-            this.$tours['menuTour'].start()
-          }, 500)
-        }
-      }
-    },
+    // initialTour: {
+    //   immediate: true,
+    //   handler(val, old) {
+    //     if (val) {
+    //       setTimeout(() => {
+    //         this.$tours['menuTour'].start()
+    //       }, 500)
+    //     }
+    //   }
+    // },
     // showSubmitBtn(val, old) {
     //   if (val > 0) {
     //     document

@@ -316,30 +316,6 @@ export default {
         this.table.status
       )
 
-      // let text
-      // switch (this.table.status) {
-      //   case 'waiting':
-      //     if (this.tokenType == 'pre-order') text = this.$t('table_page.preorder.states.waiting')
-      //     else text = this.$t('table_page.preorder.states.waiting_onsight')
-      //     break
-      //   case 'confirmed':
-      //     text = this.$t('table_page.preorder.states.confirmed')
-      //     break
-      //   case 'preparing':
-      //     text = this.$t('table_page.preorder.states.preparing')
-      //     break
-      //   case 'ready':
-      //     text = this.$t('table_page.preorder.states.ready')
-      //     break
-      //   case 'rejected':
-      //     text = this.$t('table_page.preorder.states.rejected')
-      //     break
-
-      //   default:
-      //     break
-      // }
-      
-      // return text
     },
 
 
@@ -349,7 +325,7 @@ export default {
     },
 
     showTableOrders(){
-      return (this.hasActiveTable && this.tokenType !== 'menu-only' && ( !this.ordersPaid  || !this.user.table_uuid ) )
+      return (this.hasActiveTable && this.tokenType != 'menu-only' && !this.cafe.closed && ( !this.ordersPaid  || !this.user.table_uuid ) )
     },
 
     showInitialTableView(){
@@ -357,7 +333,7 @@ export default {
     },
 
     showOrderingIsDisabled(){
-      return (this.hasActiveTable && this.tokenType == 'menu-only' && !this.user.table_uuid)
+      return (this.hasActiveTable && (this.tokenType == 'menu-only' ||  this.cafe.closed) && !this.user.table_uuid)
     },
 
     PaymentProgress() {

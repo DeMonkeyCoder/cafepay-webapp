@@ -17,7 +17,8 @@ export const state = () => ({
   flowType: null,
   tokenType: 'normal',
   totalCount: 0,
-  storeRedirect: false
+  storeRedirect: false,
+  closed: false,
 })
 
 export const getters = {
@@ -43,8 +44,7 @@ export const mutations = {
     state.rate = (data.cafe.rate) ? data.cafe.rate : 4
     state.pk = data.cafe.pk
     state.name = data.cafe.name
-    // must add #preorder data
-    // for now we fake it till we make it
+    state.closed = data.cafe.is_closed
     state.avatar = data.cafe.avatar
     state.cafepay_fee = data.cafe.cafepay_fee
 
@@ -218,7 +218,7 @@ export const actions = {
       // if sina give me the name of product with table data then we don't need this sequence anymore
       // connect to socket
       console.log('state', context.state.tokenType);
-      if (context.state.tokenType != 'menu-only') Vue.prototype.$connect()
+      if (context.state.tokenType != 'menu-only' && !context.state.closed) Vue.prototype.$connect()
     } catch (err) {
 
     }
