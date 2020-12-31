@@ -16,7 +16,7 @@
     position: absolute
 
   &__search
-    // opacity: 0
+    opacity: 0
     margin-top: 50%
     margin-bottom: 15%
     input 
@@ -70,12 +70,27 @@
       background-color: white
       border-radius: 10px
       margin-bottom: $margin
-      img
+      &__img
         width: 64px
         height: 64px
         border-radius: 32px
         padding: 4px
         background-color: $lightGrey
+        display: flex
+        justify-content: center
+        align-items: center
+        background-color: $black
+        p
+          width: 64px
+          font-weight: 500!important
+          color: white
+          padding: ($padding/4) ($padding/2)
+          text-align: center
+          // padding: $padding / 4
+          font-size: 10px
+          word-break: break-word
+        img
+          width: 64px
       .cafe-content
         width: 100%
         p
@@ -91,9 +106,18 @@
           padding-right: $padding
           text-align: end
           span
-            color: $primary_hue3
-            background-color: white
+            padding: ($padding/4) ($padding /2 )
+            color: white
             border-radius: 5px
+          &__pickup
+            background-color: #21D4FD
+            // color: $black!important
+            background: linear-gradient(to right, #f2709c, #ff9472)
+          &__onsight
+            background-color: $thirdinary
+            background: linear-gradient(to right, #b993d6, #8ca6db)
+
+
 
 
           

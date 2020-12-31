@@ -12,7 +12,7 @@
         ></b-input>
       </b-field>
 
-      <section class="feed__post">
+      <!-- <section class="feed__post">
         <header class="feed__section-header">رویدادها</header>
         <div class="feed__post__wrapper">
           <div
@@ -29,25 +29,28 @@
             </div>
           </div>
         </div>
-      </section>
+      </section> -->
       
       <section class="feed__cafe-list">
         <header class="feed__section-header">کافه و رستوران</header>
         <div
           v-for="(cafe, index) in cafeList"
           :key="index"
-          class="feed__cafe-list__cafe"
+          class="feed__cafe-list__cafe header-test"
           :style="{
-            backgroundImage: `linear-gradient(to right, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.85) 85%),url(${cafe.header})`,
+            backgroundImage: `linear-gradient(to right, rgba(0, 0, 0, 0.15) 0%, rgba(245, 245, 245, 0.85) 85%),url(${(cafe.header_image) ? cafe.header_image : defaultHeader})`,
           }"
         >
-          <img class="shadow" :src="cafe.img" alt="" />
+          <div class="feed__cafe-list__cafe__img">
+            <img v-if="cafe.avatar" class="shadow" :src="cafe.avatar" alt="" />
+            <p v-else>{{cafe.name}}</p>
+            </div>
           <div class="cafe-content">
             <p class="cafe-content__name">{{ cafe.name }}</p>
-            <p class="cafe-content__short-desc">{{ cafe.description }}</p>
+            <p class="cafe-content__short-desc">{{ (cafe.short_description) ? cafe.short_description : `${cafe.name} در کافه‌پِی` }}</p>
             <div class="cafe-content__tags">
-              <span class="cp-side-padding-half font-12 shadow-lg">پیکاپ</span>
-              <span class="cp-side-padding-half font-12 shadow-lg">حضوری</span>
+              <span class="font-10 shadow cafe-content__tags__pickup">پیکاپ</span>
+              <span class="font-10 shadow cafe-content__tags__onsight">حضوری</span>
             </div>
           </div>
         
@@ -60,11 +63,14 @@
 
 <script>
 import navigation from '~/components/user/navigation.vue'
+import defaultHeader from '~/assets/img/background/cafe-1.png'
+import svg from '~/assets/svg.js'
 export default {
   components: { navigation },
   head() {},
   data() {
     return {
+      defaultHeader,svg,
       postList: [
         {
           img: require('~/assets/img/shape/icons/test-cafe.png'),
@@ -85,36 +91,36 @@ export default {
             ' لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است،',
         },
       ],
-      cafeList: [
-        {
-          name: 'باغشاه - ۵۰',
-          token: '123456',
-          description: 'توضیح مختصر در این قسمت',
-          img: require('~/assets/img/shape/icons/test-cafe.png'),
-          header: require('~/assets/img/1.jpg'),
-        },
-        {
-          name: 'باغشاه - ۵۰',
-          token: '123456',
-          description: 'توضیح مختصر در این قسمت',
-          img: require('~/assets/img/shape/icons/test-cafe.png'),
-          header: require('~/assets/img/2.jpg'),
-        },
-        {
-          name: 'باغشاه - ۵۰',
-          token: '123456',
-          description: 'توضیح مختصر در این قسمت',
-          img: require('~/assets/img/shape/icons/test-cafe.png'),
-          header: require('~/assets/img/3.jpg'),
-        },
-        {
-          name: 'باغشاه - ۵۰',
-          token: '123456',
-          description: 'توضیح مختصر در این قسمت',
-          img: require('~/assets/img/shape/icons/test-cafe.png'),
-          header: require('~/assets/img/4.jpg'),
-        },
-      ],
+      // cafeList: [
+      //   {
+      //     name: 'باغشاه - ۵۰',
+      //     token: '123456',
+      //     description: 'توضیح مختصر در این قسمت',
+      //     img: require('~/assets/img/shape/icons/test-cafe.png'),
+      //     header: require('~/assets/img/1.jpg'),
+      //   },
+      //   {
+      //     name: 'باغشاه - ۵۰',
+      //     token: '123456',
+      //     description: 'توضیح مختصر در این قسمت',
+      //     img: require('~/assets/img/shape/icons/test-cafe.png'),
+      //     header: require('~/assets/img/2.jpg'),
+      //   },
+      //   {
+      //     name: 'باغشاه - ۵۰',
+      //     token: '123456',
+      //     description: 'توضیح مختصر در این قسمت',
+      //     img: require('~/assets/img/shape/icons/test-cafe.png'),
+      //     header: require('~/assets/img/3.jpg'),
+      //   },
+      //   {
+      //     name: 'باغشاه - ۵۰',
+      //     token: '123456',
+      //     description: 'توضیح مختصر در این قسمت',
+      //     img: require('~/assets/img/shape/icons/test-cafe.png'),
+      //     header: null
+      //   },
+      // ],
     }
   },
   methods: {},
@@ -130,8 +136,8 @@ export default {
     //   })
   },
   computed: {
-    list() {
-      return this.$store.state.cafe.list
+    cafeList() {
+      return this.$store.state.cafe.list.results
     },
   },
 }
