@@ -315,7 +315,6 @@ export default {
         'states.' +
         this.table.status
       )
-
     },
 
 
@@ -360,14 +359,16 @@ export default {
     },
 
     goToTokenAndPay(e) {
-      alert('x')
       e.preventDefault();
       // get cafe info from table socket massage
-      let cafe =  {
-        cafe: this.table.cafe,
-        type: 'pre-order'
-      }
-      this.$store.dispatch('sendCode', { tableToken: this.user.table_uuid, hasToken :this.userIsloggedIn, cafe } )
+// (this.cafe.active && this.tokenType == 'menu-only') ? null :
+      // let cafe; 
+      // cafe =  {
+      //   cafe: this.table.cafe,
+      //   type: 'pre-order'
+      // }
+      console.log('cafe in table', this.table.cafe);
+      // this.$store.dispatch('sendCode', { tableToken: this.user.table_uuid, hasToken :this.userIsloggedIn, cafe } )
     },
     proccessOrderForPayment(){
       this.ordersToPay = []
