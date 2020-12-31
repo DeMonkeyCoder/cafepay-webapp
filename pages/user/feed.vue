@@ -33,7 +33,7 @@
       
       <section class="feed__cafe-list">
         <header class="feed__section-header">کافه و رستوران</header>
-        <div
+        <div @click="goToCafe(cafe)"
           v-for="(cafe, index) in cafeList"
           :key="index"
           class="feed__cafe-list__cafe header-test"
@@ -123,7 +123,13 @@ export default {
       // ],
     }
   },
-  methods: {},
+  methods: {
+    goToCafe(cafe){
+      let token = (cafe.preorder_token) ? cafe.preorder_token.token : cafe.menu_only_token.token
+        this.$store.commit('changeNavigation', 'scan')
+      this.$router.push(`/user/home/?token=${token}`)
+    }
+  },
 
   mounted() {
     this.$store.dispatch('cafe/retreiveList')

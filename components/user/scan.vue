@@ -329,7 +329,15 @@ export default {
       return token
     },
   },
-  watch: {},
+  watch: {
+      // '$route.query.token': (val) => {
+      //     if (val) {
+      //   console.log('route', this.$route)
+      //   this.tokenProccessor(this.$route.fullPath)
+      //   }
+      // }
+    
+  },
 }
 </script>
 
