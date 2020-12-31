@@ -50,7 +50,7 @@
             <p class="cafe-content__short-desc">{{ (cafe.short_description) ? cafe.short_description : `${cafe.name} در کافه‌پِی` }}</p>
             <div class="cafe-content__tags">
               <span v-if="cafe.preorder_token" class="font-10 shadow cafe-content__tags__pickup">پیکاپ</span>
-              <span v-if="cafe.is_onsight" class="font-10 shadow cafe-content__tags__onsight">حضوری</span>
+              <span v-if="cafe.is_onsite" class="font-10 shadow cafe-content__tags__onsight">حضوری</span>
             </div>
           </div>
         
@@ -125,7 +125,7 @@ export default {
   },
   methods: {
     goToCafe(cafe){
-      let token = (cafe.preorder_token) ? cafe.preorder_token.token : cafe.menu_only_token.token
+      let token = (cafe.preorder_token && cafe.is_closed) ? cafe.preorder_token.token : cafe.menu_only_token.token
         this.$store.commit('changeNavigation', 'scan')
       this.$router.push(`/user/home/?token=${token}`)
     }
