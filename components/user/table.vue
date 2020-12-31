@@ -320,7 +320,7 @@ export default {
 
 
     showPreOrder(){
-      let check = (this.user.table_uuid && (this.ordersPaid && this.hasActiveTable || !this.hasActiveTable)  )
+      let check = (this.user.table_uuid && ((this.ordersPaid || this.tokenType == 'menu-only') && this.hasActiveTable || !this.hasActiveTable)  )
       return check
     },
 
@@ -360,6 +360,7 @@ export default {
     },
 
     goToTokenAndPay(e) {
+      alert('x')
       e.preventDefault();
       // get cafe info from table socket massage
       let cafe =  {
