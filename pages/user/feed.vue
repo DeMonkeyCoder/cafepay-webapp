@@ -49,8 +49,8 @@
             <p class="cafe-content__name">{{ cafe.name }}</p>
             <p class="cafe-content__short-desc">{{ (cafe.short_description) ? cafe.short_description : `${cafe.name} در کافه‌پِی` }}</p>
             <div class="cafe-content__tags">
-              <span class="font-10 shadow cafe-content__tags__pickup">پیکاپ</span>
-              <span class="font-10 shadow cafe-content__tags__onsight">حضوری</span>
+              <span v-if="cafe.preorder_token" class="font-10 shadow cafe-content__tags__pickup">پیکاپ</span>
+              <span v-if="cafe.is_onsight" class="font-10 shadow cafe-content__tags__onsight">حضوری</span>
             </div>
           </div>
         
