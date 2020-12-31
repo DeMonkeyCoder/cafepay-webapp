@@ -125,10 +125,10 @@
 
             <div v-if="tokenType == 'pre-order'" class="preorder-warning">
               <div>
-                <b-icon size="is-medium" icon="alert-circle-outline"></b-icon>
+                <b-icon size="" icon="alert-circle-outline"></b-icon>
               </div>
               <p>
-                {{ $t('table_page.self_pickup_warning') }}
+                {{ $t('table_page.preorder.self_pickup_warning') }}
               </p>
             </div>
 
