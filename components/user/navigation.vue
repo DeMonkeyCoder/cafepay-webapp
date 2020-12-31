@@ -27,6 +27,7 @@
     <div @click="triggerChangeTab('cp-table')" class="nav-tab chair center-align" :class="{'is-active': currentMainPage == 'cp-table'}">
       <img v-show="routeName != 'user-feed' && currentMainPage == 'cp-table'" src='@/assets/img/shape/icons/icon8/table-due.png' alt="">
       <img v-show="routeName == 'user-feed' || currentMainPage != 'cp-table'" src='@/assets/img/shape/icons/icon8/table.png' alt="">
+      <span v-if="user.table_uuid" class="has-background-danger notif-num"></span>
       <!-- <p>میز</p> -->
     </div>
 
@@ -88,14 +89,18 @@
   height: 65px
   box-shadow: 0px 0px 3px rgba(0,0 ,0 ,0.05)
 
-  .nav-tab.profile
+  .nav-tab
     position: relative
     .notif-num
-      width: 23px
-      height: 23px
-      position: absolute
-      left: calc(50% - 30px)
-      top: calc(50% - 15px)
+        animation-name: blink
+        animation-duration: 2s
+        animation-timing-function: ease
+        animation-iteration-count: infinite
+        width: 18px
+        height: 18px
+        position: absolute
+        left: calc(50% + 5px)
+        top: calc(50% - 18px)
 
   .nav-tab
     padding-top: 15px
