@@ -2,10 +2,10 @@
   <div class="navigation-container">
 
       
-    <nuxt-link to="/user/feed" class="nav-tab home-icon center-align" :class="{'is-active': routeName == 'user-feed'}">
+    <!-- <nuxt-link to="/user/feed" class="nav-tab home-icon center-align" :class="{'is-active': routeName == 'user-feed'}">
       <img v-show="routeName == 'user-feed'" src='@/assets/img/shape/icons/icon8/home-due.png' alt="">
       <img v-show="routeName != 'user-feed'" src='@/assets/img/shape/icons/icon8/home.png' alt="">
-    </nuxt-link>
+    </nuxt-link> -->
    
     <div @click="triggerChangeTab((hasActiveTable) ? 'currentCafe' : 'scan')" class="nav-tab qr-scan center-align" 
     :class="{'is-active': currentMainPage == 'scan' || currentMainPage == 'currentCafe'}">
