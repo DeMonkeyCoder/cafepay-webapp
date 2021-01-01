@@ -53,7 +53,7 @@ export default {
       order_from: 'Order from',
       payment_is_not_done: 'Payment is not done',
       details: 'Details',
-      checkout: 'Checkout',
+      checkout: 'Complete Orders',
       checkout_CASH: 'Please Pay Your bill with Cash or Credit Card',
       states: Object.assign({...order_states_general} , {
         waiting: 'Waiting for kitchen confirmation'

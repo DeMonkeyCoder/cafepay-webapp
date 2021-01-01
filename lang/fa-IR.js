@@ -54,7 +54,7 @@ export default {
       order_from: 'سفارش از',
       payment_is_not_done: 'پرداخت سفارش انجام نشده',
       details: 'جزییات',
-      checkout: 'پرداخت سفارش',
+      checkout: 'تکمیل سفارش',
       checkout_CASH: 'سفارش خود را سر صندوق پرداخت کنید',
       states: Object.assign({...order_states_general} , {
         waiting: 'در انتظار تایید توسط پذیرنده',
