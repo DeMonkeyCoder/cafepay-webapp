@@ -20,7 +20,8 @@ export const state = () => ({
   storeRedirect: false,
   closed: false,
   active: false,
-  list: []
+  list: [],
+  fee_payer: false,
 })
 
 export const getters = {
@@ -49,6 +50,7 @@ export const mutations = {
     state.closed = data.cafe.is_closed
     state.avatar = data.cafe.avatar
     state.cafepay_fee = data.cafe.cafepay_fee
+    state.fee_payer = data.cafe.fee_payer
 
     // define type of token ----- 0: menuonly   1: normal    2: preorder
     switch (data.type) {

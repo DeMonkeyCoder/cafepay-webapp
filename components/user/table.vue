@@ -298,7 +298,7 @@ export default {
       return this.$store.state.cafe
     },
     cafepayFee() {
-      return this.totalWishToPayOrder * this.cafe.cafepay_fee
+      return (this.cafe.fee_payer) ? 0 : this.totalWishToPayOrder * this.cafe.cafepay_fee
     },
     totaltoPay() {
       return this.totalWishToPayOrder + this.cafepayFee
