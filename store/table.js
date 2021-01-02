@@ -219,20 +219,7 @@ export const actions = {
               root: true
             })
             //... but this callback will be executed only when both requests are complete.
-            if (err.response) {
-              // context.commit('errorMsg', err.response.data, {
-              //   root: true
-              // })
-              if (err.response.status == 400 & err.response.data.details[0].product) {
-                let id = err.response.data.details[0].product
-                let remaining = err.response.data.details[0].remaining
-                let product = context.rootGetters["cafe/productById"](id)
-                let message = (remaining > 0) ? `از محصول ${product.name} فقط ${remaining} موجود است` : `${product.name} تمام شده است`
-                context.commit('errorMsg', message, {
-                  root: true
-                })
-              }
-            }
+            context.dispatch('throwBulkError', err)
 
           })
       } else {
@@ -262,23 +249,28 @@ export const actions = {
 
           .catch(err => {
             reject(err)
-            if (err.response) {
-              if (err.response.status == 400 & err.response.data.details[0].product) {
-                let id = err.response.data.details[0].product
-                let remaining = err.response.data.details[0].remaining
-                let product = context.rootGetters["cafe/productById"](id)
-                let message = (remaining > 0) ? `از محصول ${product.name} فقط ${remaining} موجود است` : `${product.name} تمام شده است`
-                context.commit('errorMsg', message, {
-                  root: true
-                })
-              }
-            }
+            context.dispatch('throwBulkError', err)
           })
       }
     })
 
+  },
 
-
+  throwBulkError(context, err) {
+      if (err.response) {
+        if (err.response.status == 400 & err.response.data.details[0].product) {
+          let id = err.response.data.details[0].product
+          let remaining = err.response.data.details[0].remaining
+          let product = context.rootGetters["cafe/productById"](id)
+          let message = (remaining > 0) ? `از محصول ${product.name} فقط ${remaining} موجود است` : `${product.name} تمام شده است`
+          context.commit('errorMsg', message, {
+            root: true
+          })
+        }
+        if (err.response.status == 410) context.commit('errorMsg', 'سفارش گیری غیرفعال است', {
+          root: true
+        })
+      }
   },
 
   setPaymentMethod(context, data){
