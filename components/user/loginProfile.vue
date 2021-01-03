@@ -47,6 +47,7 @@
             <b-field class="field">
               <b-input
                 ref="codeInputProfile"
+                dir="ltr"
                 inputmode="numeric"
                 class="cp-input cp-input-primary cp-input-grey"
                 maxlength="5"
