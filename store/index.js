@@ -23,10 +23,7 @@ export const state = () => ({
     reconnectError: false,
   },
   guides: {
-    changeOrderConfirm: {
-      localStorage: false,
-      productAddition: false,
-    }
+    changeOrderConfirm: false
   },
   currentMainPage: (state.hasActiveTable) ? 'currentCafe' : 'scan',
 })
@@ -129,10 +126,7 @@ export const mutations = {
     state.fistTimeCameraActive = flag
   },
   setGuide(state, guide) {
-    if (guide.step){
-      state.guides[guide.name][guide.step] = guide.data
-    }
-    else state[guide.name] = guide.data
+      state.guides[guide.name] = guide.data
   }
 }
 

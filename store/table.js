@@ -35,6 +35,7 @@ export const getters = {
     return others
   },
 
+
 }
 
 export const mutations = {
@@ -44,9 +45,6 @@ export const mutations = {
 
     state.token = table.token
     state.table_number = table.number
-  },
-  newPerson(state, person) {
-    state.you = person
   },
   
   setKeepAlive(state) {
@@ -85,8 +83,11 @@ export const mutations = {
 
     // bind the user's orders count to menu data
     // first we need to find the user using the app from persons array
-    let user = table.persons.find(p => p.id == this.state.user.user.id)
-    if (user) this.commit('cafe/bindProductCount', user)
+    let user = state.persons.find(p => p.id == this.state.user.user.id)
+    if (user) {
+      state.you = user
+      this.commit('cafe/bindProductCount', user)
+    }
 
   },
 

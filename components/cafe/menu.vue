@@ -149,6 +149,8 @@ export default {
         onNextStep: this.sliderAnimate,
         onFinish: () => {
           this.tour = false
+          this.$store.commit('setGuide', {name: 'changeOrderConfirm', data: false})
+          localStorage.setItem('changeOrderGuide', false)
         }
       },
       steps: [
@@ -272,7 +274,6 @@ export default {
           })
           .then(res => {
             resolve(res)
-            if (this.guides.changeOrderConfirm.localStorage) this.$store.commit('setGuide', {name: 'changeOrderConfirm',step: 'productAddition' , data: true})
             if (this.searchExpandActive) this.toggleSearchBox()
           })
           .catch(err => {})
@@ -314,7 +315,7 @@ export default {
         count
       })
       // initial Change order Tour
-      if (this.guides.changeOrderConfirm.productAddition || this.ordersTotalCount > 0) {
+      if (this.guides.changeOrderConfirm && this.table.you.orders.length > 0) {
         this.$tours['menuTour'].start()
         this.tour = true
       }

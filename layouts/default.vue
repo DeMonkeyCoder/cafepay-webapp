@@ -26,9 +26,9 @@ export default {
       let changeOrderGuide = localStorage.getItem('changeOrderGuide')
       if (changeOrderGuide == null) {
         localStorage.setItem('changeOrderGuide', true)
-        this.$store.commit('setGuide', {name: 'changeOrderConfirm',step: 'localStorage' , data: true})
+        this.$store.commit('setGuide', {name: 'changeOrderConfirm', data: true})
       }
-      if (changeOrderGuide) this.$store.commit('setGuide', {name: 'changeOrderConfirm',step: 'localStorage', data: true})
+      if (JSON.parse(changeOrderGuide)) this.$store.commit('setGuide', {name: 'changeOrderConfirm', data: true})
       
        
     }
