@@ -228,48 +228,52 @@ export default {
       }
     },
     productsPayloadSeperator() {
-      // if there is no change just switch to table view
-      if (this.productChangeArray.length == 0) {
-        this.$store.commit('changeNavigation', 'cp-table')
-      }
-      // if otherwise we need to dispatch changes
-      else {
-      let PayloadGeneral = this.productChangeArray.map(x => {
-        return {
-          product: x.product,
-          count: x.count
+      return new Promise((resolve, reject) => {
+            // if there is no change just switch to table view
+        if (this.productChangeArray.length == 0) {
+          this.$store.commit('changeNavigation', 'cp-table')
+        }
+        // if otherwise we need to dispatch changes
+        else {
+        let PayloadGeneral = this.productChangeArray.map(x => {
+          return {
+            product: x.product,
+            count: x.count
+          }
+        })
+        let deletionPayload = PayloadGeneral.filter(x => x.count < 0).map(y => {
+          return {
+            count: y.count * -1,
+            product: y.product
+          }
+        })
+        let additionPayload = PayloadGeneral.filter(x => x.count > 0)
+
+        // console.log('deletion', deletionPayload, 'additon', additionPayload);
+        // define states of requests , maybe both deletation and addition or one of them alone
+        let requestState
+        if (additionPayload.length && deletionPayload.length)
+          requestState = 'both'
+        if (additionPayload.length && !deletionPayload.length)
+          requestState = 'addition'
+        if (deletionPayload.length && !additionPayload.length)
+          requestState = 'deletion'
+        // console.log('request state', requestState);
+
+        this.$store
+          .dispatch('table/changeProductsOnTable', {
+            add: additionPayload,
+            del: deletionPayload,
+            state: requestState
+          })
+          .then(res => {
+            resolve(res)
+            if (this.searchExpandActive) this.toggleSearchBox()
+          })
+          .catch(err => {})
         }
       })
-      let deletionPayload = PayloadGeneral.filter(x => x.count < 0).map(y => {
-        return {
-          count: y.count * -1,
-          product: y.product
-        }
-      })
-      let additionPayload = PayloadGeneral.filter(x => x.count > 0)
-
-      // console.log('deletion', deletionPayload, 'additon', additionPayload);
-      // define states of requests , maybe both deletation and addition or one of them alone
-      let requestState
-      if (additionPayload.length && deletionPayload.length)
-        requestState = 'both'
-      if (additionPayload.length && !deletionPayload.length)
-        requestState = 'addition'
-      if (deletionPayload.length && !additionPayload.length)
-        requestState = 'deletion'
-      // console.log('request state', requestState);
-
-      this.$store
-        .dispatch('table/changeProductsOnTable', {
-          add: additionPayload,
-          del: deletionPayload,
-          state: requestState
-        })
-        .then(res => {
-          if (this.searchExpandActive) this.toggleSearchBox()
-        })
-        .catch(res => {})
-      }
+  
     },
 
     changeActiveCategory(index) {
@@ -379,6 +383,10 @@ export default {
     this.$nuxt.$on('changeActiveCategory', (data) => {
       this.changeActiveCategory(data)
    })
+   this.$nuxt.$on('triggerSubmitOrders', () => {
+    this.productsPayloadSeperator()
+    .then(res => this.$nuxt.$emit('closeNavigationModal')) 
+   })
   },
  
   computed: {
@@ -415,12 +423,12 @@ export default {
       )
     },
 
-    totalCount() {
-      return this.$store.state.cafe.productChangeArray.reduce(
-        (sum, prod) => prod.count + sum,
-        0
-      )
-    },
+    // totalCount() {
+    //   return this.$store.state.cafe.productChangeArray.reduce(
+    //     (sum, prod) => prod.count + sum,
+    //     0
+    //   )
+    // },
     showSubmitBtn() {
       return this.$store.state.cafe.productChangeArray.length
     },

@@ -11,7 +11,6 @@
     <div class="person-title has-background-white cp-tb-margin">
       <img :src="person.avatar" :alt="person.name" />
       <p class="cp-side-padding cp-tb-padding" v-html="$t('table_page.person_orders', { title: title.trim() })">
-        
       </p>
     </div>
     <div

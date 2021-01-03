@@ -104,11 +104,14 @@ export default {
   },
 
   menu_page: {
-    your_current_order: 'سفارشات فعلی شما',
+    your_current_order: 'سبد سفارشات شما',
     submit_order: 'تایید سفارش',
     cafe_is_closed: 'مجموعه بسته است',
     submit_order_self_pickup: 'تحویل در مجموعه',
     sold_out: 'تمام شد',
+    change_order_warning: 'تغییرات <span class="font-norm s-text">تایید نشده</span> در سبد سفارش خود دارید آیا مایل به تایید تغییرات هستید؟',
+    change_approve: 'تایید تغییرات در سفارش',
+    change_reject: 'حذف تغییرات',
     tour: {
       previous: 'قبلی',
       how_can_i_pay: 'چگونه پرداخت کنم؟',

@@ -33,7 +33,8 @@
                 size="is-medium"
               ></b-input>
             </b-field>
-            <p v-if="$i18n.locale == 'fa'" class="font-14">عضویت به معنای قبول <nuxt-link class="font-norm p-text font-14" to="/terms">قوانین و مقررات</nuxt-link> کافه‌پِی است</p>
+            <p v-if="$i18n.locale == 'fa'" class="font-14">عضویت به معنای قبول 
+              <nuxt-link class="font-norm p-text font-14" to="/terms">قوانین و مقررات</nuxt-link> کافه‌پِی است</p>
           </section>
 
           <section

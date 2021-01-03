@@ -107,6 +107,9 @@ export default {
     cafe_is_closed: 'store is Closed',
     submit_order_self_pickup: 'Self Pickup',
     sold_out: 'Sold out',
+    change_order_warning: 'تغییرات تایید نشده در سبد سفارش خود دارید آیا مایل به تایید تغییرات هستید؟',
+    change_approve: 'تایید تغییرات در سفارش',
+    change_reject: 'حذف تغییرات',
     tour: {
       previous: 'Previous',
       how_can_i_pay: 'How can I pay?',

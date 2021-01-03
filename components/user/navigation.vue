@@ -1,13 +1,30 @@
 <template>
   <div class="navigation-container">
 
+      <b-modal class="simple-action-modal" :active.sync="confirmOrdersModal" has-modal-card >
+        <div class="modal-card" style="width: auto">
+
+          <section class="modal-dialog">
+            <p v-html="$t('menu_page.change_order_warning')"></p>
+          </section>
+
+          <section class="modal-caption"></section>
+
+          <section class="modal-action">
+            <button class="button ma-child is-light" type="button" @click="clearOrderChanges">{{ $t('menu_page.change_reject') }}</button>
+            <b-button :loading="globalLoading" class="ma-child" type="is-warning" @click="submitOrders">{{ $t('menu_page.change_approve') }}</b-button>
+          </section>
+          
+        </div>
+      </b-modal>
+
       
     <!-- <nuxt-link to="/user/feed" class="nav-tab home-icon center-align" :class="{'is-active': routeName == 'user-feed'}">
       <img v-show="routeName == 'user-feed'" src='@/assets/img/shape/icons/icon8/home-due.png' alt="">
       <img v-show="routeName != 'user-feed'" src='@/assets/img/shape/icons/icon8/home.png' alt="">
     </nuxt-link> -->
    
-    <div @click="triggerChangeTab((hasActiveTable) ? 'currentCafe' : 'scan')" class="nav-tab qr-scan center-align" 
+    <div @click="checkUnsubmitedOrder((hasActiveTable) ? 'currentCafe' : 'scan')" class="nav-tab qr-scan center-align" 
     :class="{'is-active': currentMainPage == 'scan' || currentMainPage == 'currentCafe'}">
 
       <img v-show="routeName != 'user-feed' && currentMainPage == 'scan' && !activeMenu" 
@@ -22,19 +39,19 @@
       <p v-show="routeName != 'user-feed' && tableToken">منو</p> -->
     </div>
 
-    <!-- <div @click="triggerChangeTab('search')" class="nav-tab center-align" :class="{'is-active': currentMainPage == 'search'}">
+    <!-- <div @click="checkUnsubmitedOrder('search')" class="nav-tab center-align" :class="{'is-active': currentMainPage == 'search'}">
       <img src='@/assets/img/shape/icons/icon8/shop.png' alt="">
       <p>جست‌وجو</p>
     </div> -->
 
-    <div @click="triggerChangeTab('cp-table')" class="nav-tab chair center-align" :class="{'is-active': currentMainPage == 'cp-table'}">
+    <div @click="checkUnsubmitedOrder('cp-table')" class="nav-tab chair center-align" :class="{'is-active': currentMainPage == 'cp-table'}">
       <img v-show="routeName != 'user-feed' && currentMainPage == 'cp-table'" src='@/assets/img/shape/icons/icon8/table-due.png' alt="">
       <img v-show="routeName == 'user-feed' || currentMainPage != 'cp-table'" src='@/assets/img/shape/icons/icon8/table.png' alt="">
       <span v-if="user.table_uuid" class="has-background-danger notif-num"></span>
       <!-- <p>میز</p> -->
     </div>
 
-    <div @click="triggerChangeTab('profile')" class="nav-tab profile center-align" :class="{'is-active': currentMainPage == 'profile'}">
+    <div @click="checkUnsubmitedOrder('profile')" class="nav-tab profile center-align" :class="{'is-active': currentMainPage == 'profile'}">
       <img v-show="routeName != 'user-feed' && currentMainPage == 'profile'" src='@/assets/img/shape/icons/icon8/user-due.png' alt="">
       <img v-show="routeName == 'user-feed' || currentMainPage != 'profile'" src='@/assets/img/shape/icons/icon8/user.png' alt="">
       <!-- <span class="notif-num has-background-danger">1</span> -->
@@ -48,10 +65,34 @@
   export default {
     data() {
       return {
+        confirmOrdersModal: false,
+        tempComponentName: null
       }
     },
     methods: {
+      submitOrders(){
+        this.$nuxt.$emit('triggerSubmitOrders')
+      },
+      clearOrderChanges(){
+        // to find user orders on menu
+
+        let user = this.table.persons.find(p => p.id == this.user.id)
+        this.$store.commit('cafe/clearPCA')
+        this.$store.commit('cafe/bindProductCount', user)
+        this.confirmOrdersModal = false
+        this.triggerChangeTab(this.tempComponentName)
+      },
+      checkUnsubmitedOrder(componentName){
+      if (this.productChangeArray.length > 0) {
+            this.tempComponentName = componentName
+            this.confirmOrdersModal = true
+        }
+        else {
+          this.triggerChangeTab(componentName)
+        }
+      },
       triggerChangeTab(componentName) {
+  
         this.tabName = componentName
         this.$store.commit('changeNavigation', componentName)
         if (this.routeName == "user-feed") this.$router.push('/user/home')
@@ -68,7 +109,13 @@
       },
       activeMenu(){
         return this.$store.state.cafe.active
-      }
+      },
+      productChangeArray() {
+      return this.$store.state.cafe.productChangeArray
+    },
+    },
+    created(){
+      this.$nuxt.$on('closeNavigationModal', () => this.confirmOrdersModal = false)
     },
     mounted(){
       // document.querySelectorAll('.nav-tab').addEventListener('click', this.triggerChangeTab())
@@ -120,9 +167,9 @@
       width: 35px
 
   .is-active
-    p
-      font-weight: 500!important
-      color: $primary
+    // p
+    //   font-weight: 500!important
+    //   color: $primary
 
   // .home-icon
   //   img
@@ -149,11 +196,11 @@
   //   p
   //     bottom: 19px!important
 
-  .profile
-    img
-      // width: 28px!important
-      position: relative
-      top: 2px
-    p
-      bottom: 3px!important
+  // .profile
+  //   img
+  //     // width: 28px!important
+  //     position: relative
+  //     top: 2px
+  //   p
+  //     bottom: 3px!important
 </style>
