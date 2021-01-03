@@ -115,6 +115,7 @@ export default {
       how_can_i_pay: 'How can I pay?',
       got_it: 'Got it!',
       submit_order_guide: 'Submit your order by clicking this button',
+      change_order_guide: 'برای ثبت تغییرات در سفارش بر روی این دکمه بزنید'
     },
     toasts: {
       you_payed_on_this_product: 'You already paid on {num} products of this kind',

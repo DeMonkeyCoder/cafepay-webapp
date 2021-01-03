@@ -21,15 +21,25 @@ export default {
     }
   },
   mounted() {
-
-    window.addEventListener('popstate', (e) => {
+    if (process.client) {
+      // if guide is already define and its true means this is the first time on this browser
+      let changeOrderGuide = localStorage.getItem('changeOrderGuide')
+      if (changeOrderGuide == null) {
+        localStorage.setItem('changeOrderGuide', true)
+        this.$store.commit('setGuide', {name: 'changeOrderConfirm',step: 'localStorage' , data: true})
+      }
+      if (changeOrderGuide) this.$store.commit('setGuide', {name: 'changeOrderConfirm',step: 'localStorage', data: true})
+      
+       
+    }
+    // window.addEventListener('popstate', (e) => {
   
-      // if (this.$route)this.$store.commit('changeNavigation', e.state.state)
-      // alert(this.currentMainNav)
-      // if (this.currentMainNav == 'table')
-      // this.$store.commit('changeNavigation', 'currentCafe')
-      // window.history.pushState({}, '')
-    })
+    //   // if (this.$route)this.$store.commit('changeNavigation', e.state.state)
+    //   // alert(this.currentMainNav)
+    //   // if (this.currentMainNav == 'table')
+    //   // this.$store.commit('changeNavigation', 'currentCafe')
+    //   // window.history.pushState({}, '')
+    // })
   },
   computed: {
     currentMainNav() {

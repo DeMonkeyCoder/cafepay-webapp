@@ -109,6 +109,9 @@ Vue.mixin({
     errorThrow() {
       return this.$store.state.errorThrow
     },
+    guides(){
+      return this.$store.state.guides
+    }
 
   },
 

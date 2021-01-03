@@ -117,6 +117,7 @@ export default {
       how_can_i_pay: 'چگونه پرداخت کنم؟',
       got_it: 'فهمیدم!',
       submit_order_guide: 'با انتخاب این گزینه سفارش خود را ثبت کنید',
+      change_order_guide: 'جهت ثبت تغییرات در سفارش بر روی دکمه تایید سفارش بزنید'
     },
     toasts: {
       you_payed_on_this_product: `روی {num} عدد ازین محصول پرداخت انجام داده اید`

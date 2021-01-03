@@ -1,22 +1,22 @@
 <template>
   <div :dir="$dir()">
-        <!-- <v-tour
+        <v-tour
       name="menuTour"
       :steps="steps"
       :options="myOptions"
       :callbacks="myCallbacks"
-    ></v-tour> -->
+    ></v-tour>
     <div id="selected-products-preview" 
     class="selected-products-preview-is-shown"
     v-if="tokenType !== 'menu-only' && (!user.table_uuid || (user.table_uuid && !ordersPaid))">
-      <span v-if="!isClosed">{{ordersTotalCount}}</span>
+      <span v-if="!isClosed && !tour">{{ordersTotalCount}}</span>
       <b-button
         @click="productsPayloadSeperator"
         :loading="globalLoading"
         class="button shadow-md bcp-btn cp-btn-submit-order shadow-lg-bb"
         size="is-medium"
         :type="(isClosed) ? 'is-dark' : 'is-info'"
-        :disabeld="showSubmitBtn == 0"
+        :disabled="tour"
         >
         {{ (!isClosed) ? $t('menu_page.submit_order') : $t('menu_page.cafe_is_closed') }}
         <span v-if="tokenType == 'pre-order'" dir="rtl" class="font-bold font-14">({{ $t('menu_page.submit_order_self_pickup') }})</span>
@@ -132,9 +132,10 @@ export default {
       count: 0,
       totalPrice: 0,
       orderList: [],
+      tour: false,
       productDefaultImage,
       slideTransition: 'slide-category-next',
-          myOptions: {
+      myOptions: {
         highlight: true,
         useKeyboardNavigation: false,
         labels: {
@@ -145,12 +146,15 @@ export default {
         }
       },
       myCallbacks: {
-        onNextStep: this.sliderAnimate
+        onNextStep: this.sliderAnimate,
+        onFinish: () => {
+          this.tour = false
+        }
       },
       steps: [
         {
           target: '#selected-products-preview', // We're using document.querySelector() under the hood
-          content: this.$t('menu_page.tour.submit_order_guide'),
+          content: this.$t('menu_page.tour.change_order_guide'),
             params: {
             placement: 'top' // Any valid Popper.js placement. See https://popper.js.org/popper-documentation.html#Popper.placements
           }
@@ -268,6 +272,7 @@ export default {
           })
           .then(res => {
             resolve(res)
+            if (this.guides.changeOrderConfirm.localStorage) this.$store.commit('setGuide', {name: 'changeOrderConfirm',step: 'productAddition' , data: true})
             if (this.searchExpandActive) this.toggleSearchBox()
           })
           .catch(err => {})
@@ -308,6 +313,11 @@ export default {
         categoryIndex: this.activeCategory,
         count
       })
+      // initial Change order Tour
+      if (this.guides.changeOrderConfirm.productAddition || this.ordersTotalCount > 0) {
+        this.$tours['menuTour'].start()
+        this.tour = true
+      }
 
       // detect change
       this.$store.commit('cafe/changeDetection', {
