@@ -217,6 +217,23 @@
 // .slide-enter, .slide-leave-to /* .fade-leave-active below version 2.1.8 */
 //   opacity: 0
 
+.add-order-animation
+  animation-name: updown
+  animation-duration: 0.3s
+  animation-iteration-count: 1
+  animation-timing-function: ease-in-out
+
+@keyframes updown
+  0%
+    transform: translateY(46px)
+    
+  50%
+    transform: translateY(35px)
+    // transform: scale(1.01)
+  100%
+    transform: translateY(46px)
+    
+
 @media screen and (max-width: 370px)
   .product-list
     padding-bottom: 125px

@@ -298,6 +298,10 @@ export default {
         )
         return
       }
+      document.getElementById('selected-products-preview').classList.add('add-order-animation')
+      setTimeout(() => {
+        document.getElementById('selected-products-preview').classList.remove('add-order-animation')
+      }, 350);
       // change number of product count locally on menu data (cafe.js model and store)
       this.$store.commit('cafe/changeCount', {
         productIndex: index,
