@@ -173,6 +173,7 @@ export default {
         کد تایید برای شماره <span>{phone_number}</span> پیامک شد
       </p>`,
     submit_code: 'تایید',
+    invalid_code: 'کد وارد شده نادرست است',
     resend_code: 'ارسال مجدد کد',
     resend_time_message: 'تا {resendTime} ثانیه دیگر',
     welcome_to_cafepay: 'به کافه‌پِی خوش آمدید!',

@@ -171,6 +171,7 @@ export default {
         Enter the 5-digit code sent to <span>{phone_number}</span>
       </p>`,
     submit_code: 'Next',
+    invalid_code: 'invalid Code',
     resend_code: 'Resend code',
     resend_time_message: 'in {resendTime} seconds',
     welcome_to_cafepay: 'Welcome to Cafepay!',

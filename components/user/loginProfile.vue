@@ -235,8 +235,8 @@ export default {
     checkCode() {
       this.$axios
         .post('/api/v1/user-profile/auth-token/', {
-          phone_number: this.phone_number,
-          code: this.user_code
+          phone_number: this.convertPersian(this.phone_number),
+          code: this.convertPersian(this.user_code)
         })
         .then(res => {
           // we dont want to state the user as logged in before having his/her name
@@ -256,6 +256,9 @@ export default {
         .catch(err => {
           if (err.response) {
             console.log(err.response.data)
+            if (err.response.status == 403) {
+              this.toaster(this.$t('login_component.invalid_code'), 'is-danger')
+            }
           }
         })
     },

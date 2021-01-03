@@ -199,8 +199,9 @@ export default {
       }, 1000)
     },
     sendCode() {
-      let validation = this.$i18n.locale == 'fa' ? /^(\0|0)?9\d{9}$/g : /^(\+\d{1,2}\s?)?1?\-?\.?\s?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/g
+      // define a variable to check validation
       let phone_numberEn = this.convertPersian(this.phone_number)
+      let validation = this.$i18n.locale == 'fa' ? /^(\0|0)?9\d{9}$/g : /^(\+\d{1,2}\s?)?1?\-?\.?\s?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/g
       if (phone_numberEn.match(validation)) {
         this.$axios
           .post('api/v1/user-profile/send-code/', {
@@ -234,8 +235,8 @@ export default {
     checkCode() {
       this.$axios
         .post('/api/v1/user-profile/auth-token/', {
-          phone_number: this.phone_number,
-          code: this.user_code
+          phone_number: this.convertPersian(this.phone_number),
+          code: this.convertPersian(this.user_code)
         })
         .then(res => {
           // we dont want to state the user as logged in before having his/her name
@@ -255,6 +256,9 @@ export default {
         .catch(err => {
           if (err.response) {
             console.log(err.response.data)
+            if (err.response.status == 403) {
+              this.toaster(this.$t('login_component.invalid_code'), 'is-danger')
+            }
           }
         })
     },
