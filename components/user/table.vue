@@ -236,7 +236,8 @@
             id="table-status-bar-progress-wrapper"
             class="table-status-bar__info cp-tb-padding-half"
           >
-          <p>{{statusText}}</p>
+          <p v-if="tokenType == 'normal'">{{statusText}}</p>
+          <p v-else>{{(ordersPaid) ? 'سفارش شما پرداخت شد' : 'سفارش خود را پرداخت کنید'}}</p>
     
           </div>
         </div>
