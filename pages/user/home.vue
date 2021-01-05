@@ -1,5 +1,6 @@
 <template>
   <div :dir="$dir()">
+    <!-- why did i take scan out of keep-alive -->
     <keep-alive>
       <component v-if="currentMainPage != 'scan'" class="" @changeView="changeViewTrigger" :is="currentMainPage"></component>
     </keep-alive>

@@ -78,13 +78,13 @@
       </div>
     </b-modal>
     <div class="camera">
-      <component
+      <!-- <component
         @decode="onDecode"
         :is="qrcodeComponentLaunch"
         v-if="letsUseCamera"
-      ></component>
+      ></component> -->
 
-      <!-- <qrcode-stream  @decode="onDecode"></qrcode-stream> -->
+      <qrcode-stream v-if="launchCamera"  @decode="onDecode"></qrcode-stream>
       <div id="qr-animation"></div>
    
     </div>
@@ -127,7 +127,7 @@ import { mapActions } from 'vuex'
 
 export default {
   components: {
-    QrcodeStream: () => import('vue-qrcode-reader'),
+    QrcodeStream: () => require('vue-qrcode-reader'),
     login,
   },
   data() {
@@ -136,7 +136,7 @@ export default {
       // TODO: handle wrong token from url in a better way to
       // let user scan code again when entered wrong token
       letsUseCamera: !this.$route.query.token,
-
+      launchCamera: false,
       xyz: true,
       animationJson,
       loaderJson,
@@ -159,7 +159,8 @@ export default {
     },
     openCamera() {
       this.accessCameraActive = false
-      this.qrcodeComponentLaunch = QrcodeStream
+      this.launchCamera = true
+      // this.qrcodeComponentLaunch = QrcodeStream
     },
     onDecode(token) {
       // token proccessor called by camera or input if it is called by camera it returns string if not it's an input entery
@@ -304,10 +305,15 @@ export default {
           .then((permissionStatus) => {
             if (permissionStatus.state == 'prompt')
               this.accessCameraActive = true
-            else if (permissionStatus.state == 'granted')
-              this.qrcodeComponentLaunch = null
+            else if (permissionStatus.state == 'granted') {
+              this.launchCamera = false
+              // this.qrcodeComponentLaunch = null
+            }
           })
-      } else this.qrcodeComponentLaunch = null
+      } else {
+        this.launchCamera = false
+        // this.qrcodeComponentLaunch = null
+      } 
     }
   },
   computed: {
