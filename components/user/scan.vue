@@ -84,7 +84,7 @@
         v-if="letsUseCamera"
       ></component> -->
 
-      <qrcode-stream v-if="launchCamera"  @decode="onDecode"></qrcode-stream>
+      <client-only><qrcode-stream v-if="launchCamera"  @decode="onDecode"></qrcode-stream> </client-only>
       <div id="qr-animation"></div>
    
     </div>
@@ -127,7 +127,7 @@ import { mapActions } from 'vuex'
 
 export default {
   components: {
-    QrcodeStream: () => require('vue-qrcode-reader'),
+    // QrcodeStream: () => import('vue-qrcode-reader'),
     login,
   },
   data() {
@@ -306,12 +306,12 @@ export default {
             if (permissionStatus.state == 'prompt')
               this.accessCameraActive = true
             else if (permissionStatus.state == 'granted') {
-              this.launchCamera = false
+              this.launchCamera = true
               // this.qrcodeComponentLaunch = null
             }
           })
       } else {
-        this.launchCamera = false
+        this.launchCamera = true
         // this.qrcodeComponentLaunch = null
       } 
     }

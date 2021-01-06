@@ -83,6 +83,7 @@ export default {
     '~/plugins/axios',
     '~/plugins/mixin',
     {src:'~/plugins/vue-currency', mode: 'client'},
+    { src: '~/plugins/scanner.js', mode: 'client' },
     // '~/plugins/vue-leaflet',
     '~/plugins/moment',
     // '~/plugins/productTour.js',
