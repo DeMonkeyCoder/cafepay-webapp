@@ -22,6 +22,7 @@ export const state = () => ({
   active: false,
   list: [],
   fee_payer: false,
+  header_image: null
 })
 
 export const getters = {
@@ -51,6 +52,7 @@ export const mutations = {
     state.avatar = data.cafe.avatar
     state.cafepay_fee = data.cafe.cafepay_fee
     state.fee_payer = data.cafe.fee_payer
+    state.header_image = data.cafe.header_image
 
     // define type of token ----- 0: menuonly   1: normal    2: preorder
     switch (data.type) {

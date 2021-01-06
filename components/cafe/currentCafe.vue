@@ -23,8 +23,14 @@
         </div>
       </b-modal>
 
-      <div class="cafe-header cp-header cp-tb-padding cp-side-padding">
-        <div class="info">
+      <div class="cafe-header cp-tb-padding cp-side-padding"
+      >
+      <!-- <div v-if="cafe.header" class="cafe-header__header"
+    
+      ></div> -->
+        <img class="cafe-header__header" v-if="cafe.header_image" :src="baseUrl + cafe.header_image" alt="">
+        <img class="cafe-header__header" v-else src="~/assets/img/background/header-4.png" alt="">
+        <div class="cafe-header__info">
           <img :src="(cafe.avatar == null) ? cafeDefaultImage : baseUrl + cafe.avatar " alt />
           <p class="cafe-name cp-tb-padding cp-side-padding">{{cafe.name}}</p>
           <!-- <b-rate
@@ -35,7 +41,7 @@
             :disabled="true"
           ></b-rate> -->
         </div>
-        <div class="go-back current-cafe-top-actions cp-tb-padding">
+        <div class="cafe-header__go-back current-cafe-top-actions cp-tb-padding">
           <b-icon @click.native="isCancelTableModalActive = true"
                 class="close-icon" icon="close" size="is-medium" type="is-light"></b-icon>
           <!-- TODO: set language on cookie to set locale even if user navigates back
