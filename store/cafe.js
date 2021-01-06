@@ -86,6 +86,7 @@ export const mutations = {
     state.closed = false
     state.tokenType = 'normal'
     state.active = false
+    state.totalCount = 0
   },
   changeCount(state, setting) {
     state.totalCount += setting.count
