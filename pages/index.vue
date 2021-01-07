@@ -548,8 +548,10 @@ export default {
     }
   },
   created() {
+    if (process.client) {
     let w = window.innerWidth
     if (w < 600) this.$router.push(this.localePath('/user/home'))
+    }
   },
   mounted() {
     let h = window.innerHeight

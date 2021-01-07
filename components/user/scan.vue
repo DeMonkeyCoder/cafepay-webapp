@@ -78,13 +78,13 @@
       </div>
     </b-modal>
     <div class="camera">
-      <component
+      <!-- <component
         @decode="onDecode"
         :is="qrcodeComponentLaunch"
         v-if="letsUseCamera"
-      ></component>
+      ></component> -->
 
-      <!-- <qrcode-stream  @decode="onDecode"></qrcode-stream> -->
+      <client-only><qrcode-stream v-if="launchCamera"  @decode="onDecode"></qrcode-stream> </client-only>
       <div id="qr-animation"></div>
    
     </div>
@@ -122,12 +122,12 @@ import qrIcon from '~/assets/img/shape/icons/qr-code-scan.svg'
 import lottie from 'lottie-web'
 import login from '~/components/user/login'
 import Vue from 'vue'
-import { QrcodeStream } from 'vue-qrcode-reader'
+// import { QrcodeStream } from 'vue-qrcode-reader'
 import { mapActions } from 'vuex'
 
 export default {
   components: {
-    QrcodeStream,
+    // QrcodeStream: () => import('vue-qrcode-reader'),
     login,
   },
   data() {
@@ -136,7 +136,7 @@ export default {
       // TODO: handle wrong token from url in a better way to
       // let user scan code again when entered wrong token
       letsUseCamera: !this.$route.query.token,
-
+      launchCamera: false,
       xyz: true,
       animationJson,
       loaderJson,
@@ -159,7 +159,8 @@ export default {
     },
     openCamera() {
       this.accessCameraActive = false
-      this.qrcodeComponentLaunch = QrcodeStream
+      this.launchCamera = true
+      // this.qrcodeComponentLaunch = QrcodeStream
     },
     onDecode(token) {
       // token proccessor called by camera or input if it is called by camera it returns string if not it's an input entery
@@ -304,10 +305,15 @@ export default {
           .then((permissionStatus) => {
             if (permissionStatus.state == 'prompt')
               this.accessCameraActive = true
-            else if (permissionStatus.state == 'granted')
-              this.qrcodeComponentLaunch = QrcodeStream
+            else if (permissionStatus.state == 'granted') {
+              this.launchCamera = true
+              // this.qrcodeComponentLaunch = null
+            }
           })
-      } else this.qrcodeComponentLaunch = QrcodeStream
+      } else {
+        this.launchCamera = true
+        // this.qrcodeComponentLaunch = null
+      } 
     }
   },
   computed: {

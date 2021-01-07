@@ -5,6 +5,9 @@
 </template>
 
 <script>
+if (process.browser) {
+window.L = require('@/node_modules/leaflet/dist/leaflet.js')
+} 
 // window.L = require('@/node_modules/leaflet/dist/leaflet.js')
   export default {
     props: {

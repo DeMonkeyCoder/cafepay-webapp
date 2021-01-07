@@ -4,10 +4,11 @@ import config from './plugins/config.js'
 //TODO: dynamically handle title and description by language
 export default {
   server: {
-    // port: 3000, // default: 3000     
+    port: 9999, // default: 3000     
     host: '0.0.0.0', // default: localhost   
   },
-  ssr: false,
+  ssr: true,
+  target: 'server',
   /*
    ** Headers of the page
    */
@@ -76,20 +77,22 @@ export default {
    ** Plugins to load before mounting the App
    */
   plugins: [
-    '~/plugins/gtm',
-    '~/plugins/onReload',
+    
+    {src: '~/plugins/gtm', mode: 'client'},
+    {src: '~/plugins/onReload', mode: 'client'},
     '~/plugins/axios',
     '~/plugins/mixin',
-    '~/plugins/vue-currency',
-    '~/plugins/vue-leaflet',
+    {src:'~/plugins/vue-currency', mode: 'client'},
+    { src: '~/plugins/scanner.js', mode: 'client' },
+    {src:'~/plugins/vue-leaflet', mode: 'client'},
     '~/plugins/moment',
-    '~/plugins/productTour.js',
+    {src:'~/plugins/productTour.js', mode: 'client'},
     // '~/plugins/lottie.js',
     '~/plugins/websocket.js',
     // '~/plugins/jdenticon-2.2.0.js',
     // '~/plugins/ripple',
     '~/plugins/i18n.js',
-    '~/plugins/Vue2TouchEvents.js'
+    {src: '~/plugins/Vue2TouchEvents.js', mode: 'client'},
   ],
   /*
    ** Nuxt.js modules
