@@ -219,7 +219,7 @@
 
           <div class="table-top-section__edit-orders">
             <b-button @click="goToMyOrderInMenu" class="shadow-b" type="is-warning" inverted >
-              {{ (userHasOrder) ? t('table_page.edit_order') : $t('table_page.add_order') }}</b-button>
+              {{ (userHasOrder) ? $t('table_page.edit_order') : $t('table_page.add_order') }}</b-button>
           </div>
         </div>
 
@@ -352,10 +352,12 @@ export default {
   },
   methods: {
     goToMyOrderInMenu(){
-      setTimeout(() => {
-        this.$store.commit('cafe/changeActiveCategory', 0)
-        this.$nuxt.$emit('changeActiveCategory', 0)
-      }, 300);
+      if (this.userHasOrder) {
+        setTimeout(() => {
+          this.$store.commit('cafe/changeActiveCategory', 0)
+          this.$nuxt.$emit('changeActiveCategory', 0)
+        }, 300);
+      }
       this.$store.commit('changeNavigation', 'currentCafe')
 
     },
