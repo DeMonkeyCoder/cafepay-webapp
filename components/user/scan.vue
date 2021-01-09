@@ -6,12 +6,6 @@
       id="custom-loader-bg"
       class="custom-loading-bg"
     ></div>
-    <login
-      key="loginmodal-scan"
-      id="loginmodal-scan"
-      :loginModalActive="loginModalActive"
-      @successful="dispatchSendCode"
-    />
     <b-modal
       class="simple-action-modal camera-guide-modal"
       :active.sync="accessCameraActive"
@@ -120,7 +114,6 @@ import myCafe from '~/assets/img/shape/icons/my-cafe-2.svg'
 import qrIcon from '~/assets/img/shape/icons/qr-code-scan.svg'
 
 import lottie from 'lottie-web'
-import login from '~/components/user/login'
 import Vue from 'vue'
 // import { QrcodeStream } from 'vue-qrcode-reader'
 import { mapActions } from 'vuex'
@@ -137,7 +130,6 @@ export default {
       // let user scan code again when entered wrong token
       letsUseCamera: !this.$route.query.token,
       launchCamera: false,
-      xyz: true,
       animationJson,
       loaderJson,
       // userImg,
@@ -149,7 +141,6 @@ export default {
       enterCodeModalActive: false,
       tableCode: '',
       accessCameraActive: false,
-      loginModalActive: false,
     }
   },
   methods: {
@@ -165,7 +156,7 @@ export default {
     onDecode(token) {
       // token proccessor called by camera or input if it is called by camera it returns string if not it's an input entery
       // by CAMERA
-      if(this.loginModalActive || this.enterCodeModalActive || this.CustomLoader) {
+      if( this.enterCodeModalActive || this.CustomLoader) {
         return;
       }
       let tokenValid = !!token &&
@@ -238,17 +229,15 @@ export default {
               })
             }
             
-            // it means user is not logged in and table requires it so we open login modal
+            // it means user is not logged in and table requires it so we open login modal -- DEPRECATED
             else if (err.response.status == 401) {
               this.enterCodeModalActive = false
-              this.loginModalActive = true
             }
           }
         })
     },
 
     openCodeModal() {
-      this.loginModalActive = false
       this.enterCodeModalActive = true
       setTimeout(() => {
         this.$refs.tablecode.focus()

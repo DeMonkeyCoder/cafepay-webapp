@@ -1,11 +1,20 @@
 <template>
   <div :dir="$dir()">
-        <v-tour
+    <v-tour
       name="menuTour"
       :steps="steps"
       :options="myOptions"
       :callbacks="myCallbacks"
     ></v-tour>
+
+    <login
+      key="loginmodal-scan"
+      id="loginmodal-scan"
+      :loginModalActive="loginModalActive"
+      @successful="dispatchSendCode"
+    />
+
+
     <div id="selected-products-preview" 
     class="selected-products-preview-is-shown"
     v-if="tokenType !== 'menu-only' && (!user.table_uuid || (user.table_uuid && !ordersPaid))">
@@ -110,13 +119,14 @@
 </template>
 
 <script>
+import login from '~/components/user/login'
 import { Order } from '~/middleware/models/cafe.js'
 import productDefaultImage from '@/assets/img/product-default.png'
 import Vue from 'vue'
 import {Swiper} from 'vue2-swiper'
 export default {
   components: {
-    Swiper
+    Swiper, login
   },
   props: [
     'menu',
@@ -124,6 +134,7 @@ export default {
   ],
   data() {
     return {
+      loginModalActive: false,
       showSwipableMenu: true,
       lastSwipeOffset: null,
       skeletunMenu: 3,
