@@ -117,6 +117,9 @@ Vue.mixin({
     },
     socketIsConnected() {
       return this.$store.state.socket.isConnected
+    },
+    userHasOrder(){
+      return this.table.you.orders.length
     }
   },
 

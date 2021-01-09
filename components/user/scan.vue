@@ -219,7 +219,7 @@ export default {
 
           if (err.response) {
           //  it means wrong table token
-            if (err.response.status == 404) {
+            if (err.response.status == 404 || err.response.status == 400) {
               this.$buefy.toast.open({
                 duration: 3000,
                 message: this.$t('scan_page.code_incorrect'),
