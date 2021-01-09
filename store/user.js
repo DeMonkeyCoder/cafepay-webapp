@@ -140,7 +140,7 @@ export const actions = {
       params: {}
       })
     .then(res => {
-    console.log('hs active orders', res);
+    // console.log('hs active orders', res);
       if (res.bill_products.length > 0) Vue.prototype.$connect()
     })
 

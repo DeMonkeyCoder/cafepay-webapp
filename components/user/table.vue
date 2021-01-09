@@ -352,6 +352,7 @@ export default {
   },
   methods: {
     goToMyOrderInMenu(){
+      console.log('whaat ?', this.table.you.orders);
       if (this.userHasOrder) {
         setTimeout(() => {
           this.$store.commit('cafe/changeActiveCategory', 0)
