@@ -121,7 +121,6 @@ import { mapActions } from 'vuex'
 export default {
   components: {
     // QrcodeStream: () => import('vue-qrcode-reader'),
-    login,
   },
   data() {
     return {

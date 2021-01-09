@@ -133,8 +133,21 @@ export const actions = {
 
         })
     })
-
-
   },
+
+  hasActiveOrder(context, token) {
+    this.$api.$get(`/api/v1/table/${token}/join/simple/`, {
+      params: {}
+      })
+    .then(res => {
+    console.log('hs active orders', res);
+      if (res.bill_products.length > 0) Vue.prototype.$connect()
+    })
+
+    .catch(err => {
+      
+    })
+  }
+  
 
 }

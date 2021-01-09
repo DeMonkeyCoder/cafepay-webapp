@@ -233,7 +233,8 @@ export const actions = {
       // if sina give me the name of product with table data then we don't need this sequence anymore
       // connect to socket
       console.log('state', context.state.tokenType);
-      if (context.state.tokenType != 'menu-only' && !context.state.closed) Vue.prototype.$connect()
+      // determine that is user is logged in or Not if Yes we need to check if he has any order to furthur open the socket 
+      if (context.rootState.user.user.id) context.dispatch('user/hasActiveOrder', context.rootState.table.token , {root: true})
     } catch (err) {
 
     }

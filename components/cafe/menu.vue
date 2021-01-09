@@ -11,7 +11,7 @@
       key="loginmodal-scan"
       id="loginmodal-scan"
       :loginModalActive="loginModalActive"
-      @successful="dispatchSendCode"
+      @successful="productsPayloadSeperator"
     />
 
 
@@ -245,6 +245,10 @@ export default {
       }
     },
     productsPayloadSeperator() {
+      if (!this.userIsFetched) {
+        this.loginModalActive = true
+        return
+      }
       return new Promise((resolve, reject) => {
             // if there is no change just switch to table view
         if (this.productChangeArray.length == 0) {
@@ -285,6 +289,8 @@ export default {
           })
           .then(res => {
             resolve(res)
+            
+            if (!this.socketIsConnected) Vue.prototype.$connect()
             if (this.searchExpandActive) this.toggleSearchBox()
           })
           .catch(err => {})
