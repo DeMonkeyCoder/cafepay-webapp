@@ -39,6 +39,7 @@ export const Table = class Table {
       let identiconId;
       let userId;
       let wish_to_pay;
+      let cashier = false
 
       orders.forEach(order => {
         // fall in chain
@@ -49,10 +50,13 @@ export const Table = class Table {
         if (order.preferred_payment_method == 0) hasOnlinePayment = true
         else paymentMethod = 'cash'
          
-        // user info is in each order so remove it from them and add to parent (person)
-        user_name = (order.is_staff) ? 'صندوق دار' : order.user_profile.full_name
+        user_name =  order.user_profile.full_name
+        if (order.is_staff) {
+          user_name = 'صندوق دار'
+          if (!cashier) cashier = true
+        }
         userId = order.user_profile.pk
-
+        
         // if order is belong to user (not others) slider will be full
         if (userId == currentUserId) wish_to_pay = order.payment_info.total_amount - order.payment_info.net_payed_amount
         else wish_to_pay = 0
@@ -62,10 +66,10 @@ export const Table = class Table {
           wish_to_pay,
           name: order.product_data.name,
         }
-
+        
         // generate id for identicon base on full_name + phone number
         identiconId = order.user_profile.full_name + userId
-        // user_name = order.user_profile.full_name
+        // user info is in each order so remove it from them and add to parent (person)
         delete prodObj.user_profile
 
         newOrders.push(prodObj)
@@ -88,6 +92,7 @@ export const Table = class Table {
         totalPrice,
         totalPaid,
         avatar,
+        cashier,
         name: user_name.slice(0, 20),
         orders: newOrders,
         id: userId

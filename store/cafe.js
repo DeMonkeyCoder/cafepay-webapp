@@ -233,8 +233,10 @@ export const actions = {
       // if sina give me the name of product with table data then we don't need this sequence anymore
       // connect to socket
       // console.log('state', context.state.tokenType);
-      // determine that is user is logged in or Not if Yes we need to check if he has any order to furthur open the socket 
-      if (context.rootState.user.user.id) context.dispatch('user/hasActiveOrder', context.rootState.table.token , {root: true})
+      // determine that is user is logged in or Not if Yes we need to check if he has any order to furthur open the socket #DEPRECATED due to cashier orders now we just check loggedIn status
+      // if (context.rootState.user.user.id) context.dispatch('user/hasActiveOrder', context.rootState.table.token , {root: true})
+      if (context.rootState.user.user.id) Vue.prototype.$connect()
+
     } catch (err) {
 
     }

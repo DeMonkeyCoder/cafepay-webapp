@@ -8,6 +8,7 @@ const order_states_general = {
 }
 
 export default {
+  understood: 'فهمیدم',
   unknown_error: 'خطایی رخ داده، مجددا امتحان کنید',
   network_error: 'خطا در اتصال به اینترنت',
   balance: 'موجودی',
@@ -36,6 +37,7 @@ export default {
   },
 
   table_page: {
+    cashier_order: 'برای پرداخت سفارشاتی که صندوق دار بر روی میز شما ثبت کرده، بر روی سفارش مورد نظر بزنید',
     ordering_unavailable: 'سفارش ‌گیری فعال نیست',
     scan_first_message: `<p class="cp-side-margin-2x">
         ابتدا به بخش

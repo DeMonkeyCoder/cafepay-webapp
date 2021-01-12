@@ -1,5 +1,6 @@
 <template>
   <div class="table-person">
+
     <!-- <v-tour
       v-if="first"
       name="sliderTour"
@@ -8,10 +9,28 @@
       :callbacks="myCallbacks"
     ></v-tour> -->
 
+    <b-modal class="simple-action-modal" :active.sync="cashierGuideModalActive" has-modal-card >
+      <div class="modal-card" style="width: auto">
+
+        <section class="modal-dialog">
+          <p>{{ $t('table_page.cashier_order') }}</p>
+        </section>
+
+        <section class="modal-caption"></section>
+
+        <section class="modal-action">
+          <button class="button ma-child is-light" type="button" @click="cashierGuideModalActive = false">{{ $t('understood') }}</button>
+        </section>
+        
+      </div>
+    </b-modal>
+
     <div class="person-title has-background-white cp-tb-margin">
       <img :src="person.avatar" :alt="person.name" />
       <p class="cp-side-padding cp-tb-padding" v-html="$t('table_page.person_orders', { title: title.trim() })">
+        
       </p>
+      <span v-if="person.cashier" class="cp-tb-padding"><b-icon @click.native="showCashierGuide" class="help-icon" icon="help"></b-icon></span>
     </div>
     <div
       class="person-orders cp-side-padding cp-tb-padding-half  has-background-white cp-card"
@@ -130,6 +149,7 @@ export default {
   },
   data() {
     return {
+      cashierGuideModalActive: false,
       myOptions: {
         highlight: true,
         useKeyboardNavigation: false,
@@ -167,6 +187,9 @@ export default {
     }
   },
   methods: {
+    showCashierGuide(){
+      this.cashierGuideModalActive = true
+    },
     changeWishToPay(value, index, personName) {
       // for now i send peson name but later i will search by id
       this.$store.commit('table/changeWishToPay', {

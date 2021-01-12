@@ -69,6 +69,7 @@ export default {
    ** Global CSS
    */
   css: [
+    // #TODO - Check if font-awesome is needed
     '@assets/fontawesome/css/all.min.css',
     '@assets/sass/cafepay.sass',
     // "https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css"
