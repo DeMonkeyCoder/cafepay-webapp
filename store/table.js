@@ -36,6 +36,7 @@ export const getters = {
   },
 
 
+
 }
 
 export const mutations = {
@@ -92,6 +93,18 @@ export const mutations = {
       this.commit('cafe/bindProductCount', user)
     }
 
+  },
+
+  changeChashierCount(state, order) {
+    // for persons being more than 1
+    for (const person of state.persons) {
+      if (person.cashier) {
+        person.orders[order.index].cashier_count = order.cashier_count
+        person.orders[order.index].wish_to_pay = order.cashier_count * order.unit_amount
+        break
+      }
+    }
+    console.log('person cashier', state.persons);
   },
 
   updateTableDetail(state, data) {

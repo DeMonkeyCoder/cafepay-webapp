@@ -80,7 +80,8 @@
         </div>
       </div>
 
-      <div v-if="person.cashier" class="person-orders__select">
+      <div v-if="person.cashier && order.payment_info.net_payed_amount != order.payment_info.total_amount" 
+      class="person-orders__select">
         <b-button class="float-btn fb-32" type="is-info">
           <span v-if="order.cashier_count != 0">{{order.cashier_count}}</span>
           <b-icon v-else icon="pencil"></b-icon>
@@ -225,11 +226,13 @@ export default {
   },
   methods: {
     cashierCountChange() {
-      
+      this.$store.commit('table/changeChashierCount', this.orderTobeChange)
+      this.cashierCountModalActive = false
     },
     openCountModal(cashier, index){
       this.orderTobeChange = JSON.parse(JSON.stringify(this.person.orders[index]))
-      this.orderTobeChange.max = (this.orderTobeChange.payment_info.net_payed_amount) ? Math.ceil(this.orderTobeChange.payment_info.total_amount / this.orderTobeChange.payment_info.net_payed_amount) : this.orderTobeChange.count
+      this.orderTobeChange.index = index
+      this.orderTobeChange.max = (this.orderTobeChange.payment_info.net_payed_amount) ? Math.ceil(this.orderTobeChange.payment_info.net_payed_amount / this.orderTobeChange.unit_amount) : this.orderTobeChange.count
       if (cashier) {
         this.cashierCountModalActive = true
       }
