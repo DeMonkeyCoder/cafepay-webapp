@@ -56,7 +56,7 @@ export default {
       payment_is_not_done: 'پرداخت سفارش انجام نشده',
       details: 'جزییات',
       checkout: 'تکمیل سفارش',
-      checkout_CASH: 'سفارش خود را سر صندوق پرداخت کنید',
+      checkout_CASH: 'روش پرداخت:‌ سر صندوق',
       states: Object.assign({...order_states_general} , {
         waiting: 'در انتظار تایید توسط پذیرنده',
         no_order: 'سفارشی ثبت نشده است'
@@ -82,7 +82,7 @@ export default {
     no_orders_on_your_table: 'سفارشی برروی میز شما وجود ندارد',
     checkout_all_items: 'پرداخت کل فاکتور',
     checkout: 'پرداخت سفارش',
-    checkout_CASH_message: 'سفارش خود را سر صندوق پرداخت کنید',
+    checkout_CASH_message: 'روش پرداخت:‌ سر صندوق',
     choose_payment_method: 'انتخاب روش پرداخت',
     person: {
       tour: {

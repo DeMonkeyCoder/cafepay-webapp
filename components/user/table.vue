@@ -194,7 +194,10 @@
           type="is-info"
           >{{  $t('table_page.checkout') }} ({{ totalWishToPayOrder | currency }})</b-button
         >
-        <span v-else class="message-warning font-16 font-norm">{{$t('table_page.checkout_CASH_message')}}</span>
+        <div v-else class="message-warning payment-method-message">
+          <span class=" font-16 font-norm">{{$t('table_page.checkout_CASH_message')}}</span>
+          <b-button type="is-light" size="is-small">تغییر روش پرداخت</b-button>
+        </div>
       </div>
 
  
@@ -454,6 +457,7 @@ export default {
       immediate: true,
       handler(val, oldValue) {
         if (val.paymentMethod == 'cash' && val.hasOnlinePayment) {
+          console.log('online order ? ', val.hasOnlinePayment);
           this.proccessOrderForPayment()
           this.setCashPayment()
         }
