@@ -13,13 +13,35 @@
       <div class="modal-card" style="width: auto">
 
         <section class="modal-dialog">
-          <p>{{ $t('table_page.cashier_order') }}</p>
+          <p>{{ $t('table_page.cashier_order_guide') }}</p>
         </section>
 
         <section class="modal-caption"></section>
 
         <section class="modal-action">
           <button class="button ma-child is-light" type="button" @click="cashierGuideModalActive = false">{{ $t('understood') }}</button>
+        </section>
+        
+      </div>
+    </b-modal>
+
+    <!-- COUNT CHANGE MODAL -->
+    <b-modal class="simple-action-modal" :active.sync="cashierCountModalActive" has-modal-card >
+      <div class="modal-card" style="width: auto">
+
+        <section class="modal-dialog">
+          <p class="cp-b-margin">{{ $t('table_page.cashier_order') }}</p>
+          <b-field dir="ltr" :label="orderTobeChange.name">
+            <b-numberinput v-model="orderTobeChange.cashier_count" controls-rounded type="is-info" :min="0" 
+            :max="orderTobeChange.max"></b-numberinput>
+          </b-field>
+        </section>
+
+        <section class="modal-caption"></section>
+
+        <section class="modal-action">
+          <button :disabled="orderTobeChange.cashier_count == 0 || orderTobeChange.cashier_count > orderTobeChange.max " 
+            class="button ma-child is-info" type="button" @click="cashierCountChange">{{ $t('table_page.chashier_count_submit') }}</button>
         </section>
         
       </div>
@@ -38,22 +60,33 @@
       v-for="(order, index) in person.orders"
       :key="order.pk"
       :id="`order-${index}`"
+      @click="openCountModal(person.cashier, index)"
     >
-      <div class="person-title-and-selection">
-        <div class="person-order-title font-norm">{{ order.name }}</div>
-        <div class="person-order-selection"></div>
+      <div class="person-orders__info">
+        <div class="person-title-and-selection">
+          <div class="person-order-title font-norm">{{ order.name }}</div>
+          <div class="person-order-selection"></div>
+        </div>
+
+        <div class="person-total-order-info">
+          <span class="person-total-order-info__payment"
+            >{{ $t('table_page.person_order_count', {order_count: order.count}) }} |
+            {{ order.payment_info.total_amount | currency }}
+            <!-- <span class="toman">تومان</span> -->
+            </span>
+
+            <div v-if="order.payment_info.net_payed_amount == order.payment_info.total_amount && history == false" 
+            class="person-total-order-info__status"><span class=" green font-10 white-text cp-side-padding-half">{{ $t('table_page.person_payed') }}</span></div>
+        </div>
       </div>
 
-      <div class="person-total-order-info">
-        <span class="person-total-order-info__payment"
-          >{{ $t('table_page.person_order_count', {order_count: order.count}) }} |
-          {{ order.payment_info.total_amount | currency }}
-          <!-- <span class="toman">تومان</span> -->
-          </span>
-
-          <div v-if="order.payment_info.net_payed_amount == order.payment_info.total_amount && history == false" 
-          class="person-total-order-info__status"><span class=" green font-10 white-text cp-side-padding-half">{{ $t('table_page.person_payed') }}</span></div>
+      <div v-if="person.cashier" class="person-orders__select">
+        <b-button class="float-btn fb-32" type="is-info">
+          <span v-if="order.cashier_count != 0">{{order.cashier_count}}</span>
+          <b-icon v-else icon="pencil"></b-icon>
+        </b-button>
       </div>
+  
 
       <!-- <div class="person-payment">
         <span
@@ -150,6 +183,10 @@ export default {
   data() {
     return {
       cashierGuideModalActive: false,
+      cashierCountModalActive: false,
+      orderTobeChange: {
+        payment_info: {}
+      },
       myOptions: {
         highlight: true,
         useKeyboardNavigation: false,
@@ -187,6 +224,16 @@ export default {
     }
   },
   methods: {
+    cashierCountChange() {
+      
+    },
+    openCountModal(cashier, index){
+      this.orderTobeChange = JSON.parse(JSON.stringify(this.person.orders[index]))
+      this.orderTobeChange.max = (this.orderTobeChange.payment_info.net_payed_amount) ? Math.ceil(this.orderTobeChange.payment_info.total_amount / this.orderTobeChange.payment_info.net_payed_amount) : this.orderTobeChange.count
+      if (cashier) {
+        this.cashierCountModalActive = true
+      }
+    },
     showCashierGuide(){
       this.cashierGuideModalActive = true
     },

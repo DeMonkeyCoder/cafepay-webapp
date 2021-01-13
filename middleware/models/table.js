@@ -64,6 +64,7 @@ export const Table = class Table {
         let prodObj = {
           ...order,
           wish_to_pay,
+          cashier_count: 0,
           name: order.product_data.name,
         }
         

@@ -37,7 +37,9 @@ export default {
   },
 
   table_page: {
-    cashier_order: 'برای پرداخت سفارشاتی که صندوق دار بر روی میز شما ثبت کرده، بر روی سفارش مورد نظر بزنید',
+    cashier_order: 'تعدادی که مایل به پرداخت آن هستید را انتخاب کنید',
+    cashier_order_guide: 'برای پرداخت سفارشاتی که صندوق دار بر روی میز شما ثبت کرده، بر روی سفارش مورد نظر بزنید',
+    chashier_count_submit: 'ثبت تعداد',
     ordering_unavailable: 'سفارش ‌گیری فعال نیست',
     scan_first_message: `<p class="cp-side-margin-2x">
         ابتدا به بخش
