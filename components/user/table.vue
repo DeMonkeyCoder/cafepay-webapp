@@ -154,7 +154,7 @@
                 </div>
               </div>
 
-              <div v-if="tokenType != 'pre-order'" :class="{'shadow-md': paymentMethod == 'cash', 'method-selected': paymentMethod == 'cash'}" @click="paymentMethod = 'cash'"
+              <div v-if="tokenType != 'pre-order' && table.paymentMethod != 'cash'" :class="{'shadow-md': paymentMethod == 'cash', 'method-selected': paymentMethod == 'cash'}" @click="paymentMethod = 'cash'"
               class="pre-invoice-modal__payment-method__cash cp-b-margin cp-side-padding-half cp-tb-padding normal-radius">
                 <div class="pre-invoice-modal__payment-method__cash__img">
                   <img src="@/assets/img/credit-card-payment.png" alt="">
@@ -185,18 +185,25 @@
       </b-modal>
 
       <div id="pay-checkout" class="pay-checkout-is-shown">
-        <b-button v-if="table.paymentMethod == 'online'"
+        <b-button v-if="table.paymentMethod == 'online' || table.paid"
           :disabled="totalWishToPayOrder == 0 "
           @click="showPreInvoice"
           :loading="globalLoading"
           class="button shadow-lg-b bcp-btn cp-btn-submit-order"
           size="is-medium"
           type="is-info"
-          >{{  $t('table_page.checkout') }} ({{ totalWishToPayOrder | currency }})</b-button
+          >
+          <span v-if="table.paid">پرداخت کامل است</span>
+          <span v-else>{{  $t('table_page.checkout') }} ({{ totalWishToPayOrder | currency }})</span>
+          </b-button
         >
         <div v-else class="message-warning payment-method-message">
-          <span class=" font-16 font-norm">{{$t('table_page.checkout_CASH_message')}}</span>
-          <b-button type="is-light" size="is-small">تغییر روش پرداخت</b-button>
+          <span class="payment-method-message__text font-16 font-norm"
+          v-html="$t('table_page.checkout_CASH_message')"  >
+            </span>
+          <div class="payment-method-message__btn">
+            <b-button @click="showPreInvoice" class="shadow-lg" type="is-light" size="is-small">تغییر روش پرداخت</b-button></div>
+          
         </div>
       </div>
 
@@ -321,6 +328,7 @@ export default {
         this.table.status
       )
     },
+
 
 
     showPreOrder(){

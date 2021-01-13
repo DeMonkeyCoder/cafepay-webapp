@@ -16,6 +16,7 @@ export const Table = class Table {
       console.log('persons no order', data.personRawProduct);
     }
     this.persons = data.personRawProduct
+    this.paid = data.paid
     this.status = data.status
     this.paymentMethod = data.paymentMethod
     this.hasOnlinePayment = data.hasOnlinePayment
@@ -29,6 +30,7 @@ export const Table = class Table {
       acc.set(obj.user_profile.pk, (acc.get(obj.user_profile.pk) || []).concat(obj)), new Map).values()];
 
     let personRawProduct = []
+    let paid = true
     let status = (personRawProduct_noProperty.length) ? 'ready' : 'no_order'
     let paymentMethod = 'online'
     let hasOnlinePayment = false
@@ -78,6 +80,10 @@ export const Table = class Table {
         (total, order) => order.payment_info.net_payed_amount + total, 0)
       let avatar;
 
+      if (paid) {
+        if (totalPaid != totalPrice) paid = false
+      } 
+
       let avatars = new Avatars(sprites);
       avatar = avatars.create(identiconId, {
         base64: true
@@ -96,6 +102,7 @@ export const Table = class Table {
     return {
       personRawProduct,
       status,
+      paid,
       paymentMethod,
       hasOnlinePayment
     }

@@ -17,6 +17,7 @@ export const state = () => ({
   hasOnlinePayment: false,
   yourOrdersCost: 0,
   yourOrdersPaid: 0,
+  paid: false,
   keepAlive: false,
   you: {
     orders: []
@@ -57,6 +58,7 @@ export const mutations = {
     state.token = null
     state.table_number = null
     state.persons = []
+    state.paid = false
     state.tpayment = 0
     state.payment = {}
     state.you = {
@@ -78,6 +80,7 @@ export const mutations = {
     state.persons = table.persons
     state.payment = rawData.payment_info
     state.status = table.status
+    state.paid = table.paid
     state.paymentMethod = table.paymentMethod
     state.hasOnlinePayment = table.hasOnlinePayment
     // we use this data to handle payment status in preorder
