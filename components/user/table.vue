@@ -54,6 +54,31 @@
       v-if="showTableOrders"
       class="has-active-table"
     >
+
+
+      <b-modal class="simple-action-modal" :active.sync="descriptionModalActive" has-modal-card >
+        <div class="modal-card" style="width: auto">
+
+          <section class="modal-dialog">
+            <b-field>
+              <b-input ref="descriptionInput" class="is-noborder-input" 
+              v-model="description" maxlength="200" type="textarea" placeholder="توضیحات خود را در مورد سفارشات بنویسید"></b-input>
+            </b-field>
+          </section>
+
+          <section class="modal-caption"></section>
+
+          <section class="modal-action">
+            <b-button :loading="globalLoading" class="button ma-child is-info" type="button" @click="submitDescription">ثبت توضیحات</b-button>
+          </section>
+          
+        </div>
+      </b-modal>
+
+
+
+
+
       <b-modal
         class="table-options-modal simple-action-modal"
         :active.sync="isTableOptionsModalActive"
@@ -202,13 +227,15 @@
       <!-- <v-tour name="myTour" :steps="steps" :options="{ highlight: true }"></v-tour> -->
       
   <div class="table-header cp-header cp-tb-padding cp-side-padding">
-  
+        <h5 class="right-align t-white cp-side-padding-half">
+          {{ $t('table_page.table') }}: <span class="font-norm">{{ table.table_number }}</span>
+        </h5>
 
         <div
           id="table-status-bar"
           class="table-status-bar long-shadow cp-padding cp-header-card has-background-white"
         >
-          <div class="table-top-section">
+          <!-- <div class="table-top-section">
           <div
             class="table-top-section__name  cp-tb-padding-half cp-side-padding"
           >
@@ -221,17 +248,18 @@
             <b-button @click="goToMyOrderInMenu" class="shadow-b" type="is-warning" inverted >
               {{ (userHasOrder) ? $t('table_page.edit_order') : $t('table_page.add_order') }}</b-button>
           </div>
-        </div>
+        </div> -->
 
-          <!-- <div class="table-status-bar__actions">
-            <div class="table-status-bar__actions__pay-whole-bill">
-              <b-button  type="is-light" inverted>پرداخت کل سفارش</b-button>
+          <div class="table-status-bar__actions">
+            <div class="table-status-bar__actions__edit-orders">
+              <b-button @click="goToMyOrderInMenu" class="" type="is-warning" inverted >
+              {{ (userHasOrder) ? $t('table_page.edit_order') : $t('table_page.add_order') }}</b-button>
             </div>
 
             <div class="table-status-bar__actions__order-description">
-              <b-button  type="is-light" inverted>ثبت توضیحات</b-button>
+              <b-button @click="openDescriptionModal" :disabled="!table.joinId"  type="is-light is-info">ثبت توضیحات</b-button>
             </div>
-          </div> -->
+          </div>
 
           <div
             id="table-status-bar-progress-wrapper"
@@ -284,6 +312,8 @@ export default {
       key: 1,
       isTableOptionsModalActive: false,
       fullPayment: false,
+      description: null,
+      descriptionModalActive: false,
       cafeDefaultImage,
       preInvoiceAnimation,
       ordersToPay: [],
@@ -351,6 +381,29 @@ export default {
     // }
   },
   methods: {
+    openDescriptionModal(){
+      this.descriptionModalActive = true
+      setTimeout(() => {
+        this.$refs.descriptionInput.focus()
+      }, 200)
+    },
+    submitDescription(){
+      this.$api
+      .put(`/api/v1/join/${this.table.joinId}/set/description/`, {
+        description: this.description,
+      })
+      .then(res => {
+         this.descriptionModalActive = false
+          this.toaster('توضیحات با موفقیت ثبت شد', 'is-info', 'is-bottom')
+      })
+      
+      .catch(err => {
+        if (err.response) {
+           this.toaster('خطا در ثبت توضیحات', 'is-danger', 'is-bottom')
+          console.log(err.response.data)
+        }
+      })
+    },
     goToMyOrderInMenu(){
       console.log('whaat ?', this.table.you.orders);
       if (this.userHasOrder) {
@@ -453,6 +506,7 @@ export default {
       deep: true,
       immediate: true,
       handler(val, oldValue) {
+        this.description = JSON.parse(JSON.stringify(val.description))
         if (val.paymentMethod == 'cash' && val.hasOnlinePayment) {
           this.proccessOrderForPayment()
           this.setCashPayment()
