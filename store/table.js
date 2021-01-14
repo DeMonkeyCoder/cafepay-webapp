@@ -60,7 +60,7 @@ export const mutations = {
     state.persons = []
     state.paid = false
     state.tpayment = 0
-    paymentMethod = 'online'
+    state.paymentMethod = 'online'
     state.payment = {}
     state.you = {
       orders: []
