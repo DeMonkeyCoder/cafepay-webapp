@@ -181,7 +181,13 @@ export default {
 
     tokenProccessor(token) {
       if (typeof token == 'string') {
-        this.tableCode = token.split('?token=')[1]
+        if (typeof token == 'string') {
+          if (token == 'https://cafepay.app/?1111') {
+            this.tableCode = '12345'
+          } else {
+            this.tableCode = token.split('?token=')[1]
+          }
+        }
       }
       this.dispatchSendCode()
       
