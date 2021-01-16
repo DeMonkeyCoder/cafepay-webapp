@@ -45,11 +45,10 @@ export default {
       <p>و بارکد مربوط به میز را اسکن کنید</p>
       <p>یا کد میز را وارد نمایید</p>`,
     table: 'میز',
-    add_order: 'افزودن سفارش',
     edit_order: 'ویرایش سفارش',
     payment_status_header_payed: 'پرداخت شده',
     payment_status_header_of: 'از',
-    preorder: { 
+    preorder: {
       self_pickup_warning: 'توجه داشته باشید سفارش در محل مجموعه به شما تحویل داده خواهد شد.',
       current_orders: 'سفارشات فعلی',
       order_from: 'سفارش از',
@@ -64,8 +63,7 @@ export default {
     },
     states: Object.assign({...order_states_general} , {
       waiting: 'سفارش شما با موفقیت ثبت شد',
-      no_order: 'سفارشی بر روی میز ثبت نشده است',
-      null: 'سفارشی ثبت نشده است',
+      no_order: 'سفارشی بر روی میز ثبت نشده است'
     }),
     total_amount: 'مجموع سفارشات',
     payed_amount: 'پرداخت شده',

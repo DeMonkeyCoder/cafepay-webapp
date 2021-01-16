@@ -59,9 +59,6 @@ export const mutations = {
     state.persons = []
     state.tpayment = 0
     state.payment = {}
-    state.you = {
-      orders: []
-    }
     
   },
 

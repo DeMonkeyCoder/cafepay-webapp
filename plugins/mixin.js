@@ -111,16 +111,8 @@ Vue.mixin({
     },
     guides(){
       return this.$store.state.guides
-    },
-    userIsFetched() {
-      return (this.user.id) ? true : false
-    },
-    socketIsConnected() {
-      return this.$store.state.socket.isConnected
-    },
-    userHasOrder(){
-      return this.table.you.orders.length
     }
+
   },
 
 })

@@ -232,9 +232,8 @@ export const actions = {
       // why after menu data ? because we need menu data for build table data
       // if sina give me the name of product with table data then we don't need this sequence anymore
       // connect to socket
-      // console.log('state', context.state.tokenType);
-      // determine that is user is logged in or Not if Yes we need to check if he has any order to furthur open the socket 
-      if (context.rootState.user.user.id) context.dispatch('user/hasActiveOrder', context.rootState.table.token , {root: true})
+      console.log('state', context.state.tokenType);
+      if (context.state.tokenType != 'menu-only' && !context.state.closed) Vue.prototype.$connect()
     } catch (err) {
 
     }

@@ -1,20 +1,11 @@
 <template>
   <div :dir="$dir()">
-    <v-tour
+        <v-tour
       name="menuTour"
       :steps="steps"
       :options="myOptions"
       :callbacks="myCallbacks"
     ></v-tour>
-
-    <login
-      key="loginmodal-scan"
-      id="loginmodal-scan"
-      :loginModalActive="loginModalActive"
-      @successful="productsPayloadSeperator"
-    />
-
-
     <div id="selected-products-preview" 
     class="selected-products-preview-is-shown"
     v-if="tokenType !== 'menu-only' && (!user.table_uuid || (user.table_uuid && !ordersPaid))">
@@ -119,14 +110,13 @@
 </template>
 
 <script>
-import login from '~/components/user/login'
 import { Order } from '~/middleware/models/cafe.js'
 import productDefaultImage from '@/assets/img/product-default.png'
 import Vue from 'vue'
 import {Swiper} from 'vue2-swiper'
 export default {
   components: {
-    Swiper, login
+    Swiper
   },
   props: [
     'menu',
@@ -134,7 +124,6 @@ export default {
   ],
   data() {
     return {
-      loginModalActive: false,
       showSwipableMenu: true,
       lastSwipeOffset: null,
       skeletunMenu: 3,
@@ -245,10 +234,6 @@ export default {
       }
     },
     productsPayloadSeperator() {
-      if (!this.userIsFetched) {
-        this.loginModalActive = true
-        return
-      }
       return new Promise((resolve, reject) => {
             // if there is no change just switch to table view
         if (this.productChangeArray.length == 0) {
@@ -289,8 +274,6 @@ export default {
           })
           .then(res => {
             resolve(res)
-            
-            if (!this.socketIsConnected) Vue.prototype.$connect()
             if (this.searchExpandActive) this.toggleSearchBox()
           })
           .catch(err => {})
@@ -332,7 +315,7 @@ export default {
         count
       })
       // initial Change order Tour
-      if (this.guides.changeOrderConfirm && this.userHasOrder > 0) {
+      if (this.guides.changeOrderConfirm && this.table.you.orders.length > 0) {
         this.$tours['menuTour'].start()
         this.tour = true
       }

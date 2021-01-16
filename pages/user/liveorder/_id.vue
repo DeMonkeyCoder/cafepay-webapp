@@ -134,7 +134,7 @@ export default {
   beforeMount() {
      this.$store.commit('cafe/setType', 'pre-order')
      this.$store.commit('table/setToken', {token: this.$route.params.id, number: 'پیش سفارش'})
-     if (!this.socketIsConnected) Vue.prototype.$connect()
+     if (!this.$store.state.socket.isConnected) Vue.prototype.$connect()
 
   },
   mounted() {
