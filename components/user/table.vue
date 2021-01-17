@@ -228,8 +228,7 @@
           </div>
 
           <div class="table-top-section__edit-orders">
-            <b-button @click="goToMyOrderInMenu" class="shadow-b" type="is-warning" inverted >
-              {{ (userHasOrder) ? $t('table_page.edit_order') : $t('table_page.add_order') }}</b-button>
+            <b-button @click="goToMyOrderInMenu" class="shadow-b" type="is-warning" inverted >{{ $t('table_page.edit_order') }}</b-button>
           </div>
         </div>
 
@@ -363,13 +362,10 @@ export default {
   },
   methods: {
     goToMyOrderInMenu(){
-      console.log('whaat ?', this.table.you.orders);
-      if (this.userHasOrder) {
-        setTimeout(() => {
-          this.$store.commit('cafe/changeActiveCategory', 0)
-          this.$nuxt.$emit('changeActiveCategory', 0)
-        }, 300);
-      }
+      setTimeout(() => {
+        this.$store.commit('cafe/changeActiveCategory', 0)
+        this.$nuxt.$emit('changeActiveCategory', 0)
+      }, 300);
       this.$store.commit('changeNavigation', 'currentCafe')
 
     },
