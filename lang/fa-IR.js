@@ -49,18 +49,17 @@ export default {
       <p>و بارکد مربوط به میز را اسکن کنید</p>
       <p>یا کد میز را وارد نمایید</p>`,
     table: 'میز',
-    add_order: 'افزودن سفارش',
     edit_order: 'ویرایش سفارش',
     payment_status_header_payed: 'پرداخت شده',
     payment_status_header_of: 'از',
-    preorder: { 
+    preorder: {
       self_pickup_warning: 'توجه داشته باشید سفارش در محل مجموعه به شما تحویل داده خواهد شد.',
       current_orders: 'سفارشات فعلی',
       order_from: 'سفارش از',
       payment_is_not_done: 'پرداخت سفارش انجام نشده',
       details: 'جزییات',
       checkout: 'تکمیل سفارش',
-      checkout_CASH: 'سفارش خود را سر صندوق پرداخت کنید',
+      checkout_CASH: '<span class="font-12">روش پرداخت:‌</span> نقدی',
       states: Object.assign({...order_states_general} , {
         waiting: 'در انتظار تایید توسط پذیرنده',
         no_order: 'سفارشی ثبت نشده است'
@@ -68,8 +67,7 @@ export default {
     },
     states: Object.assign({...order_states_general} , {
       waiting: 'سفارش شما با موفقیت ثبت شد',
-      no_order: 'سفارشی بر روی میز ثبت نشده است',
-      null: 'سفارشی ثبت نشده است',
+      no_order: 'سفارشی بر روی میز ثبت نشده است'
     }),
     total_amount: 'مجموع سفارشات',
     payed_amount: 'پرداخت شده',
@@ -86,7 +84,7 @@ export default {
     no_orders_on_your_table: 'سفارشی برروی میز شما وجود ندارد',
     checkout_all_items: 'پرداخت کل فاکتور',
     checkout: 'پرداخت سفارش',
-    checkout_CASH_message: 'سفارش خود را سر صندوق پرداخت کنید',
+    checkout_CASH_message: '<span class="font-12">روش پرداخت:‌</span> نقدی',
     choose_payment_method: 'انتخاب روش پرداخت',
     person: {
       tour: {
