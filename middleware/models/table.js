@@ -49,7 +49,7 @@ export const Table = class Table {
         if (!order.is_accepted) status = 'waiting'
         // set method
         if (order.preferred_payment_method == 0 && order.payment_info.net_payed_amount != order.payment_info.total_amount) hasOnlinePayment = true
-        else paymentMethod = 'cash'
+        if(order.preferred_payment_method != 0) paymentMethod = 'cash'
          
         // user info is in each order so remove it from them and add to parent (person)
         user_name = (order.is_staff) ? 'صندوق دار' : order.user_profile.full_name
