@@ -48,9 +48,13 @@ export const Table = class Table {
         if (!order.is_ready) status = 'preparing'
         if (!order.sent_to_kitchen) status = 'confirmed'
         if (!order.is_accepted) status = 'waiting'
+        // ONLINE = '0'
+        // POS = '1'
+        // CASH = '2'
+        // CARD_TO_CARD = '3'
         // set method
         if (order.preferred_payment_method == 0 && order.payment_info.net_payed_amount != order.payment_info.total_amount) hasOnlinePayment = true
-        else paymentMethod = 'cash'
+        if (order.preferred_payment_method != 0) paymentMethod = 'cash'
          
         user_name =  order.user_profile.full_name
         if (order.is_staff) {

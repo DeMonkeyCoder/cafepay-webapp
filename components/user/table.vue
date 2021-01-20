@@ -195,8 +195,8 @@
           >
           <span v-if="table.paid">پرداخت کامل است</span>
           <span v-else>{{  $t('table_page.checkout') }} ({{ totalWishToPayOrder | currency }})</span>
-          </b-button
-        >
+        </b-button>
+
         <div v-else class="message-warning payment-method-message">
           <span class="payment-method-message__text font-16 font-norm"
           v-html="$t('table_page.checkout_CASH_message')"  >
