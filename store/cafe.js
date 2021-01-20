@@ -53,8 +53,7 @@ export const mutations = {
     state.cafepay_fee = data.cafe.cafepay_fee
     state.fee_payer = data.cafe.fee_payer
     state.header_image = data.cafe.header_image
-    // state.payment_first = data.cafe.payment_first
-    state.payment_first = true
+    state.payment_first = data.cafe.payment_first
 
     // define type of token ----- 0: menuonly   1: normal    2: preorder
     switch (data.type) {
