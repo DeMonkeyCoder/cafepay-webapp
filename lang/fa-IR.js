@@ -5,6 +5,7 @@ const order_states_general = {
   is_delivered: '!سفارش شما آماده است',
   confirmed: 'سفارش شما تایید شد',
   rejected: 'سفارش شما توسط پذیرنده رد شد',
+  null: 'سفارشی ثبت نشده'
 }
 
 export default {

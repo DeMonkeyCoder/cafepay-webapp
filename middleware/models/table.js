@@ -25,47 +25,80 @@ export const Table = class Table {
 
   }
 
+  setOrderStatus(order, table){
+            // fall in chain
+    if (!order.is_ready) table.status = 'preparing'
+    if (!order.sent_to_kitchen) table.status = 'confirmed'
+    if (!order.is_accepted) table.status = 'waiting'
+
+  }
+
+  setPaymentStatus(order, table) {
+      // ONLINE = '0'
+      // POS = '1'
+      // CASH = '2'
+      // CARD_TO_CARD = '3'
+      // set method
+      if (order.preferred_payment_method == 0 && order.payment_info.net_payed_amount != order.payment_info.total_amount) table.hasOnlinePayment = true
+      if (order.preferred_payment_method != 0) table.paymentMethod = 'cash'
+      
+  }
+
+  setAggregate(newOrders, person) {
+    person.totalPrice = newOrders.reduce(
+      (total, order) => order.payment_info.total_amount + total, 0)
+
+    person.totalPaid = newOrders.reduce(
+      (total, order) => order.payment_info.net_payed_amount + total, 0)
+  }
+
+
+  setUserInfo(order, person) {
+    person.name = order.user_profile.full_name.slice(0, 20)
+    if (order.is_staff) {
+      person.name = 'صندوق دار'
+      if (!person.cashier) person.cashier = true
+    }
+   person.id = order.user_profile.pk
+  }
+
   productsByPerson(arr, currentUserId) {
     let personRawProduct_noProperty = [...arr.reduce((acc, obj) =>
       acc.set(obj.user_profile.pk, (acc.get(obj.user_profile.pk) || []).concat(obj)), new Map).values()];
 
+    let table = {
+      status: (personRawProduct_noProperty.length) ? 'ready' : 'no_order',
+      paid: true,
+      paymentMethod: 'online',
+      hasOnlinePayment: false
+    }
     let personRawProduct = []
-    let paid = true
-    let status = (personRawProduct_noProperty.length) ? 'ready' : 'no_order'
-    let paymentMethod = 'online'
-    let hasOnlinePayment = false
+
     personRawProduct_noProperty.forEach(orders => {
       // make orders from product class
+      let person = {
+        name: null,
+        identiconId: null,
+        id: null,
+        avatar: null,
+        totalPrice: null,
+        totalPaid: null,
+        cashier: false
+      }
       let newOrders = []
-      let user_name;
-      let identiconId;
-      let userId;
-      let wish_to_pay;
-      let cashier = false
 
       orders.forEach(order => {
+        let wish_to_pay;
         // fall in chain
-        if (!order.is_ready) status = 'preparing'
-        if (!order.sent_to_kitchen) status = 'confirmed'
-        if (!order.is_accepted) status = 'waiting'
-        // ONLINE = '0'
-        // POS = '1'
-        // CASH = '2'
-        // CARD_TO_CARD = '3'
-        // set method
-        if (order.preferred_payment_method == 0 && order.payment_info.net_payed_amount != order.payment_info.total_amount) hasOnlinePayment = true
-        if (order.preferred_payment_method != 0) paymentMethod = 'cash'
-         
-        user_name =  order.user_profile.full_name
-        if (order.is_staff) {
-          user_name = 'صندوق دار'
-          if (!cashier) cashier = true
-        }
-        userId = order.user_profile.pk
+        this.setOrderStatus(order, table)
+        this.setPaymentStatus(order, table)
+        this.setUserInfo(order, person)
         
         // if order is belong to user (not others) slider will be full
-        if (userId == currentUserId) wish_to_pay = order.payment_info.total_amount - order.payment_info.net_payed_amount
+        if (person.id == currentUserId) wish_to_pay = order.payment_info.total_amount - order.payment_info.net_payed_amount
         else wish_to_pay = 0
+
+
         // build new object with addition of wish to pay and name of product
         let prodObj = {
           ...order,
@@ -75,46 +108,39 @@ export const Table = class Table {
         }
         
         // generate id for identicon base on full_name + phone number
-        identiconId = order.user_profile.full_name + userId
+        person.identiconId = order.user_profile.full_name + person.id
         // user info is in each order so remove it from them and add to parent (person)
         delete prodObj.user_profile
 
         newOrders.push(prodObj)
       });
       // we need to calculate total price of the orders of a person and total payment on them
-      let totalPrice = newOrders.reduce(
-        (total, order) => order.payment_info.total_amount + total, 0)
+      this.setAggregate(newOrders, person)
+      console.log('tag', person)
+      
+      if (table.paid) {
+        if (person.totalPaid != person.totalPrice) table.paid = false
+      }
 
-      let totalPaid = newOrders.reduce(
-        (total, order) => order.payment_info.net_payed_amount + total, 0)
-      let avatar;
-
-      if (paid) {
-        if (totalPaid != totalPrice) paid = false
-      } 
-
+      // avatar setup
+       
       let avatars = new Avatars(sprites);
-      avatar = avatars.create(identiconId, {
+      person.avatar = avatars.create(person.identiconId, {
         base64: true
       });
+      
+      delete person.identiconId
 
       // push new person along side his products
       personRawProduct.push({
-        totalPrice,
-        totalPaid,
-        avatar,
-        cashier,
-        name: user_name.slice(0, 20),
+        ...person,
         orders: newOrders,
-        id: userId
       })
     });
+
     return {
       personRawProduct,
-      status,
-      paid,
-      paymentMethod,
-      hasOnlinePayment
+      ...table
     }
   }
 
