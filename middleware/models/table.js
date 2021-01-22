@@ -88,11 +88,13 @@ export const Table = class Table {
          prodTemp.payment_info.net_payed_amount = 0
          prodTemp.payment_info.payed_amount = 0
          prodTemp.payment_info.net_amount = prodTemp.unit_amount
+         prodTemp.paid = false
       }
       else {
         prodObj.payment_info.net_payed_amount -= prodObj.unit_amount
         prodObj.payment_info.payed_amount -= prodObj.unit_amount
 
+        prodTemp.paid = true
         prodTemp.payment_info.net_payed_amount = prodTemp.unit_amount
         prodTemp.payment_info.payed_amount = prodTemp.unit_amount
         prodTemp.payment_info.net_amount = 0
@@ -149,6 +151,7 @@ export const Table = class Table {
           ...order,
           wish_to_pay,
           cashier_count: 0,
+          paid: (order.payment_info.net_payed_amount == order.payment_info.total_amount),
           name: order.product_data.name,
         }
         // user info is in each order so remove it from them and add to parent (person)
@@ -172,6 +175,14 @@ export const Table = class Table {
       });
       
       delete person.identiconId
+
+      // sort orders by payment status
+        // a.sort(function (x, y) {
+        //   // true values first
+        //   return (x === y) ? 0 : x ? -1 : 1;
+        //   // false values first
+        //   // return (x === y)? 0 : x? 1 : -1;
+        // });
 
       // push new person along side his products
       personRawProduct.push({
