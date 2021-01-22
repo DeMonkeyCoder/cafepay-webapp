@@ -29,6 +29,13 @@ export default {
         this.$store.commit('setGuide', {name: 'changeOrderConfirm', data: true})
       }
       if (JSON.parse(changeOrderGuide)) this.$store.commit('setGuide', {name: 'changeOrderConfirm', data: true})
+
+      let cashierSelectionGuide = localStorage.getItem('cashierSelectionGuide')
+      if (cashierSelectionGuide == null) {
+        localStorage.setItem('cashierSelectionGuide', true)
+        this.$store.commit('setGuide', {name: 'cashierSelection', data: true})
+      }
+      if (JSON.parse(cashierSelectionGuide)) this.$store.commit('setGuide', {name: 'cashierSelection', data: true})
       
        
     }

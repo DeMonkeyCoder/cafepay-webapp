@@ -23,7 +23,8 @@ export const state = () => ({
     reconnectError: false,
   },
   guides: {
-    changeOrderConfirm: false
+    changeOrderConfirm: false,
+    cashierSelection: false,
   },
   currentMainPage: (state.hasActiveTable) ? 'currentCafe' : 'scan',
 })

@@ -1,5 +1,5 @@
 <template>
-  <div class="table-person">
+  <div :id="(person.cashier) ? 'cashier-person' : 'normal-person'" class="table-person">
 
     <!-- <v-tour
       v-if="first"
@@ -9,11 +9,20 @@
       :callbacks="myCallbacks"
     ></v-tour> -->
 
-    <b-modal class="simple-action-modal" :active.sync="cashierGuideModalActive" has-modal-card >
+      <v-tour
+      name="cashierSelectTour"
+      :steps="cashierGuideSteps"
+      :options="cashierGuideOptions"
+      :callbacks="cashierGuideCallback"
+    ></v-tour>
+
+    <b-modal class="simple-action-modal cashier-guide-modal" :active.sync="cashierGuideModalActive" has-modal-card >
       <div class="modal-card" style="width: auto">
 
         <section class="modal-dialog">
           <p>{{ $t('table_page.cashier_order_guide') }}</p>
+          <p>{{ $t('table_page.cashier_order_guide_2') }}</p>
+          <p>{{ $t('table_page.cashier_order_guide_3') }}</p>
         </section>
 
         <section class="modal-caption"></section>
@@ -47,7 +56,7 @@
       </div>
     </b-modal> -->
 
-    <div class="person-title has-background-white cp-tb-margin">
+    <div  class="person-title has-background-white cp-tb-margin">
       <img :src="person.avatar" :alt="person.name" />
       <p class="cp-side-padding cp-tb-padding" v-html="$t('table_page.person_orders', { title: title.trim() })">
         
@@ -222,11 +231,47 @@ export default {
         //     placement: 'top' // Any valid Popper.js placement. See https://popper.js.org/popper-documentation.html#Popper.placements
         //   }
         // }
+      ],
+      cashierGuideOptions: {
+        highlight: true,
+        useKeyboardNavigation: false,
+        labels: {
+          buttonSkip: false,
+          buttonPrevious: this.$t('menu_page.tour.previous'),
+          buttonNext: this.$t('menu_page.tour.how_can_i_pay'),
+          buttonStop: this.$t('menu_page.tour.got_it')
+        }
+      },
+      cashierGuideCallback: {
+        // onNextStep: this.sliderAnimate,
+        onFinish: () => {
+          this.$store.commit('setGuide', {name: 'cashierSelection', data: false})
+          localStorage.setItem('cashierSelectionGuide', false)
+          setTimeout(() => {
+          this.$store.commit('table/changeChashierCount', {index: 0, cashier_count: 0})
+          }, 500);
+        }
+      },
+      cashierGuideSteps: [
+        {
+          target: '#cashier-person', // We're using document.querySelector() under the hood
+          content: this.$t('menu_page.tour.cashier_order_select_guide'),
+            params: {
+            placement: 'top' // Any valid Popper.js placement. See https://popper.js.org/popper-documentation.html#Popper.placements
+          }
+        },
       ]
     }
   },
   methods: {
+    intialCashierSelectionTour(){
+      this.$tours['cashierSelectTour'].start()
+      setTimeout(() => {
+        this.$store.commit('table/changeChashierCount', {index: 0, cashier_count: 1})
+      }, 1500);
+    },
     selectOrderForPayment(cashier, index){
+
       if (!cashier) return
       this.orderTobeChange = JSON.parse(JSON.stringify(this.person.orders[index]))
       this.orderTobeChange.index = index
@@ -306,7 +351,18 @@ export default {
           }, 500)
         }
       }
-    }
+    },
+    table: {
+      deep: true,
+      immediate: true,
+      handler(val, oldValue) {
+        if (val.hasCashierOrder && this.guides.cashierSelection) {
+          setTimeout(() => {
+            this.intialCashierSelectionTour()
+          }, 1000);
+        }
+      }
+    },
   }
 }
 </script>

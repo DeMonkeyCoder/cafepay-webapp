@@ -20,6 +20,7 @@ export const Table = class Table {
     this.status = data.status
     this.paymentMethod = data.paymentMethod
     this.hasOnlinePayment = data.hasOnlinePayment
+    this.hasCashierOrder = data.hasCashierOrder
     
 
 
@@ -114,7 +115,8 @@ export const Table = class Table {
       status: (personRawProduct_noProperty.length) ? 'ready' : 'no_order',
       paid: true,
       paymentMethod: 'online',
-      hasOnlinePayment: false
+      hasOnlinePayment: false,
+      hasCashierOrder: false,
     }
     let personRawProduct = []
 
@@ -158,6 +160,7 @@ export const Table = class Table {
         delete prodObj.user_profile
 
         // separate orders of cashier for a better user selection
+        if (order.is_staff && !table.hasCashierOrder) table.hasCashierOrder = true
         if (prodObj.count > 1 && order.is_staff) this.separateCashierOrders(newOrders, prodObj)
         else newOrders.push(prodObj)
       });

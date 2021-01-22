@@ -1,11 +1,12 @@
 <template>
   <div :dir="$dir()">
-        <v-tour
+    <v-tour
       name="menuTour"
       :steps="steps"
       :options="myOptions"
       :callbacks="myCallbacks"
     ></v-tour>
+
     <div id="selected-products-preview" 
     class="selected-products-preview-is-shown"
     v-if="tokenType !== 'menu-only' && (!user.table_uuid || (user.table_uuid && !ordersPaid))">
@@ -146,7 +147,7 @@ export default {
         }
       },
       myCallbacks: {
-        onNextStep: this.sliderAnimate,
+        // onNextStep: this.sliderAnimate,
         onFinish: () => {
           this.tour = false
           this.$store.commit('setGuide', {name: 'changeOrderConfirm', data: false})
