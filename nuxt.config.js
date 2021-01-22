@@ -78,7 +78,7 @@ export default {
    ** Plugins to load before mounting the App
    */
   plugins: [
-    
+    // "@/plugins/animeJs",
     {src: '~/plugins/gtm', mode: 'client'},
     {src: '~/plugins/onReload', mode: 'client'},
     '~/plugins/axios',

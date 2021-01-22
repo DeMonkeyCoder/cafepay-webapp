@@ -81,13 +81,13 @@
         </div>
       </div>
 
-      <div v-if="person.cashier && order.payment_info.net_payed_amount != order.payment_info.total_amount" 
-      class="person-orders__select">
-        <b-button class="float-btn fb-32" type="is-info">
-          <span v-if="order.cashier_count != 0">{{order.cashier_count}}</span>
-          <b-icon v-else icon="pencil"></b-icon>
+    <div v-if="person.cashier && order.payment_info.net_payed_amount != order.payment_info.total_amount" 
+      class="person-orders__select" :class="{'person-orders__select--selected': order.cashier_count}">
+        <b-button class="float-btn fb-32">
+          <!-- <span v-if="order.cashier_count != 0">{{order.cashier_count}}</span> -->
+          <b-icon icon="check"></b-icon>
         </b-button>
-      </div>
+    </div>
   
 
       <!-- <div class="person-payment">
