@@ -177,12 +177,9 @@ export const Table = class Table {
       delete person.identiconId
 
       // sort orders by payment status
-        // a.sort(function (x, y) {
-        //   // true values first
-        //   return (x === y) ? 0 : x ? -1 : 1;
-        //   // false values first
-        //   // return (x === y)? 0 : x? 1 : -1;
-        // });
+        newOrders.sort(function (x, y) {
+          return (x.paid === y.paid)? 0 : x ?  -1 : 1;
+        });
 
       // push new person along side his products
       personRawProduct.push({
