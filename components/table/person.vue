@@ -26,7 +26,7 @@
     </b-modal>
 
     <!-- COUNT CHANGE MODAL -->
-    <b-modal class="simple-action-modal" :active.sync="cashierCountModalActive" has-modal-card >
+    <!-- <b-modal class="simple-action-modal" :active.sync="cashierCountModalActive" has-modal-card >
       <div class="modal-card" style="width: auto">
 
         <section class="modal-dialog">
@@ -45,7 +45,7 @@
         </section>
         
       </div>
-    </b-modal>
+    </b-modal> -->
 
     <div class="person-title has-background-white cp-tb-margin">
       <img :src="person.avatar" :alt="person.name" />
@@ -58,9 +58,9 @@
       class="person-orders cp-side-padding cp-tb-padding-half  has-background-white cp-card"
       :class="{ 'long-shadow': shadow }"
       v-for="(order, index) in person.orders"
-      :key="order.pk"
+      :key="index"
       :id="`order-${index}`"
-      @click="openCountModal(person.cashier, index)"
+      @click="selectOrderForPayment(person.cashier, index)"
     >
       <div class="person-orders__info">
         <div class="person-title-and-selection">
@@ -225,6 +225,14 @@ export default {
     }
   },
   methods: {
+    selectOrderForPayment(cashier, index){
+      if (!cashier) return
+      this.orderTobeChange = JSON.parse(JSON.stringify(this.person.orders[index]))
+      this.orderTobeChange.index = index
+      this.orderTobeChange.cashier_count = (this.orderTobeChange.cashier_count == 1) ? 0 : 1
+      this.$store.commit('table/changeChashierCount', this.orderTobeChange)
+      
+    },
     cashierCountChange() {
       this.$store.commit('table/changeChashierCount', this.orderTobeChange)
       this.cashierCountModalActive = false

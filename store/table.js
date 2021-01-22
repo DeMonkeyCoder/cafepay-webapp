@@ -102,7 +102,6 @@ export const mutations = {
       if (person.cashier) {
         person.orders[order.index].cashier_count = order.cashier_count
         person.orders[order.index].wish_to_pay = order.cashier_count * order.unit_amount
-        break
       }
     }
     console.log('person cashier', state.persons);

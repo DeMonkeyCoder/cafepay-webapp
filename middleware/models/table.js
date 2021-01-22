@@ -62,6 +62,48 @@ export const Table = class Table {
    person.id = order.user_profile.pk
   }
 
+
+  separateCashierOrders(newOrders, prodObj) {
+    // payment_info: Object
+    // net_amount: 148000
+    // net_payed_amount: 74000
+    // payed_amount: 74000
+    // payed_amount_cash: 0
+    // payed_amount_online: 74000
+    // payed_amount_pos: 0
+    // refund_amount: 0
+    // total_amount: 222000
+    // total_count: 3
+    console.log('prod obj', prodObj);
+    let total_amount = prodObj.payment_info.total_amount / prodObj.payment_info.total_count
+    
+    for (let i = 0; i < prodObj.count; i++) {
+      // modify payment-info:
+      // first we need to copy object
+      let prodTemp = JSON.parse(JSON.stringify(prodObj))
+      prodTemp.payment_info.total_amount = total_amount
+      prodTemp.count = 1
+
+      if (!prodObj.payment_info.net_payed_amount) {
+         prodTemp.payment_info.net_payed_amount = 0
+         prodTemp.payment_info.payed_amount = 0
+         prodTemp.payment_info.net_amount = prodTemp.unit_amount
+      }
+      else {
+        prodObj.payment_info.net_payed_amount -= prodObj.unit_amount
+        prodObj.payment_info.payed_amount -= prodObj.unit_amount
+
+        prodTemp.payment_info.net_payed_amount = prodTemp.unit_amount
+        prodTemp.payment_info.payed_amount = prodTemp.unit_amount
+        prodTemp.payment_info.net_amount = 0
+        
+      }
+      
+      newOrders.push(prodTemp)
+    }
+    
+  }
+
   productsByPerson(arr, currentUserId) {
     let personRawProduct_noProperty = [...arr.reduce((acc, obj) =>
       acc.set(obj.user_profile.pk, (acc.get(obj.user_profile.pk) || []).concat(obj)), new Map).values()];
@@ -98,6 +140,9 @@ export const Table = class Table {
         if (person.id == currentUserId) wish_to_pay = order.payment_info.total_amount - order.payment_info.net_payed_amount
         else wish_to_pay = 0
 
+        // generate id for identicon base on full_name + phone number
+        person.identiconId = order.user_profile.full_name + person.id
+
 
         // build new object with addition of wish to pay and name of product
         let prodObj = {
@@ -106,24 +151,21 @@ export const Table = class Table {
           cashier_count: 0,
           name: order.product_data.name,
         }
-        
-        // generate id for identicon base on full_name + phone number
-        person.identiconId = order.user_profile.full_name + person.id
         // user info is in each order so remove it from them and add to parent (person)
         delete prodObj.user_profile
 
-        newOrders.push(prodObj)
+        // separate orders of cashier for a better user selection
+        if (prodObj.count > 1 && order.is_staff) this.separateCashierOrders(newOrders, prodObj)
+        else newOrders.push(prodObj)
       });
       // we need to calculate total price of the orders of a person and total payment on them
       this.setAggregate(newOrders, person)
-      console.log('tag', person)
       
       if (table.paid) {
         if (person.totalPaid != person.totalPrice) table.paid = false
       }
 
       // avatar setup
-       
       let avatars = new Avatars(sprites);
       person.avatar = avatars.create(person.identiconId, {
         base64: true
@@ -139,8 +181,8 @@ export const Table = class Table {
     });
 
     return {
-      personRawProduct,
-      ...table
+      ...table,
+      personRawProduct
     }
   }
 
