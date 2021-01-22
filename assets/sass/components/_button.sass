@@ -1,4 +1,8 @@
 @import '../variables.sass'
+
+.button, .input, .taginput .taginput-container.is-focusable, .textarea, .select select, .file-cta, .file-name, .pagination-previous, .pagination-next, .pagination-link, .pagination-ellipsis
+  border-radius: 5px!important
+
 .cp-btn
   border-radius: 5px
   @include tbPadding($size: 0.5 * $padding)
@@ -154,9 +158,29 @@
   width: 24px
   height: 24px
   .mdi
+    
     &::before
       color: lighten(grey, 15%)
       font-size: 16px
 
-.button, .input, .taginput .taginput-container.is-focusable, .textarea, .select select, .file-cta, .file-name, .pagination-previous, .pagination-next, .pagination-link, .pagination-ellipsis
-  border-radius: 5px!important
+.help-icon-texted
+  padding-left: ($padding / 2)!important
+  padding-right: ($padding / 2)!important
+  background-color: lighten(grey, 35%)
+  border-radius: 16px!important
+  // width: 24px
+  height: 24px
+  span
+    color: lighten(grey, 15%)!important
+    font-size: 14px!important
+  .icon
+    width: auto!important
+    transform: scaleX(-1)
+    margin-left: 0!important
+    margin-right: ($margin / 8)!important
+    .mdi
+      &::before
+        color: lighten(grey, 15%)
+        font-size: 14px
+
+

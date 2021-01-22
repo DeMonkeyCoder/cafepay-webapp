@@ -20,9 +20,18 @@
       <div class="modal-card" style="width: auto">
 
         <section class="modal-dialog">
-          <p>{{ $t('table_page.cashier_order_guide') }}</p>
-          <p>{{ $t('table_page.cashier_order_guide_2') }}</p>
-          <p>{{ $t('table_page.cashier_order_guide_3') }}</p>
+          <div>
+            {{ $t('table_page.cashier_order_guide') }}
+            <p>انتخاب سفارش</p>
+          </div>
+          <div>
+            {{ $t('table_page.cashier_order_guide_2') }}
+            <p>پرداخت کل سفارشات</p>
+            </div>
+          <div>
+            {{ $t('table_page.cashier_order_guide_3') }}
+            <p>پرداخت اشتراکی</p>
+            </div>
         </section>
 
         <section class="modal-caption"></section>
@@ -61,7 +70,8 @@
       <p class="cp-side-padding cp-tb-padding" v-html="$t('table_page.person_orders', { title: title.trim() })">
         
       </p>
-      <span v-if="person.cashier" class="cp-tb-padding"><b-icon @click.native="showCashierGuide" class="help-icon" icon="help"></b-icon></span>
+      <span v-if="person.cashier" class="cp-tb-padding help-span">
+        <b-icon @click.native="showCashierGuide" class="help-icon" icon="help"></b-icon></span>
     </div>
     <div
       class="person-orders cp-side-padding cp-tb-padding-half  has-background-white cp-card"

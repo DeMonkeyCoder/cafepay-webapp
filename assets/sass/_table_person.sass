@@ -9,11 +9,24 @@ $animationEasing: cubic-bezier(0.16, 1, 0.3, 1)
 
 .cashier-guide-modal
   .modal-dialog
-    p
+    div
+      padding: $padding
+      padding-bottom: $padding * 4
+      border-radius: $border-md
+      position: relative
       margin-bottom: $margin
       text-align: right
+      background-color: lighten($primary_hue2, 30%)
       &:last-child
         margin-bottom: 0
+      p
+        position: absolute
+        color: $primary_hue2
+        font-size: 24px!important
+        font-weight: 900!important
+        opacity: 0.75
+        right: $padding
+        bottom: $padding
   
 .table-person
   margin-bottom: 50px
@@ -24,6 +37,8 @@ $animationEasing: cubic-bezier(0.16, 1, 0.3, 1)
       flex-basis: 46px
       height: 46px
       border-radius: 23px
+    .help-span
+      // background-color: lighten(grey, 35%)
   .person-orders
     display: flex
     // margin-bottom: $margin * 1.5
