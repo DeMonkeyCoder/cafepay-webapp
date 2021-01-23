@@ -103,6 +103,7 @@ export default {
     person_order_count: 'مجموع:‌ {order_count} عدد',
     person_payed: 'پرداخت شده',
     cash_checkout_type_submitted: 'پرداخت سفارش به صورت نقدی ثبت شد',
+    online_checkout_type_submitted: 'پرداخت سفارش به صورت آنلاین ثبت شد',
   },
 
   current_cafe: {

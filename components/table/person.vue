@@ -351,17 +351,17 @@ export default {
     }
   },
   watch: {
-    initialTour: {
-      immediate: true,
-      handler(val, old) {
-        if (val) {
-          setTimeout(() => {
-            this.$tours['sliderTour'].start()
-            this.$store.commit('setFirstTime', false)
-          }, 500)
-        }
-      }
-    },
+    // initialTour: {
+    //   immediate: true,
+    //   handler(val, old) {
+    //     if (val) {
+    //       setTimeout(() => {
+    //         this.$tours['sliderTour'].start()
+    //         this.$store.commit('setFirstTime', false)
+    //       }, 500)
+    //     }
+    //   }
+    // },
     table: {
       deep: true,
       immediate: true,
