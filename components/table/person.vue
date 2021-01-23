@@ -79,7 +79,7 @@
       v-for="(order, index) in person.orders"
       :key="index"
       :id="`order-${index}`"
-      @click="selectOrderForPayment(person.cashier, index)"
+      @click="selectOrderForPayment(person.cashier, index, order)"
     >
       <div class="person-orders__info">
         <div class="person-title-and-selection">
@@ -100,7 +100,7 @@
         </div>
       </div>
 
-    <div v-if="person.cashier && order.payment_info.net_payed_amount != order.payment_info.total_amount" 
+    <div v-if="person.cashier && !order.paid" 
       class="person-orders__select" :class="{'person-orders__select--selected': order.cashier_count}">
         <b-button class="float-btn fb-32">
           <!-- <span v-if="order.cashier_count != 0">{{order.cashier_count}}</span> -->
@@ -280,9 +280,8 @@ export default {
         this.$store.commit('table/changeChashierCount', {index: 0, cashier_count: 1})
       }, 1500);
     },
-    selectOrderForPayment(cashier, index){
-
-      if (!cashier) return
+    selectOrderForPayment(cashier, index, order){
+      if (!cashier || order.paid) return
       this.orderTobeChange = JSON.parse(JSON.stringify(this.person.orders[index]))
       this.orderTobeChange.index = index
       this.orderTobeChange.cashier_count = (this.orderTobeChange.cashier_count == 1) ? 0 : 1
