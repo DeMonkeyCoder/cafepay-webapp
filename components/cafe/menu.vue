@@ -9,7 +9,7 @@
 
     <div id="selected-products-preview" 
     class="selected-products-preview-is-shown"
-    v-if="tokenType !== 'menu-only' && (!user.table_uuid || (user.table_uuid && !ordersPaid))">
+    v-if="tokenType !== 'menu-only' && !isPaymentOnly && (!user.table_uuid || (user.table_uuid && !ordersPaid))">
       <span v-if="!isClosed && !tour">{{ordersTotalCount}}</span>
       <b-button
         @click="productsPayloadSeperator"
@@ -89,7 +89,7 @@
                   <!-- <span class="toman">تومان</span> -->
                 </div>
               </div>
-              <div v-if="prod.available && tokenType !== 'menu-only' && !isClosed && (!user.table_uuid || (user.table_uuid && !ordersPaid))" class="add-or-remove">
+              <div v-if="prod.available && tokenType !== 'menu-only' && !isPaymentOnly && !isClosed && (!user.table_uuid || (user.table_uuid && !ordersPaid))" class="add-or-remove">
                 <span class="product-add" @click="countChange(index, 1, prod)">
                   <div class="aor-shape">+</div>
                 </span>
@@ -430,6 +430,10 @@ export default {
 
     isClosed() {
       return this.$store.state.cafe.closed
+    },
+
+    isPaymentOnly() {
+      return this.$store.state.cafe.payment_only
     },
 
     totalCap() {

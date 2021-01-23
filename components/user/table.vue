@@ -227,10 +227,8 @@
               {{ $t('table_page.table') }}: <span class="font-norm">{{ table.table_number }}</span>
             </h5>
           </div>
-
-          <div class="table-top-section__edit-orders">
+          <div v-show="!cafe.payment_only" class="table-top-section__edit-orders">
             <b-button @click="goToMyOrderInMenu" class="shadow-b" type="is-warning" inverted >{{ (userHasOrder) ? $t('table_page.edit_order') : $t('table_page.add_order') }}</b-button>
-            
           </div>
         </div>
 
@@ -316,6 +314,10 @@ export default {
     totaltoPay() {
       return this.totalWishToPayOrder + this.cafepayFee
     },
+
+    // isPaymentOnly() {
+    //   return this.$store.state.cafe.payment_only
+    // },
 
     totalWishToPayOrder() {
       return this.$store.getters['table/totalWishToPay']
@@ -440,7 +442,7 @@ export default {
         console.log("OrderTobeCash", OrderTobeCash.length == 0)
       if (OrderTobeCash.length == 0) {
         this.preInvoiceActive = false
-        this.toaster(this.$t('table_page.cash_checkout_type_submitted'), 'is-info', 'is-bottom')
+        this.toaster(this.$t(`table_page.${method}_checkout_type_submitted`), 'is-info', 'is-bottom')
         
       } else {
       let pbrList = OrderTobeCash.map(x => {return {pbr: x.pbr, preferred_payment_method: methodBinary}})

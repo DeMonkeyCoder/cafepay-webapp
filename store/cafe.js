@@ -53,6 +53,7 @@ export const mutations = {
     state.cafepay_fee = data.cafe.cafepay_fee
     state.fee_payer = data.cafe.fee_payer
     state.header_image = data.cafe.header_image
+    state.payment_only = data.cafe.payment_only
 
     // define type of token ----- 0: menuonly   1: normal    2: preorder
     switch (data.type) {
@@ -86,6 +87,7 @@ export const mutations = {
   clear(state) {
     state.categories = []
     state.closed = false
+    state.payment_only = false
     state.tokenType = 'normal'
     state.active = false
     state.totalCount = 0

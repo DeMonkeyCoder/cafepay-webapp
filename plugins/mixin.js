@@ -117,7 +117,8 @@ Vue.mixin({
     },
     userHasOrder() {
       return this.table.you.orders.length
-    }
+    },
+
 
   },
 
