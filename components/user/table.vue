@@ -300,6 +300,7 @@ export default {
       preInvoiceActive: false,
       hasPreOrder: true,
       preorders: [{}],
+      setMethodProccessing: false,
       //TODO: get bill preferred payment method from server
       paymentMethod: (this.$i18n.locale == 'fa') ? 'online' : 'cash'
     }
@@ -437,21 +438,26 @@ export default {
       // this.$router.push('/paymentResult')
     },
     setMethodPayment(method){
+      this.setMethodProccessing = true
       let methodBinary = (method == 'cash') ? '1' : '0'
       let OrderTobeCash = this.ordersToPayforServer.filter(x => x.preferred_payment_method != methodBinary && !x.staff)
         console.log("OrderTobeCash", OrderTobeCash.length == 0)
       if (OrderTobeCash.length == 0) {
+        this.setMethodProccessing = false
         this.preInvoiceActive = false
-        this.toaster(this.$t(`table_page.${method}_checkout_type_submitted`), 'is-info', 'is-bottom')
+        // this.toaster(this.$t(`table_page.${method}_checkout_type_submitted`), 'is-info', 'is-bottom')
         
       } else {
       let pbrList = OrderTobeCash.map(x => {return {pbr: x.pbr, preferred_payment_method: methodBinary}})
       this.$store.dispatch('table/setPaymentMethod', pbrList)
       .then(res => {
+        this.setMethodProccessing = false
         this.preInvoiceActive = false
         this.toaster(this.$t(`table_page.${method}_checkout_type_submitted`), 'is-info', 'is-bottom')
       })
-      .catch(err=> this.toaster('خطایی رخ داده', 'is-danger', 'is-bottom'))
+      .catch(err => {this.toaster('خطایی رخ داده', 'is-danger', 'is-bottom')
+        this.setMethodProccessing = false
+      })
       }
     },
     showOptionsModal() {
@@ -473,7 +479,7 @@ export default {
       deep: true,
       immediate: true,
       handler(val, oldValue) {
-        if (val.paymentMethod == 'cash' && val.hasOnlinePayment) {
+        if (val.paymentMethod == 'cash' && val.hasOnlinePayment && !this.setMethodProccessing) {
           console.log('online order ? ', val.hasOnlinePayment);
           this.proccessOrderForPayment()
           this.setMethodPayment('cash')
