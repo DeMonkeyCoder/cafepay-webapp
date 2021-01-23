@@ -176,8 +176,8 @@ export const actions = {
 
 
 
-            // attach token to table
-            commit('changeNavigation', 'currentCafe')
+           if (res.data.has_staff_order) commit('changeNavigation', 'cp-table')
+           else commit('changeNavigation', 'currentCafe')
             resolve(res)
           })
           .catch(err => {
