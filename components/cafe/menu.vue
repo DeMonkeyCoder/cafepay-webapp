@@ -316,7 +316,7 @@ export default {
         count
       })
       // initial Change order Tour
-      if (this.guides.changeOrderConfirm && this.table.you.orders.length > 0) {
+      if (this.guides.changeOrderConfirm && this.userHasOrder > 0) {
         this.$tours['menuTour'].start()
         this.tour = true
       }

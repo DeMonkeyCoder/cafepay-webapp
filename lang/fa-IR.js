@@ -52,6 +52,7 @@ export default {
       <p>و بارکد مربوط به میز را اسکن کنید</p>
       <p>یا کد میز را وارد نمایید</p>`,
     table: 'میز',
+    add_order: 'افزودن سفارش',
     edit_order: 'ویرایش سفارش',
     payment_status_header_payed: 'پرداخت شده',
     payment_status_header_of: 'از',

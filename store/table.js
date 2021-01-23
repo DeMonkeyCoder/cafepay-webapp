@@ -65,6 +65,9 @@ export const mutations = {
     state.paymentMethod = 'online'
     state.payment = {}
     state.hasCashierOrder = false
+    state.you = {
+      orders: []
+    }
     
   },
 

@@ -93,7 +93,7 @@ export default {
         this.$store.commit('table/clearData')
           // every time a token triggers (except menuonly) a socket connection will be opened
         // and if we leave menu without closing socket it remains open so we close ot  
-        if (this.tokenType != 'menu-only' && this.$store.state.socket.isConnected) Vue.prototype.$disconnect()
+        if (this.tokenType != 'menu-only' && this.socketIsConnected) Vue.prototype.$disconnect()
       }
     }
   },
