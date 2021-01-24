@@ -50,6 +50,7 @@
           <!-- <img src="@/assets/img/shape/icons/chair.png" alt=""> -->
           <b-field>
             <b-input
+              @keyup.native.enter="tokenProccessor"
               ref="tablecode"
               class="cp-input cp-input-primary cp-input-grey cp-input-shadow"
               type="code"
