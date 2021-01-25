@@ -54,9 +54,9 @@
       <swiper dir="ltr" ref="menuCategoriesSwipe"
       @slide-change-end="handleSlideChange"
       @slider-move="handleSlideMove">
-        <div :dir="$dir()" v-for="(cat, i) in menuTabItemCategories"
+        <div :dir="$dir()" v-for="cat in menuTabItemCategories"
           :key="cat.name" class="product-list-wrapper" style="height: 70vh;">
-          <div :key="cat.pk" class="product-list" v-if="isItemVisible(i)" style="height: 70vh; overflow-y: auto;">
+          <div :key="cat.pk" class="product-list" v-if="isItemVisible(cat)" style="height: 70vh; overflow-y: auto;">
             <div
               v-for="(prod, index) in cat.products"
               :key="prod.pk"
@@ -184,8 +184,8 @@ export default {
     this.setActiveTab(true)
   },
   methods: {
-    isItemVisible(i){
-      let index = this.$dir() == 'ltr' ? i : this.menuTabItemCategories.length - i
+    isItemVisible(cat){
+      let index = this.menu.indexOf(cat)
       // if(this.sliderMoving){
       //   return Math.abs(this.activeCategory - index) < 2
       // } else {
@@ -237,6 +237,9 @@ export default {
     setActiveTab(noAnimation) {
       const vinst = this;
       if(this.$refs.menuCategoriesSwipe && this.menu[this.activeCategory]){
+        if(!noAnimation) {
+          this.sliderMoving = true;
+        }
         setTimeout(function(){
           let pk = vinst.menu[vinst.activeCategory].pk
           let index = vinst.menuTabItemCategories.findIndex(cat => cat.pk == pk)
