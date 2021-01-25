@@ -122,14 +122,19 @@ export const mutations = {
       name: this.app.i18n.t('menu_page.your_current_order'),
       products: []
     })
+
+    let allProducts = menu.categories.sort((c1, c2) => c1.order - c2.order).reduce(
+      (products, cat) => products.concat(cat.products),
+      []
+    )
+    // Make them unique
+    allProducts = allProducts.filter((prod, i) => allProducts.indexOf(prod) == i)
     state.categories.push(new Category({
       pk: 0,
       title: this.app.i18n.t('menu_page.all_products'),
-      products: menu.categories.sort((c1, c2) => c1.order - c2.order).reduce(
-        (products, cat) => products.concat(cat.products),
-        []
-      )
+      products: allProducts
     }))
+
     for (const category of menu.categories) {
       state.categories.push(new Category(category))
     }
@@ -162,34 +167,35 @@ export const mutations = {
     state.totalCount = 0
 
     for (const category of state.categories) {
+
+      // Ignore categories that we created for All Products and Current Order
+      if (category.pk <= 0) continue
+
       // if user == false that means we dont have any order anymore so clear products of user current category and reset counts on other categories
       if (!user && firstCategory) category.products = []
-      // we dont want to check user current orders category so we use this flag to check if that's it or not!
-      if (firstCategory) firstCategory = false
-      else {
-        if (user) {
-          for (const product of category.products) {
-            let matchedOrder = user.orders.find(p => p.product == product.pk)
-            if (matchedOrder) {
-              // check if order has payments for reduce order count
-              product.reduceLimit = Math.ceil(matchedOrder.payment_info.net_payed_amount / matchedOrder.unit_amount)
-              product.count = matchedOrder.count
-              // compute total Count here (initial)
-              state.totalCount += matchedOrder.count
+    
+      if (user) {
+        for (const product of category.products) {
+          let matchedOrder = user.orders.find(p => p.product == product.pk)
+          if (matchedOrder) {
+            // check if order has payments for reduce order count
+            product.reduceLimit = Math.ceil(matchedOrder.payment_info.net_payed_amount / matchedOrder.unit_amount)
+            product.count = matchedOrder.count
+            // compute total Count here (initial)
+            state.totalCount += matchedOrder.count
 
-              // check if product exist in my order category (firstCateogry) or not
-              let matchedOrder_currentOrderCat = state.categories[0].products.find(p => p.pk == matchedOrder.product)
-              if (matchedOrder_currentOrderCat) {
-                matchedOrder_currentOrderCat.reduceLimit = Math.ceil(matchedOrder.payment_info.net_payed_amount / matchedOrder.unit_amount)
-                matchedOrder_currentOrderCat.count = matchedOrder.count
-              } else state.categories[0].products.push(product)
-            }
+            // check if product exist in my order category (firstCateogry) or not
+            let matchedOrder_currentOrderCat = state.categories[0].products.find(p => p.pk == matchedOrder.product)
+            if (matchedOrder_currentOrderCat) {
+              matchedOrder_currentOrderCat.reduceLimit = Math.ceil(matchedOrder.payment_info.net_payed_amount / matchedOrder.unit_amount)
+              matchedOrder_currentOrderCat.count = matchedOrder.count
+            } else state.categories[0].products.push(product)
           }
-        } else {
-          for (const product of category.products) {
-            product.count = 0
-            product.reduceLimit = 0
-          }
+        }
+      } else {
+        for (const product of category.products) {
+          product.count = 0
+          product.reduceLimit = 0
         }
       }
     }
