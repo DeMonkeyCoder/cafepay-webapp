@@ -56,7 +56,7 @@
       @slider-move="handleSlideMove">
         <div :dir="$dir()" v-for="cat in menuTabItemCategories"
           :key="cat.name" class="product-list-wrapper">
-          <div :key="cat.pk" class="product-list">
+          <div :key="cat.pk" class="product-list" style="height: 70vh; overflow-y: auto;">
             <div
               v-for="(prod, index) in cat.products"
               :key="prod.pk"
