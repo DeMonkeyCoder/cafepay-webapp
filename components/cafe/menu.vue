@@ -186,12 +186,23 @@ export default {
   methods: {
     isItemVisible(cat){
       let index = this.menu.indexOf(cat)
-      // if(this.sliderMoving){
-      //   return Math.abs(this.activeCategory - index) < 2
-      // } else {
-      //   return index == this.activeCategory
-      // }
-      return this.sliderMoving || index == this.activeCategory
+      if(this.sliderMoving){
+        
+        // Item is on the direction we are sliding.
+        let sameSwipeSide =
+          (this.activeCategory - this.lastActiveCategory)
+          * (index - this.lastActiveCategory) >= 0
+
+        // Item might be visible during slide
+        let itemIsInSlideScope =
+          Math.abs(index - this.lastActiveCategory)
+          <= Math.abs(this.activeCategory - this.lastActiveCategory) + 1
+
+        return sameSwipeSide && itemIsInSlideScope
+      } else {
+        return index == this.activeCategory
+      }
+      // return this.sliderMoving || index == this.activeCategory
     },
     reRenderSwipable() {
       this.showSwipableMenu = false;
@@ -200,7 +211,10 @@ export default {
       });
     },
     handleSlideMove(offset) {
-      this.sliderMoving = true
+      if(!this.sliderMoving){
+        this.sliderMoving = true
+        this.lastActiveCategory = this.activeCategory
+      }
       if(!this.lastSwipeOffset){
         this.lastSwipeOffset = offset
         return
@@ -303,6 +317,7 @@ export default {
       // if (this.activeCategory > index)
       //   this.slideTransition = 'slide-category-prev'
       // else this.slideTransition = 'slide-category-next'
+      this.lastActiveCategory = this.activeCategory;
       this.activeCategory = index
       this.setActiveTab()
     },
@@ -471,7 +486,6 @@ export default {
   },
   watch: {
     activeCategory(_newValue, oldValue){
-      this.lastActiveCategory = oldValue;
       this.scrollToActiveCategory();
     },
     menuTabItemCategories(_newValue, _oldValue){
