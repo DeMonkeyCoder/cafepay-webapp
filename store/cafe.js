@@ -122,14 +122,14 @@ export const mutations = {
       name: this.app.i18n.t('menu_page.your_current_order'),
       products: []
     })
-    state.categories.push({
+    state.categories.push(new Category({
       pk: 0,
-      name: this.app.i18n.t('menu_page.all_products'),
+      title: this.app.i18n.t('menu_page.all_products'),
       products: menu.categories.sort((c1, c2) => c1.order - c2.order).reduce(
         (products, cat) => products.concat(cat.products),
         []
       )
-    })
+    }))
     for (const category of menu.categories) {
       state.categories.push(new Category(category))
     }
