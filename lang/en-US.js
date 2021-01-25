@@ -102,6 +102,7 @@ export default {
   },
 
   menu_page: {
+    all_products: 'All',
     your_current_order: 'Your Current Order',
     submit_order: 'Submit Order',
     cafe_is_closed: 'store is Closed',

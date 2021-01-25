@@ -113,6 +113,7 @@ export default {
   },
 
   menu_page: {
+    all_products: 'همه',
     your_current_order: 'سبد سفارشات شما',
     submit_order: 'تایید سفارش',
     cafe_is_closed: 'مجموعه بسته است',
