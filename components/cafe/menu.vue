@@ -54,9 +54,9 @@
       <swiper dir="ltr" ref="menuCategoriesSwipe"
       @slide-change-end="handleSlideChange"
       @slider-move="handleSlideMove">
-        <div :dir="$dir()" v-for="cat in menuTabItemCategories"
-          :key="cat.name" class="product-list-wrapper">
-          <div :key="cat.pk" class="product-list" style="height: 70vh; overflow-y: auto;">
+        <div :dir="$dir()" v-for="(cat, i) in menuTabItemCategories"
+          :key="cat.name" class="product-list-wrapper" style="height: 70vh;">
+          <div :key="cat.pk" class="product-list" v-if="isItemVisible(i)" style="height: 70vh; overflow-y: auto;">
             <div
               v-for="(prod, index) in cat.products"
               :key="prod.pk"
@@ -125,17 +125,19 @@ export default {
   ],
   data() {
     return {
+      sliderMoving: false,
       showSwipableMenu: true,
       lastSwipeOffset: null,
       skeletunMenu: 3,
       key: 'value',
+      lastActiveCategory: 1,
       activeCategory: 1,
       count: 0,
       totalPrice: 0,
       orderList: [],
       tour: false,
       productDefaultImage,
-      slideTransition: 'slide-category-next',
+      // slideTransition: 'slide-category-next',
       myOptions: {
         highlight: true,
         useKeyboardNavigation: false,
@@ -182,6 +184,15 @@ export default {
     this.setActiveTab(true)
   },
   methods: {
+    isItemVisible(i){
+      let index = this.$dir() == 'ltr' ? i : this.menuTabItemCategories.length - i
+      // if(this.sliderMoving){
+      //   return Math.abs(this.activeCategory - index) < 2
+      // } else {
+      //   return index == this.activeCategory
+      // }
+      return this.sliderMoving || index == this.activeCategory
+    },
     reRenderSwipable() {
       this.showSwipableMenu = false;
       this.$nextTick(() => {
@@ -189,6 +200,7 @@ export default {
       });
     },
     handleSlideMove(offset) {
+      this.sliderMoving = true
       if(!this.lastSwipeOffset){
         this.lastSwipeOffset = offset
         return
@@ -215,6 +227,7 @@ export default {
       this.lastSwipeOffset = offset
     },
     handleSlideChange(page){
+      this.sliderMoving = false;
       this.lastSwipeOffset = null;
 
       let pageIndex = page - 1;
@@ -284,9 +297,9 @@ export default {
     },
 
     changeActiveCategory(index) {
-      if (this.activeCategory > index)
-        this.slideTransition = 'slide-category-prev'
-      else this.slideTransition = 'slide-category-next'
+      // if (this.activeCategory > index)
+      //   this.slideTransition = 'slide-category-prev'
+      // else this.slideTransition = 'slide-category-next'
       this.activeCategory = index
       this.setActiveTab()
     },
@@ -454,7 +467,8 @@ export default {
     },
   },
   watch: {
-    activeCategory(_newValue, _oldValue){
+    activeCategory(_newValue, oldValue){
+      this.lastActiveCategory = oldValue;
       this.scrollToActiveCategory();
     },
     menuTabItemCategories(_newValue, _oldValue){
