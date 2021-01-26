@@ -118,6 +118,7 @@ export const mutations = {
     // push current basket of orders first for editing current orders
     // TODO: move this line out of store
     state.categories.push({
+      localType: 'CURRENT_ORDER',
       pk: -1,
       name: this.app.i18n.t('menu_page.your_current_order'),
       products: []
@@ -130,13 +131,16 @@ export const mutations = {
     // Make them unique
     allProducts = allProducts.filter((prod, i) => allProducts.indexOf(prod) == i)
     state.categories.push(new Category({
+      localType: 'ALL',
       pk: 0,
       title: this.app.i18n.t('menu_page.all_products'),
       products: allProducts
     }))
 
     for (const category of menu.categories) {
-      state.categories.push(new Category(category))
+      state.categories.push(new Category(Object.assign({
+        localType: 'CATEGORY',
+      },category)))
     }
   },
 

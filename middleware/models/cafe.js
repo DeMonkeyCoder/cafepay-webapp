@@ -7,6 +7,7 @@ export const Category = class Category {
     this.name = rawData.title
     this.pk = rawData.pk
     this.products = []
+    this.localType = rawData.localType
     for (const product of rawData.products) {
       this.products.push(new Product(product))
     }

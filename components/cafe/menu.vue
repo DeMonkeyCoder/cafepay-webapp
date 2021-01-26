@@ -41,7 +41,7 @@
             'current-order-category': index == 0,
             'shadow-lg': index == 0
           }"
-          @click="changeActiveCategory(index)"
+          @click="changeActiveCategoryButtonClick(index)"
         >
           {{ index == 0 ? $t("menu_page.your_current_order") : cat.name }}
         </div>
@@ -90,11 +90,11 @@
                 </div>
               </div>
               <div v-if="prod.available && tokenType !== 'menu-only' && !isPaymentOnly && !isClosed && (!user.table_uuid || (user.table_uuid && !ordersPaid))" class="add-or-remove">
-                <span class="product-add" @click="countChange(index, 1, prod)">
+                <span class="product-add" @click="countChange(index, 1, prod, cat)">
                   <div class="aor-shape">+</div>
                 </span>
                 <span class="product-count">{{ prod.count }}</span>
-                <span class="product-remove" @click="countChange(index, -1, prod)">
+                <span class="product-remove" @click="countChange(index, -1, prod, cat)">
                   <div class="aor-shape">-</div>
                 </span>
               </div>
@@ -187,7 +187,7 @@ export default {
     isItemVisible(cat){
       let index = this.menu.indexOf(cat)
       if(this.sliderMoving){
-        
+
         // Item is on the direction we are sliding.
         let sameSwipeSide =
           (this.activeCategory - this.lastActiveCategory)
@@ -214,6 +214,18 @@ export default {
       if(!this.sliderMoving){
         this.sliderMoving = true
         this.lastActiveCategory = this.activeCategory
+
+        // TODO: after analytics test, remove one of these
+        this.$gtm.trackEvent({
+          event: 'menu-change-cat-by-swipe',
+          category: 'menu',
+          value: 'swipe',
+        })
+        this.$gtm.trackEvent({
+          event: 'menu-change-cat',
+          category: 'menu',
+          value: 'swipe',
+        })
       }
       if(!this.lastSwipeOffset){
         this.lastSwipeOffset = offset
@@ -312,7 +324,21 @@ export default {
       })
   
     },
+    changeActiveCategoryButtonClick(index) {
 
+      // TODO: after analytics test, remove one of these
+      this.$gtm.trackEvent({
+        event: 'menu-change-cat-by-button',
+        category: 'menu',
+        value: 'button',
+      })
+      this.$gtm.trackEvent({
+        event: 'menu-change-cat',
+        category: 'menu',
+        value: 'button',
+      })
+      this.changeActiveCategory(index)
+    },
     changeActiveCategory(index) {
       // if (this.activeCategory > index)
       //   this.slideTransition = 'slide-category-prev'
@@ -322,7 +348,23 @@ export default {
       this.setActiveTab()
     },
 
-    countChange(index, count, product) {
+    countChange(index, count, product, cat) {
+
+      // TODO: after analytics test, remove one of these
+      this.$gtm.trackEvent({
+        event: 'product-' + (count > 0 ? 'add' : 'remove')
+            + '-from-cat-type-' + cat.localType,
+        category: 'order',
+        value: cat.localType,
+      })
+      this.$gtm.trackEvent({
+        event: 'product-count-change',
+        type: (count > 0 ? 'add' : 'remove'),
+        category: 'order',
+        value: cat.localType,
+      })
+
+      
       // check for 0 count and deletion
       if (product.count == 0 && count == -1) return
       if (
