@@ -123,7 +123,12 @@ export default {
       langDir: 'lang/',
       defaultLocale: config.defaultLocale,
       detectBrowserLanguage: false
-    }]
+    }],
+
+    ['@nuxtjs/robots', [{
+      UserAgent: '*',
+      Disallow: '/en'
+    }]]
   ],
 
   router: {
