@@ -19,6 +19,8 @@ export const state = () => ({
   hasOnlinePayment: false,
   yourOrdersCost: 0,
   yourOrdersPaid: 0,
+  paid: false,
+  hasCashierOrder: false,
   keepAlive: false,
   you: {
     orders: []
@@ -36,6 +38,7 @@ export const getters = {
     // return others + state.you.orders.reduce((Sum, order) => order.wish_to_pay + Sum, 0)
     return others
   },
+
 
 
 }
@@ -59,10 +62,16 @@ export const mutations = {
     state.token = null
     state.table_number = null
     state.persons = []
+<<<<<<< HEAD
     state.description = null
     state.joinId = null
+=======
+    state.paid = false
+>>>>>>> master
     state.tpayment = 0
+    state.paymentMethod = 'online'
     state.payment = {}
+    state.hasCashierOrder = false
     state.you = {
       orders: []
     }
@@ -83,9 +92,14 @@ export const mutations = {
     state.payment = rawData.payment_info
     state.description = rawData.description
     state.status = table.status
+<<<<<<< HEAD
     state.joinId = rawData.pk
+=======
+    state.paid = table.paid
+>>>>>>> master
     state.paymentMethod = table.paymentMethod
     state.hasOnlinePayment = table.hasOnlinePayment
+    state.hasCashierOrder = table.hasCashierOrder
     // we use this data to handle payment status in preorder
     state.cafe = rawData.cafe
 
@@ -98,6 +112,17 @@ export const mutations = {
       this.commit('cafe/bindProductCount', user)
     }
 
+  },
+
+  changeChashierCount(state, order) {
+    // for persons being more than 1
+    for (const person of state.persons) {
+      if (person.cashier) {
+        person.orders[order.index].cashier_count = order.cashier_count
+        person.orders[order.index].wish_to_pay = order.cashier_count * order.unit_amount
+      }
+    }
+    console.log('person cashier', state.persons);
   },
 
   updateTableDetail(state, data) {

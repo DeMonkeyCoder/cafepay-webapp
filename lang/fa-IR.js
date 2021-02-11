@@ -5,9 +5,11 @@ const order_states_general = {
   is_delivered: '!سفارش شما آماده است',
   confirmed: 'سفارش شما تایید شد',
   rejected: 'سفارش شما توسط پذیرنده رد شد',
+  null: 'سفارشی ثبت نشده'
 }
 
 export default {
+  understood: 'فهمیدم',
   unknown_error: 'خطایی رخ داده، مجددا امتحان کنید',
   network_error: 'خطا در اتصال به اینترنت',
   balance: 'موجودی',
@@ -36,6 +38,11 @@ export default {
   },
 
   table_page: {
+    cashier_order: 'تعدادی که مایل به پرداخت آن هستید را انتخاب کنید',
+    cashier_order_guide: 'برای پرداخت سفارشاتی که صندوق دار بر روی میز شما ثبت کرده، بر روی سفارش مورد نظر بزنید',
+    cashier_order_guide_2: 'اگر مایل به پرداخت تمامی سفارشات ثبت شده بر روی میز هستید همه آنها را انتخاب و سپس بر روی دکمه پرداخت سفارش بزنید',
+    cashier_order_guide_3: 'چنانچه مایل به پرداخت اشتراکی سفارشات با دوستانتان هستید، سفارش مورد نظر را از بین سفارشات ثبت شده توسط صندوق دار انتخاب و پرداخت نمایید',
+    chashier_count_submit: 'ثبت تعداد',
     ordering_unavailable: 'سفارش ‌گیری فعال نیست',
     scan_first_message: `<p class="cp-side-margin-2x">
         ابتدا به بخش
@@ -49,14 +56,14 @@ export default {
     edit_order: 'ویرایش سفارش',
     payment_status_header_payed: 'پرداخت شده',
     payment_status_header_of: 'از',
-    preorder: { 
+    preorder: {
       self_pickup_warning: 'توجه داشته باشید سفارش در محل مجموعه به شما تحویل داده خواهد شد.',
       current_orders: 'سفارشات فعلی',
       order_from: 'سفارش از',
       payment_is_not_done: 'پرداخت سفارش انجام نشده',
       details: 'جزییات',
       checkout: 'تکمیل سفارش',
-      checkout_CASH: 'سفارش خود را سر صندوق پرداخت کنید',
+      checkout_CASH: '<span class="font-12">روش پرداخت:‌</span> نقدی',
       states: Object.assign({...order_states_general} , {
         waiting: 'در انتظار تایید توسط پذیرنده',
         no_order: 'سفارشی ثبت نشده است'
@@ -64,8 +71,7 @@ export default {
     },
     states: Object.assign({...order_states_general} , {
       waiting: 'سفارش شما با موفقیت ثبت شد',
-      no_order: 'سفارشی بر روی میز ثبت نشده است',
-      null: 'سفارشی ثبت نشده است',
+      no_order: 'سفارشی بر روی میز ثبت نشده است'
     }),
     total_amount: 'مجموع سفارشات',
     payed_amount: 'پرداخت شده',
@@ -82,7 +88,7 @@ export default {
     no_orders_on_your_table: 'سفارشی برروی میز شما وجود ندارد',
     checkout_all_items: 'پرداخت کل فاکتور',
     checkout: 'پرداخت سفارش',
-    checkout_CASH_message: 'سفارش خود را سر صندوق پرداخت کنید',
+    checkout_CASH_message: '<span class="font-12">روش پرداخت:‌</span> نقدی',
     choose_payment_method: 'انتخاب روش پرداخت',
     person: {
       tour: {
@@ -97,6 +103,7 @@ export default {
     person_order_count: 'مجموع:‌ {order_count} عدد',
     person_payed: 'پرداخت شده',
     cash_checkout_type_submitted: 'پرداخت سفارش به صورت نقدی ثبت شد',
+    online_checkout_type_submitted: 'پرداخت سفارش به صورت آنلاین ثبت شد',
   },
 
   current_cafe: {
@@ -106,6 +113,7 @@ export default {
   },
 
   menu_page: {
+    all_products: 'همه',
     your_current_order: 'سبد سفارشات شما',
     submit_order: 'تایید سفارش',
     cafe_is_closed: 'مجموعه بسته است',
@@ -119,7 +127,8 @@ export default {
       how_can_i_pay: 'چگونه پرداخت کنم؟',
       got_it: 'فهمیدم!',
       submit_order_guide: 'با انتخاب این گزینه سفارش خود را ثبت کنید',
-      change_order_guide: 'جهت ثبت تغییرات در سفارش بر روی دکمه تایید سفارش بزنید'
+      change_order_guide: 'جهت ثبت تغییرات در سفارش بر روی دکمه تایید سفارش بزنید',
+      cashier_order_select_guide: 'صندوق دار سفارشی بر روی میز شما ثبت نموده است جهت پرداخت، آن را انتخاب نمایید',
     },
     toasts: {
       you_payed_on_this_product: `روی {num} عدد ازین محصول پرداخت انجام داده اید`

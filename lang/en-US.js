@@ -43,7 +43,6 @@ export default {
       </p>
       <p>and scan the barcode</p>
       <p>or enter the table\'s code</p>`,
-    add_order: 'add Order',
     edit_order: 'Edit Order',
     payment_status_header_payed: 'Paid',
     payment_status_header_of: 'of',
@@ -62,8 +61,7 @@ export default {
     },
     states: Object.assign({...order_states_general} , {
       waiting: 'Your Order is submitted',
-      no_order: 'no Order has been Submitted',
-      null: 'no order has been submitted',
+      no_order: 'no Order has been Submitted'
     }),
     total_amount: 'Total amount',
     payed_amount: 'Paid amount',
@@ -104,6 +102,7 @@ export default {
   },
 
   menu_page: {
+    all_products: 'All',
     your_current_order: 'Your Current Order',
     submit_order: 'Submit Order',
     cafe_is_closed: 'store is Closed',

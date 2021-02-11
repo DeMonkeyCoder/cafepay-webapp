@@ -179,7 +179,7 @@
                 </div>
               </div>
 
-              <div v-if="tokenType != 'pre-order'" :class="{'shadow-md': paymentMethod == 'cash', 'method-selected': paymentMethod == 'cash'}" @click="paymentMethod = 'cash'"
+              <div v-if="tokenType != 'pre-order' && table.paymentMethod != 'cash' && !cafe.payment_first" :class="{'shadow-md': paymentMethod == 'cash', 'method-selected': paymentMethod == 'cash'}" @click="paymentMethod = 'cash'"
               class="pre-invoice-modal__payment-method__cash cp-b-margin cp-side-padding-half cp-tb-padding normal-radius">
                 <div class="pre-invoice-modal__payment-method__cash__img">
                   <img src="@/assets/img/credit-card-payment.png" alt="">
@@ -210,16 +210,27 @@
       </b-modal>
 
       <div id="pay-checkout" class="pay-checkout-is-shown">
-        <b-button v-if="table.paymentMethod == 'online'"
+        <b-button v-if="table.paymentMethod == 'online' || table.paid"
           :disabled="totalWishToPayOrder == 0 "
           @click="showPreInvoice"
           :loading="globalLoading"
           class="button shadow-lg-b bcp-btn cp-btn-submit-order"
           size="is-medium"
           type="is-info"
-          >{{  $t('table_page.checkout') }} ({{ totalWishToPayOrder | currency }})</b-button
-        >
-        <span v-else class="message-warning font-16 font-norm">{{$t('table_page.checkout_CASH_message')}}</span>
+          >
+          <span v-if="table.paid">پرداخت کامل است</span>
+          <span v-else>{{  $t('table_page.checkout') }} ({{ totalWishToPayOrder | currency }})</span>
+        </b-button>
+
+        <div v-else class="message-warning payment-method-message">
+          <span class="payment-method-message__text font-16 font-norm"
+          v-html="$t('table_page.checkout_CASH_message')"  >
+            </span>
+          <div class="payment-method-message__btn">
+            <b-button :loading="globalLoading" @click="setMethodPayment('online')" 
+            class="shadow-lg" type="is-light" size="is-small">تغییر پرداخت به آنلاین</b-button></div>
+          
+        </div>
       </div>
 
  
@@ -243,10 +254,8 @@
               {{ $t('table_page.table') }}: <span class="font-norm">{{ table.table_number }}</span>
             </h5>
           </div>
-
-          <div class="table-top-section__edit-orders">
-            <b-button @click="goToMyOrderInMenu" class="shadow-b" type="is-warning" inverted >
-              {{ (userHasOrder) ? $t('table_page.edit_order') : $t('table_page.add_order') }}</b-button>
+          <div v-show="!cafe.payment_only" class="table-top-section__edit-orders">
+            <b-button @click="goToMyOrderInMenu" class="shadow-b" type="is-warning" inverted >{{ (userHasOrder) ? $t('table_page.edit_order') : $t('table_page.add_order') }}</b-button>
           </div>
         </div> -->
 
@@ -265,8 +274,9 @@
             id="table-status-bar-progress-wrapper"
             class="table-status-bar__info cp-tb-padding-half"
           >
-          <p v-if="tokenType == 'normal'">{{statusText}}</p>
-          <p v-else>{{(ordersPaid) ? 'سفارش شما پرداخت شد' : 'سفارش خود را پرداخت کنید'}}</p>
+          <p v-if="tokenType == 'normal'">{{(cafe.payment_first) ? 'سفارش خود را پرداخت کنید' : statusText}}</p>
+          <p v-if="tokenType == 'pre-order'">{{(ordersPaid) ? 'سفارش شما پرداخت شد' : 'سفارش خود را پرداخت کنید'}}</p>
+
     
           </div>
         </div>
@@ -321,6 +331,7 @@ export default {
       preInvoiceActive: false,
       hasPreOrder: true,
       preorders: [{}],
+      setMethodProccessing: false,
       //TODO: get bill preferred payment method from server
       paymentMethod: (this.$i18n.locale == 'fa') ? 'online' : 'cash'
     }
@@ -336,6 +347,10 @@ export default {
       return this.totalWishToPayOrder + this.cafepayFee
     },
 
+    // isPaymentOnly() {
+    //   return this.$store.state.cafe.payment_only
+    // },
+
     totalWishToPayOrder() {
       return this.$store.getters['table/totalWishToPay']
     },
@@ -348,6 +363,7 @@ export default {
         this.table.status
       )
     },
+
 
 
     showPreOrder(){
@@ -405,7 +421,6 @@ export default {
       })
     },
     goToMyOrderInMenu(){
-      console.log('whaat ?', this.table.you.orders);
       if (this.userHasOrder) {
         setTimeout(() => {
           this.$store.commit('cafe/changeActiveCategory', 0)
@@ -436,7 +451,8 @@ export default {
             this.ordersToPayforServer.push({
               pbr: order.pk,
               amount: order.wish_to_pay,
-              preferred_payment_method: order.preferred_payment_method
+              preferred_payment_method: order.preferred_payment_method,
+              staff: order.is_staff
             })
 
             let productExist = this.ordersToPay.findIndex(
@@ -471,21 +487,32 @@ export default {
       }, 200)
     },
     paymentCheckout() {
-      if (this.paymentMethod == 'cash') this.setCashPayment()
+      if (this.paymentMethod == 'cash') this.setMethodPayment('cash')
       else this.$store.dispatch('table/submitPayment', this.ordersToPayforServer)
       // this.$router.push('/paymentResult')
     },
-    setCashPayment(){
-      let OrderTobeCash = this.ordersToPayforServer.filter(x => x.preferred_payment_method != '1')
-      console.log('order to be cash', OrderTobeCash);
-      let pbrList = OrderTobeCash.map(x => {return {pbr: x.pbr, preferred_payment_method: '1'}})
-      console.log('pbr list', pbrList);
+    setMethodPayment(method){
+      this.setMethodProccessing = true
+      let methodBinary = (method == 'cash') ? '1' : '0'
+      let OrderTobeCash = this.ordersToPayforServer.filter(x => x.preferred_payment_method != methodBinary && !x.staff)
+        console.log("OrderTobeCash", OrderTobeCash.length == 0)
+      if (OrderTobeCash.length == 0) {
+        this.setMethodProccessing = false
+        this.preInvoiceActive = false
+        // this.toaster(this.$t(`table_page.${method}_checkout_type_submitted`), 'is-info', 'is-bottom')
+        
+      } else {
+      let pbrList = OrderTobeCash.map(x => {return {pbr: x.pbr, preferred_payment_method: methodBinary}})
       this.$store.dispatch('table/setPaymentMethod', pbrList)
       .then(res => {
+        this.setMethodProccessing = false
         this.preInvoiceActive = false
-        this.toaster(this.$t('table_page.cash_checkout_type_submitted'), 'is-info', 'is-bottom')
+        this.toaster(this.$t(`table_page.${method}_checkout_type_submitted`), 'is-info', 'is-bottom')
       })
-      .catch(err=> this.toaster('خطایی رخ داده', 'is-danger', 'is-bottom'))
+      .catch(err => {this.toaster('خطایی رخ داده', 'is-danger', 'is-bottom')
+        this.setMethodProccessing = false
+      })
+      }
     },
     showOptionsModal() {
       this.isTableOptionsModalActive = true
@@ -506,10 +533,10 @@ export default {
       deep: true,
       immediate: true,
       handler(val, oldValue) {
-        this.description = JSON.parse(JSON.stringify(val.description))
-        if (val.paymentMethod == 'cash' && val.hasOnlinePayment) {
+        if (val.paymentMethod == 'cash' && val.hasOnlinePayment && !this.setMethodProccessing) {
+          console.log('online order ? ', val.hasOnlinePayment);
           this.proccessOrderForPayment()
-          this.setCashPayment()
+          this.setMethodPayment('cash')
         }
       }
     },

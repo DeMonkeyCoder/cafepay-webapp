@@ -1,4 +1,8 @@
 @import '../variables.sass'
+
+.button, .input, .taginput .taginput-container.is-focusable, .textarea, .select select, .file-cta, .file-name, .pagination-previous, .pagination-next, .pagination-link, .pagination-ellipsis
+  border-radius: 5px!important
+
 .cp-btn
   border-radius: 5px
   @include tbPadding($size: 0.5 * $padding)
@@ -60,9 +64,26 @@
 
 
 .float-btn
+  border-radius: 25px
+  & > span
+    width: 100%
+    height: 100%
+    display: flex
+    justify-content: center
+    align-items: center
+    .mdi
+      &::before
+        font-size: 16px
+
+.fb-50
   width: 50px
   height: 50px
-  border-radius: 25px
+
+.fb-32
+  width: 32px
+  height: 32px
+  span
+    font-size: 16px!important
 
 .cp-btn-submit-order
   width: 100%!important
@@ -89,8 +110,8 @@
   position: fixed
   display: flex
   bottom: 0
-  left: 2rem
-  right: 2rem
+  left: 1.5rem
+  right: 1.5rem
   background-color: white
   height: 50px
   transition-timing-function: ease-in
@@ -130,3 +151,36 @@
 
   &__button-skip
     display: none!important
+
+.help-icon
+  background-color: lighten(grey, 35%)
+  border-radius: 16px
+  width: 24px
+  height: 24px
+  .mdi
+    
+    &::before
+      color: lighten(grey, 15%)
+      font-size: 16px
+
+.help-icon-texted
+  padding-left: ($padding / 2)!important
+  padding-right: ($padding / 2)!important
+  background-color: lighten(grey, 35%)
+  border-radius: 16px!important
+  // width: 24px
+  height: 24px
+  span
+    color: lighten(grey, 15%)!important
+    font-size: 14px!important
+  .icon
+    width: auto!important
+    transform: scaleX(-1)
+    margin-left: 0!important
+    margin-right: ($margin / 8)!important
+    .mdi
+      &::before
+        color: lighten(grey, 15%)
+        font-size: 14px
+
+

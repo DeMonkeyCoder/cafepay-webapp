@@ -7,17 +7,9 @@
       :callbacks="myCallbacks"
     ></v-tour>
 
-    <login
-      key="loginmodal-scan"
-      id="loginmodal-scan"
-      :loginModalActive="loginModalActive"
-      @successful="productsPayloadSeperator"
-    />
-
-
     <div id="selected-products-preview" 
     class="selected-products-preview-is-shown"
-    v-if="tokenType !== 'menu-only' && (!user.table_uuid || (user.table_uuid && !ordersPaid))">
+    v-if="tokenType !== 'menu-only' && !isPaymentOnly && (!user.table_uuid || (user.table_uuid && !ordersPaid))">
       <span v-if="!isClosed && !tour">{{ordersTotalCount}}</span>
       <b-button
         @click="productsPayloadSeperator"
@@ -49,7 +41,7 @@
             'current-order-category': index == 0,
             'shadow-lg': index == 0
           }"
-          @click="changeActiveCategory(index)"
+          @click="changeActiveCategoryButtonClick(index)"
         >
           {{ index == 0 ? $t("menu_page.your_current_order") : cat.name }}
         </div>
@@ -64,7 +56,7 @@
       @slider-move="handleSlideMove">
         <div :dir="$dir()" v-for="cat in menuTabItemCategories"
           :key="cat.name" class="product-list-wrapper">
-          <div :key="cat.pk" class="product-list">
+          <div :key="cat.pk" class="product-list" v-if="isItemVisible(cat)">
             <div
               v-for="(prod, index) in cat.products"
               :key="prod.pk"
@@ -97,12 +89,12 @@
                   <!-- <span class="toman">تومان</span> -->
                 </div>
               </div>
-              <div v-if="prod.available && tokenType !== 'menu-only' && !isClosed && (!user.table_uuid || (user.table_uuid && !ordersPaid))" class="add-or-remove">
-                <span class="product-add" @click="countChange(index, 1, prod)">
+              <div v-if="prod.available && tokenType !== 'menu-only' && !isPaymentOnly && !isClosed && (!user.table_uuid || (user.table_uuid && !ordersPaid))" class="add-or-remove">
+                <span class="product-add" @click="countChange(index, 1, prod, cat)">
                   <div class="aor-shape">+</div>
                 </span>
                 <span class="product-count">{{ prod.count }}</span>
-                <span class="product-remove" @click="countChange(index, -1, prod)">
+                <span class="product-remove" @click="countChange(index, -1, prod, cat)">
                   <div class="aor-shape">-</div>
                 </span>
               </div>
@@ -119,14 +111,13 @@
 </template>
 
 <script>
-import login from '~/components/user/login'
 import { Order } from '~/middleware/models/cafe.js'
 import productDefaultImage from '@/assets/img/product-default.png'
 import Vue from 'vue'
 import {Swiper} from 'vue2-swiper'
 export default {
   components: {
-    Swiper, login
+    Swiper
   },
   props: [
     'menu',
@@ -134,18 +125,19 @@ export default {
   ],
   data() {
     return {
-      loginModalActive: false,
+      sliderMoving: false,
       showSwipableMenu: true,
       lastSwipeOffset: null,
       skeletunMenu: 3,
       key: 'value',
+      lastActiveCategory: 1,
       activeCategory: 1,
       count: 0,
       totalPrice: 0,
       orderList: [],
       tour: false,
       productDefaultImage,
-      slideTransition: 'slide-category-next',
+      // slideTransition: 'slide-category-next',
       myOptions: {
         highlight: true,
         useKeyboardNavigation: false,
@@ -157,7 +149,7 @@ export default {
         }
       },
       myCallbacks: {
-        onNextStep: this.sliderAnimate,
+        // onNextStep: this.sliderAnimate,
         onFinish: () => {
           this.tour = false
           this.$store.commit('setGuide', {name: 'changeOrderConfirm', data: false})
@@ -192,6 +184,26 @@ export default {
     this.setActiveTab(true)
   },
   methods: {
+    isItemVisible(cat){
+      let index = this.menu.indexOf(cat)
+      if(this.sliderMoving){
+
+        // Item is on the direction we are sliding.
+        let sameSwipeSide =
+          (this.activeCategory - this.lastActiveCategory)
+          * (index - this.lastActiveCategory) >= 0
+
+        // Item might be visible during slide
+        let itemIsInSlideScope =
+          Math.abs(index - this.lastActiveCategory)
+          <= Math.abs(this.activeCategory - this.lastActiveCategory) + 1
+
+        return sameSwipeSide && itemIsInSlideScope
+      } else {
+        return index == this.activeCategory
+      }
+      // return this.sliderMoving || index == this.activeCategory
+    },
     reRenderSwipable() {
       this.showSwipableMenu = false;
       this.$nextTick(() => {
@@ -199,6 +211,22 @@ export default {
       });
     },
     handleSlideMove(offset) {
+      if(!this.sliderMoving){
+        this.sliderMoving = true
+        this.lastActiveCategory = this.activeCategory
+
+        // TODO: after analytics test, remove one of these
+        this.$gtm.trackEvent({
+          event: 'menu-change-cat-by-swipe',
+          category: 'menu',
+          value: 'swipe',
+        })
+        this.$gtm.trackEvent({
+          event: 'menu-change-cat',
+          category: 'menu',
+          value: 'swipe',
+        })
+      }
       if(!this.lastSwipeOffset){
         this.lastSwipeOffset = offset
         return
@@ -225,6 +253,7 @@ export default {
       this.lastSwipeOffset = offset
     },
     handleSlideChange(page){
+      this.sliderMoving = false;
       this.lastSwipeOffset = null;
 
       let pageIndex = page - 1;
@@ -234,6 +263,9 @@ export default {
     setActiveTab(noAnimation) {
       const vinst = this;
       if(this.$refs.menuCategoriesSwipe && this.menu[this.activeCategory]){
+        if(!noAnimation) {
+          this.sliderMoving = true;
+        }
         setTimeout(function(){
           let pk = vinst.menu[vinst.activeCategory].pk
           let index = vinst.menuTabItemCategories.findIndex(cat => cat.pk == pk)
@@ -245,10 +277,6 @@ export default {
       }
     },
     productsPayloadSeperator() {
-      if (!this.userIsFetched) {
-        this.loginModalActive = true
-        return
-      }
       return new Promise((resolve, reject) => {
             // if there is no change just switch to table view
         if (this.productChangeArray.length == 0) {
@@ -289,8 +317,6 @@ export default {
           })
           .then(res => {
             resolve(res)
-            
-            if (!this.socketIsConnected) Vue.prototype.$connect()
             if (this.searchExpandActive) this.toggleSearchBox()
           })
           .catch(err => {})
@@ -298,16 +324,47 @@ export default {
       })
   
     },
+    changeActiveCategoryButtonClick(index) {
 
+      // TODO: after analytics test, remove one of these
+      this.$gtm.trackEvent({
+        event: 'menu-change-cat-by-button',
+        category: 'menu',
+        value: 'button',
+      })
+      this.$gtm.trackEvent({
+        event: 'menu-change-cat',
+        category: 'menu',
+        value: 'button',
+      })
+      this.changeActiveCategory(index)
+    },
     changeActiveCategory(index) {
-      if (this.activeCategory > index)
-        this.slideTransition = 'slide-category-prev'
-      else this.slideTransition = 'slide-category-next'
+      // if (this.activeCategory > index)
+      //   this.slideTransition = 'slide-category-prev'
+      // else this.slideTransition = 'slide-category-next'
+      this.lastActiveCategory = this.activeCategory;
       this.activeCategory = index
       this.setActiveTab()
     },
 
-    countChange(index, count, product) {
+    countChange(index, count, product, cat) {
+
+      // TODO: after analytics test, remove one of these
+      this.$gtm.trackEvent({
+        event: 'product-' + (count > 0 ? 'add' : 'remove')
+            + '-from-cat-type-' + cat.localType,
+        category: 'order',
+        value: cat.localType,
+      })
+      this.$gtm.trackEvent({
+        event: 'product-count-change',
+        type: (count > 0 ? 'add' : 'remove'),
+        category: 'order',
+        value: cat.localType,
+      })
+
+      
       // check for 0 count and deletion
       if (product.count == 0 && count == -1) return
       if (
@@ -448,6 +505,10 @@ export default {
       return this.$store.state.cafe.closed
     },
 
+    isPaymentOnly() {
+      return this.$store.state.cafe.payment_only
+    },
+
     totalCap() {
       return this.$store.state.cafe.productChangeArray.reduce(
         (sum, prod) => prod.capital + sum,
@@ -466,7 +527,7 @@ export default {
     },
   },
   watch: {
-    activeCategory(_newValue, _oldValue){
+    activeCategory(_newValue, oldValue){
       this.scrollToActiveCategory();
     },
     menuTabItemCategories(_newValue, _oldValue){

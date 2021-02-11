@@ -1,5 +1,6 @@
 <template>
-  <div class="table-person">
+  <div :id="(person.cashier) ? 'cashier-person' : 'normal-person'" class="table-person">
+
     <!-- <v-tour
       v-if="first"
       name="sliderTour"
@@ -8,33 +9,105 @@
       :callbacks="myCallbacks"
     ></v-tour> -->
 
-    <div class="person-title has-background-white cp-tb-margin">
+      <v-tour
+      name="cashierSelectTour"
+      :steps="cashierGuideSteps"
+      :options="cashierGuideOptions"
+      :callbacks="cashierGuideCallback"
+    ></v-tour>
+
+    <b-modal class="simple-action-modal cashier-guide-modal" :active.sync="cashierGuideModalActive" has-modal-card >
+      <div class="modal-card" style="width: auto">
+
+        <section class="modal-dialog">
+          <div>
+            {{ $t('table_page.cashier_order_guide') }}
+            <p>انتخاب سفارش</p>
+          </div>
+          <div>
+            {{ $t('table_page.cashier_order_guide_2') }}
+            <p>پرداخت کل سفارشات</p>
+            </div>
+          <div>
+            {{ $t('table_page.cashier_order_guide_3') }}
+            <p>پرداخت اشتراکی</p>
+            </div>
+        </section>
+
+        <section class="modal-caption"></section>
+
+        <section class="modal-action">
+          <button class="button ma-child is-light" type="button" @click="cashierGuideModalActive = false">{{ $t('understood') }}</button>
+        </section>
+        
+      </div>
+    </b-modal>
+
+    <!-- COUNT CHANGE MODAL -->
+    <!-- <b-modal class="simple-action-modal" :active.sync="cashierCountModalActive" has-modal-card >
+      <div class="modal-card" style="width: auto">
+
+        <section class="modal-dialog">
+          <p class="cp-b-margin">{{ $t('table_page.cashier_order') }}</p>
+          <b-field dir="ltr" :label="orderTobeChange.name">
+            <b-numberinput v-model="orderTobeChange.cashier_count" controls-rounded type="is-info" :min="0" 
+            :max="orderTobeChange.max"></b-numberinput>
+          </b-field>
+        </section>
+
+        <section class="modal-caption"></section>
+
+        <section class="modal-action">
+          <button :disabled="orderTobeChange.cashier_count == 0 || orderTobeChange.cashier_count > orderTobeChange.max " 
+            class="button ma-child is-info" type="button" @click="cashierCountChange">{{ $t('table_page.chashier_count_submit') }}</button>
+        </section>
+        
+      </div>
+    </b-modal> -->
+
+    <div  class="person-title has-background-white cp-tb-margin">
       <img :src="person.avatar" :alt="person.name" />
       <p class="cp-side-padding cp-tb-padding" v-html="$t('table_page.person_orders', { title: title.trim() })">
+        
       </p>
+      <span v-if="person.cashier" class="cp-tb-padding help-span">
+        <b-icon @click.native="showCashierGuide" class="help-icon" icon="help"></b-icon></span>
     </div>
     <div
       class="person-orders cp-side-padding cp-tb-padding-half  has-background-white cp-card"
       :class="{ 'long-shadow': shadow }"
       v-for="(order, index) in person.orders"
-      :key="order.pk"
+      :key="index"
       :id="`order-${index}`"
+      @click="selectOrderForPayment(person.cashier, index, order)"
     >
-      <div class="person-title-and-selection">
-        <div class="person-order-title font-norm">{{ order.name }}</div>
-        <div class="person-order-selection"></div>
+      <div class="person-orders__info">
+        <div class="person-title-and-selection">
+          <div class="person-order-title font-norm">{{ order.name }}</div>
+          <div class="person-order-selection"></div>
+        </div>
+
+        <div class="person-total-order-info">
+          <span class="person-total-order-info__payment">
+            <span v-if="!person.cashier">{{ $t('table_page.person_order_count', {order_count: order.count}) }}
+             | </span>
+            {{ order.payment_info.total_amount | currency }}
+            <!-- <span class="toman">تومان</span> -->
+            </span>
+
+            <div v-if="order.paid && history == false" 
+            class="person-total-order-info__status"><span class=" green font-10 white-text cp-side-padding-half">{{ $t('table_page.person_payed') }}</span></div>
+        </div>
       </div>
 
-      <div class="person-total-order-info">
-        <span class="person-total-order-info__payment"
-          >{{ $t('table_page.person_order_count', {order_count: order.count}) }} |
-          {{ order.payment_info.total_amount | currency }}
-          <!-- <span class="toman">تومان</span> -->
-          </span>
-
-          <div v-if="order.payment_info.net_payed_amount == order.payment_info.total_amount && history == false" 
-          class="person-total-order-info__status"><span class=" green font-10 white-text cp-side-padding-half">{{ $t('table_page.person_payed') }}</span></div>
-      </div>
+    <div v-if="person.cashier && !order.paid" 
+      class="person-orders__select" :class="{'person-orders__select--selected': order.cashier_count}">
+        <b-button class="float-btn fb-32">
+          <!-- <span v-if="order.cashier_count != 0">{{order.cashier_count}}</span> -->
+          <b-icon icon="check"></b-icon>
+        </b-button>
+    </div>
+  
 
       <!-- <div class="person-payment">
         <span
@@ -130,6 +203,11 @@ export default {
   },
   data() {
     return {
+      cashierGuideModalActive: false,
+      cashierCountModalActive: false,
+      orderTobeChange: {
+        payment_info: {}
+      },
       myOptions: {
         highlight: true,
         useKeyboardNavigation: false,
@@ -163,10 +241,68 @@ export default {
         //     placement: 'top' // Any valid Popper.js placement. See https://popper.js.org/popper-documentation.html#Popper.placements
         //   }
         // }
+      ],
+      cashierGuideOptions: {
+        highlight: true,
+        useKeyboardNavigation: false,
+        labels: {
+          buttonSkip: false,
+          buttonPrevious: this.$t('menu_page.tour.previous'),
+          buttonNext: this.$t('menu_page.tour.how_can_i_pay'),
+          buttonStop: this.$t('menu_page.tour.got_it')
+        }
+      },
+      cashierGuideCallback: {
+        // onNextStep: this.sliderAnimate,
+        onFinish: () => {
+          this.$store.commit('setGuide', {name: 'cashierSelection', data: false})
+          localStorage.setItem('cashierSelectionGuide', false)
+          setTimeout(() => {
+          this.$store.commit('table/changeChashierCount', {index: 0, cashier_count: 0})
+          }, 500);
+        }
+      },
+      cashierGuideSteps: [
+        {
+          target: '#cashier-person', // We're using document.querySelector() under the hood
+          content: this.$t('menu_page.tour.cashier_order_select_guide'),
+            params: {
+            placement: 'top' // Any valid Popper.js placement. See https://popper.js.org/popper-documentation.html#Popper.placements
+          }
+        },
       ]
     }
   },
   methods: {
+    intialCashierSelectionTour(){
+      this.$tours['cashierSelectTour'].start()
+      setTimeout(() => {
+        this.$store.commit('table/changeChashierCount', {index: 0, cashier_count: 1})
+      }, 1500);
+    },
+    selectOrderForPayment(cashier, index, order){
+      if (!cashier || order.paid) return
+      this.orderTobeChange = JSON.parse(JSON.stringify(this.person.orders[index]))
+      this.orderTobeChange.index = index
+      this.orderTobeChange.cashier_count = (this.orderTobeChange.cashier_count == 1) ? 0 : 1
+      this.$store.commit('table/changeChashierCount', this.orderTobeChange)
+      
+    },
+    cashierCountChange() {
+      this.$store.commit('table/changeChashierCount', this.orderTobeChange)
+      this.cashierCountModalActive = false
+    },
+    openCountModal(cashier, index){
+      this.orderTobeChange = JSON.parse(JSON.stringify(this.person.orders[index]))
+      this.orderTobeChange.index = index
+      this.orderTobeChange.max = (this.orderTobeChange.payment_info.net_payed_amount) ? Math.ceil(this.orderTobeChange.payment_info.net_payed_amount / this.orderTobeChange.unit_amount) : this.orderTobeChange.count
+      if (cashier) {
+        this.cashierCountModalActive = true
+      }
+    },
+    showCashierGuide(){
+      this.cashierGuideModalActive = true
+    },
     changeWishToPay(value, index, personName) {
       // for now i send peson name but later i will search by id
       this.$store.commit('table/changeWishToPay', {
@@ -214,17 +350,28 @@ export default {
     }
   },
   watch: {
-    initialTour: {
+    // initialTour: {
+    //   immediate: true,
+    //   handler(val, old) {
+    //     if (val) {
+    //       setTimeout(() => {
+    //         this.$tours['sliderTour'].start()
+    //         this.$store.commit('setFirstTime', false)
+    //       }, 500)
+    //     }
+    //   }
+    // },
+    table: {
+      deep: true,
       immediate: true,
-      handler(val, old) {
-        if (val) {
+      handler(val, oldValue) {
+        if (val.hasCashierOrder && this.guides.cashierSelection) {
           setTimeout(() => {
-            this.$tours['sliderTour'].start()
-            this.$store.commit('setFirstTime', false)
-          }, 500)
+            this.intialCashierSelectionTour()
+          }, 1000);
         }
       }
-    }
+    },
   }
 }
 </script>

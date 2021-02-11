@@ -1,0 +1,148 @@
+$animationTime: 0.75s
+// $animationEasing: cubic-bezier(0.76, 0, 0.24, 1)
+// $animationEasing: cubic-bezier(0.83, 0, 0.17, 1)
+// $animationEasing: cubic-bezier(0.34, 1, 0.64, 1)
+// $animationEasing: cubic-bezier(0.65, 0, 0.35, 1)
+// $animationEasing: cubic-bezier(0.11, 0, 0.5, 0)
+$animationEasing: cubic-bezier(0.16, 1, 0.3, 1)
+// $animationEasing: cubic-bezier(0.87, 0, 0.13, 1)
+
+.cashier-guide-modal
+  .modal-dialog
+    div
+      padding: $padding
+      padding-bottom: $padding * 4
+      border-radius: $border-md
+      position: relative
+      margin-bottom: $margin
+      text-align: right
+      background-color: lighten($primary_hue2, 30%)
+      &:last-child
+        margin-bottom: 0
+      p
+        position: absolute
+        color: $primary_hue2
+        font-size: 24px!important
+        font-weight: 900!important
+        opacity: 0.75
+        right: $padding
+        bottom: $padding
+  
+.table-person
+  margin-bottom: 50px
+  .person-title
+    border-radius: 25px
+    display: flex
+    img
+      flex-basis: 46px
+      height: 46px
+      border-radius: 23px
+    .help-span
+      // background-color: lighten(grey, 35%)
+  .person-orders
+    display: flex
+    // margin-bottom: $margin * 1.5
+    margin-top: $margin!important
+    position: relative
+
+    &__select
+      direction: ltr
+      // display: flex
+      // justify-content: flex-end
+      // align-items: center
+      position: absolute
+      transition: $animationTime $animationEasing
+      top: 0
+      left: 0
+      bottom: 0
+      right: 0
+      button
+        transition: $animationTime $animationEasing
+        background-color: lighten(grey, 35%)
+        height: 100%
+        border-radius: 5px 0px 0px 5px!important
+        &:focus, &:active, &:hover
+          border: none!important
+          color: tranparent!important
+          border-color: transparent!important
+          outline: none!important
+          box-shadow: none!important
+        span
+          color: lighten(grey, 25%)
+          i
+            &::before
+              transition: $animationTime $animationEasing
+              font-size: 20px!important
+      &--selected
+        opacity: 0.75
+        transition: $animationTime $animationEasing 
+        button
+          transition: $animationTime $animationEasing
+          background-color: $primary
+          border-radius: 5px 5px 5px 5px!important
+          width: 100% 
+          height: 100%
+          span
+            // transition: $animationTime $animationEasing
+            color: white!important
+            i
+              &::before
+                transition: $animationTime $animationEasing
+                font-size: 24px!important
+
+    &__info
+      flex: 1
+
+    .toman
+      font-size: 10px!important
+      margin-inline-start: 2px
+    .person-title-and-selection
+      display: flex
+    .wish-to-pay, .person-payment, .person-total-order-info
+      font-size: 13px
+      color: $grey
+    .person-slider
+      position: absolute
+      bottom: -16px
+      left: 0
+      right: 0
+      .b-slider.is-large .b-slider-track
+        height: 0.85rem
+        border-radius: 0px 0px 5px 5px
+      .b-slider-fill
+        border-radius: 0px 0px 5px 5px
+
+    .order-payment-done
+      margin: 0.25rem -1*$margin -1*$margin -1*$margin
+      display: flex
+      justify-content: center
+      align-items: center
+      color: white
+      border-radius: 0px 0px 5px 5px
+      padding: 3px
+
+    .person-total-order-info
+      display: flex
+      
+      &__status
+        flex: 1
+        text-align: end
+        border-radius: 2px
+        span
+          border-radius: 2px
+      span
+        font-size: 15px
+        
+
+    .person-payment
+      display: flex
+      flex-direction: column
+      span
+        flex: 1
+        font-size: 14px
+        span
+          font-size: 16px
+    .wish-to-pay
+      margin-bottom: $margin
+      #wish-to-pay-text
+        font-size: 12px

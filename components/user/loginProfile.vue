@@ -21,6 +21,7 @@
             </p>
             <b-field class="center-align">
               <b-input
+                @keyup.native.enter="sendCode"
                 ref="phoneInputProfile"
                 dir="ltr"
                 inputmode="numeric"
@@ -47,6 +48,7 @@
             </div>
             <b-field class="field">
               <b-input
+                @keyup.native.enter="checkCode"
                 ref="codeInputProfile"
                 dir="ltr"
                 inputmode="numeric"
@@ -82,6 +84,7 @@
 
             <b-field>
               <b-input
+                @keyup.native.enter="signup"
                 :dir="$dir()"
                 v-model="first_name"
                 class="cp-input cp-input-primary cp-input-grey"

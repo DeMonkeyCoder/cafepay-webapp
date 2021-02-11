@@ -69,6 +69,7 @@ export default {
    ** Global CSS
    */
   css: [
+    // #TODO - Check if font-awesome is needed
     '@assets/fontawesome/css/all.min.css',
     '@assets/sass/cafepay.sass',
     // "https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css"
@@ -77,7 +78,7 @@ export default {
    ** Plugins to load before mounting the App
    */
   plugins: [
-    
+    // "@/plugins/animeJs",
     {src: '~/plugins/gtm', mode: 'client'},
     {src: '~/plugins/onReload', mode: 'client'},
     '~/plugins/axios',
@@ -122,7 +123,12 @@ export default {
       langDir: 'lang/',
       defaultLocale: config.defaultLocale,
       detectBrowserLanguage: false
-    }]
+    }],
+
+    ['@nuxtjs/robots', [{
+      UserAgent: '*',
+      Disallow: '/en'
+    }]]
   ],
 
   router: {

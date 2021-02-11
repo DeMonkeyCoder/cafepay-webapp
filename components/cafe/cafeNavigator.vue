@@ -106,10 +106,6 @@
       //   })
       // }
     },
-    updated(){
-      console.log("Hooooooo!")
-      console.log(this.direction)
-    }
   }
 </script>
 
