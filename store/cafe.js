@@ -22,7 +22,8 @@ export const state = () => ({
   active: false,
   list: [],
   fee_payer: false,
-  header_image: null
+  header_image: null,
+  my_credit_in_cafe: 0,
 })
 
 export const getters = {
@@ -55,6 +56,7 @@ export const mutations = {
     state.header_image = data.cafe.header_image
     state.payment_only = data.cafe.payment_only
     state.payment_first = data.cafe.payment_first
+    state.my_credit_in_cafe = data.my_credit_in_cafe
 
     // define type of token ----- 0: menuonly   1: normal    2: preorder
     switch (data.type) {
