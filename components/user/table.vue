@@ -140,9 +140,23 @@
                 </p>
               </li>
               <li>
-                <p class="pre-invoice-modal__name font-bold">{{ $t('table_page.final_total_amount') }}</p>
-                <p class="pre-invoice-modal__amount font-bold">
+                <p class="pre-invoice-modal__name font-l">اعتبار شما</p>
+                <p class="pre-invoice-modal__amount font-l">
+                  {{ cafe.my_credit_in_cafe | currency }}
+                  <!-- <span class="toman">تومان</span> -->
+                </p>
+              </li>
+              <li>
+                <p class="pre-invoice-modal__name font-l">{{ $t('table_page.final_total_amount') }}</p>
+                <p class="pre-invoice-modal__amount font-l">
                   {{ totaltoPay | currency }}
+                  <!-- <span class="toman">تومان</span> -->
+                </p>
+              </li>
+              <li>
+                <p class="pre-invoice-modal__name font-bold">قابل پرداخت</p>
+                <p class="pre-invoice-modal__amount font-bold">
+                  {{ Math.max(totaltoPay - cafe.my_credit_in_cafe, 0) | currency }}
                   <!-- <span class="toman">تومان</span> -->
                 </p>
               </li>
