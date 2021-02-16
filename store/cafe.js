@@ -98,19 +98,33 @@ export const mutations = {
   },
   changeCount(state, setting) {
     state.totalCount += setting.count
-    // if its not from filtered category indexes are legit so we need no find
-    if (!setting.filtered) state.categories[setting.categoryIndex].products[setting.productIndex].count += setting.count
-    else {
-      // we have product id and we need to find it in out main menu and update it
-      for (const category of state.categories) {
-        for (const product of category.products) {
-          if (setting.id == product.pk) {
-            product.count += setting.count
-            break;
-          }
+
+    let theProduct = state.categories[setting.categoryIndex].products[setting.productIndex];
+    theProduct.count += setting.count
+
+    for (const category of state.categories) {
+      for (const product of category.products) {
+        if (theProduct.pk == product.pk) {
+          product.count = theProduct.count
+          break
         }
       }
     }
+    
+    // // if its not from filtered category indexes are legit so we need no find
+    // if (!setting.filtered) {
+    //   state.categories[setting.categoryIndex].products[setting.productIndex].count += setting.count
+    // } else {
+    //   // we have product id and we need to find it in out main menu and update it
+    //   for (const category of state.categories) {
+    //     for (const product of category.products) {
+    //       if (setting.id == product.pk) {
+    //         product.count += setting.count
+    //         break;
+    //       }
+    //     }
+    //   }
+    // }
   },
 
   setMenu(state, menu) {
