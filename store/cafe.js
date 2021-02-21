@@ -188,8 +188,8 @@ export const mutations = {
 
     for (const category of state.categories) {
 
-      // Ignore categories that we created for All Products and Current Order
-      if (category.pk <= 0) continue
+      // Ignore categories that we created for Current Order
+      if (category.pk < 0) continue
 
       // if user == false that means we dont have any order anymore so clear products of user current category and reset counts on other categories
       if (!user && firstCategory) category.products = []
