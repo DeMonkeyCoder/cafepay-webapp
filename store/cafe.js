@@ -188,8 +188,8 @@ export const mutations = {
 
     for (const category of state.categories) {
 
-      // Ignore categories that we created for Current Order
-      if (category.pk < 0) continue
+      // Ignore categories that we created for Current Order and All products
+      if (category.pk <= 0) continue
 
       // if user == false that means we dont have any order anymore so clear products of user current category and reset counts on other categories
       if (!user && firstCategory) category.products = []
@@ -210,6 +210,13 @@ export const mutations = {
               matchedOrder_currentOrderCat.reduceLimit = Math.ceil(matchedOrder.payment_info.net_payed_amount / matchedOrder.unit_amount)
               matchedOrder_currentOrderCat.count = matchedOrder.count
             } else state.categories[0].products.push(product)
+
+            // check if product exist in all Products category (secondCateogry) or not
+            let matchedOrder_allProductsCat = state.categories[1].products.find(p => p.pk == matchedOrder.product)
+            if (matchedOrder_allProductsCat) {
+              matchedOrder_allProductsCat.reduceLimit = Math.ceil(matchedOrder.payment_info.net_payed_amount / matchedOrder.unit_amount)
+              matchedOrder_allProductsCat.count = matchedOrder.count
+            } else state.categories[1].products.push(product)
           }
         }
       } else {
