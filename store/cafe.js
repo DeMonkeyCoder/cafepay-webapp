@@ -184,8 +184,7 @@ export const mutations = {
 
   bindProductCount(state, user) {
     let firstCategory = true
-    state.totalCount = 0
-    let matchedOrders = []
+
     for (const category of state.categories) {
 
       // Ignore categories that we created for Current Order
@@ -196,28 +195,31 @@ export const mutations = {
     
       if (user) {
         for (const product of category.products) {
-          let matchedOrder = user.orders.find(p => p.product == product.pk)
-          if (matchedOrder) {
-            product.reduceLimit = Math.ceil(matchedOrder.payment_info.net_payed_amount / matchedOrder.unit_amount)
-            product.count = matchedOrder.count
-            matchedOrders.push(matchedOrder)
-
-            // check if product exist in my order category (firstCateogry) or not
-            let matchedOrder_currentOrderCat = state.categories[0].products.find(p => p.pk == matchedOrder.product)
-            if (matchedOrder_currentOrderCat) {
-              matchedOrder_currentOrderCat.reduceLimit = Math.ceil(matchedOrder.payment_info.net_payed_amount / matchedOrder.unit_amount)
-              matchedOrder_currentOrderCat.count = matchedOrder.count
-            } else state.categories[0].products.push(product)
+          
+          let matchedOrders = user.orders.filter(p => p.product == product.pk)
+          product.reduceLimit = 0
+          product.count = 0
+          for (const matchedOrder of matchedOrders) {
+            product.reduceLimit += Math.ceil(matchedOrder.payment_info.net_payed_amount / matchedOrder.unit_amount)
+            product.count += matchedOrder.count
           }
+
+          // check if product exist in my order category (firstCateogry) or not
+          let matchedOrder_currentOrderCat = state.categories[0].products.find(p => p.pk == product.pk)
+          if (matchedOrder_currentOrderCat) {
+            matchedOrder_currentOrderCat.reduceLimit = product.reduceLimit
+            matchedOrder_currentOrderCat.count = product.count
+          } else state.categories[0].products.push(product)
         }
       } else {
-        for (const product of category.allProducts) {
+        for (const product of category.products) {
           product.count = 0
           product.reduceLimit = 0
         }
       }
     }
-    
+
+    state.totalCount = 0    
     if(user){
       for (const order of user.orders) {
         state.totalCount += order.count
