@@ -185,7 +185,7 @@ export const mutations = {
   bindProductCount(state, user) {
     let firstCategory = true
     state.totalCount = 0
-
+    let matchedOrders = []
     for (const category of state.categories) {
 
       // Ignore categories that we created for Current Order
@@ -198,11 +198,9 @@ export const mutations = {
         for (const product of category.products) {
           let matchedOrder = user.orders.find(p => p.product == product.pk)
           if (matchedOrder) {
-            // check if order has payments for reduce order count
             product.reduceLimit = Math.ceil(matchedOrder.payment_info.net_payed_amount / matchedOrder.unit_amount)
             product.count = matchedOrder.count
-            // compute total Count here (initial)
-            state.totalCount += matchedOrder.count
+            matchedOrders.push(matchedOrder)
 
             // check if product exist in my order category (firstCateogry) or not
             let matchedOrder_currentOrderCat = state.categories[0].products.find(p => p.pk == matchedOrder.product)
@@ -213,10 +211,16 @@ export const mutations = {
           }
         }
       } else {
-        for (const product of category.products) {
+        for (const product of category.allProducts) {
           product.count = 0
           product.reduceLimit = 0
         }
+      }
+    }
+    
+    if(user){
+      for (const order of user.orders) {
+        state.totalCount += order.count
       }
     }
 
