@@ -12,8 +12,10 @@ export const state = () => ({
   paymentMethod: 'online',
   cafe: '',
   tpayment: 0,
+  joinId: null,
   persons: [],
   payment: {},
+  description: null,
   hasOnlinePayment: false,
   yourOrdersCost: 0,
   yourOrdersPaid: 0,
@@ -60,7 +62,8 @@ export const mutations = {
     state.token = null
     state.table_number = null
     state.persons = []
-    state.paid = false
+    state.description = null
+    state.joinId = null
     state.tpayment = 0
     state.paymentMethod = 'online'
     state.payment = {}
@@ -83,7 +86,10 @@ export const mutations = {
     let table = new Table(rawData, this.state.user.user.id)
     state.persons = table.persons
     state.payment = rawData.payment_info
+    state.description = rawData.description
     state.status = table.status
+    state.paid = false
+    state.joinId = rawData.pk
     state.paid = table.paid
     state.paymentMethod = table.paymentMethod
     state.hasOnlinePayment = table.hasOnlinePayment
