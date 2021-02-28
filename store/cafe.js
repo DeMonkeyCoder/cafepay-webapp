@@ -111,6 +111,12 @@ export const mutations = {
       }
     }
     
+    if(theProduct.count > 0) {
+      // check if product exist in my order category (firstCateogry) or not
+      if(!state.categories[0].products.find(p => p.pk == theProduct.pk)) {
+        state.categories[0].products.push(theProduct)
+      }
+    }
     // // if its not from filtered category indexes are legit so we need no find
     // if (!setting.filtered) {
     //   state.categories[setting.categoryIndex].products[setting.productIndex].count += setting.count
@@ -181,9 +187,11 @@ export const mutations = {
     state.list = data
   },
 
-
+  clearBasket(state){
+    state.categories[0].products = []
+  },
   bindProductCount(state, user) {
-    let firstCategory = true
+    state.categories[0].products = []
 
     for (const category of state.categories) {
 
@@ -203,13 +211,14 @@ export const mutations = {
             product.reduceLimit += Math.ceil(matchedOrder.payment_info.net_payed_amount / matchedOrder.unit_amount)
             product.count += matchedOrder.count
           }
-
-          // check if product exist in my order category (firstCateogry) or not
-          let matchedOrder_currentOrderCat = state.categories[0].products.find(p => p.pk == product.pk)
-          if (matchedOrder_currentOrderCat) {
-            matchedOrder_currentOrderCat.reduceLimit = product.reduceLimit
-            matchedOrder_currentOrderCat.count = product.count
-          } else state.categories[0].products.push(product)
+          if(product.count > 0) {
+            // check if product exist in my order category (firstCateogry) or not
+            let matchedOrder_currentOrderCat = state.categories[0].products.find(p => p.pk == product.pk)
+            if (matchedOrder_currentOrderCat) {
+              matchedOrder_currentOrderCat.reduceLimit = product.reduceLimit
+              matchedOrder_currentOrderCat.count = product.count
+            } else state.categories[0].products.push(product)
+          }
         }
       } else {
         for (const product of category.products) {

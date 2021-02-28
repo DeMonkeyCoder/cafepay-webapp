@@ -480,7 +480,7 @@ export default {
  
   computed: {
     menuTabItemCategories(){
-      let menuFiltered = Object.assign([], this.menu).filter(cat => cat.products.length > 0)
+      let menuFiltered = Object.assign([], this.menu)//.filter(cat => cat.products.length > 0)
       return this.$dir() == 'rtl' ? menuFiltered.reverse() : menuFiltered
     },
     isMenuPage() {

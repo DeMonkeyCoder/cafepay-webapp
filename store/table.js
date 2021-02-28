@@ -104,6 +104,8 @@ export const mutations = {
     if (user) {
       state.you = user
       this.commit('cafe/bindProductCount', user)
+    } else {
+      this.commit('cafe/clearBasket')
     }
 
   },
