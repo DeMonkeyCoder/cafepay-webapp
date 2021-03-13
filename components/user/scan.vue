@@ -137,7 +137,7 @@ export default {
       // TODO: handle wrong token from url in a better way to
       // let user scan code again when entered wrong token
       letsUseCamera: !this.$route.query.token,
-      launchCamera: !this.$route.query.token,
+      launchCamera: false,
       xyz: true,
       animationJson,
       loaderJson,
@@ -311,7 +311,8 @@ export default {
           .query({ name: 'camera' })
           .then((permissionStatus) => {
             if (permissionStatus.state == 'prompt')
-              this.accessCameraActive = true
+              if (!this.$route.query.token)
+                this.accessCameraActive = true
             else if (permissionStatus.state == 'granted') {
               this.launchCamera = true
               // this.qrcodeComponentLaunch = null
