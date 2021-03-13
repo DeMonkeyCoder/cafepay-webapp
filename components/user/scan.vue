@@ -310,10 +310,11 @@ export default {
         navigator.permissions
           .query({ name: 'camera' })
           .then((permissionStatus) => {
-            if (permissionStatus.state == 'prompt')
-              if (!this.$route.query.token)
+            if (permissionStatus.state == 'prompt') {
+              if (!this.$route.query.token) {
                 this.accessCameraActive = true
-            else if (permissionStatus.state == 'granted') {
+              }
+            } else if (permissionStatus.state == 'granted') {
               this.launchCamera = true
               // this.qrcodeComponentLaunch = null
             }
