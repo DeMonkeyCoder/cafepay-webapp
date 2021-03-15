@@ -1,6 +1,5 @@
 /** Model definition file for the Movie Class **/
 
-// const identicon = require('identicon')
 import Avatars from '@dicebear/avatars';
 import sprites from '@dicebear/avatars-bottts-sprites';
 

@@ -17,7 +17,6 @@
     "@nuxtjs/pwa": "^2.6.0",
     "@nuxtjs/robots": "^2.4.2",
     "autonumeric": "^4.5.13",
-    "identicon": "^3.0.1",
     "jalali-moment": "^3.3.9",
     "jquery": "^3.5.1",
     "leaflet": "^1.6.0",
