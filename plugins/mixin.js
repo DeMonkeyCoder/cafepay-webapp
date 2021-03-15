@@ -1,9 +1,9 @@
 import Vue from 'vue'
-import config from '~/plugins/config.js'
+
 Vue.mixin({
   data() {
     return {
-      baseUrl: config.baseUrl,
+      baseUrl: process.env.CAFEPAY_WEBAPP_BASE_URL,
       cloading: false,
       colors: {
         primary: '#009fe3',

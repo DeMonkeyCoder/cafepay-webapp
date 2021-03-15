@@ -1,11 +1,11 @@
+require('dotenv').config()
 import webpack from 'webpack'
-import config from './plugins/config.js'
 
 //TODO: dynamically handle title and description by language
 export default {
   server: {
-    port: 9999, // default: 3000     
-    host: '0.0.0.0', // default: localhost   
+    port: process.env.CAFEPAY_WEBAPP_NUXT_PORT,
+    host: process.env.CAFEPAY_WEBAPP_NUXT_HOST,
   },
   ssr: true,
   target: 'server',
@@ -13,7 +13,7 @@ export default {
    ** Headers of the page
    */
   head: {
-    title: (config.defaultLocale == 'fa' ? 
+    title: (process.env.CAFEPAY_WEBAPP_DEFAULT_LOCALE == 'fa' ? 
       'کافه پی | پرداخت آنلاین در کافه‌ها و رستوران‌ها' :
       'Cafepay | Online payment for cafe and restaurant'),
     meta: [{
@@ -30,7 +30,7 @@ export default {
       {
         hid: 'description',
         name: 'description',
-        content: (config.defaultLocale == 'fa' ? 
+        content: (process.env.CAFEPAY_WEBAPP_DEFAULT_LOCALE == 'fa' ? 
             'کافه پی | پرداخت آنلاین در کافه‌ها و رستوران‌ها' :
             'Cafepay | Online payment for cafe and restaurant')
       },
@@ -95,6 +95,14 @@ export default {
     '~/plugins/i18n.js',
     {src: '~/plugins/Vue2TouchEvents.js', mode: 'client'},
   ],
+
+  // Modules for dev and build (recommended) (https://go.nuxtjs.dev/config-modules)
+  buildModules: [
+    [ '@nuxtjs/dotenv', {
+      systemvars: true
+    }]
+  ],
+
   /*
    ** Nuxt.js modules
    */
@@ -121,7 +129,7 @@ export default {
       ],
       lazy: true,
       langDir: 'lang/',
-      defaultLocale: config.defaultLocale,
+      defaultLocale: process.env.CAFEPAY_WEBAPP_DEFAULT_LOCALE,
       detectBrowserLanguage: false
     }],
 
@@ -143,7 +151,7 @@ export default {
    ** See https://axios.nuxtjs.org/options
    */
   axios: {
-    baseURL: config.baseUrl,
+    baseURL: process.env.CAFEPAY_WEBAPP_BASE_URL,
     proxyHeaders: false,
     credentials: false
   },
