@@ -87,6 +87,3 @@ sw.*
 # Mac OSX
 .DS_Store
 package-lock.json
-
-baseUrl.js
-config.js

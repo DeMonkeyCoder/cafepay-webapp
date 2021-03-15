@@ -9,7 +9,7 @@ export const state = () => ({
   errorMessage: null,
   globalLoading: false,
   errorThrow: false,
-  baseUrl: config.baseUrl,
+  baseUrl: process.env.CAFEPAY_WEBAPP_BASE_URL,
   activeCafe: {},
   firstTimeActive: false,
   activeTable: {},

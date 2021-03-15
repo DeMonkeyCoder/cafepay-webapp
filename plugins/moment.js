@@ -1,7 +1,7 @@
 import Vue from 'vue'
-import config from './config'
+
 const moment = require('jalali-moment')
-moment.locale(config.defaultLocale)
+moment.locale(process.env.CAFEPAY_WEBAPP_DEFAULT_LOCALE)
 Vue.filter('cmoment', (value, arg) => {
   return moment(value, "YYYY-M-D HH:mm:ss").format(arg)
 });

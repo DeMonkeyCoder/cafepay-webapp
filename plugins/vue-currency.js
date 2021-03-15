@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import VueCurrencyFilter from "vue-currency-filter";
-import config from './config'
+
 //TODO: handle currency dynamically
-Vue.use(VueCurrencyFilter, config.defaultLocale == 'fa' ? {
+Vue.use(VueCurrencyFilter, process.env.CAFEPAY_WEBAPP_DEFAULT_LOCALE == 'fa' ? {
   symbol: "تومان",
   thousandsSeparator: ",",
   fractionCount: 0,
