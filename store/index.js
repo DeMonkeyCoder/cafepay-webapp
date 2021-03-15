@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import  config from '~/plugins/config.js'
 
 
 Vue.use(Vuex)
