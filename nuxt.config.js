@@ -1,11 +1,18 @@
-require('dotenv').config()
 import webpack from 'webpack'
+let config = {
+  CAFEPAY_WEBAPP_NUXT_HOST: process.env.CAFEPAY_WEBAPP_NUXT_HOST || '0.0.0.0',
+  CAFEPAY_WEBAPP_NUXT_PORT: process.env.CAFEPAY_WEBAPP_NUXT_PORT || '3000',
+  CAFEPAY_WEBAPP_BASE_URL: process.env.CAFEPAY_WEBAPP_BASE_URL || 'https://main.cafepay.app/',
+  CAFEPAY_WEBAPP_SOCKET_URL: process.env.CAFEPAY_WEBAPP_SOCKET_URL || 'wss://main.cafepay.app/',
+  CAFEPAY_WEBAPP_DEFAULT_LOCALE: process.env.CAFEPAY_WEBAPP_DEFAULT_LOCALE || 'fa'
+}
 
 //TODO: dynamically handle title and description by language
 export default {
+  publicRuntimeConfig: config,
   server: {
-    port: process.env.CAFEPAY_WEBAPP_NUXT_PORT,
-    host: process.env.CAFEPAY_WEBAPP_NUXT_HOST,
+    port: config.CAFEPAY_WEBAPP_NUXT_PORT,
+    host: config.CAFEPAY_WEBAPP_NUXT_HOST,
   },
   ssr: true,
   target: 'server',
@@ -13,7 +20,7 @@ export default {
    ** Headers of the page
    */
   head: {
-    title: (process.env.CAFEPAY_WEBAPP_DEFAULT_LOCALE == 'fa' ? 
+    title: (config.CAFEPAY_WEBAPP_DEFAULT_LOCALE == 'fa' ? 
       'کافه پی | پرداخت آنلاین در کافه‌ها و رستوران‌ها' :
       'Cafepay | Online payment for cafe and restaurant'),
     meta: [{
@@ -30,7 +37,7 @@ export default {
       {
         hid: 'description',
         name: 'description',
-        content: (process.env.CAFEPAY_WEBAPP_DEFAULT_LOCALE == 'fa' ? 
+        content: (config.CAFEPAY_WEBAPP_DEFAULT_LOCALE == 'fa' ? 
             'کافه پی | پرداخت آنلاین در کافه‌ها و رستوران‌ها' :
             'Cafepay | Online payment for cafe and restaurant')
       },
@@ -97,11 +104,7 @@ export default {
   ],
 
   // Modules for dev and build (recommended) (https://go.nuxtjs.dev/config-modules)
-  buildModules: [
-    [ '@nuxtjs/dotenv', {
-      systemvars: true
-    }]
-  ],
+  buildModules: [],
 
   /*
    ** Nuxt.js modules
@@ -129,7 +132,7 @@ export default {
       ],
       lazy: true,
       langDir: 'lang/',
-      defaultLocale: process.env.CAFEPAY_WEBAPP_DEFAULT_LOCALE,
+      defaultLocale: config.CAFEPAY_WEBAPP_DEFAULT_LOCALE,
       detectBrowserLanguage: false
     }],
 
@@ -151,7 +154,7 @@ export default {
    ** See https://axios.nuxtjs.org/options
    */
   axios: {
-    baseURL: process.env.CAFEPAY_WEBAPP_BASE_URL,
+    baseURL: config.CAFEPAY_WEBAPP_BASE_URL,
     proxyHeaders: false,
     credentials: false
   },

@@ -1,0 +1,5 @@
+{
+    "platform": "docker",
+    "app": "cafepay-webapp",
+    "port": 3000
+}

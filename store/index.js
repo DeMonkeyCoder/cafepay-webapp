@@ -8,7 +8,7 @@ export const state = () => ({
   errorMessage: null,
   globalLoading: false,
   errorThrow: false,
-  baseUrl: process.env.CAFEPAY_WEBAPP_BASE_URL,
+  baseUrl: null,
   activeCafe: {},
   firstTimeActive: false,
   activeTable: {},
@@ -29,6 +29,9 @@ export const state = () => ({
 })
 
 export const mutations = {
+  setBaseUrl(state, baseUrl) {
+    state.baseUrl = baseUrl
+  },
   SOCKET_ONOPEN(state, event) {
     Vue.prototype.$socket = event.currentTarget
     state.socket.isConnected = true
@@ -131,8 +134,9 @@ export const mutations = {
 }
 
 export const actions = {
-
-
+  nuxtServerInit({ commit }, { $config }) {
+    commit('setBaseUrl', $config.CAFEPAY_WEBAPP_BASE_URL)
+  },
   sendCode({
     commit,
     dispatch
