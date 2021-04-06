@@ -49,6 +49,7 @@ export const mutations = {
     state.rate = (data.cafe.rate) ? data.cafe.rate : 4
     state.pk = data.cafe.pk
     state.name = data.cafe.name
+    state.phone = data.cafe.phone
     state.closed = data.cafe.is_closed
     state.avatar = data.cafe.avatar
     state.cafepay_fee = data.cafe.cafepay_fee
