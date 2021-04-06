@@ -4,7 +4,8 @@ let config = {
   CAFEPAY_WEBAPP_NUXT_PORT: process.env.CAFEPAY_WEBAPP_NUXT_PORT || '3000',
   CAFEPAY_WEBAPP_BASE_URL: process.env.CAFEPAY_WEBAPP_BASE_URL || 'https://main.cafepay.app/',
   CAFEPAY_WEBAPP_SOCKET_URL: process.env.CAFEPAY_WEBAPP_SOCKET_URL || 'wss://main.cafepay.app/',
-  CAFEPAY_WEBAPP_DEFAULT_LOCALE: process.env.CAFEPAY_WEBAPP_DEFAULT_LOCALE || 'fa'
+  CAFEPAY_WEBAPP_DEFAULT_LOCALE: process.env.CAFEPAY_WEBAPP_DEFAULT_LOCALE || 'fa',
+  CAFEPAY_WEBAPP_SENTRY_DSN: process.env.CAFEPAY_WEBAPP_SENTRY_DSN || "https://09f71ad330e5445eb46ec3081aa40f99@cafepay-dev.alimahdiyar.ir/4"
 }
 
 //TODO: dynamically handle title and description by language
@@ -138,8 +139,12 @@ export default {
 
     ['@nuxtjs/robots', [{
       UserAgent: '*',
-      Disallow: '/en'
-    }]]
+      Disallow: process.env.NODE_ENV == 'development' ? '/' : '/en'
+    }]],
+
+    ['@nuxtjs/sentry', {
+      dsn: config.CAFEPAY_WEBAPP_SENTRY_DSN,
+    }]
   ],
 
   router: {
