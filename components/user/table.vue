@@ -280,7 +280,7 @@
             </div>
 
             <div class="table-status-bar__actions__order-description">
-              <b-button @click="openDescriptionModal" :disabled="!table.joinId"  type="is-light is-info">ثبت توضیحات</b-button>
+              <b-button @click="openDescriptionModal" :disabled="!table.joinId"  type="is-light is-info">{{ cafe.pk == 35 ? 'توضیحات و آدرس' : 'ثبت توضیحات' }}</b-button>
             </div>
           </div>
 
