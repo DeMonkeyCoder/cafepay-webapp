@@ -28,10 +28,10 @@
       <!-- <div v-if="cafe.header" class="cafe-header__header"
     
       ></div> -->
-        <img class="cafe-header__header" v-if="cafe.header_image" :src="baseUrl + cafe.header_image" alt="">
+        <img class="cafe-header__header" v-if="cafe.header_image" :src="mediaUrl + cafe.header_image" alt="">
         <img class="cafe-header__header" v-else src="~/assets/img/background/header-4.png" alt="">
         <div class="cafe-header__info">
-          <img :src="(cafe.avatar == null) ? cafeDefaultImage : baseUrl + cafe.avatar " alt />
+          <img :src="(cafe.avatar == null) ? cafeDefaultImage : mediaUrl + cafe.avatar " alt />
           <p class="cafe-name cp-tb-padding cp-side-padding">{{cafe.name}}</p>
           <!-- <b-rate
             class="cafe-rate cp-tb-padding cp-side-padding"

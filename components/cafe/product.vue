@@ -5,7 +5,7 @@
       :style="{backgroundImage: `linear-gradient(to left, rgba(0, 0, 0, 0.4),rgba(0, 159, 227, 0.4)),url(${product.avatar})`}"
     >
       <div class="info">
-       <img :src="(product.avatar == null) ? productDefaultImage : this.baseUrl + product.avatar " alt />
+       <img :src="(product.avatar == null) ? productDefaultImage : mediaUrl + product.avatar " alt />
         <p class="cafe-name cp-tb-padding cp-side-padding">{{product.name}}</p>
         <b-rate
           class="cafe-rate cp-tb-padding cp-side-padding"
