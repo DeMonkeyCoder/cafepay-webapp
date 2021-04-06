@@ -144,6 +144,16 @@ export default {
 
     ['@nuxtjs/sentry', {
       dsn: config.CAFEPAY_WEBAPP_SENTRY_DSN,
+      tracesSampleRate: 1.0,
+      vueOptions: {
+        tracing: true,
+        tracingOptions: {
+          hooks: [ 'mount', 'update' ],
+          timeout: 2000,
+          trackComponents: true
+        }
+      },
+      browserOptions: {}
     }]
   ],
 
