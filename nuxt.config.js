@@ -5,7 +5,7 @@ let config = {
   CAFEPAY_WEBAPP_BASE_URL: process.env.CAFEPAY_WEBAPP_BASE_URL || 'https://main.cafepay.app/',
   CAFEPAY_WEBAPP_SOCKET_URL: process.env.CAFEPAY_WEBAPP_SOCKET_URL || 'wss://main.cafepay.app/',
   CAFEPAY_WEBAPP_DEFAULT_LOCALE: process.env.CAFEPAY_WEBAPP_DEFAULT_LOCALE || 'fa',
-  CAFEPAY_WEBAPP_SENTRY_DSN: process.env.CAFEPAY_WEBAPP_SENTRY_DSN || "https://09f71ad330e5445eb46ec3081aa40f99@cafepay-dev.alimahdiyar.ir/4"
+  CAFEPAY_WEBAPP_SENTRY_DSN: process.env.NODE_ENV == 'production' ? "https://09f71ad330e5445eb46ec3081aa40f99@cafepay-dev.alimahdiyar.ir/4" : null
 }
 
 //TODO: dynamically handle title and description by language
@@ -144,6 +144,16 @@ export default {
 
     ['@nuxtjs/sentry', {
       dsn: config.CAFEPAY_WEBAPP_SENTRY_DSN,
+      tracesSampleRate: 1.0,
+      vueOptions: {
+        tracing: true,
+        tracingOptions: {
+          hooks: [ 'mount', 'update' ],
+          timeout: 2000,
+          trackComponents: true
+        }
+      },
+      browserOptions: {}
     }]
   ],
 

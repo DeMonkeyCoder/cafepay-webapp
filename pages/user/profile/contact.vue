@@ -13,23 +13,24 @@
         <img class="no-pic" src="@/assets/img/shape/icons/icon8/profile/contact-us-due.png" alt />
         <h4 class="header cp-tb-padding cp-side-padding">تماس با ما</h4>
         <p :dir="$dir()" class="detail cp-tb-padding cp-side-padding">
-          با کافه‌پی در ارتباط باشید!
+          ارتباط با پشتیبانی
           <!-- <span class="p-text font-18">خدافز</span> -->
         </p>
       </div>
     </div>
 
     <section class="content-below-profile-bar profile-contact cp-side-margin">
-      <p class="profile-contact__guide cp-side-padding ">جهت دریافت مشاوره رایگان در خصوص سرویس‌های کافه‌پِی، کسب اطلاعات بیشتر و ثبت پیشنهادات و انتقادات با شماره‌های زیر تماس بگیرید</p>
+      <!-- <p class="profile-contact__guide cp-side-padding ">برای تماس با پشتیبانی با شماره های زیر تماس بگیرید</p>
 
-      <img class="profile-contact__arrow" src="@/assets/img/shape/arrow.png" alt="">
+      <img class="profile-contact__arrow" src="@/assets/img/shape/arrow.png" alt=""> -->
 
-      <a href="tel:0930-313-1503"  data-rel="external">
+      <a v-if="currentCafe && currentCafe.pk" :href="'tel:' + currentCafe.phone"  data-rel="external">
       <div class="profile-contact__card cp-side-padding cp-b-margin cp-tb-padding-2x">
-        <img src="@/assets/img/shape/icons/icon8/profile/icons8-account-96.png" alt="" />
+        <img v-if="currentCafe.avatar" :src="currentCafe.avatar" alt="" />
+        <img v-else src="@/assets/img/shape/icons/icon8/profile/contact-us-due.png" alt="" />
         <div class="profile-contact__card__text cp-side-padding">
-          <p class="profile-contact__card__text__role font-16 font-bold">مشاوره و فروش</p>
-          <p dir="ltr" class="profile-contact__card__text__number font-18">0930 313 1503</p>
+          <p class="profile-contact__card__text__role font-16 font-bold">{{ currentCafe.name }}</p>
+          <p dir="ltr" class="profile-contact__card__text__number font-18">{{ currentCafe.phone }}</p>
         </div>
         <div class="profile-contact__card__dialer">
           <b-icon icon="phone"></b-icon>
@@ -41,7 +42,7 @@
       <div class="profile-contact__card cp-side-padding cp-tb-padding-2x">
         <img src="@/assets/img/shape/icons/icon8/profile/icons8-online-support-96.png" alt="" />
         <div class="profile-contact__card__text cp-side-padding">
-          <p class="profile-contact__card__text__role font-16 font-bold">پشتیبانی کاربران</p>
+          <p class="profile-contact__card__text__role font-16 font-bold">پشتیبانی و فروش کافه پی</p>
           <p dir="ltr" class="profile-contact__card__text__number font-18">0917 116 4374</p>
         </div>
         <div class="profile-contact__card__dialer">
@@ -56,6 +57,11 @@
 
 <script>
 export default {
+  computed: {
+    currentCafe(){
+      return this.$store.state.cafe;
+    },
+  },
   mounted() {},
 }
 </script>
