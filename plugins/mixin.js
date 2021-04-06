@@ -6,6 +6,7 @@ export default function ({
   Vue.mixin({
     data() {
       return {
+        mediaUrl: $config.CAFEPAY_WEBAPP_MEDIA_URL,
         baseUrl: $config.CAFEPAY_WEBAPP_BASE_URL,
         cloading: false,
         colors: {

@@ -70,7 +70,7 @@
                   :src="
                     prod.avatar == null
                       ? productDefaultImage
-                      : baseUrl + prod.avatar
+                      : mediaUrl + prod.avatar
                   "
                   alt
                 />

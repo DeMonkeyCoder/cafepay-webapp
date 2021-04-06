@@ -26,7 +26,7 @@
 
       <a v-if="currentCafe && currentCafe.pk" :href="'tel:' + currentCafe.phone"  data-rel="external">
       <div class="profile-contact__card cp-side-padding cp-b-margin cp-tb-padding-2x">
-        <img v-if="currentCafe.avatar" :src="currentCafe.avatar" alt="" />
+        <img v-if="currentCafe.avatar" :src="baseUrl + currentCafe.avatar" alt="" />
         <img v-else src="@/assets/img/shape/icons/icon8/profile/contact-us-due.png" alt="" />
         <div class="profile-contact__card__text cp-side-padding">
           <p class="profile-contact__card__text__role font-16 font-bold">{{ currentCafe.name }}</p>
