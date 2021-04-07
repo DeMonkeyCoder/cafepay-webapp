@@ -162,7 +162,7 @@
               </li>
             </ul>
 
-            <div v-if="tokenType == 'pre-order'" class="preorder-warning">
+            <div v-if="tokenType == 'pre-order' && currectCafe.pk == 13" class="preorder-warning">
               <div>
                 <b-icon size="" icon="alert-circle-outline"></b-icon>
               </div>
