@@ -162,11 +162,11 @@
               </li>
             </ul>
 
-            <div v-if="tokenType == 'pre-order' && currectCafe.pk == 13" class="preorder-warning">
+            <div v-if="tokenType == 'pre-order' && cafe.pk == 13" class="preorder-warning">
               <div>
                 <b-icon size="" icon="alert-circle-outline"></b-icon>
               </div>
-              <p>
+              <p>wafweafwa
                 {{ $t('table_page.preorder.self_pickup_warning') }}
               </p>
             </div>
