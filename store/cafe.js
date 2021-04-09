@@ -58,6 +58,7 @@ export const mutations = {
     state.payment_only = data.cafe.payment_only
     state.payment_first = data.cafe.payment_first
     state.my_credit_in_cafe = data.my_credit_in_cafe
+    state.is_delivery = data.is_delivery
 
     // define type of token ----- 0: menuonly   1: normal    2: preorder
     switch (data.type) {

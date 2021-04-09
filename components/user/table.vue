@@ -62,10 +62,10 @@
           <section class="modal-dialog">
             <b-field>
               <b-input ref="descriptionInput" class="is-noborder-input" 
-              v-model="description" maxlength="200" type="textarea" :placeholder="(tokenType == 'pre-order' && cafe.pk != 13) ? 'توضیحات و آدرس خود را اینجا بنویسید' : 'توضیحات خود را در مورد سفارشات بنویسید'"></b-input>
+              v-model="description" maxlength="200" type="textarea" :placeholder="(tokenType == 'pre-order' && isDelivery(cafe)) ? 'توضیحات و آدرس خود را اینجا بنویسید' : 'توضیحات خود را در مورد سفارشات بنویسید'"></b-input>
             </b-field>
             <b-field class="field" style="text-align: right">
-              <b-checkbox v-if="tokenType == 'pre-order' && cafe.pk != 13" v-model="isPickupDescription" size="is-large" type="is-info">خودم تحویل می گیرم</b-checkbox>
+              <b-checkbox v-if="tokenType == 'pre-order' && isDelivery(cafe)" v-model="isPickupDescription" size="is-large" type="is-info">خودم تحویل می گیرم</b-checkbox>
             </b-field>
           </section>
 
@@ -165,11 +165,11 @@
               </li>
             </ul>
 
-            <div v-if="tokenType == 'pre-order' && cafe.pk == 13" class="preorder-warning">
+            <div v-if="tokenType == 'pre-order' && !isDelivery(cafe)" class="preorder-warning">
               <div>
                 <b-icon size="" icon="alert-circle-outline"></b-icon>
               </div>
-              <p>wafweafwa
+              <p>
                 {{ $t('table_page.preorder.self_pickup_warning') }}
               </p>
             </div>
@@ -283,7 +283,7 @@
             </div>
 
             <div class="table-status-bar__actions__order-description">
-              <b-button @click="openDescriptionModal" :disabled="!table.joinId"  type="is-light is-info">{{ cafe.pk != 13 ? 'توضیحات و آدرس' : 'ثبت توضیحات' }}</b-button>
+              <b-button @click="openDescriptionModal" :disabled="!table.joinId"  type="is-light is-info">{{ isDelivery(cafe) ? 'توضیحات و آدرس' : 'ثبت توضیحات' }}</b-button>
             </div>
           </div>
 

@@ -20,7 +20,7 @@
         :disabled="tour"
         >
         {{ (!isClosed) ? $t('menu_page.submit_order') : $t('menu_page.cafe_is_closed') }}
-        <span v-if="tokenType == 'pre-order' && currectCafe.pk == 13" dir="rtl" class="font-bold font-14">({{ $t('menu_page.submit_order_self_pickup') }})</span>
+        <span v-if="tokenType == 'pre-order' && !isDelivery(cafe)" dir="rtl" class="font-bold font-14">({{ $t('menu_page.submit_order_self_pickup') }})</span>
         </b-button
       >
     </div>
@@ -493,7 +493,7 @@ export default {
     //   // it must be the first component and user must be new and page must be table
     //   return this.showSubmitBtn > 0 && this.isMenuPage  && this.firstTimeActive
     // },
-    currectCafe(){
+    cafe(){
       return this.$store.state.cafe;
     },
     productChangeArray() {

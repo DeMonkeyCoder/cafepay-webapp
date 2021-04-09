@@ -26,6 +26,11 @@ export default function ({
     },
 
     methods: {
+      isDelivery(cafe){
+        // what it should be
+        // return cafe.is_delivery
+        return cafe.pk == 35 || cafe.pk == 28
+      },
       toaster(massage, type, position) {
         this.$buefy.toast.open({
           duration: 3000,
