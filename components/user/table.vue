@@ -64,6 +64,9 @@
               <b-input ref="descriptionInput" class="is-noborder-input" 
               v-model="description" maxlength="200" type="textarea" placeholder="توضیحات خود را در مورد سفارشات بنویسید"></b-input>
             </b-field>
+            <b-field class="field" style="text-align: right">
+              <b-checkbox v-model="isPickupDescription" size="is-large" type="is-info">خودم تحویل می گیرم</b-checkbox>
+            </b-field>
           </section>
 
           <section class="modal-caption"></section>
@@ -333,6 +336,7 @@ export default {
   components: { person },
   data() {
     return {
+      isPickupDescription: false,
       key: 1,
       isTableOptionsModalActive: false,
       fullPayment: false,
@@ -420,7 +424,7 @@ export default {
     submitDescription(){
       this.$api
       .put(`/api/v1/join/${this.table.joinId}/set/description/`, {
-        description: this.description,
+        description: this.description + (this.isPickupDescription ? ' خودم تحویل می گیرم' : ''),
       })
       .then(res => {
          this.descriptionModalActive = false
