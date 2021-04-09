@@ -62,10 +62,10 @@
           <section class="modal-dialog">
             <b-field>
               <b-input ref="descriptionInput" class="is-noborder-input" 
-              v-model="description" maxlength="200" type="textarea" placeholder="توضیحات خود را در مورد سفارشات بنویسید"></b-input>
+              v-model="description" maxlength="200" type="textarea" :placeholder="(tokenType == 'pre-order' && cafe.pk != 13) ? 'توضیحات و آدرس خود را اینجا بنویسید' : 'توضیحات خود را در مورد سفارشات بنویسید'"></b-input>
             </b-field>
             <b-field class="field" style="text-align: right">
-              <b-checkbox v-model="isPickupDescription" size="is-large" type="is-info">خودم تحویل می گیرم</b-checkbox>
+              <b-checkbox v-if="tokenType == 'pre-order' && cafe.pk != 13" v-model="isPickupDescription" size="is-large" type="is-info">خودم تحویل می گیرم</b-checkbox>
             </b-field>
           </section>
 
