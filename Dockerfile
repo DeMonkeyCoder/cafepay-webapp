@@ -1,23 +1,21 @@
-FROM node:10.21.0-alpine
 
-# create destination directory
-RUN mkdir -p /usr/src/nuxt-app
-WORKDIR /usr/src/nuxt-app
+FROM node:12-alpine as build
 
-# update and install dependency
-RUN apk update && apk upgrade
-RUN apk add git
-RUN apk add python
+WORKDIR /app
 
-# copy the app, note .dockerignore
-COPY . /usr/src/nuxt-app/
-RUN npm install
+RUN apk add git python3 build-base
 
-# build necessary, even if no static files are needed,
-# since it builds the server as well
+COPY . /app
+
+RUN if [ -e /app/package-lock.json ]; \
+  then \
+    echo 'Running npm ci...' && npm ci; \
+  else \
+    echo 'Running npm install' && npm install; \
+fi
+
 RUN npm run build
 
-# expose 3000 on container
 EXPOSE 3000
 
 # start the app
