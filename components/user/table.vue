@@ -556,6 +556,7 @@ export default {
           this.proccessOrderForPayment()
           this.setMethodPayment('cash')
         }
+        if (val.description) this.description = val.description
       }
     },
   },
