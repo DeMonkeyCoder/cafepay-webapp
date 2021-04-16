@@ -283,7 +283,7 @@
             </div>
 
             <div class="table-status-bar__actions__order-description">
-              <b-button @click="openDescriptionModal" :disabled="!table.joinId"  type="is-light is-info">{{ isDelivery(cafe) ? 'توضیحات و آدرس' : 'ثبت توضیحات' }}</b-button>
+              <b-button @click="openDescriptionModal" :disabled="!table.joinId"  type="is-light is-info">{{ (tokenType == 'pre-order' && isDelivery(cafe)) ? 'توضیحات و آدرس' : 'ثبت توضیحات' }}</b-button>
             </div>
           </div>
 
