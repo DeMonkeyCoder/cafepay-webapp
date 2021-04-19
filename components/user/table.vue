@@ -57,16 +57,31 @@
 
 
       <b-modal class="simple-action-modal" :active.sync="descriptionModalActive" has-modal-card >
-        <div class="modal-card" style="width: auto">
+        <div class="modal-card" style="width: auto; min-width: 260px;">
 
           <section class="modal-dialog">
-            <b-field>
+            <b-field style="margin-bottom: 10px;">
               <b-input ref="descriptionInput" class="is-noborder-input" 
               v-model="description" maxlength="200" type="textarea" :placeholder="(tokenType == 'pre-order' && isDelivery(cafe)) ? 'توضیحات و آدرس خود را اینجا بنویسید' : 'توضیحات خود را در مورد سفارشات بنویسید'"></b-input>
             </b-field>
-            <b-field class="field" style="text-align: right">
-              <b-checkbox v-if="tokenType == 'pre-order' && isDelivery(cafe)" v-model="isPickupDescription" size="is-large" type="is-info">خودم تحویل می گیرم</b-checkbox>
-            </b-field>
+            <section v-if="tokenType == 'pre-order' && isDelivery(cafe)">
+              <b-field style="text-align: right; margin-bottom: 2px;">
+                  <b-radio v-model="DeliveryChoice"
+                      size="is-small"
+                      type="is-info"
+                      :native-value="DeliveryChoiceEnum.DELIVERY">
+                      <span style="padding-right: 5px">برام بفرستید</span>
+                  </b-radio>
+              </b-field>
+              <b-field style="text-align: right">
+                  <b-radio v-model="DeliveryChoice"
+                      size="is-small"
+                      type="is-info"
+                      :native-value="DeliveryChoiceEnum.PIKCUP">
+                      <span style="padding-right: 5px">خودم تحویل می گیرم</span>
+                  </b-radio>
+              </b-field>
+            </section>
           </section>
 
           <section class="modal-caption"></section>
@@ -332,11 +347,19 @@ import person from '~/components/table/person.vue'
 import lottie from 'lottie-web'
 import preInvoiceAnimation from '~/assets/img/28970-download.json'
 import cafeDefaultImage from '@/assets/img/cafe-default.png'
+
+const DeliveryChoiceEnum = Object.freeze({
+  PIKCUP: 1,
+  DELIVERY: 2
+})
+
 export default {
   components: { person },
   data() {
     return {
-      isPickupDescription: false,
+      DeliveryChoice: DeliveryChoiceEnum.DELIVERY,
+      DeliveryChoiceEnum,
+      showPreInvoiceAfterDescription: false,
       key: 1,
       isTableOptionsModalActive: false,
       fullPayment: false,
@@ -424,11 +447,16 @@ export default {
     submitDescription(){
       this.$api
       .put(`/api/v1/join/${this.table.joinId}/set/description/`, {
-        description: this.description + (this.isPickupDescription ? ' خودم تحویل می گیرم' : ''),
+        description: this.description + ((this.DeliveryChoice == this.DeliveryChoiceEnum.PIKCUP) ? ' خودم تحویل می گیرم' : ''),
       })
       .then(res => {
-         this.descriptionModalActive = false
+        this.descriptionModalActive = false
+        if(this.showPreInvoiceAfterDescription) {
+          this.showPreInvoiceAfterDescription = false
+          this.showPreInvoice()
+        } else {
           this.toaster('توضیحات با موفقیت ثبت شد', 'is-info', 'is-bottom')
+        }
       })
       
       .catch(err => {
@@ -490,6 +518,13 @@ export default {
       }
     },
     showPreInvoice() {
+      if(this.tokenType == 'pre-order' && this.isDelivery(this.cafe)) {
+        if(!(this.description || this.DeliveryChoice == this.DeliveryChoiceEnum.PIKCUP )){
+          this.showPreInvoiceAfterDescription = true;
+          this.openDescriptionModal()
+          return;
+        }
+      }
       // first generate it
       this.proccessOrderForPayment()
       this.preInvoiceActive = true
