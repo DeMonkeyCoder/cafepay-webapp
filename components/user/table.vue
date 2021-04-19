@@ -244,7 +244,7 @@
       <div id="pay-checkout" class="pay-checkout-is-shown">
         <b-button v-if="table.paymentMethod == 'online' || table.paid"
           :disabled="totalWishToPayOrder == 0 "
-          @click="showPreInvoice"
+          @click="showPreInvoice(false)"
           :loading="globalLoading"
           class="button shadow-lg-b bcp-btn cp-btn-submit-order"
           size="is-medium"
@@ -363,7 +363,7 @@ export default {
       key: 1,
       isTableOptionsModalActive: false,
       fullPayment: false,
-      description: null,
+      description: '',
       descriptionModalActive: false,
       cafeDefaultImage,
       preInvoiceAnimation,
@@ -445,6 +445,14 @@ export default {
       }, 200)
     },
     submitDescription(){
+      if(!(this.description || this.DeliveryChoice == this.DeliveryChoiceEnum.PIKCUP )){
+        this.descriptionModalActive = false
+        if(this.showPreInvoiceAfterDescription) {
+          this.showPreInvoiceAfterDescription = false
+          this.showPreInvoice(true)
+        }
+        return
+      }
       this.$api
       .put(`/api/v1/join/${this.table.joinId}/set/description/`, {
         description: this.description + ((this.DeliveryChoice == this.DeliveryChoiceEnum.PIKCUP) ? ' خودم تحویل می گیرم' : ''),
@@ -453,7 +461,7 @@ export default {
         this.descriptionModalActive = false
         if(this.showPreInvoiceAfterDescription) {
           this.showPreInvoiceAfterDescription = false
-          this.showPreInvoice()
+          this.showPreInvoice(true)
         } else {
           this.toaster('توضیحات با موفقیت ثبت شد', 'is-info', 'is-bottom')
         }
@@ -517,8 +525,8 @@ export default {
         }
       }
     },
-    showPreInvoice() {
-      if(this.tokenType == 'pre-order' && this.isDelivery(this.cafe)) {
+    showPreInvoice(ignoreEmptyAddress) {
+      if(this.tokenType == 'pre-order' && this.isDelivery(this.cafe) && !ignoreEmptyAddress) {
         if(!(this.description || this.DeliveryChoice == this.DeliveryChoiceEnum.PIKCUP )){
           this.showPreInvoiceAfterDescription = true;
           this.openDescriptionModal()
