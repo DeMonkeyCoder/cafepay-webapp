@@ -75,9 +75,26 @@
         </div>
       </b-modal>
 
+      <b-modal class="simple-action-modal" :active.sync="AddressModalActive" has-modal-card >
+        <div class="modal-card" style="width: auto">
 
+          <section class="modal-dialog">
+            <b-field>
+              <b-input ref="descriptionInput" class="is-noborder-input" 
+              v-model="address" maxlength="200" type="textarea" placeholder="آدرس خود را اینجا بنویسید"></b-input>
+            </b-field>
+          </section>
 
+          <section class="modal-caption"></section>
 
+          <section class="modal-action">
+            <b-button :loading="globalLoading" class="button ma-child is-info" type="button" @click="submitAddress">ثبت آدرس</b-button>
+          </section>
+          
+        </div>
+      </b-modal>
+
+      
 
       <b-modal
         class="table-options-modal simple-action-modal"
@@ -232,7 +249,7 @@
           size="is-medium"
           type="is-info"
           >
-          <span v-if="table.paid">پرداخت کامل است</span>
+          <span v-if="table.paid">{{(table.empty) ? 'سفارشی ثبت نشده' : 'پرداخت کامل است'}}</span>
           <span v-else>{{  $t('table_page.checkout') }} ({{ totalWishToPayOrder | currency }})</span>
         </b-button>
 
@@ -251,7 +268,9 @@
 
       <!-- <v-tour name="myTour" :steps="steps" :options="{ highlight: true }"></v-tour> -->
       
-  <div class="table-header cp-header cp-tb-padding cp-side-padding">
+  <div class="table-header cp-header cp-tb-padding cp-side-padding"
+  :class="{'table-header--has-address': tokenType == 'delivery'}"
+  >
         <h5 class="right-align t-white cp-side-padding-half">
           {{ $t('table_page.table') }}: <span class="font-norm">{{ table.table_number }}</span>
         </h5>
@@ -259,6 +278,7 @@
         <div
           id="table-status-bar"
           class="table-status-bar long-shadow cp-padding cp-header-card has-background-white"
+          :class="{'table-status-bar--has-address': tokenType == 'delivery'}"
         >
           <!-- <div class="table-top-section">
           <div
@@ -289,9 +309,14 @@
             class="table-status-bar__info cp-tb-padding-half"
           >
           <p v-if="tokenType == 'normal'">{{(cafe.payment_first) ? 'سفارش خود را پرداخت کنید' : statusText}}</p>
-          <p v-if="tokenType == 'pre-order'">{{(ordersPaid) ? 'سفارش شما پرداخت شد' : 'سفارش خود را پرداخت کنید'}}</p>
+          <p v-if="tokenType == 'pre-order' || tokenType == 'delivery'">{{(ordersPaid) ? 'سفارش شما پرداخت شد' : 'سفارش خود را پرداخت کنید'}}</p>
+          <!-- <p v-if="tokenType == 'delivery'">{{(ordersPaid) ? 'سفارش شما پرداخت شد' : 'سفارش خود را پرداخت کنید'}}</p> -->
+          </div>
 
-    
+          <div class="table-status-bar__info cp-tb-padding-half cp-side-padding-half cp-t-margin" id="delivery" v-if="tokenType == 'delivery'">
+            <p v-if="user.address" class="table-status-bar__info__delivery"> آدرس: <span class="font-norm">{{user.address}}</span></p>
+            <p v-else class="table-status-bar__info__delivery"><span class="font-norm">آدرس شما ثبت نشده است</span></p>
+            ‌<b-button @click="openAddressModal" :disabled="!table.joinId"  type="is-light is-info">{{(user.address != null) ? 'تغییر آدرس' : 'ثبت آدرس'}}</b-button>
           </div>
         </div>
       </div>
@@ -338,6 +363,8 @@ export default {
       fullPayment: false,
       description: null,
       descriptionModalActive: false,
+      AddressModalActive: false,
+      address: null,
       cafeDefaultImage,
       preInvoiceAnimation,
       ordersToPay: [],
@@ -372,13 +399,11 @@ export default {
     statusText() {
       return this.$t(
         'table_page.' +
-        (this.tokenType == 'pre-order' ? 'preorder.' : '') +
+        (this.tokenType == 'pre-order' || this.tokenType == 'delivery' ? 'preorder.' : '') +
         'states.' +
         this.table.status
       )
     },
-
-
 
     showPreOrder(){
       let check = (this.user.table_uuid && ((this.ordersPaid || this.tokenType == 'menu-only') && this.hasActiveTable || !this.hasActiveTable)  )
@@ -417,6 +442,34 @@ export default {
         this.$refs.descriptionInput.focus()
       }, 200)
     },
+
+    openAddressModal(){
+      this.AddressModalActive = true
+      setTimeout(() => {
+        this.$refs.descriptionInput.focus()
+      }, 200)
+    },
+
+
+    submitAddress(){
+      this.$api({url: `/api/v1/user-profile/`, method: 'patch', data: {
+        address: this.address, }
+      })
+      .then(res => {
+         this.AddressModalActive = false
+             this.$store.dispatch('user/retrieve')
+              //for entering to table
+          this.toaster('آدرس با موفقیت ثبت شد', 'is-info', 'is-bottom')
+      })
+      
+      .catch(err => {
+        if (err.response) {
+           this.toaster('خطا در ثبت آدرس', 'is-danger', 'is-bottom')
+          console.log(err.response.data)
+        }
+      })
+    },
+
     submitDescription(){
       this.$api
       .put(`/api/v1/join/${this.table.joinId}/set/description/`, {
@@ -543,6 +596,14 @@ export default {
       immediate: true,
       handler(val, old) {},
     },
+
+    user: {
+      immediate: true,
+      handler(val){
+        this.address = val.address 
+      }
+    },
+
     table: {
       deep: true,
       immediate: true,

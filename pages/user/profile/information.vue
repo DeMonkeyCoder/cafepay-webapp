@@ -94,6 +94,16 @@
           ></b-input>
         </b-field>
 
+        <b-field>
+          <b-input
+            v-model="userLocal.address"
+            maxlength="200" type="textarea"
+            class="cp-input cp-input-primary "
+            :placeholder="$t('profile_page.address')"
+            icon="map-marker-outline"
+          ></b-input>
+        </b-field>
+
         <!-- <b-field>
           <b-input
             v-model="userLocal.shaba_number"

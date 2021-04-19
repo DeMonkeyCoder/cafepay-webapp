@@ -6,6 +6,9 @@
     padding-top: $padding * 1!important
     margin-bottom: 6*$margin
 
+    &--has-address
+      margin-bottom: 10*$margin!important
+
     .table-top-section
       display: flex
       margin-bottom: $margin
@@ -50,6 +53,13 @@
     position: relative
     top: 2.5rem
 
+    &--has-address
+      top: 0rem!important
+
+      #delivery
+        border-radius: 5px
+        background-color: lighten($primaryNotImportant, 50%)
+
     &__actions
       margin-bottom: $margin
       display: flex
@@ -74,6 +84,13 @@
       border-radius: 5px
       background-color: $blueShade
       z-index: 2
+
+    &__info
+      &__delivery
+        text-align: right!important
+        word-break: break-all
+        height: 22px
+        overflow: hidden
     p
       // letter-spacing: -0.02rem
       width: 100%
@@ -91,6 +108,8 @@
 
     .payment-completed-icon
       z-index: 100!important
+
+  
 
 .others
   margin-bottom: 3 * $margin

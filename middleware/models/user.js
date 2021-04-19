@@ -14,6 +14,7 @@ export default class User {
     this.balance = userData.balance,
     this.id = userData.pk
     this.orders = []
+    this.address = userData.address
     this.table_uuid = userData.active_table_uuid
     this.date_joined = userData.date_joined
     let avatars = new Avatars(sprites);

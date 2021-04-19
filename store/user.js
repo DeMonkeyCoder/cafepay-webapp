@@ -116,9 +116,8 @@ export const actions = {
         }).then(res => {
           context.commit('set', res)
           if (res.active_table_uuid) {
-            context.commit('cafe/setType', 'pre-order', {
-              root: true
-            })
+            if(res.has_delivery) context.commit('cafe/setType', 'delivery', {root: true})
+            else context.commit('cafe/setType', 'pre-order', {root: true})
             context.commit('table/setToken', {
               token: res.active_table_uuid,
               number: 'پیش سفارش'
