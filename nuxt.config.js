@@ -11,6 +11,10 @@ let config = {
 
 //TODO: dynamically handle title and description by language
 export default {
+
+  // for pm2 to work...
+	rootDir: __dirname,
+
   publicRuntimeConfig: config,
   server: {
     port: config.CAFEPAY_WEBAPP_NUXT_PORT,

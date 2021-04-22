@@ -3,9 +3,11 @@ FROM node:12-alpine as build
 
 WORKDIR /app
 
-RUN apk add git python3 build-base
+RUN apk add bash git python3 build-base
 
 COPY . /app
+
+RUN npm install pm2 -g
 
 RUN if [ -e /app/package-lock.json ]; \
   then \
@@ -18,5 +20,6 @@ RUN npm run build
 
 EXPOSE 3000
 
+
 # start the app
-CMD [ "npm", "start" ]
+CMD [ "pm2-runtime", "pm2.config.js" ]
