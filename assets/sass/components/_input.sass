@@ -28,8 +28,17 @@ input, textarea, select
   span
     padding-top: 1.10rem
 
+.cp-select
+  border-radius: 5px!important
+  select
+    height: 50px
+  .select:not(.is-multiple) 
+      height: auto
+  span.icon
+    padding-top: 1.10rem
+
 .cp-input-primary
-  input
+  input, select
     &:focus
       + span
         color: $primary

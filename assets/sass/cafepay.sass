@@ -22,6 +22,7 @@
 @import  'contact.sass'
 @import  'orderHistory.sass'
 @import 'feed.sass'
+@import 'address.sass'
 
 @import './components/modal'
 @import './components/input'
@@ -230,6 +231,10 @@ h1
 
 // MARGIN SECTION --------------------------------------------------------
 
+
+.cp-margin
+  margin: $margin!important
+
 .cp-side-margin
   @include sideMargin($size: $margin)
 
@@ -342,6 +347,14 @@ html
   align-items: center
   padding: $margin/2 $margin
 
+
+.fade-enter-active, .fade-leave-active 
+  transition: opacity .5s
+
+.fade-enter, .fade-leave-to
+  opacity: 0
+
+  
 //  shadows
 .shadow-b
   box-shadow: 0 3px 6px -1px rgba(0, 0, 0, 0.12), 0 1px 4px -1px rgba(0, 0, 0, 0.07)!important
@@ -408,3 +421,7 @@ html
     &--highlighted
       box-shadow: 0 0 0 99999px rgba(0,0,0,.4)!important
 
+
+
+a.dropdown-item, .dropdown .dropdown-menu .has-link a, button.dropdown-item 
+  text-align: right

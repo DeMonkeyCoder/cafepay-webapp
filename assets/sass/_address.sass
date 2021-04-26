@@ -1,0 +1,39 @@
+.address
+  &__modal
+    .modal-close
+      border-radius: 16px
+      background-color: white
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)!important
+      &::before, &::after
+        background-color: $black
+    .modal-card
+      padding-top: 4 * $padding
+      .bcp-btn-large
+        span
+          font-size: 18px
+    &__address-card
+      display: flex
+      background-color: white
+      // filter: grayscale(100%)
+      // background-color: $blueShade
+      &--selected
+        background-color: lighten($primary_hue2, 40%)
+        transition: 0.3s
+        &__info
+          &__header
+            color: $primary
+      &__info
+        flex: 11
+      &__action
+        display: flex
+        justify-content: center
+        align-items: center
+        flex: 1
+        a.dropdown-item
+          span.aca-text
+            position: relative
+            bottom: 4px
+  .label
+    font-size: 18px
+  .input[disabled], .taginput .taginput-container.is-focusable[disabled], .textarea[disabled], .select select[disabled], fieldset[disabled] .input, fieldset[disabled] .taginput .taginput-container.is-focusable, .taginput fieldset[disabled] .taginput-container.is-focusable, fieldset[disabled] .textarea, fieldset[disabled] .select select, .select fieldset[disabled] select
+    background-color: white

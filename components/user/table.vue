@@ -131,6 +131,16 @@
         <div class="modal-card" style="width: auto">
           <section class="modal-dialog  cp-side-padding-2x cp-tb-padding">
             <div id="pre-invoice-animation"></div>
+
+            <div class="pre-invoice-modal__delivery-method cp-t-margin-2x">
+            <header class="font-bold font-18 cp-b-margin">انتخاب روش تحویل ارسال</header>
+            <div class="pre-invoice-modal__delivery-method-selection">
+              <div class="method-selection-delivery">
+
+              </div>
+              <div class="method-selection-pickup"></div>
+            </div>
+            </div>
             <ol class="order-summery">
               <li v-for="order in ordersToPay" :key="order.pk">
                 <p class="order-summery__name">{{ order.name }}</p>
@@ -172,7 +182,7 @@
               </li>
               <li>
                 <p class="pre-invoice-modal__name font-bold">قابل پرداخت</p>
-                <p class="pre-invoice-modal__amount font-bold">
+                <p class="pre-invoice-modal__amount font-bold font-18">
                   {{ Math.max(totaltoPay - cafe.my_credit_in_cafe, 0) | currency }}
                   <!-- <span class="toman">تومان</span> -->
                 </p>
@@ -269,7 +279,7 @@
       <!-- <v-tour name="myTour" :steps="steps" :options="{ highlight: true }"></v-tour> -->
       
   <div class="table-header cp-header cp-tb-padding cp-side-padding"
-  :class="{'table-header--has-address': tokenType == 'delivery'}"
+  :class="{'table-header--has-address': false}"
   >
         <h5 class="right-align t-white cp-side-padding-half">
           {{ $t('table_page.table') }}: <span class="font-norm">{{ table.table_number }}</span>
@@ -278,7 +288,7 @@
         <div
           id="table-status-bar"
           class="table-status-bar long-shadow cp-padding cp-header-card has-background-white"
-          :class="{'table-status-bar--has-address': tokenType == 'delivery'}"
+          :class="{'table-status-bar--has-address': false}"
         >
           <!-- <div class="table-top-section">
           <div
@@ -295,7 +305,7 @@
 
           <div class="table-status-bar__actions">
             <div class="table-status-bar__actions__edit-orders">
-              <b-button @click="goToMyOrderInMenu" class="" type="is-warning" inverted >
+              <b-button @click="goToMyOrderInMenu" class="shadow" type="is-light" >
               {{ (userHasOrder) ? $t('table_page.edit_order') : $t('table_page.add_order') }}</b-button>
             </div>
 
@@ -304,6 +314,7 @@
             </div>
           </div>
 
+          <!-- v-if="!is_delivery" -->
           <div
             id="table-status-bar-progress-wrapper"
             class="table-status-bar__info cp-tb-padding-half"
@@ -313,11 +324,31 @@
           <!-- <p v-if="tokenType == 'delivery'">{{(ordersPaid) ? 'سفارش شما پرداخت شد' : 'سفارش خود را پرداخت کنید'}}</p> -->
           </div>
 
-          <div class="table-status-bar__info cp-tb-padding-half cp-side-padding-half cp-t-margin" id="delivery" v-if="tokenType == 'delivery'">
+          <!-- <div class="table-status-bar__delivery-selection">
+
+            <p @click="switchDeliveryType('delivery')" class="cp-tb-margin cp-side-margin-half" 
+            :class="{'table-status-bar__delivery-selection--selected': delivery_type == 'delivery',
+            'table-status-bar__delivery-selection--not-selected': delivery_type == 'pickup'}">
+              <transition name="fade"><img id="delivery-selection-img" v-if="delivery_type == 'pickup'" src='@/assets/img/shape/icons/icon8/delivery.png' alt=""></transition>
+              <transition name="fade"> <img id="delivery-selection-img" v-if="delivery_type == 'delivery'" src='@/assets/img/shape/icons/icon8/delivery-selected-2.png' alt=""></transition>
+              <span v-if="delivery_type == 'delivery'">ارسال با پیک</span>
+            </p>
+
+            <p @click="switchDeliveryType('pickup')" class="cp-tb-margin cp-side-margin-half" 
+            :class="{'table-status-bar__delivery-selection--selected': delivery_type == 'pickup',
+             'table-status-bar__delivery-selection--not-selected': delivery_type == 'delivery'}">
+              <transition name="fade"><img id="pickup-selection-img" v-if="delivery_type == 'delivery'" src='@/assets/img/shape/icons/icon8/pickup.png' alt=""></transition>
+              <transition name="fade"> <img id="pickup-selection-img" v-if="delivery_type == 'pickup'" src='@/assets/img/shape/icons/icon8/pickup-selected.png' alt=""></transition>
+              <span v-if="delivery_type == 'pickup'">خودم تحویل می‌گیریم</span>
+            </p>
+
+          </div> -->
+
+          <!-- <div class="table-status-bar__info cp-tb-padding-half cp-side-padding-half cp-t-margin" id="delivery" v-if="tokenType == 'delivery'">
             <p v-if="user.address" class="table-status-bar__info__delivery"> آدرس: <span class="font-norm">{{user.address}}</span></p>
             <p v-else class="table-status-bar__info__delivery"><span class="font-norm">آدرس شما ثبت نشده است</span></p>
             ‌<b-button @click="openAddressModal" :disabled="!table.joinId"  type="is-light is-info">{{(user.address != null) ? 'تغییر آدرس' : 'ثبت آدرس'}}</b-button>
-          </div>
+          </div> -->
         </div>
       </div>
 
@@ -359,6 +390,8 @@ export default {
   data() {
     return {
       key: 1,
+      is_delivery: true,
+      delivery_type: 'delivery',
       isTableOptionsModalActive: false,
       fullPayment: false,
       description: null,
@@ -436,6 +469,9 @@ export default {
     // }
   },
   methods: {
+    switchDeliveryType(type){
+      this.delivery_type = type
+    },
     openDescriptionModal(){
       this.descriptionModalActive = true
       setTimeout(() => {

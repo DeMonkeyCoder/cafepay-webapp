@@ -87,12 +87,17 @@
         font-size: 18px!important
 
   #pre-invoice-animation
-    width: 60%
+    width: 50%
     // width: 320px * 0.75
     margin: auto
     // height: 230px * 0.75
+    
 
   &__payment-method
+    &__delivery-method
+      &__selection
+        display: flex
+        .method-selection-delivery, .method-selection-pickup
     &__online, &__cash
       display: flex
       filter: grayscale(100%)

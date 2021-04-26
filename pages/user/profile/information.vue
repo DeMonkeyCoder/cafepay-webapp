@@ -94,26 +94,29 @@
           ></b-input>
         </b-field>
 
-        <b-field>
-          <b-input
-            v-model="userLocal.address"
-            maxlength="200" type="textarea"
-            class="cp-input cp-input-primary "
-            :placeholder="$t('profile_page.address')"
-            icon="map-marker-outline"
-          ></b-input>
-        </b-field>
 
-        <!-- <b-field>
+        
+       <b-button
+          :loading="globalLoading"
+          class="bcp-btn bcp-btn-large cp-b-margin"
+          type="is-white"
+          expanded
+          @click="goToAddresses"
+          >رفتن به لیست آدرس‌ها</b-button>
+
+
+
+    <!--   
+      <b-field>
           <b-input
             v-model="userLocal.shaba_number"
             class="cp-input cp-input-primary "
             placeholder="شماره شبا"
             icon="credit-card"
           ></b-input>
-        </b-field> -->
+        </b-field> 
 
-        <!-- <div class="birthday-field">
+         <div class="birthday-field">
           <b-field>
             <b-input
               id="date-picker-input"
@@ -145,20 +148,23 @@
           >{{ $t('profile_page.update_information') }}</b-button
         >
       </div>
+      <address-list @closeModal="addressListModal = false" :addressListModal="addressListModal" />
     </section>
   </div>
 </template>
 
 <script>
-// import VuePersianDatetimePicker from 'vue-persian-datetime-picker'
+import addressList from '~/components/profile/addressList.vue'
 import moment from 'moment-jalaali'
 export default {
-  components: { 'date-picker': () => import('vue-persian-datetime-picker') },
+  components: { 'date-picker': () => import('vue-persian-datetime-picker'), addressList },
   data() {
     return {
       userLocal: {},
       isChangeNumberModalActive: false,
-      newPhoneNumber: null
+      newPhoneNumber: null,
+      addressListModal: false,
+
     }
   },
   watch: {
@@ -179,6 +185,9 @@ export default {
     }
   },
   methods: {
+    goToAddresses(){
+      this.addressListModal = true
+    },
     formatUserDateJoined(rawDate){
       if(rawDate){
         return this.moment.from(rawDate, 'en', 'YYYY-MM-DD HH:mm:ss')

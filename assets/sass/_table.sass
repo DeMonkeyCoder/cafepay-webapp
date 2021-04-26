@@ -53,6 +53,29 @@
     position: relative
     top: 2.5rem
 
+    &__delivery-selection
+      background-color: $blueShade
+      height: 50px
+      display: flex
+      border-radius: 5px
+      &--not-selected
+        flex: 1
+      p
+        position: relative
+        img
+          position: absolute
+          width: 32px
+          height: 32px
+
+        img#delivery-selection-img
+          top: 0
+          right: 0
+
+        img#pickup-selection-img
+          top: 0
+          left: 0
+
+
     &--has-address
       top: 0rem!important
 
