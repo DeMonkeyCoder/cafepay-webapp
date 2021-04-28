@@ -17,26 +17,19 @@
             placeholder="شهر خود را انتخاب کنید"
             icon="city-variant"
           >
-              <option value="flint">Flint</option>
-              <option value="silver">Silver</option>
-              <option value="vane">Vane</option>
-              <option value="billy">Billy</option>
-              <option value="jack">Jack</option>
+              <option v-for="(city, i) in cities" :key="i" :value="city">{{city.name}}</option>
         </b-select>
         </b-field>
 
         <b-field label="منطقه (محله)">
           <b-select expanded
-            
+            :disabled="!addressLocal.city"
+            v-model="addressLocal.region"
             class="cp-select cp-input-primary "
             placeholder="منطقه(محله) خود را انتخاب کنید"
             icon="map-legend"
           >
-              <option value="flint">Flint</option>
-              <option value="silver">Silver</option>
-              <option value="vane">Vane</option>
-              <option value="billy">Billy</option>
-              <option value="jack">Jack</option>
+              <option v-for="region in regions" :key="region.pk" :value="region.pk">{{region.name}}</option>
         </b-select>
         </b-field>
 
@@ -50,7 +43,8 @@
           ></b-input>
         </b-field>
          
-          <b-button expanded @click="newAddressModal = true" class="bcp-btn bcp-btn-large font-18 cp-b-margin-2x" type="is-info"
+          <b-button :disabled="!addressLocal.region || !addressLocal.address" expanded @click="createAddress" 
+          class="bcp-btn bcp-btn-large font-18 cp-b-margin-2x" type="is-info" :loading="globalLoading"
             >تایید آدرس</b-button>
  
     
@@ -66,21 +60,63 @@
     data() {
       return {
         modalActive: false,
+        cities: [],
+        regions: [],
         addressLocal: {
           city: null,
-          district: null,
+          region: null,
           address: null
         }
       }
     },
+
+  mounted(){
+    this.getCityList()
+  },
+  methods: {
+    getCityList(){
+    this.$api
+      .get('api/v1/city/list/', {
+        params: {},
+      })
+      .then(res => {
+        this.cities = res.data
+        console.log('list', res.data);
+      })
+    },
+    createAddress(){
+        this.$api
+        .post('/api/v1/user-profile/address/create/', {region: this.addressLocal.region, address: this.addressLocal.address})
+        .then(res => {
+              this.$emit('updateAddressList')
+              this.modalActive = false
+              this.$buefy.toast.open({
+              duration: 3000,
+              message: 'آدرس با موفقیت ذخیره شد.',
+              position: 'is-bottom',
+              type: 'is-success'
+            })
+         
+        })
+        .catch(err => {
+          if (err.response) {
+            console.log(err.response.data)
+          }
+        })
+    }
+  },
   watch: {
+    'addressLocal.city'(val){
+      this.regions = val.regions
+    },
     newAddressModal(val, oldValue) {
       if (val) this.modalActive = true
       else this.modalActive = false
     },
     modalActive(val){
       if (!val) this.$emit('closeModal')
-    }
+    },
+
   },
   }
 </script>

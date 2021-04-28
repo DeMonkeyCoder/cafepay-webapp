@@ -16,11 +16,12 @@
           <section>
             <header class="font-18 font-norm cp-b-margin">آدرس‌ها:</header>
 
+
             <div class="address__modal__address-card header-radius background-white cp-padding cp-b-margin" 
             :class="{'address__modal__address-card--selected': selected == i}"
-            v-for="(address, i) in list" :key="i">
+            v-for="(address, i) in user.addresses" :key="i">
               <div class="address__modal__address-card__info" @click="selected = i">
-                <p class="font-norm font-16 address__modal__address-card__info__header">{{address.city+'، '+address.district}}</p>
+                <p class="font-norm font-16 address__modal__address-card__info__header">{{address.region.city.name +'، '+address.region.name}}</p>
                 <p>{{address.address}}</p>
               </div>
               <div class="address__modal__address-card__action">
@@ -42,7 +43,7 @@
         <section class="modal-action cp-padding-2x"></section>
       </div>
     </b-modal>
-    <new-address @closeModal="newAddressModal = false" :newAddressModal="newAddressModal" />
+    <new-address @updateAddressList="getList" @closeModal="newAddressModal = false" :newAddressModal="newAddressModal" />
   </div>
 </template>
 
@@ -72,7 +73,12 @@ export default {
   },
 
   methods: {
-    name() {},
+    getList() {
+
+    },
+  },
+  mounted(){
+
   },
   watch: {
     addressListModal(val, oldValue) {

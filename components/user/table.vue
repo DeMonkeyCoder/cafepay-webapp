@@ -135,10 +135,45 @@
             <div class="pre-invoice-modal__delivery-method cp-t-margin-2x">
             <header class="font-bold font-18 cp-b-margin">انتخاب روش تحویل ارسال</header>
             <div class="pre-invoice-modal__delivery-method-selection">
-              <div class="method-selection-delivery">
 
+             <div
+                :class="{'shadow-md': delivery_method == 'delivery', 'method-selected': delivery_method == 'delivery'}" @click="delivery_method = 'delivery'"
+                class="pre-invoice-modal__payment-method__online cp-side-padding-half cp-tb-padding normal-radius">
+                <div class="pre-invoice-modal__payment-method__online__img">
+                  <img src="@/assets/img/shape/icons/icon8/delivery-selected.png" alt="">
+                </div>
+                <div class="pre-invoice-modal__payment-method__online__text">
+                  <p class="font-16 font-bold">ارسال با پیک</p>
+                  <p class="font-14 delivery-selection-description">سفارش شما با پیک ارسال خواهد شد</p>
+                </div>
+                <!-- <div v-if="delivery_method == 'online'" class="pre-invoice-modal__payment-method__online__check">
+                  <b-icon
+                  icon="check"
+                  size="is-medium">
+                  </b-icon>
+                </div> -->
               </div>
-              <div class="method-selection-pickup"></div>
+
+              <div v-if="tokenType != 'pre-order' && table.delivery_method != 'pickup' " :class="{'shadow-md': delivery_method == 'pickup', 'method-selected': delivery_method == 'pickup'}" @click="delivery_method = 'pickup'"
+              class="pre-invoice-modal__payment-method__cash cp-b-margin cp-side-padding-half cp-tb-padding normal-radius">
+                <div class="pre-invoice-modal__payment-method__cash__img">
+                  <img src="@/assets/img/shape/icons/icon8/pickup-selected-2.png" alt="">
+                </div>
+                <div class="pre-invoice-modal__payment-method__cash__text">
+                  <p class="font-16 font-bold">تحویل در مجموعه</p>
+                  <p class="font-14 delivery-selection-description">خودم تحویل می‌گیرم</p>
+                </div>
+                <!-- <div v-if="paymentMethod == 'cash'" class="pre-invoice-modal__payment-method__cash__check">
+                  <b-icon
+                  icon="check"
+                  size="is-medium">
+                  </b-icon>
+                </div> -->
+              </div>
+
+              <!-- <div class="method-selection-delivery"></div>
+              <div class="method-selection-pickup"></div> -->
+
             </div>
             </div>
             <ol class="order-summery">
@@ -182,7 +217,7 @@
               </li>
               <li>
                 <p class="pre-invoice-modal__name font-bold">قابل پرداخت</p>
-                <p class="pre-invoice-modal__amount font-bold font-18">
+                <p class="pre-invoice-modal__amount font-bold font-18`">
                   {{ Math.max(totaltoPay - cafe.my_credit_in_cafe, 0) | currency }}
                   <!-- <span class="toman">تومان</span> -->
                 </p>
@@ -212,12 +247,12 @@
                   <p class="font-16">پرداخت آنلاین</p>
                   <p class="font-bold">درگاه بانک پاسارگاد</p>
                 </div>
-                <div v-if="paymentMethod == 'online'" class="pre-invoice-modal__payment-method__online__check">
+                <!-- <div v-if="paymentMethod == 'online'" class="pre-invoice-modal__payment-method__online__check">
                   <b-icon
                   icon="check"
                   size="is-medium">
                   </b-icon>
-                </div>
+                </div> -->
               </div>
 
               <div v-if="tokenType != 'pre-order' && table.paymentMethod != 'cash' && !cafe.payment_first" :class="{'shadow-md': paymentMethod == 'cash', 'method-selected': paymentMethod == 'cash'}" @click="paymentMethod = 'cash'"
@@ -229,12 +264,12 @@
                   <p class="font-16">{{ $t('table_page.checkout_cash_or_credit') }}</p>
                   <p class="font-bold">{{ $t('table_page.pay_to_cashier') }}</p>
                 </div>
-                <div v-if="paymentMethod == 'cash'" class="pre-invoice-modal__payment-method__cash__check">
+                <!-- <div v-if="paymentMethod == 'cash'" class="pre-invoice-modal__payment-method__cash__check">
                   <b-icon
                   icon="check"
                   size="is-medium">
                   </b-icon>
-                </div>
+                </div> -->
               </div>
             </div>
           </section>
@@ -390,6 +425,7 @@ export default {
   data() {
     return {
       key: 1,
+      delivery_method: 'delivery',
       is_delivery: true,
       delivery_type: 'delivery',
       isTableOptionsModalActive: false,
