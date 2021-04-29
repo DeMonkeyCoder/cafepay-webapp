@@ -55,8 +55,9 @@
 </template>
 
 <script>
+  import Vue from 'vue'
   export default {
-    props: ['newAddressModal'],
+    props: ['newAddressModal', 'address'],
     data() {
       return {
         modalActive: false,
@@ -85,8 +86,9 @@
       })
     },
     createAddress(){
-        this.$api
-        .post('/api/v1/user-profile/address/create/', {region: this.addressLocal.region, address: this.addressLocal.address})
+        let call = (this.address) ? 'put' : 'post'
+        let url = (this.address) ? `api/v1/user-profile/address/${this.address.pk}/` : '/api/v1/user-profile/address/create/'
+        this.$api[call](url, {region: this.addressLocal.region, address: this.addressLocal.address})
         .then(res => {
               this.$emit('updateAddressList')
               this.modalActive = false
@@ -108,6 +110,17 @@
   watch: {
     'addressLocal.city'(val){
       this.regions = val.regions
+    },
+    address(val) {
+      Vue.set(this.addressLocal, 'city',val.region.city)
+      this.addressLocal = {
+        city: val.region.city,
+        region: val.region.pk,
+        address: val.address
+      }
+      setTimeout(() => {
+        this.$forceUpdate()
+      }, 100);
     },
     newAddressModal(val, oldValue) {
       if (val) this.modalActive = true
