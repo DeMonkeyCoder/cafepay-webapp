@@ -70,7 +70,8 @@ export const mutations = {
         break;
 
       case '2':
-        state.tokenType = 'pre-order'
+        if (!data.has_delivery) state.tokenType = 'delivery'
+        else state.tokenType = 'pre-order'
         break;
     
       default:

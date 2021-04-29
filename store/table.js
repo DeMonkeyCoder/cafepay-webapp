@@ -91,6 +91,7 @@ export const mutations = {
     state.paid = false
     state.joinId = rawData.pk
     state.paid = table.paid
+    state.empty = table.empty
     state.paymentMethod = table.paymentMethod
     state.hasOnlinePayment = table.hasOnlinePayment
     state.hasCashierOrder = table.hasCashierOrder

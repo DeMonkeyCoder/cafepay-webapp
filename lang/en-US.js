@@ -136,6 +136,7 @@ export default {
     profile_information: 'Account',
     terms: 'Terms of use',
     logout: 'Logout',
+    address: 'Address',
     first_name: 'First Name',
     last_name: 'Last Name',
     phone_number: 'Phone Number',

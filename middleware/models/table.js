@@ -20,6 +20,7 @@ export const Table = class Table {
     this.paymentMethod = data.paymentMethod
     this.hasOnlinePayment = data.hasOnlinePayment
     this.hasCashierOrder = data.hasCashierOrder
+    this.empty = (rawData.bill_products.length == 0) ? true : false
     
 
 
