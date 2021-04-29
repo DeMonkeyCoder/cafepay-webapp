@@ -22,4 +22,4 @@ EXPOSE 3000
 
 
 # start the app
-CMD [ "pm2-runtime", "pm2.config.js" ]
+CMD [ "pm2-runtime", "pm2.config.js" , "--no-daemon"]
