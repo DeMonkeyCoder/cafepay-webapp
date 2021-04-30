@@ -28,4 +28,8 @@ export default class User {
     return this.first_name + ' ' + this.last_name
   }
 
+  get active_address_obj(){
+    return this.addresses.find(x => this.active_address == x.pk)
+  }
+
 }

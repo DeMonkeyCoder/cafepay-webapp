@@ -93,24 +93,6 @@
         </div>
       </b-modal>
 
-      <b-modal class="simple-action-modal" :active.sync="AddressModalActive" has-modal-card >
-        <div class="modal-card" style="width: auto">
-
-          <section class="modal-dialog">
-            <b-field>
-              <b-input ref="descriptionInput" class="is-noborder-input" 
-              v-model="address" maxlength="200" type="textarea" placeholder="آدرس خود را اینجا بنویسید"></b-input>
-            </b-field>
-          </section>
-
-          <section class="modal-caption"></section>
-
-          <section class="modal-action">
-            <b-button :loading="globalLoading" class="button ma-child is-info" type="button" @click="submitAddress">ثبت آدرس</b-button>
-          </section>
-          
-        </div>
-      </b-modal>
 
       
 
@@ -150,11 +132,11 @@
           <section class="modal-dialog  cp-side-padding-2x cp-tb-padding">
             <div id="pre-invoice-animation"></div>
 
-            <div class="pre-invoice-modal__delivery-method cp-t-margin-2x">
+            <section class="pre-invoice-modal__delivery-method cp-t-margin-2x">
             <header class="font-bold font-18 cp-b-margin">انتخاب روش تحویل ارسال</header>
             <div class="pre-invoice-modal__delivery-method-selection">
 
-             <div
+             <div v-if="cafe.has_delivery"
                 :class="{'shadow-md': delivery_method == 'delivery', 'method-selected': delivery_method == 'delivery'}" @click="delivery_method = 'delivery'"
                 class="pre-invoice-modal__payment-method__online cp-side-padding-half cp-tb-padding normal-radius">
                 <div class="pre-invoice-modal__payment-method__online__img">
@@ -181,19 +163,31 @@
                   <p class="font-16 font-bold">تحویل در مجموعه</p>
                   <p class="font-14 delivery-selection-description">خودم تحویل می‌گیرم</p>
                 </div>
-                <!-- <div v-if="paymentMethod == 'cash'" class="pre-invoice-modal__payment-method__cash__check">
-                  <b-icon
-                  icon="check"
-                  size="is-medium">
-                  </b-icon>
-                </div> -->
+     
               </div>
 
-              <!-- <div class="method-selection-delivery"></div>
-              <div class="method-selection-pickup"></div> -->
+            </div>
 
-            </div>
-            </div>
+            </section>
+
+
+            <section class="cp-t-margin-2x" v-if="delivery_method == 'delivery'">
+              <b-field class="bold-label" label="آدرس" :type="(user.active_address) ? 'default' : 'is-danger'">
+                <b-input
+                  readonly
+                  v-model="user.active_address_obj.address"
+                  @click.native="AddressModalActive = true"
+                  class="cp-input cp-input-primary cp-input-shadow cp-input-whitesmoke cp-b-margin"
+                  placeholder="آدرس خود را وارد کنید"
+                  icon="map-marker-outline"
+                ></b-input>
+              </b-field>
+
+            </section>
+
+
+            <section class="cp-t-margin-2x">
+
             <ol class="order-summery">
               <li v-for="order in ordersToPay" :key="order.pk">
                 <p class="order-summery__name">{{ order.name }}</p>
@@ -242,7 +236,9 @@
               </li>
             </ul>
 
-            <div v-if="tokenType == 'pre-order' && !isDelivery(cafe)" class="preorder-warning">
+            </section>
+
+            <div v-if="tokenType == 'pre-order'" class="preorder-warning">
               <div>
                 <b-icon size="" icon="alert-circle-outline"></b-icon>
               </div>
@@ -343,18 +339,7 @@
           class="table-status-bar long-shadow cp-padding cp-header-card has-background-white"
           :class="{'table-status-bar--has-address': false}"
         >
-          <!-- <div class="table-top-section">
-          <div
-            class="table-top-section__name  cp-tb-padding-half cp-side-padding"
-          >
-            <h5 class="">
-              {{ $t('table_page.table') }}: <span class="font-norm">{{ table.table_number }}</span>
-            </h5>
-          </div>
-          <div v-show="!cafe.payment_only" class="table-top-section__edit-orders">
-            <b-button @click="goToMyOrderInMenu" class="shadow-b" type="is-warning" inverted >{{ (userHasOrder) ? $t('table_page.edit_order') : $t('table_page.add_order') }}</b-button>
-          </div>
-        </div> -->
+  
 
           <div class="table-status-bar__actions">
             <div class="table-status-bar__actions__edit-orders">
@@ -377,31 +362,6 @@
           <!-- <p v-if="tokenType == 'delivery'">{{(ordersPaid) ? 'سفارش شما پرداخت شد' : 'سفارش خود را پرداخت کنید'}}</p> -->
           </div>
 
-          <!-- <div class="table-status-bar__delivery-selection">
-
-            <p @click="switchDeliveryType('delivery')" class="cp-tb-margin cp-side-margin-half" 
-            :class="{'table-status-bar__delivery-selection--selected': delivery_type == 'delivery',
-            'table-status-bar__delivery-selection--not-selected': delivery_type == 'pickup'}">
-              <transition name="fade"><img id="delivery-selection-img" v-if="delivery_type == 'pickup'" src='@/assets/img/shape/icons/icon8/delivery.png' alt=""></transition>
-              <transition name="fade"> <img id="delivery-selection-img" v-if="delivery_type == 'delivery'" src='@/assets/img/shape/icons/icon8/delivery-selected-2.png' alt=""></transition>
-              <span v-if="delivery_type == 'delivery'">ارسال با پیک</span>
-            </p>
-
-            <p @click="switchDeliveryType('pickup')" class="cp-tb-margin cp-side-margin-half" 
-            :class="{'table-status-bar__delivery-selection--selected': delivery_type == 'pickup',
-             'table-status-bar__delivery-selection--not-selected': delivery_type == 'delivery'}">
-              <transition name="fade"><img id="pickup-selection-img" v-if="delivery_type == 'delivery'" src='@/assets/img/shape/icons/icon8/pickup.png' alt=""></transition>
-              <transition name="fade"> <img id="pickup-selection-img" v-if="delivery_type == 'pickup'" src='@/assets/img/shape/icons/icon8/pickup-selected.png' alt=""></transition>
-              <span v-if="delivery_type == 'pickup'">خودم تحویل می‌گیریم</span>
-            </p>
-
-          </div> -->
-
-          <!-- <div class="table-status-bar__info cp-tb-padding-half cp-side-padding-half cp-t-margin" id="delivery" v-if="tokenType == 'delivery'">
-            <p v-if="user.address" class="table-status-bar__info__delivery"> آدرس: <span class="font-norm">{{user.address}}</span></p>
-            <p v-else class="table-status-bar__info__delivery"><span class="font-norm">آدرس شما ثبت نشده است</span></p>
-            ‌<b-button @click="openAddressModal" :disabled="!table.joinId"  type="is-light is-info">{{(user.address != null) ? 'تغییر آدرس' : 'ثبت آدرس'}}</b-button>
-          </div> -->
         </div>
       </div>
 
@@ -430,6 +390,7 @@
         </div>
       </div>
     </div>
+    <address-list tableMode @updateActiveAddress="$nuxt.$emit('updateActiveAddress')" @closeModal="AddressModalActive = false" :addressListModal="AddressModalActive" />
   </div>
 </template>
 
@@ -438,23 +399,17 @@ import person from '~/components/table/person.vue'
 import lottie from 'lottie-web'
 import preInvoiceAnimation from '~/assets/img/28970-download.json'
 import cafeDefaultImage from '@/assets/img/cafe-default.png'
-
-const DeliveryChoiceEnum = Object.freeze({
-  PIKCUP: 1,
-  DELIVERY: 2
-})
-
+import addressList from '~/components/profile/addressList.vue'
 export default {
-  components: { person },
+  components: { person, addressList },
   data() {
     return {
       DeliveryChoice: DeliveryChoiceEnum.DELIVERY,
       DeliveryChoiceEnum,
       showPreInvoiceAfterDescription: false,
       key: 1,
-      delivery_method: 'delivery',
-      is_delivery: true,
-      delivery_type: 'delivery',
+      addressListModal: false,
+      delivery_method: null,
       isTableOptionsModalActive: false,
       fullPayment: false,
       description: '',
@@ -532,18 +487,8 @@ export default {
     // }
   },
   methods: {
-    switchDeliveryType(type){
-      this.delivery_type = type
-    },
     openDescriptionModal(){
       this.descriptionModalActive = true
-      setTimeout(() => {
-        this.$refs.descriptionInput.focus()
-      }, 200)
-    },
-
-    openAddressModal(){
-      this.AddressModalActive = true
       setTimeout(() => {
         this.$refs.descriptionInput.focus()
       }, 200)
@@ -609,6 +554,7 @@ export default {
       this.$store.commit('changeNavigation', 'currentCafe')
 
     },
+
 
     goToTokenAndPay(e) {
       e.preventDefault();
@@ -720,6 +666,14 @@ export default {
       immediate: true,
       handler(val){
         this.address = val.address 
+      }
+    },
+
+    cafe: {
+      immediate: true,
+      handler(val){
+        if (val.has_delivery) this.delivery_method = 'delivery'
+        else this.delivery_method = 'pickup'
       }
     },
 

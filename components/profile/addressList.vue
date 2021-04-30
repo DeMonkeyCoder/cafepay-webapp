@@ -55,7 +55,7 @@
 import newAddress from '~/components/profile/newAddress.vue'
 export default {
   components: { 'date-picker': () => import('vue-persian-datetime-picker'), newAddress },
-  props: ['addressListModal'],
+  props: ['addressListModal', 'tableMode'],
   data() {
     return {
       modalActive: false,
@@ -80,6 +80,9 @@ export default {
 
     changeActiveAddress(pk){
       this.$emit('updateActiveAddress', pk)
+      // if (this.tableMode) setTimeout(() => {
+      //   this.modalActive = false
+      // }, 3000);
     },
     createNewAddress(){
       this.currentAddress = null

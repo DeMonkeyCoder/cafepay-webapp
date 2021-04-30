@@ -52,6 +52,7 @@ export const mutations = {
     state.phone = data.cafe.phone
     state.closed = data.cafe.is_closed
     state.avatar = data.cafe.avatar
+    state.has_delivery = data.cafe.has_delivery
     state.cafepay_fee = data.cafe.cafepay_fee
     state.fee_payer = data.cafe.fee_payer
     state.header_image = data.cafe.header_image
