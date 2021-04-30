@@ -228,7 +228,11 @@ export default {
         })
     }
   },
-  mounted() {}
+  mounted() {
+    this.$nuxt.$on('updateActiveAddress', (data) => {
+      this.updateActiveAddress(data)
+    })
+  }
 }
 </script>
 
