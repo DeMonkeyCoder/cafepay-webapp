@@ -425,7 +425,7 @@ export default {
       if(!cafeRegion) {
         return null
       }
-      return cafeRegion.price
+      return cafeRegion.price / 10
     },
     cafe() {
       return this.$store.state.cafe
