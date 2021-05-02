@@ -60,6 +60,7 @@ export const mutations = {
     state.payment_first = data.cafe.payment_first
     state.my_credit_in_cafe = data.my_credit_in_cafe
     state.is_delivery = data.is_delivery
+    state.delivery_regions = data.cafe.delivery_regions
 
     // define type of token ----- 0: menuonly   1: normal    2: preorder
     switch (data.type) {
@@ -71,7 +72,7 @@ export const mutations = {
         break;
 
       case '2':
-        if (!data.has_delivery) state.tokenType = 'delivery'
+        if (data.has_delivery) state.tokenType = 'delivery'
         else state.tokenType = 'pre-order'
         break;
     

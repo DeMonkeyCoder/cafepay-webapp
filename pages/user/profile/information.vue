@@ -148,7 +148,7 @@
           >{{ $t('profile_page.update_information') }}</b-button
         >
       </div>
-      <address-list @updateActiveAddress="updateActiveAddress" @closeModal="addressListModal = false" :addressListModal="addressListModal" />
+      <address-list @closeModal="addressListModal = false" :addressListModal="addressListModal" />
     </section>
   </div>
 </template>
@@ -203,10 +203,6 @@ export default {
     openChangeNumberModal() {
       this.isChangeNumberModalActive = true
     },
-    updateActiveAddress(data){
-      this.userLocal.active_address = data
-      this.updateInformation()
-    },
     updateInformation() {
       this.$api
         .put('/api/v1/user-profile/', this.userLocal)
@@ -227,11 +223,6 @@ export default {
           }
         })
     }
-  },
-  mounted() {
-    this.$nuxt.$on('updateActiveAddress', (data) => {
-      this.updateActiveAddress(data)
-    })
   }
 }
 </script>

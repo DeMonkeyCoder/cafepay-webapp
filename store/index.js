@@ -161,7 +161,6 @@ export const actions = {
             // headers: { Authorization: 'Token ' + this.token }
           })
           .then(res => {
-            
             // sets pk, avatar, name and table id
             commit('cafe/setBasic', res.data)
             commit('setActiveTable', true)

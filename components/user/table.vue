@@ -62,26 +62,8 @@
           <section class="modal-dialog">
             <b-field style="margin-bottom: 10px;">
               <b-input ref="descriptionInput" class="is-noborder-input" 
-              v-model="description" maxlength="200" type="textarea" :placeholder="(tokenType == 'pre-order' && isDelivery(cafe)) ? 'توضیحات و آدرس خود را اینجا بنویسید' : 'توضیحات خود را در مورد سفارشات بنویسید'"></b-input>
+              v-model="description" maxlength="200" type="textarea" placeholder="توضیحات خود را در مورد سفارشات بنویسید"></b-input>
             </b-field>
-            <section v-if="tokenType == 'pre-order' && isDelivery(cafe)">
-              <b-field style="text-align: right; margin-bottom: 2px;">
-                  <b-radio v-model="DeliveryChoice"
-                      size="is-small"
-                      type="is-info"
-                      :native-value="DeliveryChoiceEnum.DELIVERY">
-                      <span style="padding-right: 5px">برام بفرستید</span>
-                  </b-radio>
-              </b-field>
-              <b-field style="text-align: right">
-                  <b-radio v-model="DeliveryChoice"
-                      size="is-small"
-                      type="is-info"
-                      :native-value="DeliveryChoiceEnum.PIKCUP">
-                      <span style="padding-right: 5px">خودم تحویل می گیرم</span>
-                  </b-radio>
-              </b-field>
-            </section>
           </section>
 
           <section class="modal-caption"></section>
@@ -131,51 +113,52 @@
         <div class="modal-card" style="width: auto">
           <section class="modal-dialog  cp-side-padding-2x cp-tb-padding">
             <div id="pre-invoice-animation"></div>
+            <section class="pre-invoice-modal__delivery-method cp-t-margin-2x" v-if="tokenType == 'pre-order' || tokenType == 'delivery'">
+              <header class="font-bold font-18 cp-b-margin">انتخاب روش تحویل ارسال</header>
+              <div class="pre-invoice-modal__delivery-method-selection">
 
-            <section class="pre-invoice-modal__delivery-method cp-t-margin-2x">
-            <header class="font-bold font-18 cp-b-margin">انتخاب روش تحویل ارسال</header>
-            <div class="pre-invoice-modal__delivery-method-selection">
+              <div v-if="cafe.has_delivery"
+                  :class="{'shadow-md': delivery_method == 'delivery', 'method-selected': delivery_method == 'delivery'}" @click="delivery_method = 'delivery'"
+                  class="pre-invoice-modal__payment-method__online cp-side-padding-half cp-tb-padding normal-radius">
+                  <div class="pre-invoice-modal__payment-method__online__img">
+                    <img src="@/assets/img/shape/icons/icon8/delivery-selected.png" alt="">
+                  </div>
+                  <div class="pre-invoice-modal__payment-method__online__text">
+                    <p class="font-16 font-bold">ارسال با پیک</p>
+                    <p class="font-14 delivery-selection-description">سفارش شما با پیک ارسال خواهد شد</p>
+                  </div>
+                  <!-- <div v-if="delivery_method == 'online'" class="pre-invoice-modal__payment-method__online__check">
+                    <b-icon
+                    icon="check"
+                    size="is-medium">
+                    </b-icon>
+                  </div> -->
+                </div>
 
-             <div v-if="cafe.has_delivery"
-                :class="{'shadow-md': delivery_method == 'delivery', 'method-selected': delivery_method == 'delivery'}" @click="delivery_method = 'delivery'"
-                class="pre-invoice-modal__payment-method__online cp-side-padding-half cp-tb-padding normal-radius">
-                <div class="pre-invoice-modal__payment-method__online__img">
-                  <img src="@/assets/img/shape/icons/icon8/delivery-selected.png" alt="">
+                <div v-if="(tokenType == 'pre-order' || tokenType == 'delivery') && table.delivery_method != 'pickup' " :class="{'shadow-md': delivery_method == 'pickup', 'method-selected': delivery_method == 'pickup'}" @click="delivery_method = 'pickup'"
+                class="pre-invoice-modal__payment-method__cash cp-b-margin cp-side-padding-half cp-tb-padding normal-radius">
+                  <div class="pre-invoice-modal__payment-method__cash__img">
+                    <img src="@/assets/img/shape/icons/icon8/pickup-selected-2.png" alt="">
+                  </div>
+                  <div class="pre-invoice-modal__payment-method__cash__text">
+                    <p class="font-16 font-bold">تحویل در مجموعه</p>
+                    <p class="font-14 delivery-selection-description">خودم تحویل می‌گیرم</p>
+                  </div>
+      
                 </div>
-                <div class="pre-invoice-modal__payment-method__online__text">
-                  <p class="font-16 font-bold">ارسال با پیک</p>
-                  <p class="font-14 delivery-selection-description">سفارش شما با پیک ارسال خواهد شد</p>
-                </div>
-                <!-- <div v-if="delivery_method == 'online'" class="pre-invoice-modal__payment-method__online__check">
-                  <b-icon
-                  icon="check"
-                  size="is-medium">
-                  </b-icon>
-                </div> -->
+
               </div>
-
-              <div v-if="tokenType != 'pre-order' && table.delivery_method != 'pickup' " :class="{'shadow-md': delivery_method == 'pickup', 'method-selected': delivery_method == 'pickup'}" @click="delivery_method = 'pickup'"
-              class="pre-invoice-modal__payment-method__cash cp-b-margin cp-side-padding-half cp-tb-padding normal-radius">
-                <div class="pre-invoice-modal__payment-method__cash__img">
-                  <img src="@/assets/img/shape/icons/icon8/pickup-selected-2.png" alt="">
-                </div>
-                <div class="pre-invoice-modal__payment-method__cash__text">
-                  <p class="font-16 font-bold">تحویل در مجموعه</p>
-                  <p class="font-14 delivery-selection-description">خودم تحویل می‌گیرم</p>
-                </div>
-     
-              </div>
-
-            </div>
 
             </section>
 
 
             <section class="cp-t-margin-2x" v-if="delivery_method == 'delivery'">
-              <b-field class="bold-label" label="آدرس" :type="(user.active_address) ? 'default' : 'is-danger'">
+              <b-field
+                :message="(user.active_address && !isAvailableAddress(user.active_address_obj)) ? 'خارج از محدوده' : null"
+                class="bold-label" label="آدرس" :type="(user.active_address_obj && isAvailableAddress(user.active_address_obj)) ? 'default' : 'is-danger'">
                 <b-input
                   readonly
-                  v-model="user.active_address_obj.address"
+                  :value="user.active_address ? user.active_address_obj.address : null"
                   @click.native="AddressModalActive = true"
                   class="cp-input cp-input-primary cp-input-shadow cp-input-whitesmoke cp-b-margin"
                   placeholder="آدرس خود را وارد کنید"
@@ -206,6 +189,13 @@
                   <!-- <span class="toman">تومان</span> -->
                 </p>
               </li>
+              <li v-if="deliveryFee != null">
+                <p class="pre-invoice-modal__name font-l">هزینه ارسال</p>
+                <p class="pre-invoice-modal__amount font-l">
+                  {{ deliveryFee | currency }}
+                  <!-- <span class="toman">تومان</span> -->
+                </p>
+              </li>
               <li>
                 <p class="pre-invoice-modal__name font-l">{{ $t('table_page.service_fee') }}</p>
                 <p class="pre-invoice-modal__amount font-l">
@@ -214,17 +204,16 @@
                 </p>
               </li>
               <li>
-                <p class="pre-invoice-modal__name font-l">اعتبار شما</p>
-                <p class="pre-invoice-modal__amount font-l">
-                  {{ cafe.my_credit_in_cafe | currency }}
-                  <!-- <span class="toman">تومان</span> -->
-                </p>
-              </li>
-              <li>
                 <p class="pre-invoice-modal__name font-l">{{ $t('table_page.final_total_amount') }}</p>
                 <p class="pre-invoice-modal__amount font-l">
                   {{ totaltoPay | currency }}
                   <!-- <span class="toman">تومان</span> -->
+                </p>
+              </li>
+              <li>
+                <p class="pre-invoice-modal__name font-l">اعتبار شما</p>
+                <p class="pre-invoice-modal__amount font-l">
+                  {{ cafe.my_credit_in_cafe | currency }}
                 </p>
               </li>
               <li>
@@ -238,7 +227,7 @@
 
             </section>
 
-            <div v-if="tokenType == 'pre-order'" class="preorder-warning">
+            <div v-if="tokenType == 'pre-order' && !isDelivery(cafe)" class="preorder-warning">
               <div>
                 <b-icon size="" icon="alert-circle-outline"></b-icon>
               </div>
@@ -251,7 +240,6 @@
               <header class="font-bold font-18 cp-b-margin">{{ $t('table_page.choose_payment_method') }}</header>
 
               <div
-                v-if="$i18n.locale == 'fa'"
                 :class="{'shadow-md': paymentMethod == 'online', 'method-selected': paymentMethod == 'online'}" @click="paymentMethod = 'online'"
                 class="pre-invoice-modal__payment-method__online cp-side-padding-half cp-tb-padding normal-radius">
                 <div class="pre-invoice-modal__payment-method__online__img">
@@ -269,7 +257,7 @@
                 </div> -->
               </div>
 
-              <div v-if="tokenType != 'pre-order' && table.paymentMethod != 'cash' && !cafe.payment_first" :class="{'shadow-md': paymentMethod == 'cash', 'method-selected': paymentMethod == 'cash'}" @click="paymentMethod = 'cash'"
+              <div v-if="tokenType != 'pre-order' && tokenType != 'delivery' && table.paymentMethod != 'cash' && !cafe.payment_first" :class="{'shadow-md': paymentMethod == 'cash', 'method-selected': paymentMethod == 'cash'}" @click="paymentMethod = 'cash'"
               class="pre-invoice-modal__payment-method__cash cp-b-margin cp-side-padding-half cp-tb-padding normal-radius">
                 <div class="pre-invoice-modal__payment-method__cash__img">
                   <img src="@/assets/img/credit-card-payment.png" alt="">
@@ -302,14 +290,14 @@
       <div id="pay-checkout" class="pay-checkout-is-shown">
         <b-button v-if="table.paymentMethod == 'online' || table.paid"
           :disabled="totalWishToPayOrder == 0 "
-          @click="showPreInvoice(false)"
+          @click="showPreInvoice()"
           :loading="globalLoading"
           class="button shadow-lg-b bcp-btn cp-btn-submit-order"
           size="is-medium"
           type="is-info"
           >
           <span v-if="table.paid">{{(table.empty) ? 'سفارشی ثبت نشده' : 'پرداخت کامل است'}}</span>
-          <span v-else>{{  $t('table_page.checkout') }} ({{ totalWishToPayOrder | currency }})</span>
+          <span v-else>{{ (tokenType == 'pre-order' || tokenType == 'delivery') ? 'ادامه و پرداخت' : $t('table_page.checkout') }} ({{ totalWishToPayOrder | currency }})</span>
         </b-button>
 
         <div v-else class="message-warning payment-method-message">
@@ -348,7 +336,7 @@
             </div>
 
             <div class="table-status-bar__actions__order-description">
-              <b-button @click="openDescriptionModal" :disabled="!table.joinId"  type="is-light is-info">{{ (tokenType == 'pre-order' && isDelivery(cafe)) ? 'توضیحات و آدرس' : 'ثبت توضیحات' }}</b-button>
+              <b-button @click="openDescriptionModal" :disabled="!table.joinId"  type="is-light is-info">ثبت توضیحات</b-button>
             </div>
           </div>
 
@@ -390,7 +378,7 @@
         </div>
       </div>
     </div>
-    <address-list tableMode @updateActiveAddress="$nuxt.$emit('updateActiveAddress')" @closeModal="AddressModalActive = false" :addressListModal="AddressModalActive" />
+    <address-list :tableMode="true" @closeModal="AddressModalActive = false" :addressListModal="AddressModalActive" />
   </div>
 </template>
 
@@ -404,9 +392,6 @@ export default {
   components: { person, addressList },
   data() {
     return {
-      DeliveryChoice: DeliveryChoiceEnum.DELIVERY,
-      DeliveryChoiceEnum,
-      showPreInvoiceAfterDescription: false,
       key: 1,
       addressListModal: false,
       delivery_method: null,
@@ -429,6 +414,19 @@ export default {
     }
   },
   computed: {
+    deliveryFee() {
+      if(!((this.tokenType == 'pre-order' || this.tokenType == 'delivery') && this.delivery_method == 'delivery')){
+        return null
+      }
+      if(!this.user.active_address) {
+        return null
+      }
+      let cafeRegion = this.cafe.delivery_regions.find(r => r.pk == this.user.active_address_obj.region.pk)
+      if(!cafeRegion) {
+        return null
+      }
+      return cafeRegion.price
+    },
     cafe() {
       return this.$store.state.cafe
     },
@@ -436,7 +434,7 @@ export default {
       return (this.cafe.fee_payer) ? 0 : this.totalWishToPayOrder * this.cafe.cafepay_fee
     },
     totaltoPay() {
-      return this.totalWishToPayOrder + this.cafepayFee
+      return this.totalWishToPayOrder + this.cafepayFee + (this.deliveryFee ? this.deliveryFee : null)
     },
 
     // isPaymentOnly() {
@@ -450,7 +448,7 @@ export default {
     statusText() {
       return this.$t(
         'table_page.' +
-        (this.tokenType == 'pre-order' || this.tokenType == 'delivery' ? 'preorder.' : '') +
+        ((this.tokenType == 'pre-order' || this.tokenType == 'delivery') ? 'preorder.' : '') +
         'states.' +
         this.table.status
       )
@@ -494,7 +492,9 @@ export default {
       }, 200)
     },
 
-
+    isAvailableAddress(address) {
+      return !!this.cafe.delivery_regions.find(r => r.pk == address.region.pk)
+    },
     submitAddress(){
       this.$api({url: `/api/v1/user-profile/`, method: 'patch', data: {
         address: this.address, }
@@ -515,26 +515,16 @@ export default {
     },
 
     submitDescription(){
-      if(!(this.description || this.DeliveryChoice == this.DeliveryChoiceEnum.PIKCUP )){
-        this.descriptionModalActive = false
-        if(this.showPreInvoiceAfterDescription) {
-          this.showPreInvoiceAfterDescription = false
-          this.showPreInvoice(true)
-        }
+      if(this.description == this.table.description){
         return
       }
       this.$api
       .put(`/api/v1/join/${this.table.joinId}/set/description/`, {
-        description: this.description + ((this.DeliveryChoice == this.DeliveryChoiceEnum.PIKCUP) ? ' خودم تحویل می گیرم' : ''),
+        description: this.description,
       })
       .then(res => {
+        this.toaster('توضیحات با موفقیت ثبت شد', 'is-info', 'is-bottom')
         this.descriptionModalActive = false
-        if(this.showPreInvoiceAfterDescription) {
-          this.showPreInvoiceAfterDescription = false
-          this.showPreInvoice(true)
-        } else {
-          this.toaster('توضیحات با موفقیت ثبت شد', 'is-info', 'is-bottom')
-        }
       })
       
       .catch(err => {
@@ -596,14 +586,7 @@ export default {
         }
       }
     },
-    showPreInvoice(ignoreEmptyAddress) {
-      if(this.tokenType == 'pre-order' && this.isDelivery(this.cafe) && !ignoreEmptyAddress) {
-        if(!(this.description || this.DeliveryChoice == this.DeliveryChoiceEnum.PIKCUP )){
-          this.showPreInvoiceAfterDescription = true;
-          this.openDescriptionModal()
-          return;
-        }
-      }
+    showPreInvoice() {
       // first generate it
       this.proccessOrderForPayment()
       this.preInvoiceActive = true
@@ -619,8 +602,46 @@ export default {
       }, 200)
     },
     paymentCheckout() {
-      if (this.paymentMethod == 'cash') this.setMethodPayment('cash')
-      else this.$store.dispatch('table/submitPayment', this.ordersToPayforServer)
+      if (this.paymentMethod == 'cash') {
+        this.setMethodPayment('cash')
+      } else {
+        if((this.tokenType == 'pre-order' || this.tokenType == 'delivery') && this.delivery_method == 'delivery') {
+          if(!this.user.active_address){
+            this.$buefy.toast.open({
+              duration: 3000,
+              message: 'لطفا آدرس را وارد کنید',
+              position: 'is-bottom',
+              type: 'is-danger'
+            })
+            return
+          }
+          if(!this.isAvailableAddress(this.user.active_address_obj)) {
+            this.$buefy.toast.open({
+              duration: 3000,
+              message: 'آدرس انتخابی خارج از محدوده مجموعه می باشد',
+              position: 'is-bottom',
+              type: 'is-danger'
+            })
+            return
+          }
+          this.$api
+          .patch(`/api/v1/join/${this.table.joinId}/set/user-profile-address/`, {
+            include_delivery_fee: true,
+            user_profile_address: this.user.active_address
+          })
+          .then(res => {
+            this.$store.dispatch('table/submitPayment', this.ordersToPayforServer)
+          })
+          .catch(err => {
+            if (err.response) {
+              this.toaster('خطا در ثبت آدرس', 'is-danger', 'is-bottom')
+              console.log(err.response.data)
+            }
+          })
+        } else {
+          this.$store.dispatch('table/submitPayment', this.ordersToPayforServer)
+        }
+      }
       // this.$router.push('/paymentResult')
     },
     setMethodPayment(method){

@@ -19,7 +19,7 @@
         :type="(isClosed) ? 'is-dark' : 'is-info'"
         :disabled="tour"
         >
-        {{ (!isClosed) ? $t('menu_page.submit_order') : $t('menu_page.cafe_is_closed') }}
+        {{ (!isClosed) ? ((tokenType == 'pre-order' || tokenType == 'delivery') ? 'رفتن به مرحله‌ی بعد' : $t('menu_page.submit_order')) : $t('menu_page.cafe_is_closed') }}
         <span v-if="tokenType == 'pre-order' && !isDelivery(cafe)" dir="rtl" class="font-bold font-14">({{ $t('menu_page.submit_order_self_pickup') }})</span>
         </b-button
       >

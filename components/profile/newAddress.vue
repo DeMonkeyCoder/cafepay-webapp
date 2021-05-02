@@ -13,24 +13,27 @@
         <b-field label="شهر">
           <b-select expanded
             v-model="addressLocal.city"
-            class="cp-select cp-input-primary "
+            class="cp-select cp-input-primary"
             placeholder="شهر خود را انتخاب کنید"
             icon="city-variant"
           >
-              <option v-for="(city, i) in cities" :key="i" :value="city">{{city.name}}</option>
+              <option v-for="(city, i) in cities" :key="i" :value="city.pk">{{city.name}}</option>
         </b-select>
         </b-field>
 
         <b-field label="منطقه (محله)">
-          <b-select expanded
+          <b-autocomplete expanded
             :disabled="!addressLocal.city"
-            v-model="addressLocal.region"
-            class="cp-select cp-input-primary "
+            v-model="regionName"
+            :data="filteredRegions"
+            field="name"
+            :open-on-focus="true"
+            class="cp-select cp-input-primary"
             placeholder="منطقه(محله) خود را انتخاب کنید"
+            @select="(region) => addressLocal.region = (region ? region.pk : null)"
             icon="map-legend"
           >
-              <option v-for="region in regions" :key="region.pk" :value="region.pk">{{region.name}}</option>
-        </b-select>
+          </b-autocomplete>
         </b-field>
 
         <b-field label="آدرس دقیق">
@@ -57,16 +60,24 @@
 <script>
   import Vue from 'vue'
   export default {
+    computed: {
+      currentCity(){
+        return this.cities?.find(city => city.pk == this.addressLocal.city)
+      },
+      filteredRegions(){
+        return this.currentCity?.regions?.filter((region => region.name.includes(this.regionName)))
+      }
+    },
     props: ['newAddressModal', 'address'],
     data() {
       return {
         modalActive: false,
         cities: [],
-        regions: [],
+        regionName: '',
         addressLocal: {
-          city: null,
+          city: 1,
           region: null,
-          address: null
+          address: null,
         }
       }
     },
@@ -90,15 +101,9 @@
         let url = (this.address) ? `api/v1/user-profile/address/${this.address.pk}/` : '/api/v1/user-profile/address/create/'
         this.$api[call](url, {region: this.addressLocal.region, address: this.addressLocal.address})
         .then(res => {
-              this.$emit('updateAddressList')
-              this.modalActive = false
-              this.$buefy.toast.open({
-              duration: 3000,
-              message: 'آدرس با موفقیت ذخیره شد.',
-              position: 'is-bottom',
-              type: 'is-success'
-            })
-         
+          let address = Object.assign({}, res.data)
+          address.region = this.currentCity.regions.find(r => r.pk == address.region)
+          this.$emit('addressSubmitted', address)
         })
         .catch(err => {
           if (err.response) {
@@ -108,19 +113,20 @@
     }
   },
   watch: {
-    'addressLocal.city'(val){
-      this.regions = val.regions
-    },
     address(val) {
-      Vue.set(this.addressLocal, 'city',val.region.city)
-      this.addressLocal = {
-        city: val.region.city,
-        region: val.region.pk,
-        address: val.address
+      if(val) {
+        Vue.set(this, 'addressLocal', {
+          city: val.region.city.pk,
+          region: val.region.pk,
+          address: val.address
+        })
+      } else {
+        Vue.set(this, 'addressLocal', {
+          city: 1,
+          region: null,
+          address: null
+        })
       }
-      setTimeout(() => {
-        this.$forceUpdate()
-      }, 100);
     },
     newAddressModal(val, oldValue) {
       if (val) this.modalActive = true

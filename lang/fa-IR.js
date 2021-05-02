@@ -115,7 +115,7 @@ export default {
   menu_page: {
     all_products: 'همه',
     your_current_order: 'سبد سفارشات شما',
-    submit_order: 'رفتن به مرحله‌ی بعد',
+    submit_order: 'تایید سفارش',
     cafe_is_closed: 'مجموعه بسته است',
     submit_order_self_pickup: 'تحویل در مجموعه',
     sold_out: 'تمام شد',
