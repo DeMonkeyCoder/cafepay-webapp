@@ -5,21 +5,16 @@ WORKDIR /app
 
 RUN apk add bash git python3 build-base
 
-COPY . /app
-
 RUN npm install pm2 -g
 
-RUN if [ -e /app/package-lock.json ]; \
-  then \
-    echo 'Running npm ci...' && npm ci; \
-  else \
-    echo 'Running npm install' && npm install; \
-fi
-
-RUN npm run build
+COPY package.json /app
+RUN npm install --production
+COPY . /app
 
 EXPOSE 3000
 
+RUN npm run build
 
 # start the app
-CMD [ "pm2-runtime", "pm2.config.js" , "--no-daemon"]
+CMD [ "rm", "-rf", "~/.pm2"]
+CMD [ "pm2-runtime", "pm2.config.js"]
