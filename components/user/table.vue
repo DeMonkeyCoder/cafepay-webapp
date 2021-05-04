@@ -614,6 +614,10 @@ export default {
       })
     },
     paymentCheckout() {
+      if (this.settingAddressOnJoin) {
+        setTimeout(() => this.paymentCheckout(), 500)
+        return
+      }
       if (this.paymentMethod == 'cash') {
         this.setMethodPayment('cash')
       } else {
