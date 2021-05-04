@@ -58,4 +58,28 @@ export default function ({
 
 
   inject('api', api)
+
+  const nonBlockingApi = $axios.create()
+
+  nonBlockingApi.onRequest(req => {
+    req.headers.common['Authorization'] = `Token ${store.state.token}`
+  })
+
+
+  nonBlockingApi.onResponse(res => {
+  })
+
+  nonBlockingApi.onError(error => {
+    if (error.response) {
+      const code = parseInt(error.response && error.response.status)
+
+    } else {
+      console.log('error', error)
+      store.commit("errorMsg",
+      $nuxt.$i18n.$t('network_error')
+      )
+    }
+  })
+
+  inject('nonBlockingApi', nonBlockingApi)
 }

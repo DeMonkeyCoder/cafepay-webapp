@@ -410,7 +410,8 @@ export default {
       preorders: [{}],
       setMethodProccessing: false,
       //TODO: get bill preferred payment method from server
-      paymentMethod: (this.$i18n.locale == 'fa') ? 'online' : 'cash'
+      paymentMethod: (this.$i18n.locale == 'fa') ? 'online' : 'cash',
+      settingAddressOnJoin: false
     }
   },
   computed: {
@@ -494,24 +495,6 @@ export default {
 
     isAvailableAddress(address) {
       return !!this.cafe.delivery_regions.find(rp => rp.region.pk == address.region.pk)
-    },
-    submitAddress(){
-      this.$api({url: `/api/v1/user-profile/`, method: 'patch', data: {
-        address: this.address, }
-      })
-      .then(res => {
-         this.AddressModalActive = false
-             this.$store.dispatch('user/retrieve')
-              //for entering to table
-          this.toaster('آدرس با موفقیت ثبت شد', 'is-info', 'is-bottom')
-      })
-      
-      .catch(err => {
-        if (err.response) {
-           this.toaster('خطا در ثبت آدرس', 'is-danger', 'is-bottom')
-          console.log(err.response.data)
-        }
-      })
     },
 
     submitDescription(){
@@ -601,6 +584,35 @@ export default {
         preInvoiceAnime.play()
       }, 200)
     },
+    setActiveAddressOnJoin(){
+      return new Promise((resolve, reject) => {
+        if(
+          !this.settingAddressOnJoin
+          && this.table
+          && this.table.joinId
+          && !this.table.empty
+          && (this.tokenType == 'pre-order' || this.tokenType == 'delivery')
+          && this.delivery_method != 'pickup'
+          && this.user.active_address
+          && (
+            !this.table.address ||
+            (this.table.address.cloned_from != this.user.active_address)
+          )
+          && this.isAvailableAddress(this.user.active_address_obj)) {
+          this.settingAddressOnJoin = true
+          this.$nonBlockingApi
+            .patch(`/api/v1/join/${this.table.joinId}/set/user-profile-address/`, {
+              include_delivery_fee: true,
+              user_profile_address: this.user.active_address
+            }).then((res) => resolve(res))
+            .catch((err) => reject(err))
+            .finally(() => this.settingAddressOnJoin = false)
+        } else {
+          // no action needed
+          resolve(null)
+        }
+      })
+    },
     paymentCheckout() {
       if (this.paymentMethod == 'cash') {
         this.setMethodPayment('cash')
@@ -624,12 +636,7 @@ export default {
             })
             return
           }
-          this.$api
-          .patch(`/api/v1/join/${this.table.joinId}/set/user-profile-address/`, {
-            include_delivery_fee: true,
-            user_profile_address: this.user.active_address
-          })
-          .then(res => {
+          this.setActiveAddressOnJoin().then(res => {
             this.$store.dispatch('table/submitPayment', this.ordersToPayforServer)
           })
           .catch(err => {
@@ -676,7 +683,9 @@ export default {
       this.isTableOptionsModalActive = false
     },
   },
-  mounted() {},
+  mounted() {
+    this.setActiveAddressOnJoin()
+  },
   watch: {
     PaymentProgress: {
       immediate: true,
@@ -685,7 +694,9 @@ export default {
 
     user: {
       immediate: true,
+      deep: true,
       handler(val){
+        this.setActiveAddressOnJoin()
         this.address = val.address 
       }
     },
@@ -702,6 +713,7 @@ export default {
       deep: true,
       immediate: true,
       handler(val, oldValue) {
+        this.setActiveAddressOnJoin()
         if (val.paymentMethod == 'cash' && val.hasOnlinePayment && !this.setMethodProccessing) {
           console.log('online order ? ', val.hasOnlinePayment);
           this.proccessOrderForPayment()
