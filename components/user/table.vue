@@ -421,7 +421,7 @@ export default {
       if(!this.user.active_address) {
         return null
       }
-      let cafeRegion = this.cafe.delivery_regions.find(r => r.pk == this.user.active_address_obj.region.pk)
+      let cafeRegion = this.cafe.delivery_regions.find(rp => rp.region.pk == this.user.active_address_obj.region.pk)
       if(!cafeRegion) {
         return null
       }
@@ -493,7 +493,7 @@ export default {
     },
 
     isAvailableAddress(address) {
-      return !!this.cafe.delivery_regions.find(r => r.pk == address.region.pk)
+      return !!this.cafe.delivery_regions.find(rp => rp.region.pk == address.region.pk)
     },
     submitAddress(){
       this.$api({url: `/api/v1/user-profile/`, method: 'patch', data: {
