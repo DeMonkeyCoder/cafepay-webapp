@@ -91,6 +91,10 @@ export default {
    ** Plugins to load before mounting the App
    */
   plugins: [
+    {
+      src: '@/plugins/vuelayers.js',
+      ssr: false
+    },
     // "@/plugins/animeJs",
     {src: '~/plugins/gtm', mode: 'client'},
     {src: '~/plugins/onReload', mode: 'client'},

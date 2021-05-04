@@ -17,8 +17,8 @@
             placeholder="شهر خود را انتخاب کنید"
             icon="city-variant"
           >
-              <option v-for="(city, i) in cities" :key="i" :value="city.pk">{{city.name}}</option>
-        </b-select>
+            <option v-for="(city, i) in cities" :key="i" :value="city.pk">{{city.name}}</option>
+          </b-select>
         </b-field>
 
         <b-field label="منطقه (محله)">
@@ -45,7 +45,42 @@
             icon="map-marker-outline"
           ></b-input>
         </b-field>
-         
+         {{ mapCenter }}
+          <vl-map :load-tiles-while-animating="true" :load-tiles-while-interacting="true"
+                  data-projection="EPSG:4326" style="height: 400px">
+            <vl-view :zoom.sync="mapZoom" :center.sync="mapCenter" :rotation.sync="mapRotation"></vl-view>
+
+            <vl-geoloc @update:position="updateGeoPosition($event)">
+              <!-- <template slot-scope="geoloc">
+                <vl-feature v-if="geoloc.position" id="position-feature">
+                  <vl-geom-point :coordinates="mapCenter"></vl-geom-point>
+                  <vl-style-box>
+                    <vl-style-icon src="media/marker.png" :scale="0.4" :anchor="[0.5, 1]"></vl-style-icon>
+                  </vl-style-box>
+                </vl-feature>
+              </template> -->
+            </vl-geoloc>
+
+
+            <vl-layer-vector>
+              <vl-feature>
+                <vl-geom-point
+                  :coordinates="mapCenter" 
+                ></vl-geom-point>
+
+                <vl-style-box>
+                  <vl-style-circle :radius="20">
+                    <vl-style-fill color="white"></vl-style-fill>
+                    <vl-style-stroke color="red"></vl-style-stroke>
+                  </vl-style-circle>
+                </vl-style-box>
+              </vl-feature>
+            </vl-layer-vector>
+
+            <vl-layer-tile id="osm">
+              <vl-source-osm></vl-source-osm>
+            </vl-layer-tile>
+          </vl-map>
           <b-button :disabled="!addressLocal.region || !addressLocal.address" expanded @click="createAddress" 
           class="bcp-btn bcp-btn-large font-18 cp-b-margin-2x" type="is-info" :loading="globalLoading"
             >تایید آدرس</b-button>
@@ -71,6 +106,9 @@
     props: ['newAddressModal', 'address'],
     data() {
       return {
+        mapRotation: 0,
+        mapCenter: [52.53951505968019, 29.61462220649139],
+        mapZoom: 11,
         modalActive: false,
         cities: [],
         regionName: '',
@@ -86,6 +124,10 @@
     this.getCityList()
   },
   methods: {
+    updateGeoPosition(newPostiion) {
+      this.mapCenter = newPostiion
+      this.mapZoom = 17
+    },
     getCityList(){
     this.$api
       .get('api/v1/city/list/', {
