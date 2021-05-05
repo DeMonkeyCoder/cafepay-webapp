@@ -44,8 +44,6 @@
             icon="map-marker-outline"
           ></b-input>
         </b-field>
-        <!-- Just for making nuxt load the image -->
-        <img src="~/static/map-marker.png" style="display: none;"/>
           <vl-map :load-tiles-while-animating="true" :load-tiles-while-interacting="true" v-if="newAddressModalState == newAddressModalStateEnum.MAP"
                   data-projection="EPSG:4326" style="height: 55vh; max-width: 600px; margin: auto; margin-bottom: 10px;">
             <vl-view :zoom.sync="mapZoom" :center.sync="mapCenter" :rotation.sync="mapRotation"></vl-view>
@@ -69,7 +67,7 @@
                 ></vl-geom-point>
 
                 <vl-style-box>
-                  <vl-style-icon src="/_nuxt/static/map-marker.png" :scale="0.05" :anchor="[0.5, 0.65]"></vl-style-icon>
+                  <vl-style-icon src="/img/map-marker.png" :scale="0.05" :anchor="[0.5, 0.65]"></vl-style-icon>
                 </vl-style-box>
               </vl-feature>
             </vl-layer-vector>
