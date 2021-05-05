@@ -10,7 +10,7 @@
       <div class="modal-card" style="width: auto">
         <section class="modal-dialog cp-side-padding-2x cp-tb-padding">
 
-        <b-field label="شهر">
+        <!-- <b-field label="شهر">
           <b-select expanded
             v-model="addressLocal.city"
             class="cp-select cp-input-primary"
@@ -19,24 +19,23 @@
           >
             <option v-for="(city, i) in cities" :key="i" :value="city.pk">{{city.name}}</option>
           </b-select>
-        </b-field>
-
+        </b-field> -->
         <b-field label="منطقه (محله)">
           <b-autocomplete expanded
-            :disabled="!addressLocal.city"
+            :disabled="!addressLocal.city || newAddressModalState != newAddressModalStateEnum.MAP"
             v-model="regionName"
             :data="filteredRegions"
             field="name"
             :open-on-focus="true"
             class="cp-select cp-input-primary"
             placeholder="منطقه(محله) خود را انتخاب کنید"
-            @select="(region) => addressLocal.region = (region ? region.pk : null)"
+            @select="(region) => regionSelected(region)"
             icon="map-legend"
           >
           </b-autocomplete>
         </b-field>
 
-        <b-field label="آدرس دقیق">
+        <b-field label="آدرس دقیق" v-if="newAddressModalState == newAddressModalStateEnum.ADDRESS">
           <b-input
             v-model="addressLocal.address"
             maxlength="200" type="textarea"
@@ -45,9 +44,10 @@
             icon="map-marker-outline"
           ></b-input>
         </b-field>
-         {{ mapCenter }}
-          <vl-map :load-tiles-while-animating="true" :load-tiles-while-interacting="true"
-                  data-projection="EPSG:4326" style="height: 400px">
+        <!-- Just for making nuxt load the image -->
+        <img src="~/static/map-marker.png" style="display: none;"/>
+          <vl-map :load-tiles-while-animating="true" :load-tiles-while-interacting="true" v-if="newAddressModalState == newAddressModalStateEnum.MAP"
+                  data-projection="EPSG:4326" style="height: 55vh; max-width: 600px; margin: auto; margin-bottom: 10px;">
             <vl-view :zoom.sync="mapZoom" :center.sync="mapCenter" :rotation.sync="mapRotation"></vl-view>
 
             <vl-geoloc @update:position="updateGeoPosition($event)">
@@ -69,10 +69,7 @@
                 ></vl-geom-point>
 
                 <vl-style-box>
-                  <vl-style-circle :radius="20">
-                    <vl-style-fill color="white"></vl-style-fill>
-                    <vl-style-stroke color="red"></vl-style-stroke>
-                  </vl-style-circle>
+                  <vl-style-icon src="/_nuxt/static/map-marker.png" :scale="0.05" :anchor="[0.5, 0.65]"></vl-style-icon>
                 </vl-style-box>
               </vl-feature>
             </vl-layer-vector>
@@ -81,7 +78,11 @@
               <vl-source-osm></vl-source-osm>
             </vl-layer-tile>
           </vl-map>
-          <b-button :disabled="!addressLocal.region || !addressLocal.address" expanded @click="createAddress" 
+
+          <b-button v-if="newAddressModalState == newAddressModalStateEnum.MAP" :disabled="!addressLocal.region" expanded @click="newAddressModalState = newAddressModalStateEnum.ADDRESS" 
+          class="bcp-btn bcp-btn-large font-18 cp-b-margin-2x" type="is-info" :loading="globalLoading"
+            >تایید</b-button>
+          <b-button v-else :disabled="!addressLocal.region || !addressLocal.address" expanded @click="createAddress" 
           class="bcp-btn bcp-btn-large font-18 cp-b-margin-2x" type="is-info" :loading="globalLoading"
             >تایید آدرس</b-button>
  
@@ -94,8 +95,20 @@
 
 <script>
   import Vue from 'vue'
+  
+  const newAddressModalStateEnum = Object.freeze({
+    MAP: 1,
+    ADDRESS: 2,
+  })
+
   export default {
     computed: {
+      regions(){
+        if(!this.cities) {
+          return []
+        }
+        return this.cities.reduce((accumulator, currentValue) => accumulator.concat(currentValue.regions), [])
+      },
       currentCity(){
         return this.cities?.find(city => city.pk == this.addressLocal.city)
       },
@@ -106,9 +119,13 @@
     props: ['newAddressModal', 'address'],
     data() {
       return {
+        mapUnchanged: true,
+        newAddressModalStateEnum,
+        newAddressModalState: newAddressModalStateEnum.MAP,
         mapRotation: 0,
         mapCenter: [52.53951505968019, 29.61462220649139],
         mapZoom: 11,
+        locationSetByGeoPosition: false,
         modalActive: false,
         cities: [],
         regionName: '',
@@ -124,9 +141,19 @@
     this.getCityList()
   },
   methods: {
+    regionSelected(region) {
+      if(region) {
+        this.addressLocal.region = region.pk
+        this.mapCenter = [region.lon, region.lat]
+        this.mapZoom = 15.5
+      }
+    },
     updateGeoPosition(newPostiion) {
-      this.mapCenter = newPostiion
-      this.mapZoom = 17
+      if(!this.locationSetByGeoPosition) {
+        this.locationSetByGeoPosition = true
+        this.mapCenter = newPostiion
+        this.mapZoom = 16
+      }
     },
     getCityList(){
     this.$api
@@ -141,7 +168,12 @@
     createAddress(){
         let call = (this.address) ? 'put' : 'post'
         let url = (this.address) ? `api/v1/user-profile/address/${this.address.pk}/` : '/api/v1/user-profile/address/create/'
-        this.$api[call](url, {region: this.addressLocal.region, address: this.addressLocal.address})
+        this.$api[call](url, {
+          region: this.addressLocal.region,
+          address: this.addressLocal.address,
+          lon: this.mapCenter[0],
+          lat: this.mapCenter[1],
+        })
         .then(res => {
           let address = Object.assign({}, res.data)
           address.region = this.currentCity.regions.find(r => r.pk == address.region)
@@ -155,14 +187,37 @@
     }
   },
   watch: {
+    mapCenter(val) {
+      if(!this.regions) {
+        return
+      }
+      const dist = (x1, x2, y1, y2) => Math.sqrt( Math.pow((Number(x1)-Number(x2)), 2) + Math.pow((Number(y1)-Number(y2)), 2) )
+      let nearestRegion = this.regions[0]
+      this.regions.forEach((r) => {
+        if(dist(r.lon, val[0], r.lat, val[1]) < dist(nearestRegion.lon, val[0], nearestRegion.lat, val[1])) {
+          nearestRegion = r
+        }
+      })
+      console.log('nearest')
+      console.log(nearestRegion)
+      Vue.set(this, 'addressLocal', {
+        city: nearestRegion.city,
+        region: nearestRegion.pk,
+        address: this.addressLocal.address,
+      })
+      this.regionName = nearestRegion.name
+    },
     address(val) {
       if(val) {
+        this.mapUnchanged = false;
         Vue.set(this, 'addressLocal', {
           city: val.region.city.pk,
           region: val.region.pk,
           address: val.address
         })
+        this.mapCenter = [val.lon, val.lat]
       } else {
+        this.mapUnchanged = true;
         Vue.set(this, 'addressLocal', {
           city: 1,
           region: null,
@@ -179,7 +234,7 @@
     },
 
   },
-  }
+}
 </script>
 
 <style scoped>

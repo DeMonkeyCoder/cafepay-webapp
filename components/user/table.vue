@@ -411,7 +411,7 @@ export default {
       setMethodProccessing: false,
       //TODO: get bill preferred payment method from server
       paymentMethod: (this.$i18n.locale == 'fa') ? 'online' : 'cash',
-      settingAddressOnJoin: false
+      settingAddressOnJoinPromise: null
     }
   },
   computed: {
@@ -494,7 +494,7 @@ export default {
     },
 
     isAvailableAddress(address) {
-      return !!this.cafe.delivery_regions.find(rp => rp.region.pk == address.region.pk)
+      return !!this.cafe.delivery_regions?.find(rp => rp.region.pk == address.region.pk)
     },
 
     submitDescription(){
@@ -584,63 +584,91 @@ export default {
         preInvoiceAnime.play()
       }, 200)
     },
-    setActiveAddressOnJoin(){
-      return new Promise((resolve, reject) => {
-        if(
-          !this.settingAddressOnJoin
-          && this.table
-          && this.table.joinId
-          && !this.table.empty
-          && (this.tokenType == 'pre-order' || this.tokenType == 'delivery')
-          && this.delivery_method != 'pickup'
-          && this.user.active_address
-          && (
-            !this.table.address ||
-            (this.table.address.cloned_from != this.user.active_address)
-          )
-          && this.isAvailableAddress(this.user.active_address_obj)) {
-          this.settingAddressOnJoin = true
-          this.$nonBlockingApi
-            .patch(`/api/v1/join/${this.table.joinId}/set/user-profile-address/`, {
-              include_delivery_fee: true,
-              user_profile_address: this.user.active_address
-            }).then((res) => resolve(res))
-            .catch((err) => reject(err))
-            .finally(() => this.settingAddressOnJoin = false)
-        } else {
-          // no action needed
-          resolve(null)
-        }
-      })
+    setPickupOrActiveAddressOnJoin(){
+      console.log('hi0')
+      if(!this.settingAddressOnJoinPromise) {
+        console.log('hi1')
+        this.settingAddressOnJoinPromise = new Promise((resolve, reject) => {
+          if(this.table
+            && this.table.joinId
+            && !this.table.empty) {
+              console.log('hi2')
+              if(!(this.tokenType == 'pre-order' || this.tokenType == 'delivery')) {
+                resolve("no action needed")
+                return
+              }
+              console.log('hi3')
+              if(this.delivery_method != 'pickup') {
+                if(!this.user.active_address || !this.isAvailableAddress(this.user.active_address_obj)) {
+                  reject("invalid address")
+                  return
+                }
+                console.log('hi4')
+                if(!this.table.address ||
+                  (this.table.address.cloned_from != this.user.active_address)) {
+                  console.log('hi5')
+
+                  this.$nonBlockingApi
+                    .patch(`/api/v1/join/${this.table.joinId}/set/user-profile-address/`, {
+                      include_delivery_fee: true,
+                      user_profile_address: this.user.active_address
+                    }).then((res) => resolve(res))
+                    .catch((err) => reject(err))
+                } else {
+                  resolve("no action needed")
+                  return
+                }
+              } else {
+                if(this.table.address) {
+                  this.$nonBlockingApi
+                    .patch(`/api/v1/join/${this.table.joinId}/set/user-profile-address/`, {
+                      include_delivery_fee: false,
+                      user_profile_address: null
+                    }).then((res) => resolve(res))
+                    .catch((err) => reject(err))
+                } else {
+                  resolve("no action needed")
+                  return
+                }
+              }
+          } else {
+            reject("invalid data")
+            return
+          }
+        })
+        this.settingAddressOnJoinPromise
+          .finally(() => this.settingAddressOnJoinPromise = null)
+      }
+      return this.settingAddressOnJoinPromise
     },
     paymentCheckout() {
-      if (this.settingAddressOnJoin) {
-        setTimeout(() => this.paymentCheckout(), 500)
-        return
-      }
       if (this.paymentMethod == 'cash') {
         this.setMethodPayment('cash')
       } else {
-        if((this.tokenType == 'pre-order' || this.tokenType == 'delivery') && this.delivery_method == 'delivery') {
-          if(!this.user.active_address){
-            this.$buefy.toast.open({
-              duration: 3000,
-              message: 'لطفا آدرس را وارد کنید',
-              position: 'is-bottom',
-              type: 'is-danger'
-            })
-            return
+        if((this.tokenType == 'pre-order' || this.tokenType == 'delivery')) {
+          if(this.delivery_method == 'delivery') {
+            // delivery
+            if(!this.user.active_address){
+              this.$buefy.toast.open({
+                duration: 3000,
+                message: 'لطفا آدرس را وارد کنید',
+                position: 'is-bottom',
+                type: 'is-danger'
+              })
+              return
+            }
+            if(!this.isAvailableAddress(this.user.active_address_obj)) {
+              this.$buefy.toast.open({
+                duration: 3000,
+                message: 'آدرس انتخابی خارج از محدوده مجموعه می باشد',
+                position: 'is-bottom',
+                type: 'is-danger'
+              })
+              return
+            }
           }
-          if(!this.isAvailableAddress(this.user.active_address_obj)) {
-            this.$buefy.toast.open({
-              duration: 3000,
-              message: 'آدرس انتخابی خارج از محدوده مجموعه می باشد',
-              position: 'is-bottom',
-              type: 'is-danger'
-            })
-            return
-          }
-          this.setActiveAddressOnJoin().then(res => {
+          // delivery or pickup
+          this.setPickupOrActiveAddressOnJoin().then(res => {
             this.$store.dispatch('table/submitPayment', this.ordersToPayforServer)
           })
           .catch(err => {
@@ -650,6 +678,7 @@ export default {
             }
           })
         } else {
+          // normal
           this.$store.dispatch('table/submitPayment', this.ordersToPayforServer)
         }
       }
@@ -688,9 +717,12 @@ export default {
     },
   },
   mounted() {
-    this.setActiveAddressOnJoin()
+    this.setPickupOrActiveAddressOnJoin()
   },
   watch: {
+    delivery_method(){
+      this.setPickupOrActiveAddressOnJoin()
+    },
     PaymentProgress: {
       immediate: true,
       handler(val, old) {},
@@ -700,7 +732,7 @@ export default {
       immediate: true,
       deep: true,
       handler(val){
-        this.setActiveAddressOnJoin()
+        this.setPickupOrActiveAddressOnJoin()
         this.address = val.address 
       }
     },
@@ -717,7 +749,7 @@ export default {
       deep: true,
       immediate: true,
       handler(val, oldValue) {
-        this.setActiveAddressOnJoin()
+        this.setPickupOrActiveAddressOnJoin()
         if (val.paymentMethod == 'cash' && val.hasOnlinePayment && !this.setMethodProccessing) {
           console.log('online order ? ', val.hasOnlinePayment);
           this.proccessOrderForPayment()

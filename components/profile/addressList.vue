@@ -123,7 +123,7 @@ export default {
       this.changeActiveAddress(address)
     },
     isAvailableAddress(address) {
-      return !!this.cafe.delivery_regions.find(rp => rp.region.pk == address.region.pk)
+      return !!this.cafe.delivery_regions?.find(rp => rp.region.pk == address.region.pk)
     },
     changeActiveAddress(address){
       this.$api
