@@ -7,7 +7,7 @@ module.exports = {
             script          : "./node_modules/nuxt-start/bin/nuxt-start.js",
             exec_mode       : "cluster",
             watch           : false,
-            instances       : "3",
+            instances       : "2",
             merge_logs      : true,
             log_type        : "raw",
                 cwd: "./",
