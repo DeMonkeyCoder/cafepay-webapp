@@ -1,5 +1,5 @@
 export default ({ store }) => {
-  
+  let token = localStorage.getItem('token')
   if (localStorage.getItem("token") !== null) {
     const cookieValObject = {'token': `${token}`}
     this.$cookies.set('token', cookieValObject, {
