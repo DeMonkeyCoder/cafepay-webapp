@@ -116,6 +116,12 @@ export default {
    ** Nuxt.js modules
    */
   modules: [
+    // Simple usage
+    'cookie-universal-nuxt',
+
+    // With options
+    ['cookie-universal-nuxt', { alias: 'cookiz' }],
+    
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
