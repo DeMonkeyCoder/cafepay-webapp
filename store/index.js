@@ -98,10 +98,14 @@ export const mutations = {
   // },
   setToken(state, token) {
     state.token = token
-    localStorage.setItem('token', token)
+    const cookieValObject = {'token': `${token}`}
+    this.$cookies.set('token', cookieValObject, {
+      path: '/',
+      maxAge: 60 * 60 * 24 * 7
+    })
   },
   clearToken(state) {
-    localStorage.removeItem('token')
+    this.$cookies.remove('token')
     state.token = null
   },
   backToScan(state, flag){
