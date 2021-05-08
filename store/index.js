@@ -99,13 +99,13 @@ export const mutations = {
   setToken(state, token) {
     state.token = token
     const cookieValObject = {'token': `${token}`}
-    this.$cookies.set('token', cookieValObject, {
+    this.$cookies.set('CafepayWebappToken', cookieValObject, {
       path: '/',
       maxAge: 60 * 60 * 24 * 7
     })
   },
   clearToken(state) {
-    this.$cookies.remove('token')
+    this.$cookies.remove('CafepayWebappToken')
     state.token = null
   },
   backToScan(state, flag){
