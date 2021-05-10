@@ -1,8 +1,7 @@
 export default ({ app, store }) => {
-  
-  if (localStorage.getItem("token") !== null) {
-    let token = localStorage.getItem('token')
-    const cookieValObject = {'token': `${token}`}
+  let localStorageToken = localStorage.getItem("token");
+  if (!!localStorageToken && localStorageToken != 'null' && localStorageToken != 'undefined') {
+    const cookieValObject = {'token': `${localStorageToken}`}
     app.$cookies.set('CafepayWebappToken', cookieValObject, {
       path: '/',
       maxAge: 60 * 60 * 24 * 7

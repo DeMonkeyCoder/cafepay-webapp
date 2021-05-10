@@ -98,6 +98,7 @@ export const mutations = {
   // },
   setToken(state, token) {
     state.token = token
+    localStorage.setItem('token', token)
     const cookieValObject = {'token': `${token}`}
     this.$cookies.set('CafepayWebappToken', cookieValObject, {
       path: '/',
@@ -105,6 +106,7 @@ export const mutations = {
     })
   },
   clearToken(state) {
+    localStorage.removeItem('token')
     this.$cookies.remove('CafepayWebappToken')
     state.token = null
   },
