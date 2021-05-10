@@ -1,16 +1,16 @@
 export default ({ app, store }) => {
   
-  // if (localStorage.getItem("token") !== null) {
-  //   let token = localStorage.getItem('token')
-  //   const cookieValObject = {'token': `${token}`}
-  //   app.$cookies.set('CafepayWebappToken', cookieValObject, {
-  //     path: '/',
-  //     maxAge: 60 * 60 * 24 * 7
-  //   })
-  // }
+  if (localStorage.getItem("token") !== null) {
+    let token = localStorage.getItem('token')
+    const cookieValObject = {'token': `${token}`}
+    app.$cookies.set('CafepayWebappToken', cookieValObject, {
+      path: '/',
+      maxAge: 60 * 60 * 24 * 7
+    })
+  }
 
-  let token = app.$cookies.get('CafepayWebappToken').token
-  if (token != 'undefined' && token != 'null') store.commit('setToken', token)
+  let token = app.$cookies.get('CafepayWebappToken')
+  if (!!token) store.commit('setToken', token.token)
   
   // let tableToken = localStorage.getItem('tableToken')
   // if (tableToken != 'undefined' && tableToken != 'null') {
