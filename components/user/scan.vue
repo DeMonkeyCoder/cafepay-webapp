@@ -180,17 +180,29 @@ export default {
       this.tokenProccessor(token)
     },
 
-    tokenProccessor(token) {
-      if (typeof token == 'string') {
-        if (typeof token == 'string') {
-          if (token == 'https://cafepay.app/?1111') {
-            this.tableCode = '12345'
+    tokenProccessor(urlWithToken) {
+      if (typeof urlWithToken == 'string') {
+        // demo token
+        if (urlWithToken == 'https://cafepay.app/?1111') {
+          this.tableCode = '12345'
+        } else {
+          // get subdomain (will be 'cafepay' if running on original domain)
+          let subdomain = urlWithToken.split('//')[1].split('.')[0]
+          // check if we are not in localhost
+          let isCafepaySubDomain = urlWithToken.includes('cfpy.ir')
+                          || urlWithToken.includes('cafepay.app')
+          let isNotReservedSubDomain = !['m', 'cafepay', 'test', 't'].includes(subdomain)
+          if(isCafepaySubDomain && isNotReservedSubDomain) {
+            this.tableCode = subdomain
           } else {
-            this.tableCode = token.split('?token=')[1]
+            // will be undefined if no token is in query params
+            this.tableCode = urlWithToken.split('?token=')[1]
           }
         }
       }
-      this.dispatchSendCode()
+      if(this.tableCode) {
+        this.dispatchSendCode()
+      }
       
     },
 
@@ -288,11 +300,11 @@ export default {
     })
     qrAnimeObj.play()
 
-    if (this.$route.query.token) {
-      console.log('route', this.$route)
+    // if (this.$route.query.token) {
+    //   console.log('route', this.$route)
       // this.tableCode = this.$route.fullPath.split('?token=')[1]
-      this.tokenProccessor(this.$route.fullPath)
-    }
+    this.tokenProccessor(window.location.href)
+    // }
 
     // if user is redirected from link for menu-only there is no need for initial camera
     if (this.storeRedirect) {

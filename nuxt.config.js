@@ -6,7 +6,9 @@ let config = {
   CAFEPAY_WEBAPP_SOCKET_URL: process.env.CAFEPAY_WEBAPP_SOCKET_URL || 'wss://main.cafepay.app/',
   CAFEPAY_WEBAPP_DEFAULT_LOCALE: process.env.CAFEPAY_WEBAPP_DEFAULT_LOCALE || 'fa',
   CAFEPAY_WEBAPP_MEDIA_URL: process.env.CAFEPAY_WEBAPP_MEDIA_URL || 'https://main.cafepay.app/',
-  CAFEPAY_WEBAPP_SENTRY_DSN: process.env.NODE_ENV == 'production' ? "https://09f71ad330e5445eb46ec3081aa40f99@cafepay-dev.alimahdiyar.ir/4" : null
+  CAFEPAY_WEBAPP_SENTRY_DSN: process.env.NODE_ENV == 'production' ? "https://09f71ad330e5445eb46ec3081aa40f99@cafepay-dev.alimahdiyar.ir/4" : null,
+  CAFEPAY_WEBAPP_PWA_ICON: process.env.CAFEPAY_WEBAPP_PWA_ICON || '~/static/icon/cp512.png',
+  CAFEPAY_WEBAPP_PWA_NAME: process.env.CAFEPAY_WEBAPP_PWA_NAME || 'کافه‌پی'
 }
 
 //TODO: dynamically handle title and description by language
@@ -192,10 +194,10 @@ export default {
   pwa: {
     icon: {
       /* icon options */
-      source: '~/static/icon/cp512.png'
+      source: config.CAFEPAY_WEBAPP_PWA_ICON
     },
     manifest: {
-      name: 'کافه‌پی',
+      name: config.CAFEPAY_WEBAPP_PWA_NAME,
       lang: 'fa',
       display: 'standalone',
        theme_color: '#0073a0',
