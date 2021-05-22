@@ -4,7 +4,10 @@ export default ({ app, store }) => {
     const cookieValObject = {'token': `${localStorageToken}`}
     // Works client side only
     const getDomainName = function() {
-        let hostName = window.location.host;
+        let hostName = window.location.hostname;
+        if(hostName == 'localhost' || Number(hostName.split('.')[0]) != NaN) {
+          return hostName
+        }
         return hostName.substring(hostName.lastIndexOf(".", hostName.lastIndexOf(".") - 1) + 1);
     }
     app.$cookies.set('CafepayWebappToken', cookieValObject, {
