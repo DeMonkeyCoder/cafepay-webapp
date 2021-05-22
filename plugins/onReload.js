@@ -2,9 +2,15 @@ export default ({ app, store }) => {
   let localStorageToken = localStorage.getItem("token");
   if (!!localStorageToken && localStorageToken != 'null' && localStorageToken != 'undefined') {
     const cookieValObject = {'token': `${localStorageToken}`}
+    // Works client side only
+    const getDomainName = function() {
+        let hostName = window.location.host;
+        return hostName.substring(hostName.lastIndexOf(".", hostName.lastIndexOf(".") - 1) + 1);
+    }
     app.$cookies.set('CafepayWebappToken', cookieValObject, {
       path: '/',
-      maxAge: 60 * 60 * 24 * 7
+      maxAge: 60 * 60 * 24 * 7,
+      domain: getDomainName()
     })
   }
 

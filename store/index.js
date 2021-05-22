@@ -100,9 +100,15 @@ export const mutations = {
     state.token = token
     localStorage.setItem('token', token)
     const cookieValObject = {'token': `${token}`}
+    // Works client side only
+    const getDomainName = function() {
+        let hostName = window.location.host;
+        return hostName.substring(hostName.lastIndexOf(".", hostName.lastIndexOf(".") - 1) + 1);
+    }
     this.$cookies.set('CafepayWebappToken', cookieValObject, {
       path: '/',
-      maxAge: 60 * 60 * 24 * 7
+      maxAge: 60 * 60 * 24 * 7,
+      domain: getDomainName()
     })
   },
   clearToken(state) {
