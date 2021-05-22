@@ -202,10 +202,31 @@ export default {
       }
       if(this.tableCode) {
         this.dispatchSendCode()
+      } else {
+        // enable camera if token is not in sub domain or query params
+        this.doLaunchCamera()
       }
-      
     },
-
+    doLaunchCamera(){
+      // if navigator is supported for camera ask for permission if not just try to initial camera component
+      if (navigator.permissions) {
+        navigator.permissions
+          .query({ name: 'camera' })
+          .then((permissionStatus) => {
+            if (permissionStatus.state == 'prompt') {
+              if (!this.$route.query.token) {
+                this.accessCameraActive = true
+              }
+            } else if (permissionStatus.state == 'granted') {
+              this.launchCamera = true
+              // this.qrcodeComponentLaunch = null
+            }
+          })
+      } else {
+        this.launchCamera = true
+        // this.qrcodeComponentLaunch = null
+      }
+    },
     dispatchSendCode() {
       // u need to set the table too, for api link
       this.CustomLoader = true
@@ -255,6 +276,8 @@ export default {
                 position: 'is-top',
                 type: 'is-danger',
               })
+              // make sure user can use camera again
+              this.doLaunchCamera()
             }
             
             // it means user is not logged in and table requires it so we open login modal
@@ -316,25 +339,6 @@ export default {
       //   value: 'no-value',
       //   noninteraction: false, // Optional
       // })
-    } else {
-      // if navigator is supported for camera ask for permission if not just try to initial camera component
-      if (navigator.permissions) {
-        navigator.permissions
-          .query({ name: 'camera' })
-          .then((permissionStatus) => {
-            if (permissionStatus.state == 'prompt') {
-              if (!this.$route.query.token) {
-                this.accessCameraActive = true
-              }
-            } else if (permissionStatus.state == 'granted') {
-              this.launchCamera = true
-              // this.qrcodeComponentLaunch = null
-            }
-          })
-      } else {
-        this.launchCamera = true
-        // this.qrcodeComponentLaunch = null
-      } 
     }
   },
   computed: {
