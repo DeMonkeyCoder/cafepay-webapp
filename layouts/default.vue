@@ -81,7 +81,7 @@ export default {
           this.$store.dispatch('user/retrieve').then(res => {
             if (this.tableActive && res.first_name != '') this.$store.dispatch('sendCode', this.tableToken)
             if (this.$router.currentRoute.path == '/') {
-              if (res.first_name != '') this.$router.push(this.localePath('/user/home'))
+              // if (res.first_name != '') this.$router.push(this.localePath('/user/home'))
             }
           })
         } else {

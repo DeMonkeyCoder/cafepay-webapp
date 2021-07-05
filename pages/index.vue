@@ -193,58 +193,23 @@
       id="how-to-use"
       class="cp-tb-padding-4x cp-side-padding-4x"
     >
-      <h1 class="header">راهنمای سفارش‌دهی و پرداخت</h1>
+      <h1 class="header">به ما اعتماد کردند</h1>
+      <div style="display: flex; flex-wrap: wrap">
+        <div v-for="cafe in cafes" style="padding: 5px 5px 0px 5px;">
+          <a :href="'https://m.cafepay.app/user/home/?token=' + (cafe.preorder_token ? cafe.preorder_token.token : cafe.menu_only_token.token)" target="_blank">
+            <img :src="cafe.avatar" width="150" />
+          </a>
+        </div>
+      </div>
+    </section>
 
-      <div class="how-to-use-steps columns">
-        <div class="htus-container column is-6">
-          <div class="htus has-background-white normal-radius long-shadow">
-            <div class="htus-num">
-              <p class="primary">۱</p>
-            </div>
-            <div class="htus-content">
-              روی دکمه
-              <span class="htus-btn font-norm p-text">ورود - ثبت نام</span> کلیک
-              کن، شماره همراهت وارد و تجربه کافه پی رو شروع کن
-            </div>
-          </div>
-        </div>
-        <div class="htus-container column is-6">
-          <div class="htus has-background-white normal-radius long-shadow">
-            <div class="htus-num">
-              <p class="secondary">۲</p>
-            </div>
-            <div class="htus-content">
-              بارکد روی میز رو اسکن یا روی دکمه
-              <span class="htus-btn font-norm s-text">وارد کردن کد میز</span> کد
-              کلیک کن و کد مربوط به میز رو وارد کن
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="how-to-use-steps columns">
-        <div class="htus-container column is-6">
-          <div class="htus has-background-white normal-radius long-shadow">
-            <div class="htus-num">
-              <p class="purple">۳</p>
-            </div>
-            <div class="htus-content">
-              غذایی که میخوای رو از منو انتخاب کن و پرداختت رو همونجا آنلاین
-              انجام بده.
-            </div>
-          </div>
-        </div>
-        <div class="htus-container column is-6">
-          <div class="htus has-background-white normal-radius long-shadow">
-            <div class="htus-num">
-              <p class="green">۴</p>
-            </div>
-            <div class="htus-content">
-              بعد از اتمام غذا میتونی نظرت رو راجع به غذا و کافه یا رستورانی که
-              توش بودی بدی
-            </div>
-          </div>
-        </div>
-      </div>
+    <section
+      :dir="$dir()"
+      id="about-us"
+      class="about-us has-background-white cp-tb-padding-4x cp-side-padding-4x"
+    >
+      <h1 class="header">همکاران ما</h1>
+
     </section>
 
     <section
@@ -409,6 +374,402 @@ import mobilebc from '~/assets/img/background/320-3.jpg'
 export default {
   data() {
     return {
+      cafes: [{
+            "pk": 15,
+            "name": "کافه دمو1",
+            "description": "",
+            "location": null,
+            "address": "شیراز، کارخانه نوآوری",
+            "is_closed": false,
+            "is_onsite": false,
+            "payment_first": false,
+            "payment_only": false,
+            "menu_only_token": {
+                "pk": 65,
+                "type": "0",
+                "status": "0",
+                "token": "demo1",
+                "has_delivery": false
+            },
+            "preorder_token": null,
+            "short_description": null,
+            "mean_ready_duration": "00:35:00",
+            "header_image": null,
+            "has_delivery": false,
+            "overall_rating": {
+                "rate": 0.0,
+                "count": 4
+            },
+            "avatar": null,
+            "shop_images": []
+        },
+        {
+            "pk": 33,
+            "name": "بِتُــن",
+            "description": "café,bakery",
+            "location": "29.653280080420842,52.485361186981386",
+            "address": "‏‎قصردشـت نبـش کوچه ۹۹",
+            "is_closed": false,
+            "is_onsite": true,
+            "payment_first": false,
+            "payment_only": false,
+            "menu_only_token": {
+                "pk": 1183,
+                "type": "0",
+                "status": "0",
+                "token": "betoncafe",
+                "has_delivery": false
+            },
+            "preorder_token": null,
+            "short_description": null,
+            "mean_ready_duration": "00:35:00",
+            "header_image": "http://main.cafepay.app/media/betonheader_RvAp3eO.jpg",
+            "has_delivery": false,
+            "overall_rating": {
+                "rate": 0.0,
+                "count": 75
+            },
+            "avatar": "http://main.cafepay.app/media/beton.jpg",
+            "shop_images": [
+                {
+                    "pk": 43,
+                    "is_avatar": true,
+                    "image": "http://main.cafepay.app/media/beton.jpg",
+                    "is_header": false,
+                    "is_qr": false
+                },
+                {
+                    "pk": 44,
+                    "is_avatar": false,
+                    "image": "http://main.cafepay.app/media/betonheader_RvAp3eO.jpg",
+                    "is_header": true,
+                    "is_qr": false
+                }
+            ]
+        },
+        {
+            "pk": 9,
+            "name": "ساندویچ 11:11",
+            "description": "",
+            "location": "0.07141111432403538,-0.08068084716796875",
+            "address": "شیراز،خيابان خاكشناسی،روبه روی كوچه١١",
+            "is_closed": false,
+            "is_onsite": false,
+            "payment_first": false,
+            "payment_only": false,
+            "menu_only_token": {
+                "pk": 57,
+                "type": "0",
+                "status": "0",
+                "token": "11.11sandwiches",
+                "has_delivery": false
+            },
+            "preorder_token": null,
+            "short_description": null,
+            "mean_ready_duration": "00:35:00",
+            "header_image": null,
+            "has_delivery": false,
+            "overall_rating": {
+                "rate": 0.0,
+                "count": 25
+            },
+            "avatar": "http://main.cafepay.app/media/101294842_2269206646707794_6720626191826419712_n.jpg",
+            "shop_images": [
+                {
+                    "pk": 13,
+                    "is_avatar": true,
+                    "image": "http://main.cafepay.app/media/101294842_2269206646707794_6720626191826419712_n.jpg",
+                    "is_header": false,
+                    "is_qr": false
+                }
+            ]
+        },
+        {
+            "pk": 10,
+            "name": "کافه رستوران ژو",
+            "description": "",
+            "location": null,
+            "address": "ستارخان از سمت فلکه سنگی به سمت ستارخان بعد از مجتمع تجاری هامون مابین کوچه 6وکوچه8 کافه رستوران ژو",
+            "is_closed": false,
+            "is_onsite": false,
+            "payment_first": false,
+            "payment_only": false,
+            "menu_only_token": {
+                "pk": 59,
+                "type": "0",
+                "status": "0",
+                "token": "zhoo_cafe_restaurant",
+                "has_delivery": false
+            },
+            "preorder_token": null,
+            "short_description": null,
+            "mean_ready_duration": "00:35:00",
+            "header_image": null,
+            "has_delivery": false,
+            "overall_rating": {
+                "rate": 0.0,
+                "count": 37
+            },
+            "avatar": "http://main.cafepay.app/media/49541064_229809951231060_311009405220945920_n.jpg",
+            "shop_images": [
+                {
+                    "pk": 14,
+                    "is_avatar": true,
+                    "image": "http://main.cafepay.app/media/49541064_229809951231060_311009405220945920_n.jpg",
+                    "is_header": false,
+                    "is_qr": false
+                }
+            ]
+        },
+        {
+            "pk": 11,
+            "name": "ولینگتون",
+            "description": "",
+            "location": null,
+            "address": "قدوسی غربی, بين كوچه ١٣ و ١٥",
+            "is_closed": false,
+            "is_onsite": false,
+            "payment_first": false,
+            "payment_only": false,
+            "menu_only_token": {
+                "pk": 60,
+                "type": "0",
+                "status": "0",
+                "token": "wellington_c.r",
+                "has_delivery": false
+            },
+            "preorder_token": null,
+            "short_description": null,
+            "mean_ready_duration": "00:35:00",
+            "header_image": null,
+            "has_delivery": false,
+            "overall_rating": {
+                "rate": 0.0,
+                "count": 23
+            },
+            "avatar": "http://main.cafepay.app/media/73175801_589589488284858_702378116701487104_n.jpg",
+            "shop_images": [
+                {
+                    "pk": 15,
+                    "is_avatar": true,
+                    "image": "http://main.cafepay.app/media/73175801_589589488284858_702378116701487104_n.jpg",
+                    "is_header": false,
+                    "is_qr": false
+                }
+            ]
+        },
+        {
+            "pk": 14,
+            "name": "فست فود رایز",
+            "description": "Rise from the ashes",
+            "location": "29.584803080450147,52.47018814086914",
+            "address": "بلوار جمهوری، بین کوچه ی ۸ و ۱۰، فست فود رایز",
+            "is_closed": false,
+            "is_onsite": false,
+            "payment_first": false,
+            "payment_only": false,
+            "menu_only_token": {
+                "pk": 62,
+                "type": "0",
+                "status": "0",
+                "token": "rise.fastfood",
+                "has_delivery": false
+            },
+            "preorder_token": null,
+            "short_description": null,
+            "mean_ready_duration": "00:35:00",
+            "header_image": null,
+            "has_delivery": false,
+            "overall_rating": {
+                "rate": 0.0,
+                "count": 60
+            },
+            "avatar": "http://main.cafepay.app/media/24177245_164874767452178_7663759464809365504_n.jpg",
+            "shop_images": [
+                {
+                    "pk": 18,
+                    "is_avatar": true,
+                    "image": "http://main.cafepay.app/media/24177245_164874767452178_7663759464809365504_n.jpg",
+                    "is_header": false,
+                    "is_qr": false
+                }
+            ]
+        },
+        {
+            "pk": 26,
+            "name": "کافه 404",
+            "description": "Be fresh... 💖",
+            "location": "0.01407623276856043,-0.08068084716796875",
+            "address": "شیراز - بلوار شهید کسائی - نبش کوچه 10",
+            "is_closed": false,
+            "is_onsite": false,
+            "payment_first": false,
+            "payment_only": false,
+            "menu_only_token": {
+                "pk": 586,
+                "type": "0",
+                "status": "0",
+                "token": "533603200880",
+                "has_delivery": false
+            },
+            "preorder_token": {
+                "pk": 580,
+                "type": "2",
+                "status": "0",
+                "token": "404.cafebar",
+                "has_delivery": false
+            },
+            "short_description": "𝐵𝑒 𝐹𝓇𝑒𝓈𝒽... 💖",
+            "mean_ready_duration": "00:35:00",
+            "header_image": "http://main.cafepay.app/media/404header.jpg",
+            "has_delivery": false,
+            "overall_rating": {
+                "rate": 0.0,
+                "count": 82
+            },
+            "avatar": "http://main.cafepay.app/media/404.jpg",
+            "shop_images": [
+                {
+                    "pk": 25,
+                    "is_avatar": true,
+                    "image": "http://main.cafepay.app/media/404.jpg",
+                    "is_header": false,
+                    "is_qr": false
+                },
+                {
+                    "pk": 26,
+                    "is_avatar": false,
+                    "image": "http://main.cafepay.app/media/404header.jpg",
+                    "is_header": true,
+                    "is_qr": false
+                }
+            ]
+        },
+        {
+            "pk": 27,
+            "name": "کافه رستوران استریت لانژ",
+            "description": "Since 1979",
+            "location": "0.01029968256171454,-0.08068084716796875",
+            "address": "معالی آباد، پزشکان",
+            "is_closed": false,
+            "is_onsite": false,
+            "payment_first": false,
+            "payment_only": false,
+            "menu_only_token": {
+                "pk": 592,
+                "type": "0",
+                "status": "0",
+                "token": "9f2aa817-1be3-44a7-bfa7-5a9710fab21a",
+                "has_delivery": false
+            },
+            "preorder_token": {
+                "pk": 591,
+                "type": "2",
+                "status": "0",
+                "token": "street.lounge",
+                "has_delivery": false
+            },
+            "short_description": "Since 1979",
+            "mean_ready_duration": "00:35:00",
+            "header_image": null,
+            "has_delivery": false,
+            "overall_rating": {
+                "rate": 0.0,
+                "count": 16
+            },
+            "avatar": "http://main.cafepay.app/media/lounge.jpg",
+            "shop_images": [
+                {
+                    "pk": 27,
+                    "is_avatar": true,
+                    "image": "http://main.cafepay.app/media/lounge.jpg",
+                    "is_header": false,
+                    "is_qr": false
+                }
+            ]
+        },
+        {
+            "pk": 16,
+            "name": "کافه پازل",
+            "description": "مجموعه کافه، بازی های فکری و گالری هنری☕🎲🎨",
+            "location": "-0.07329938796474668,-0.08068084716796875",
+            "address": "قدوسی شرقی، نبش کوچه ۶",
+            "is_closed": false,
+            "is_onsite": true,
+            "payment_first": false,
+            "payment_only": false,
+            "menu_only_token": {
+                "pk": 66,
+                "type": "0",
+                "status": "0",
+                "token": "cafe_puzzle",
+                "has_delivery": false
+            },
+            "preorder_token": null,
+            "short_description": null,
+            "mean_ready_duration": "00:35:00",
+            "header_image": null,
+            "has_delivery": false,
+            "overall_rating": {
+                "rate": 0.0,
+                "count": 84
+            },
+            "avatar": "http://main.cafepay.app/media/92700170_984544745275429_4700941245634052096_n.jpg",
+            "shop_images": [
+                {
+                    "pk": 19,
+                    "is_avatar": true,
+                    "image": "http://main.cafepay.app/media/92700170_984544745275429_4700941245634052096_n.jpg",
+                    "is_header": false,
+                    "is_qr": false
+                }
+            ]
+        },
+        {
+            "pk": 32,
+            "name": "کافه گالری مازو",
+            "description": "کافه گالری مازو",
+            "location": "29.625595800296892,52.50228480753459",
+            "address": "📍خیابان عفیف آباد بین کوچه 18 و 20 روبروی مجتمع سپهر",
+            "is_closed": false,
+            "is_onsite": false,
+            "payment_first": false,
+            "payment_only": false,
+            "menu_only_token": {
+                "pk": 1161,
+                "type": "0",
+                "status": "0",
+                "token": "mazzo__cafe",
+                "has_delivery": false
+            },
+            "preorder_token": null,
+            "short_description": null,
+            "mean_ready_duration": "00:35:00",
+            "header_image": "http://main.cafepay.app/media/Screenshot_from_2021-02-01_02-33-22.png",
+            "has_delivery": false,
+            "overall_rating": {
+                "rate": 0.0,
+                "count": 52
+            },
+            "avatar": "http://main.cafepay.app/media/mazzo.jpg",
+            "shop_images": [
+                {
+                    "pk": 41,
+                    "is_avatar": true,
+                    "image": "http://main.cafepay.app/media/mazzo.jpg",
+                    "is_header": false,
+                    "is_qr": false
+                },
+                {
+                    "pk": 42,
+                    "is_avatar": false,
+                    "image": "http://main.cafepay.app/media/Screenshot_from_2021-02-01_02-33-22.png",
+                    "is_header": true,
+                    "is_qr": false
+                }
+            ]
+        }
+      ],
       name: 'کافه پِی',
       logo,
       state: 'intro',
@@ -545,12 +906,6 @@ export default {
         )
         this.globalLoading = false
       }, 1500)
-    }
-  },
-  created() {
-    if (process.client) {
-    let w = window.innerWidth
-    if (w < 600) this.$router.push(this.localePath('/user/home'))
     }
   },
   mounted() {
