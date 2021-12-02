@@ -144,7 +144,7 @@ export default {
       try {
       let data = await this.$axios({
         method: 'get',
-        url: `api/v1/cafe/${this.cafe.pk}/post/list/`
+        url: `v1/v1/cafe/${this.cafe.pk}/post/list/`
       })
       this.postsTest = data.data
       for (const post of postsTest) {
