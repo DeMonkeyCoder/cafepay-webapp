@@ -309,7 +309,7 @@ export const actions = {
 
   setPaymentMethod(context, data){
     return new Promise((resolve, reject) => {
-      this.$api.$post(`/api/v1/cafe/${context.state.cafe.pk}/pbr/payment/method/`, {
+      this.$api.$post(`/v1/cafe/${context.state.cafe.pk}/pbr/payment/method/`, {
           pbr_payment_methods: data
         })
         .then(res => {
@@ -332,7 +332,7 @@ export const actions = {
 
     // context.commit('clearWishToPay')
     try {
-      let data = await this.$api.$post(`/api/v1/pbr/session/create/`, {
+      let data = await this.$api.$post(`/v1/pbr/session/create/`, {
         payments
       })
       context.commit('clearWishToPay')
@@ -348,7 +348,7 @@ export const actions = {
   },
   async paymentMake(context, id) {
     try {
-      let data = await this.$api.$get(`/api/v1/payment/make/${id}/`)
+      let data = await this.$api.$get(`/v1/payment/make/${id}/`)
       window.location = data.redirect_to
       // this.app.router.push('/paymentResult')
     } catch (err) {

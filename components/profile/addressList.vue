@@ -127,7 +127,7 @@ export default {
     },
     changeActiveAddress(address){
       this.$api
-        .patch('/api/v1/user-profile/', {
+        .patch('/v1/user-profile/', {
           active_address: address.pk
         })
         .then(res => {

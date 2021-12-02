@@ -89,7 +89,7 @@ export const actions = {
   getOrderHistory(context , next) {
     return new Promise((resolve, reject) => {
       let url;
-      url = (next) ? context.state.history.next.split('cafepay.app')[1] : '/api/v1/user-profile/orders/history/'
+      url = (next) ? context.state.history.next.split('cafepay.app')[1] : '/v1/user-profile/orders/history/'
       this.$api.$get(url, {
           params: {}
         }).then(res => {
@@ -111,7 +111,7 @@ export const actions = {
   retrieve(context) {
     return new Promise((resolve, reject) => {
 
-      this.$api.$get('/api/v1/user-profile/', {
+      this.$api.$get('/v1/user-profile/', {
           params: {}
         }).then(res => {
           context.commit('set', res)

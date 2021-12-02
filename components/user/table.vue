@@ -502,7 +502,7 @@ export default {
         return
       }
       this.$api
-      .put(`/api/v1/join/${this.table.joinId}/set/description/`, {
+      .put(`/v1/join/${this.table.joinId}/set/description/`, {
         description: this.description,
       })
       .then(res => {
@@ -609,7 +609,7 @@ export default {
                   console.log('hi5')
 
                   this.$nonBlockingApi
-                    .patch(`/api/v1/join/${this.table.joinId}/set/user-profile-address/`, {
+                    .patch(`/v1/join/${this.table.joinId}/set/user-profile-address/`, {
                       include_delivery_fee: true,
                       user_profile_address: this.user.active_address
                     }).then((res) => resolve(res))
@@ -621,7 +621,7 @@ export default {
               } else {
                 if(this.table.address) {
                   this.$nonBlockingApi
-                    .patch(`/api/v1/join/${this.table.joinId}/set/user-profile-address/`, {
+                    .patch(`/v1/join/${this.table.joinId}/set/user-profile-address/`, {
                       include_delivery_fee: false,
                       user_profile_address: null
                     }).then((res) => resolve(res))

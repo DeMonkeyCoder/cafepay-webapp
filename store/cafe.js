@@ -277,7 +277,7 @@ export const mutations = {
 export const actions = {
   async retrieveMenu(context) {
     try {
-      let data = await this.$axios.$get(`/api/v1/cafe/${context.state.pk}/category-based-menu/active/`, {
+      let data = await this.$axios.$get(`/v1/cafe/${context.state.pk}/category-based-menu/active/`, {
         // params: {},
         // headers: {
         //   'Authorization': 'Token ' + context.rootState.token,
@@ -302,7 +302,7 @@ export const actions = {
   },
     async retreiveList(context) {
       try {
-        let data = await this.$axios.$get(`/api/v1/cafe/list/`, {
+        let data = await this.$axios.$get(`/v1/cafe/list/`, {
         })
         context.commit('setList', data)
       } catch (err) {

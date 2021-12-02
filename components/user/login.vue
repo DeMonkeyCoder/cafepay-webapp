@@ -238,7 +238,7 @@ export default {
     },
     checkCode() {
       this.$axios
-        .post('/api/v1/user-profile/auth-token/', {
+        .post('/v1/user-profile/auth-token/', {
           phone_number: this.convertPersian(this.phone_number),
           code: this.convertPersian(this.user_code)
         })
@@ -273,7 +273,7 @@ export default {
         // now we set token safely
         this.$store.commit('setToken', this.tempToken)
         this.$api
-          .put('/api/v1/user-profile/', {
+          .put('/v1/user-profile/', {
             first_name: this.first_name,
           })
           .then(res => {

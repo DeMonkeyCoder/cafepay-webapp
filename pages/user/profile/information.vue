@@ -205,7 +205,7 @@ export default {
     },
     updateInformation() {
       this.$api
-        .put('/api/v1/user-profile/', this.userLocal)
+        .put('/v1/user-profile/', this.userLocal)
         .then(res => {
               this.$store.commit('user/set', res.data)
             

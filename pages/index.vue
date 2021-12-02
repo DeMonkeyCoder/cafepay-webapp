@@ -832,7 +832,7 @@ export default {
     // },
     // checkCode() {
     //   this.$axios
-    //     .post('/api/v1/user-profile/auth-token/', {
+    //     .post('/v1/user-profile/auth-token/', {
     //       phone_number: this.phone_number,
     //       code: this.user_code
     //     })
@@ -866,7 +866,7 @@ export default {
 
     //   if (this.first_name != '' && this.last_name != '') {
     //     this.$api
-    //       .put('/api/v1/user-profile/', {
+    //       .put('/v1/user-profile/', {
     //         first_name: this.first_name,
     //         last_name: this.last_name
     //       })
