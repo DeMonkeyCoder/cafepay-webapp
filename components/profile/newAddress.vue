@@ -175,7 +175,7 @@
     },
     createAddress(){
         let call = (this.address) ? 'put' : 'post'
-        let url = (this.address) ? `v1/v1/user-profile/address/${this.address.pk}/` : '/v1/user-profile/address/create/'
+        let url = (this.address) ? `v1/user-profile/address/${this.address.pk}/` : '/v1/user-profile/address/create/'
         this.$api[call](url, {
           region: this.addressLocal.region,
           address: this.addressLocal.address,

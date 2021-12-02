@@ -208,14 +208,14 @@ export const actions = {
           root: true
         })
         axios.all([
-            axios.post(context.$config.baseUrl + `v1/v1/table/${context.state.token}/products/bulk/post/`, {
+            axios.post(context.$config.baseUrl + `v1/table/${context.state.token}/products/bulk/post/`, {
               table_products: req.add
             }, {
               headers: {
                 'Authorization': 'Token ' + context.rootState.token,
               }
             }, ),
-            axios.post(context.$config.baseUrl + `v1/v1/table/${context.state.token}/products/bulk/delete/`, {
+            axios.post(context.$config.baseUrl + `v1/table/${context.state.token}/products/bulk/delete/`, {
               table_products: req.del
             }, {
               headers: {
@@ -260,7 +260,7 @@ export const actions = {
         let method = (req.state == 'addition') ? 'post' : 'delete'
         let table_products = (method == 'post') ? req.add : req.del
 
-        this.$api.$post(`v1/v1/table/${context.state.token}/products/bulk/${method}/`, {
+        this.$api.$post(`v1/table/${context.state.token}/products/bulk/${method}/`, {
             table_products
           })
           .then(res => {

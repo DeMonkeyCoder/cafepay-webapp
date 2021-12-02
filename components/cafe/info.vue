@@ -130,7 +130,7 @@ export default {
       try {
       let data = await this.$axios({
         method: 'get',
-        url: `v1/v1/cafe/${this.cafe.pk}/basic/info/`,
+        url: `v1/cafe/${this.cafe.pk}/basic/info/`,
       })
       // data.data.location = `${this.addressInfo.location_x},${this.addressInfo.location_y}`
       this.info = data.data

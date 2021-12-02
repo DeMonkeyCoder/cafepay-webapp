@@ -159,7 +159,7 @@ export default {
       this.newAddressModal = true
     },
     deleteAddress(pk){
-      this.$api.delete(`v1/v1/user-profile/address/${pk}/`)
+      this.$api.delete(`v1/user-profile/address/${pk}/`)
       .then(res=>{
         this.$store.dispatch('user/retrieve')
         this.$refs.dropdown.toggle()
