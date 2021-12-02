@@ -191,6 +191,7 @@ export default {
           // check if we are not in localhost
           let isCafepaySubDomain = urlWithToken.includes('cfpy.ir')
                           || urlWithToken.includes('cafepay.app')
+                          || urlWithToken.includes('cafehedayat.com')
           let isNotReservedSubDomain = !['m', 'cafepay', 'test', 't', 'cfpy'].includes(subdomain)
           if(isCafepaySubDomain && isNotReservedSubDomain) {
             this.tableCode = subdomain
