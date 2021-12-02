@@ -165,7 +165,7 @@
     },
     getCityList(){
     this.$api
-      .get('api/v1/city/list/', {
+      .get('v1/city/list/', {
         params: {},
       })
       .then(res => {

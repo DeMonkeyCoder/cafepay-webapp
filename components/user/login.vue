@@ -208,7 +208,7 @@ export default {
       let validation = this.$i18n.locale == 'fa' ? /^(\0|0)?9\d{9}$/g : /^(\+\d{1,2}\s?)?1?\-?\.?\s?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/g
       if (phone_numberEn.match(validation)) {
         this.$axios
-          .post('api/v1/user-profile/send-code/', {
+          .post('v1/user-profile/send-code/', {
             phone_number: phone_numberEn
           })
           .then(res => {

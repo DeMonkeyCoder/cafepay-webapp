@@ -804,7 +804,7 @@ export default {
     //   let validation = /^(\0|0)?9\d{9}$/g
     //   if (this.phone_number.match(validation)) {
     //     this.$axios
-    //       .post('api/v1/user-profile/send-code/', {
+    //       .post('v1/user-profile/send-code/', {
     //         phone_number: this.phone_number
     //       })
     //       .then(res => {

@@ -92,7 +92,7 @@
         }
       }
       // getMenu(){
-      //   this.$axios.get('api/v1/cafe/' + this.cafeId + '/category-product-menu/active/',
+      //   this.$axios.get('v1/cafe/' + this.cafeId + '/category-product-menu/active/',
       //   { params: {}, headers: { 'Authorization': 'Token ' + '4a195a23fd29c57d4200d7eebc51644278a68eef' } })
       //   .then(res => {
       //     console.log('cafe menu', res.data);

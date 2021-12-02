@@ -168,7 +168,7 @@ export const actions = {
         console.log('api type', api);
         // u need to set the table too, for api link
         this[api]
-          .get('api/v1/table-token/' + data.tableToken + '/cafe-info/', {
+          .get('v1/table-token/' + data.tableToken + '/cafe-info/', {
             params: {},
             // headers: { Authorization: 'Token ' + this.token }
           })
