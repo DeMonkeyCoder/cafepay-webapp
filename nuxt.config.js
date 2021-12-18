@@ -131,7 +131,7 @@ export default {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
-    'nuxt-buefy',
+    ['nuxt-buefy', { materialDesignIcons: false }],
     ['nuxt-i18n', {
       seo: true,
       locales: [
