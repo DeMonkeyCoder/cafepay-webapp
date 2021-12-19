@@ -7,7 +7,7 @@ let config = {
   CAFEPAY_WEBAPP_DEFAULT_LOCALE: process.env.CAFEPAY_WEBAPP_DEFAULT_LOCALE || 'fa',
   CAFEPAY_WEBAPP_MEDIA_URL: process.env.CAFEPAY_WEBAPP_MEDIA_URL || 'https://main.cafepay.app/',
   CAFEPAY_WEBAPP_SENTRY_DSN: process.env.NODE_ENV == 'production' ? "https://0e3dc9e740b240eda1c9f92e29fe1007@sntr.alimahdiyar.ir/11" : null,
-  CAFEPAY_WEBAPP_PWA_ICON: process.env.CAFEPAY_WEBAPP_PWA_ICON || '~/static/icon/cp512.png',
+  CAFEPAY_WEBAPP_PWA_ICON: process.env.CAFEPAY_WEBAPP_PWA_ICON || '~/static/icon/512.png',
   CAFEPAY_WEBAPP_PWA_NAME: process.env.CAFEPAY_WEBAPP_PWA_NAME || 'کافه‌پی'
 }
 
@@ -53,7 +53,7 @@ export default {
     link: [{
         rel: 'icon',
         type: 'image/x-icon',
-        href: '/icon/cp32.png?v2'
+        href: '/icon/32.png?v2'
       },
       {
         rel: 'stylesheet',
