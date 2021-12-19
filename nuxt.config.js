@@ -116,7 +116,9 @@ export default {
   ],
 
   // Modules for dev and build (recommended) (https://go.nuxtjs.dev/config-modules)
-  buildModules: [],
+  buildModules: [
+    '@nuxtjs/pwa',
+  ],
 
   /*
    ** Nuxt.js modules
@@ -130,7 +132,6 @@ export default {
     
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
-    '@nuxtjs/pwa',
     ['nuxt-buefy', { materialDesignIcons: false }],
     ['nuxt-i18n', {
       seo: true,
@@ -198,6 +199,7 @@ export default {
     },
     manifest: {
       name: config.CAFEPAY_WEBAPP_PWA_NAME,
+      short_name: config.CAFEPAY_WEBAPP_PWA_NAME,
       lang: 'fa',
       display: 'standalone',
        theme_color: '#0073a0',
