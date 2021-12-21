@@ -378,6 +378,41 @@
         </div>
       </div>
     </div>
+
+    <b-modal
+      class="simple-action-modal login-modal"      :active.sync="paymentGatewayWarningModal"
+      has-modal-card
+      :can-cancel="true"
+    >
+      <div class="modal-card" style="width: auto; max-width: 400px; margin: auto;">
+        <section class="intro-state center-align modal-dialog">
+          <p class="login-title" style="margin: 0px 5px;">توجه!</p>
+          <p style="padding: 10px 5px;">
+            لطفا پس از انجام پرداخت و مشاهده فاکتور از درگاه، حتما کلید
+            <span style="font-weight: bold!important">{{ paymentGatewayReturnToSiteText }}</span>
+            را فشار دهید تا سیستم کافه پی از انجام شدن پرداخت مطلع گردد.
+          </p>
+          <p style="text-align: right; padding: 10px;">
+            <b-checkbox
+              :value="dontShowPaymentGatewayWarning"
+              @input="setDontShowPaymentGatewayWarning"
+            size="is-large" type="is-info"
+              >دیگر این پیغام را نمایش نده</b-checkbox
+            >
+          </p>
+          <!-- <img src="@/assets/img/camera-guide.png" alt="" /> -->
+        </section>
+
+        <section class="modal-caption"></section>
+
+        <section class="modal-action">
+          <!-- <button class="button ma-child is-light" type="button" @click="closeModal(false)">خیر</button> -->
+          <b-button class="ma-child" type="is-info" @click="submitOnlinePayment(true)"
+            >تایید</b-button
+          >
+        </section>
+      </div>
+    </b-modal>
     <address-list :tableMode="true" @closeModal="AddressModalActive = false" :addressListModal="AddressModalActive" />
   </div>
 </template>
@@ -393,6 +428,9 @@ export default {
   data() {
     return {
       key: 1,
+      dontShowPaymentGatewayWarning: false,
+      paymentGatewayWarningModal: false,
+      paymentGatewayReturnToSiteText: 'تکمیل پرداخت',
       addressListModal: false,
       delivery_method: null,
       isTableOptionsModalActive: false,
@@ -486,6 +524,10 @@ export default {
     // }
   },
   methods: {
+    setDontShowPaymentGatewayWarning(newValue) {
+      localStorage.setItem('dontShowPaymentGatewayWarning', newValue);
+      this.dontShowPaymentGatewayWarning = newValue
+    },
     openDescriptionModal(){
       this.descriptionModalActive = true
       setTimeout(() => {
@@ -669,7 +711,7 @@ export default {
           }
           // delivery or pickup
           this.setPickupOrActiveAddressOnJoin().then(res => {
-            this.$store.dispatch('table/submitPayment', this.ordersToPayforServer)
+            this.submitOnlinePayment(false)
           })
           .catch(err => {
             if (err.response) {
@@ -679,10 +721,22 @@ export default {
           })
         } else {
           // normal
-          this.$store.dispatch('table/submitPayment', this.ordersToPayforServer)
+          this.submitOnlinePayment(false)
         }
       }
       // this.$router.push('/paymentResult')
+    },
+    submitOnlinePayment(confirmed){
+      if(!confirmed && !this.dontShowPaymentGatewayWarning) {
+        if(this.isZibal(this.table.cafe)) {
+          this.paymentGatewayWarningModal = true;
+          this.paymentGatewayReturnToSiteText = 'بازگشت به وبسایت پذیرنده'
+          return
+        }
+        // if we reach here, we don't need confirmation for the gateway
+      }
+      this.paymentGatewayWarningModal = false;
+      this.$store.dispatch('table/submitPayment', this.ordersToPayforServer)
     },
     setMethodPayment(method){
       this.setMethodProccessing = true
@@ -717,6 +771,7 @@ export default {
     },
   },
   mounted() {
+    this.dontShowPaymentGatewayWarning = localStorage.getItem('dontShowPaymentGatewayWarning') == 'true'
     this.setPickupOrActiveAddressOnJoin()
   },
   watch: {
