@@ -192,6 +192,7 @@ export default {
           let isCafepaySubDomain = urlWithToken.includes('cfpy.ir')
                           || urlWithToken.includes('cafepay.app')
                           || urlWithToken.includes('cafehedayat.com')
+                          || urlWithToken.includes('likardbistro.ir')
           let isNotReservedSubDomain = !['m', 'cafepay', 'test', 't', 'cfpy'].includes(subdomain)
           if(isCafepaySubDomain && isNotReservedSubDomain) {
             this.tableCode = subdomain
