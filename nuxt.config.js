@@ -125,7 +125,7 @@ export default {
    */
   modules: [
     // With options
-    ['cookie-universal-nuxt', { SameSite: 'None' }],
+    'cookie-universal-nuxt',
     
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',

@@ -13,7 +13,9 @@ export default ({ app, store }) => {
     app.$cookies.set('CafepayWebappToken', cookieValObject, {
       path: '/',
       maxAge: 60 * 60 * 24 * 7,
-      domain: getDomainName()
+      domain: getDomainName(),
+      sameSite: 'none',
+      secure: true,
     })
   }
 
