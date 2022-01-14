@@ -126,6 +126,13 @@ import Vue from 'vue'
 // import { QrcodeStream } from 'vue-qrcode-reader'
 import { mapActions } from 'vuex'
 
+const ScanType = Object.freeze({
+  LINK: 'link',
+  WEBAPP_SCANNER: 'webapp_scanner',
+  TABLE_CODE: 'table_code',
+  DOMAIN_NAME: 'domain_name',
+})
+
 export default {
   components: {
     // QrcodeStream: () => import('vue-qrcode-reader'),
@@ -177,10 +184,16 @@ export default {
       if(!tokenValid) {
         return;
       }
-      this.tokenProccessor(token)
+      this.tokenProccessor(token, true)
     },
 
-    tokenProccessor(urlWithToken) {
+    tokenProccessor(urlWithToken, fromWebappScanner) {
+      let scanMode = null;
+      if(fromWebappScanner == true) {
+        scanMode = ScanType.WEBAPP_SCANNER
+      } else if(this.tableCode) {
+        scanMode = ScanType.TABLE_CODE
+      }
       if (typeof urlWithToken == 'string') {
         // demo token
         if (urlWithToken == 'https://cafepay.app/?1111') {
@@ -197,13 +210,21 @@ export default {
           let isNotReservedSubDomain = !['m', 'cafepay', 'test', 't', 'cfpy', 'en'].includes(subdomain)
           if(isCafepaySubDomain && isNotReservedSubDomain) {
             this.tableCode = subdomain
+            scanMode = scanMode ?? ScanType.DOMAIN_NAME
           } else {
             // will be undefined if no token is in query params
             this.tableCode = urlWithToken.split('?token=')[1]
+            scanMode = scanMode ?? ScanType.LINK
           }
         }
       }
       if(this.tableCode) {
+        this.$axios.post('v1/raw-log/create/', {
+          text: JSON.stringify({
+            token: this.tableCode,
+            mode: scanMode
+          })
+        })
         this.dispatchSendCode()
       } else {
         // enable camera if token is not in sub domain or query params
@@ -329,7 +350,7 @@ export default {
     // if (this.$route.query.token) {
     //   console.log('route', this.$route)
       // this.tableCode = this.$route.fullPath.split('?token=')[1]
-    this.tokenProccessor(window.location.href)
+    this.tokenProccessor(window.location.href, false)
     // }
 
     // if user is redirected from link for menu-only there is no need for initial camera
