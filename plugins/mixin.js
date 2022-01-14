@@ -27,7 +27,7 @@ export default function ({
 
     methods: {
       isZibal(cafe) {
-        return cafe.pk == 35;
+        return cafe.pk == 35 || cafe.pk == 74;
       },
       isDelivery(cafe){
         // what it should be
