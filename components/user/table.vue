@@ -277,11 +277,13 @@
           </section>
           <section class="modal-action cp-padding-2x">
             <b-button
+              :disabled="!isZibal(table.cafe)"
               @click="paymentCheckout"
               :loading="globalLoading"
               class="ma-child"
               type="is-success"
-              >{{(paymentMethod == 'cash') ? $t('table_page.checkout_cash_submit_button') : $t('table_page.checkout_online_submit_button') }}
+              >{{(paymentMethod == 'cash') ? $t('table_page.checkout_cash_submit_button') : 
+                    (isZibal(table.cafe) ? $t('table_page.checkout_online_submit_button') : 'پرداخت آنلاین این مجموعه غیرفعال است' ) }}
             </b-button>
           </section>
         </div>
