@@ -372,6 +372,11 @@ import background from '~/assets/img/background/320-2.jpg'
 import mobilebc from '~/assets/img/background/320-3.jpg'
 
 export default {
+  middleware: [
+    function({ redirect }) {
+        redirect('/user/home');
+    },
+  ],
   data() {
     return {
       cafes: [{
