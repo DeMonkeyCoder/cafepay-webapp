@@ -13,7 +13,7 @@
         <img class="no-pic" src="@/assets/img/shape/icons/icon8/profile/contact-us-due.png" alt />
         <h4 class="header cp-tb-padding cp-side-padding">تماس با ما</h4>
         <p :dir="$dir()" class="detail cp-tb-padding cp-side-padding">
-          ارتباط با پشتیبانی
+          ارتباط با مجموعه
           <!-- <span class="p-text font-18">خدافز</span> -->
         </p>
       </div>
