@@ -38,7 +38,7 @@
       </div>
       </a>
 
-      <a href="tel:0917-116-4374"  data-rel="external">
+      <!-- <a href="tel:0917-116-4374"  data-rel="external">
       <div class="profile-contact__card cp-side-padding cp-tb-padding-2x">
         <img src="@/assets/img/shape/icons/icon8/profile/icons8-online-support-96.png" alt="" />
         <div class="profile-contact__card__text cp-side-padding">
@@ -49,7 +49,7 @@
           <b-icon icon="phone"></b-icon>
         </div>
       </div>
-      </a>
+      </a> -->
 
     </section>
   </div>
