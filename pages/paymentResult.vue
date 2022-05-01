@@ -63,7 +63,11 @@ import errorAnimation from '~/assets/img/error.json'
         return this.$store.state.table.payment
       },
       info(){
-        return this.$route.query
+        const inf = Object.assign({},this.$route.query)
+        if(inf.description === 'previously verified') {
+          inf.status = 200
+        }
+        return inf
       }
     },
     mounted(){
