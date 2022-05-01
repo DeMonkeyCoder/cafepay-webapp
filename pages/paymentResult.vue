@@ -64,7 +64,7 @@ import errorAnimation from '~/assets/img/error.json'
       },
       info(){
         const inf = Object.assign({},this.$route.query)
-        if(inf.description === 'previously verified') {
+        if(inf.description === 'previously verifed') {
           inf.status = 200
         }
         return inf
